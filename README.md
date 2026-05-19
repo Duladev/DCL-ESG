@@ -8,6 +8,8 @@ Manage ESG data in Diamond Cutters LTD
     WASTE MANAGEMENT
     PLASTIC INVENTORY
     HSE TRAINING & SAFETY
+    SOCIAL
+    Minorities
 
 > # LOGIN PAGE
     username entry
@@ -22,7 +24,7 @@ Manage ESG data in Diamond Cutters LTD
       Search by Emp_ID
     #Filters with Counter
       Gender, Category, Department, Nationalities
-    #Export Excel
+    #Export Excel Button
 
 > #  CSR ACTIVITIES
     # Data Entries
@@ -75,6 +77,7 @@ Manage ESG data in Diamond Cutters LTD
         Data Grid View for show entered data
         Filters - Recycled, Non-Recycled, Other Recycled, Chemical
         Update Button, Delete Button(when select a data from grid view fetch all data to textboxes for update and delete)
+        Excel Export Button
 > # Inventory
         # Electricity
 >         Electricity Purchase
@@ -102,18 +105,166 @@ Manage ESG data in Diamond Cutters LTD
                 Total Purchased Capacity - Data Entry - Qty(KWh)
                 Type Of Non-Renewable Source - DropDownMenu
                 Total Purchased Capacity - Data Entry - Qty(KWh)
-              Bill upload to server(should be save month bill path in database)
-            Data View Panel
-        Calendar(for select year and month)
-        Data Grid View(for view previous data with uploaded bill location path in server)
->         Own Generated Electricity
-                Type Of Own Generated Electricity Type(renewable) - DropDownMenu
+              Bill Upload Button to server(should be save month bill path in database)
+         Own Generated Electricity
+                Type Of Own Generated Electricity Type(renewable) - DropDownMenu(solar/wind power/hydropower/geothermal/biomass energy/wave energy/green hydregon/tidal energy)
                 Monthly Generated Electricity capacity(renewable) - Data Entry Qty(KWh)
-                Type Of Own Generated Electricity Type(non-renewable) - DropDownMenu
+                Type Of Own Generated Electricity Type(non-renewable) - DropDownMenu(coal, natural gas, oil, nuclear energy, diesal, peat,shale gas and oil, tar sand(oil sand)
                 Monthly Generated Electricity capacity(non-renewable) - Data Entry Qty(KWh)
                 Total Own Generated Capacity(Consumed) - Data Entry Qty(KWh)
                 Own Generated Sold Capacity - Formular((Monthly Generated Electricity capacity(renewable)+Monthly Generated Electricity capacity(non-renewable))-Total Own Generated Capacity(Consumed))
+                Comments
+        Data View Panel
+        Calendar(for select year and month)
+        Data Grid View(for view previous data with uploaded bill location path in server)
+        Save, Delete, Update buttons(when select a data from grid view fetch all data to textboxes for update and delete)
+        Excel Export Button
+    # Gas
+      Calender(for month and year select)
+      Type of Gas - DropDownMenu
+      Main Purchased Gas - Data Entry Qty(KWh)
+      Amount
+      Add Gas Type Button(for add gas type)
+      Data Grid View with Filers
+      Data Grid View for show entered data
+      Filters - Gas Type
+      Save Button, Update Button, Delete Button(when select a data from grid view fetch all data to textboxes for update and delete)
+      Bill Upload Button to server(should be save month bill path in database)
+      Excel Export
+    # Water
+    Water Purchased
+      Calender(for month and year select)
+      Water Monthly Purchased - Data Entry Qty(cubic meter)
+      Amount paid - Data Entry(LKR)
+      Additional Water Monthly Purchased - Data Entry Qty(cubic meter)
+      Additional Amount Paid - Data Entry(LKR)
+    RainWater Management
+      RainWater Collected - Data Entry Qty(cubic meter)
+      RainWater Consumed - Data Entry Qty(cubic meter)
+      RainWater Recycled - Data Entry Qty(cubic meter)
+      Comments
+      Data Grid View with Filers
+      Data Grid View for show entered data
+      Filter - Month
+      Save Button, Update Button, Delete Button(when select a data from grid view fetch all data to textboxes for update and delete)
+      Bill Upload Button to server(should be save month bill path in database)
+      Excel Export Button
+    # Plastic
+      Data Entry Panel
+      Calendar(for select the year and month)
+      Product Category, Product Type, Type OF Unit, Purchased Unit Count, weight per unit, purchased scale(formular=weight per unit*purchased unit count), Price Per Unit, Total Purchase Cost(formular=price per unit*purchased unit count)
+      Comments
+      Data Grid View with Filers
+      Data Grid View for show entered data
+      Filter - Product Category, Product Type
+      Save Button, Update Button, Delete Button(when select a data from grid view fetch all data to textboxes for update and delete)
+      Bill Upload Button to server(should be save month bill path in database)
+      Excel Export Button
+    # Paper
+      Data Entry Panel
+      Calendar(for select the year and month)
+      Product Category, Product Type, Type OF Unit, Purchased Unit Count, weight per unit, purchased scale(formular=weight per unit*purchased unit count), Price Per Unit, Total Purchase Cost(formular=price per unit*purchased unit count)
+      Comments
+      Data Grid View with Filers
+      Data Grid View for show entered data
+      Filter - Product Category, Product Type
+      Save Button, Update Button, Delete Button(when select a data from grid view fetch all data to textboxes for update and delete)
+      Bill Upload Button to server(should be save month bill path in database)
+      Excel Export Button
+>          #HSE Training, Safety Incident & Grievances
+            Data Entry Panel For HSE Training
+            Number of people that attended health & safety training, 
+            Number of people that attended first-aid class/workshop, 
+            Number of people that attended fire-fighting class,  
+            Number of people that attended another awareness workshop (please specifiy which one)
 
+            Data Entry Panel For Safety Incident
+            Number of property damage incidents, 
+            Number of environmental incidents, 
+            Number of near misses, Total number of accidents, 
+            Number of accidents which resulted in injuries, 
+            Number of accidents which resulted in illness, 
+            Number of accidents which resulted in death
+            Total Incident Counter
+            
+            Data Entry Panel For Grievances
+            Total number of employees grievances
+            Number of unresolved employees grievances
+>     Social
+        Data Entry
+        Calendar(for select month and year)
+        Gender Counts(Male/Female)
+        Age Categories(counts) - DropDownMenu(17 years old or less,Between 18 and 30 years old,Between 31 and 50 years old,50 years old or above)
+    Required Skills(counts)
+        Among the total number of employees,total number of people that learnt the job's skills at NIRU this year or in the past	
+        Number of people hired already qualified, with that specific skills	
+        Number of people that didn't work in our industry before coming to NIRU
+    Promotions(count)
+        Among the total number of employees, the number of employees who received a promotion during the reporting period
+    Internal Mobility(count)
+        Among the total number of employees, the number (or percentage) of employees who experienced an internal role change during the reporting period
+    Family(count)
+        "Number of people of the same family working in the company If one mum and her daughter, please count it as 2"
+    Management(counts)
+        Number of women in first-line management (team leader, supervisor, manager)	
+        Number of men in first-line management (team leader, supervisor, manager)	
+        Number of women at at middle-level  management (senior manager)	
+        Number of men at middle-level  management (senior manager)	
+        Number of women at at upper-level  management (head of department, director)	
+        Number of men at at upper-level  management (head of department, director)
+        Number of women  among the 12 people representing the group leadership team 
+        Number of men among the 12 people representing the group leadership team 
+>      Minorities
+        Disabilities - Counts
+             Physical Disabilities 
+             Sensory Disabilities
+             Mental Health Conditions
+             Intellectual and Developmental Disabilities
+             Chronic Health Conditions
+        Behaviour - Counts
+             Lesbian
+             Gay
+             Bisexual
+             Asexual
+             Pansexual
+        Identifications - Counts
+             Transgender
+             Queer
+             Questioning
+             Non-binary
+             Agender
+        Nations - Counts
+            African
+            Asian
+            Hispanic/Latino
+            Indigenous
+            Middle Eastern/North African
+            Pacific Islander
+            European
+            Other Ethnicities => Please specify and count
+        Religions - Counts
+            Christianity
+            Islam
+            Hinduism
+            Buddhism
+            Judaism
+            Sikhism
+            Other Religions => Please specify (R.Catheloic) and count
+            No Religion
+        Languages - Counts
+            Language A => Sinhala
+            Language B => Hebrew
+            Language C => French
+            Language D => Hindi
+
+
+
+
+
+
+        
+
+        
         
       
   
