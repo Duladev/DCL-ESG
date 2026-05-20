@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>DCL-ESG Prototype - Diamond Cutters Ltd</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #e9eef3;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            padding: 40px 32px;
+        }
+
+        /* MAIN CONTAINER: all screens grid (for figma paste as frames) */
+        .prototype-container {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Each "screen" is a Figma-ready frame */
+        .screen-frame {
+            background: #F5F7FA;
+            border-radius: 24px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: all 0.2s;
+            border: 1px solid #E9EEF2;
+        }
+
+        .screen-header {
+            background: white;
+            padding: 20px 32px;
+            border-bottom: 1px solid #E9EEF2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .screen-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1A2C3E;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .screen-title:before {
+            content: "⬤";
+            font-size: 12px;
+            color: #2E7D32;
+        }
+
+        .screen-content {
+            padding: 32px;
+        }
+
+        /* design system components */
+        .btn-primary {
+            background: #2E7D32;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.15s;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-secondary {
+            background: white;
+            border: 1px solid #C2CFE0;
+            padding: 8px 20px;
+            border-radius: 8px;
+            color: #1F3A4B;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn-danger {
+            background: #EF5350;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 6px;
+            color: white;
+            font-weight: 500;
+            font-size: 12px;
+        }
+
+        .input-field, .date-input, select, textarea {
+            border: 1px solid #D0DBE8;
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 14px;
+            font-family: inherit;
+            background: white;
+            width: 100%;
+            transition: 0.1s;
+        }
+
+        .input-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #2c3e44;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
+            margin-top: 16px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px 16px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            border: 1px solid #EFF3F8;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .data-grid {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            font-size: 13px;
+        }
+
+        .data-grid th {
+            background: #F8FAFE;
+            padding: 14px 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #2C3E50;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .data-grid td {
+            padding: 12px 12px;
+            border-bottom: 1px solid #EDF2F7;
+            color: #1e2f3e;
+        }
+
+        .filter-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .chip {
+            background: white;
+            border-radius: 40px;
+            padding: 6px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid #CFDFE6;
+        }
+
+        .waste-section {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border-left: 6px solid;
+        }
+
+        .tab-bar {
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid #E2E8F0;
+            margin-bottom: 24px;
+        }
+        .tab {
+            padding: 10px 24px;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        .tab.active {
+            border-bottom-color: #2E7D32;
+            color: #2E7D32;
+        }
+
+        .flex-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+        .w-100 { width: 100%; }
+        .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .mt-4 { margin-top: 24px; }
+        .mb-3 { margin-bottom: 16px; }
+        .text-right { text-align: right; }
+        .badge-count { background: #EFF3F8; border-radius: 40px; padding: 2px 10px; font-size: 12px; }
+    </style>
+</head>
+<body>
+<div class="prototype-container">
+
+    <!-- LOGIN SCREEN (frame 1) -->
+    <div class="screen-frame">
+        <div class="screen-header">
+            <div class="screen-title">🔐 LOGIN · DCL-ESG</div>
+            <div></div>
+        </div>
+        <div class="screen-content" style="display: flex; justify-content: center;">
+            <div style="max-width: 440px; width: 100%; background: white; border-radius: 32px; padding: 40px 36px; box-shadow: 0 8px 30px rgba(0,0,0,0.05);">
+                <div style="text-align: center; margin-bottom: 32px;">
+                    <div style="font-size: 34px; font-weight: 800; color: #1e4620;">DCL-ESG</div>
+                    <div style="color: #6C7A89;">Diamond Cutters Ltd · ESG Manager</div>
+                </div>
+                <div class="input-label">Username</div>
+                <input class="input-field" type="text" placeholder="employee.id / admin" value="admin@dcl.com">
+                <div class="input-label mt-4">Password</div>
+                <input class="input-field" type="password" placeholder="••••••" value="password123">
+                <div class="flex-row" style="margin-top: 32px; justify-content: space-between;">
+                    <button class="btn-primary" style="flex:1; justify-content: center;">Login →</button>
+                    <button class="btn-secondary" style="flex:0.3;">Exit</button>
+                </div>
+                <div style="font-size: 12px; text-align: center; margin-top: 28px; color: #8a9bb0;">Diamond Cutters LTD · v2.0</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD (MAIN MENU) - after login -->
+    <div class="screen-frame">
+        <div class="screen-header">
+            <div class="screen-title">📊 ESG Dashboard</div>
+            <div style="display: flex; gap: 12px;"><span style="background:#EFF3F8; padding:6px 14px; border-radius: 30px;">👤 John Carter</span><span class="btn-secondary" style="padding:6px 14px;">Logout</span></div>
+        </div>
+        <div class="screen-content">
+            <div class="card-grid">
+                <div class="dashboard-card">👥 Employee Details</div>
+                <div class="dashboard-card">❤️ CSR Activities</div>
+                <div class="dashboard-card">♻️ Waste Management</div>
+                <div class="dashboard-card">📦 Plastic Inventory</div>
+                <div class="dashboard-card">🛡️ HSE & Safety</div>
+                <div class="dashboard-card">🤝 Social Metrics</div>
+                <div class="dashboard-card">🏳️ Minorities</div>
+                <div class="dashboard-card">📈 Reports Export</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EMPLOYEE DETAILS SCREEN -->
+    <div class="screen-frame">
+        <div class="screen-header">
+            <div class="screen-title">👥 Employee Details</div>
+            <button class="btn-primary">📎 Export Excel</button>
+        </div>
+        <div class="screen-content">
+            <div class="flex-row" style="justify-content: space-between;">
+                <div style="width: 300px;"><input class="input-field" placeholder="🔍 Search by Emp_ID / Name"></div>
+                <button class="btn-secondary">Search</button>
+            </div>
+            <div class="filter-chips">
+                <span class="chip">Gender: All (32)</span><span class="chip">Male (18)</span><span class="chip">Female (14)</span>
+                <span class="chip">Category: All</span><span class="chip">Management (6)</span><span class="chip">Technical (26)</span>
+                <span class="chip">Nationalities: SRI (24)</span><span class="chip">IND (5)</span>
+            </div>
+            <table class="data-grid" style="width:100%">
+                <thead><tr><th>Emp_No</th><th>Emp_Name</th><th>Gender</th><th>Department</th><th>Date of Join</th><th>Tenure(y)</th><th>Nationality</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>DCL101</td><td>Sarah Johnson</td><td>F</td><td>Cutting</td><td>2018-03-12</td><td>6</td><td>LKA</td></tr>
+                    <tr><td>DCL102</td><td>Michael Perera</td><td>M</td><td>Polishing</td><td>2020-07-01</td><td>3.8</td><td>LKA</td></tr>
+                    <tr><td>DCL103</td><td>Anita Verma</td><td>F</td><td>Quality</td><td>2021-11-10</td><td>2.5</td><td>IND</td></tr>
+                </tbody>
+            </table>
+            <div class="flex-row" style="justify-content: flex-end; margin-top: 20px;"><span class="badge-count">1-3 of 32</span> <button class="btn-secondary">Next</button></div>
+        </div>
+    </div>
+
+    <!-- CSR ACTIVITIES -->
+    <div class="screen-frame">
+        <div class="screen-header"><div class="screen-title">🌱 CSR Activities</div><button class="btn-primary">+ New Entry</button></div>
+        <div class="screen-content">
+            <div class="grid-2col">
+                <div style="background: white; border-radius: 20px; padding: 20px;">
+                    <div class="input-label">Date</div><input class="date-input" type="date" value="2025-05-15">
+                    <div class="input-label mt-3">Action / Title</div><input class="input-field" placeholder="Tree plantation drive">
+                    <div class="input-label mt-3">Description</div><textarea rows="2" class="input-field">Community engagement at Galle face</textarea>
+                    <div class="flex-row mt-3"><div style="flex:1"><div class="input-label">Employees Involved</div><input value="24"></div><div style="flex:1"><div class="input-label">Hours Invested</div><input value="56"></div></div>
+                    <div class="flex-row mt-3"><div style="flex:1"><div class="input-label">Cost (USD)</div><input value="1250"></div><div style="flex:1"><div class="input-label">People Impacted</div><input value="380"></div></div>
+                    <div class="flex-row mt-4"><button class="btn-primary">Save</button><button class="btn-secondary">Refresh</button></div>
+                </div>
+                <div><div class="flex-row" style="gap: 8px;"><input class="date-input" placeholder="From Date"><input class="date-input" placeholder="To Date"><button class="btn-secondary">Filter</button></div>
+                <table class="data-grid mt-3" style="font-size:12px"><thead><tr><th>Date</th><th>Action</th><th>Cost</th><th>Update</th></tr></thead><tbody><tr><td>2025-04-10</td><td>Beach Cleanup</td><td>$870</td><td><button class="btn-secondary" style="padding:4px 12px;">Edit</button></td></tr><tr><td>2025-03-22</td><td>School donation</td><td>$2400</td><td><button class="btn-secondary">Edit</button></td></tr></tbody></table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WASTE MANAGEMENT (comprehensive view) -->
+    <div class="screen-frame">
+        <div class="screen-header"><div class="screen-title">♻️ Waste Management – Daily Log</div><div><input class="date-input" value="2025-05-19"><span style="margin-left:16px; font-weight:700;">Daily Total: 324.6 kg</span></div></div>
+        <div class="screen-content">
+            <div class="grid-2col" style="gap: 20px;">
+                <div class="waste-section" style="border-left-color:#EF5350;"><div style="font-weight:800;">🚯 Non-Recycled</div><div class="flex-row">Polythene: <input style="width:100px" value="12.5"> kg</div><div class="flex-row mt-2">Plastic: <input style="width:100px" value="8.2"> kg</div><button class="btn-secondary" style="margin-top:12px;">+ Add new</button></div>
+                <div class="waste-section" style="border-left-color:#4CAF50;"><div style="font-weight:800;">♻️ Recycled</div><div class="flex-row">Paper: <input style="width:100px" value="45"> kg</div><div>Cardboard: <input style="width:100px" value="32"> kg</div><div>Recycled Plastic: <input style="width:100px" value="18.5"></div><button class="btn-secondary">+ Add item</button></div>
+                <div class="waste-section" style="border-left-color:#2196F3;"><div style="font-weight:800;">🔄 Other Recycled</div><div>Organic(Food): <input style="width:80px" value="23"> kg <span>🔘 Compost</span></div><div>Copper: <input value="5.2"> kg    Aluminium: <input value="7"> kg</div><div>Glass: <input value="14"> kg   E-Waste: <input value="3.8"></div></div>
+                <div class="waste-section" style="border-left-color:#FF9800;"><div style="font-weight:800;">🧪 Chemical Waste</div><div>Used Chemical Liquids: <input style="width:90px" value="6.7"> kg</div><div>Chemical Packing: <input value="9.2"> kg</div><div>Chemical Fabric: <input value="2.9"> kg</div></div>
+            </div>
+            <div class="filter-chips" style="margin-top: 16px;"><span class="chip">All</span><span class="chip">Recycled</span><span class="chip">Non-Recycled</span><span class="chip">Chemical</span><span class="chip">Other Recycled</span><button class="btn-primary" style="margin-left:auto;">📊 Export Excel</button></div>
+            <table class="data-grid mt-3"><thead><tr><th>Date</th><th>Category</th><th>Item</th><th>Qty (Kg)</th><th>Actions</th></tr></thead><tbody><tr><td>2025-05-19</td><td>Recycled</td><td>Paper</td><td>45</td><td><button class="btn-secondary" style="padding:4px 12px;">Update</button> <button class="btn-danger">Delete</button></td></tr><tr><td>2025-05-19</td><td>Chemical</td><td>Liquids</td><td>6.7</td><td><button class="btn-secondary">Update</button></td></tr></tbody></table>
+        </div>
+    </div>
+
+    <!-- INVENTORY (Electricity tab + others summary) -->
+    <div class="screen-frame">
+        <div class="screen-header"><div class="screen-title">⚡ Inventory & Utilities</div><div><input class="date-input" type="month" value="2025-05"></div></div>
+        <div class="screen-content">
+            <div class="tab-bar"><div class="tab active">Electricity</div><div class="tab">Gas</div><div class="tab">Water</div><div class="tab">Plastic</div><div class="tab">Paper</div></div>
+            <div class="grid-2col">
+                <div style="background: white; border-radius: 24px; padding: 20px;">
+                    <div style="font-weight:700;">🔌 Electricity Purchase</div>
+                    <div class="flex-row"><select><option>Main Purchase</option><option>Additional Purchase</option></select></div>
+                    <div class="flex-row mt-2"><span>Peak Time KWh:</span><input style="width:120px" value="1240"> <span>Amount(LKR):</span><input style="width:120px" value="24800"></div>
+                    <div class="flex-row mt-2"><span>Normal Time KWh:</span><input style="width:120px" value="3550"> <span>Amount(LKR):</span><input style="width:120px" value="53250"></div>
+                    <div class="flex-row mt-2"><span>Off-Peak KWh:</span><input style="width:120px" value="820"></div>
+                    <div class="mt-3"><div class="input-label">🌞 Own Generated (Renewable) Solar</div><input placeholder="KWh generated" value="430"></div>
+                    <div class="mt-2"><div class="input-label">🛢️ Non-Renewable (Diesel)</div><input value="120"></div>
+                    <div class="mt-2"><div class="input-label">Formula - Sold Capacity: <strong>430+120 - Consumed</strong></div><input value="360" placeholder="Total Consumed (KWh)"></div>
+                    <button class="btn-secondary mt-3">📄 Upload Bill</button>
+                </div>
+                <div><table class="data-grid"><thead><tr><th>Month</th><th>Total Purchase</th><th>Generated</th><th>Bill</th></tr></thead><tbody><tr><td>Apr 2025</td><td>5470 KWh</td><td>580 KWh</td><td><span class="badge-count">📎 invoice.pdf</span></td></tr><tr><td>Mar 2025</td><td>5120 KWh</td><td>520 KWh</td><td><span class="badge-count">📎 uploaded</span></td></tr></tbody></table>
+                <div class="flex-row mt-3"><button class="btn-primary">Save</button><button class="btn-secondary">Update</button><button class="btn-danger">Delete</button><button class="btn-secondary">Export Excel</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HSE TRAINING & SAFETY -->
+    <div class="screen-frame">
+        <div class="screen-header"><div class="screen-title">🛡️ HSE Training, Safety Incidents & Grievances</div><div><span class="badge-count">Reporting period: May 2025</span></div></div>
+        <div class="screen-content">
+            <div class="grid-2col" style="gap: 24px;">
+                <div style="background: white; border-radius: 18px; padding: 20px;"><div style="font-weight: 700;">📘 HSE Training</div>
+                    <div class="input-label mt-2">Attended health & safety training</div><input value="142"><div class="input-label">Attended first-aid workshop</div><input value="98"><div class="input-label">Fire-fighting class</div><input value="76"><div class="input-label">Other awareness workshop</div><input placeholder="specify: ergonomics" value="34"></div>
+                <div style="background: white; border-radius: 18px; padding: 20px;"><div style="font-weight: 700;">⚠️ Safety Incidents</div>
+                    <div class="flex-row"><span>Property damage:</span><input style="width:80px" value="2"> <span>Environmental incidents:</span><input style="width:80px" value="0"></div><div class="flex-row mt-2"><span>Near misses:</span><input style="width:80px" value="5"> <span>Total accidents:</span><input style="width:80px" value="3"></div>
+                    <div class="flex-row mt-2"><span>Injuries:</span><input value="2"> <span>Illness:</span><input value="1"> <span>Deaths:</span><input value="0"></div>
+                    <div style="margin-top: 14px; background: #FFF3E0; padding: 10px; border-radius: 12px;"><strong>⚠️ Total Incident Counter: 13</strong></div>
+                </div>
+                <div style="background: white; border-radius: 18px; padding: 20px;"><div style="font-weight: 700;">📢 Grievances</div>
+                    <div class="input-label">Total employees grievances</div><input value="8"><div class="input-label mt-2">Unresolved grievances</div><input value="2"><div class="flex-row mt-4"><button class="btn-primary">Save Data</button></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SOCIAL SCREEN (monthly & key metrics) -->
+    <div class="screen-frame">
+        <div class="screen-header"><div class="screen-title">🤝 Social Metrics – Workforce & Mobility</div><div><input class="date-input" type="month" value="2025-05"></div></div>
+        <div class="screen-content">
+            <div class="grid-2col" style="gap: 20px;">
+                <div><div class="input-label">Gender Counts</div><div class="flex-row"><span>Male: <input style="width:80px" value="124"></span><span>Female: <input style="width:80px" value="98"></span></div>
+                <div class="mt-3"><div class="input-label">Age Categories</div><select><option>18-30 years</option><option>31-50 years</option><option>50+</option></select><input placeholder="count" value="47"></div>
+                <div class="mt-3"><div class="input-label">Required Skills (NIRU trained)</div><input value="84"><div class="input-label mt-2">Hired already qualified</div><input value="63"><div class="input-label mt-2">New to industry</div><input value="38"></div>
+                </div>
+                <div><div class="input-label">🏆 Promotions (reporting period)</div><input value="12"><div class="input-label mt-3">🔄 Internal Mobility (role change)</div><input value="21"><div class="input-label mt-3">👪 Same family working</div><input value="4"></div>
+            </div>
+            <div class="mt-4" style="background: white; border-radius: 20px; padding: 20px;"><div style="font-weight:700;">📊 Management Breakdown</div>
+                <table class="data-grid"><thead><tr><th>Level</th><th>Women</th><th>Men</th></tr></thead><tbody>
+                    <tr><td>First-line (Team lead)</td><td><input style="width:70px" value="8"></td><td><input style="width:70px" value="14"></td></tr>
+                    <tr><td>Middle-level (Senior Mgr)</td><td><input value="6"></td><td><input value="11"></td></tr>
+                    <tr><td>Upper-level (Head of Dept)</td><td><input value="3"></td><td><input value="9"></td></tr>
+                    <tr><td>Group Leadership Team (12)</td><td><input value="5"></td><td><input value="7"></td></tr>
+                </tbody></table>
+                <div class="flex-row mt-3"><button class="btn-primary">Save Social Data</button><button class="btn-secondary">Export</button></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MINORITIES SCREEN - comprehensive diversity -->
+    <div class="screen-frame">
+        <div class="screen-header"><div class="screen-title">🏳️ Minorities & Inclusion (Counts by category)</div><button class="btn-secondary">Save all</button></div>
+        <div class="screen-content">
+            <div class="grid-2col" style="gap: 24px;">
+                {/*should be aligned */}
+                <div style="background: white; border-radius: 20px; padding: 18px;"><div style="font-weight: 700;">🦾 Disabilities</div><div class="flex-row">Physical: <input style="width:70px" value="4"> Sensory: <input style="width:70px" value="2"></div><div>Mental Health: <input style="width:70px" value="6"> Intellectual: <input style="width:70px" value="1"></div><div>Chronic Health: <input style="width:70px" value="3"></div></div>
+                <div style="background: white; border-radius: 20px; padding: 18px;"><div style="font-weight: 700;">🌈 Behaviour / Orientation</div><div>Lesbian: <input style="width:70px" value="2"> Gay: <input value="5"> Bisexual: <input value="4"></div><div>Asexual: <input value="1"> Pansexual: <input value="2"></div></div>
+                <div style="background: white; border-radius: 20px; padding: 18px;"><div style="font-weight: 700;">⚧️ Identifications</div><div>Transgender: <input value="3"> Queer: <input value="2"> Questioning: <input value="4"></div><div>Non-binary: <input value="3"> Agender: <input value="1"></div></div>
+                <div style="background: white; border-radius: 20px; padding: 18px;"><div style="font-weight: 700;">🌍 Nations / Ethnicities</div><div>African: <input style="width:60px" value="2"> Asian: <input value="148"> Hispanic: <input value="1"></div><div>Indigenous: <input value="0"> Middle Eastern: <input value="3"> European?: <input value="8"></div><div>Other: <input placeholder="specify" value("Mauritian"> <input placeholder="count" style("width:60px" value("2"></ div></ div>
+                    {/* Languages should be aligned */}
+                <div style="background: white; border-radius: 20px; padding: 18px;"><div style="font-weight: 700;">🗣️ Languages</div><div>
+                    Sinhala:<input style="width:80px" value="156"> 
+                    Hebrew: <input style="width:80px" value="156">
+                    French: <input style="width:80px" value="11"> 
+                    Hindi: <input style="width:80px" value="18">
+                </div>
+                <div class="mt-2"><em>Add more languages via config</em></div></div>
+            </div>
+            <div class="flex-row" style="justify-content: flex-end; margin-top: 24px;"><button class="btn-primary">Commit Minorities Data</button><button class="btn-secondary">Export diversity report</button></div>
+        </div>
+    </div>
+
+    <!-- ADDITIONAL: PLASTIC INVENTORY dedicated screen (tab refined) -->
+    <div class="screen-frame">
+        <div class="screen-header"><div class="screen-title">📦 Plastic Inventory Management</div><div><input class="date-input" type="month" value="2025-05"></div></div>
+        <div class="screen-content">
+            <div class="grid-2col">
+                <div style="background: white; border-radius: 20px; padding: 20px;"><div class="input-label">Product Category</div><input placeholder="Packaging" value="Bags"><div class="input-label">Product Type</div><input value="LDPE Film"><div class="input-label">Unit Type / Purchased Unit Count</div><div class="flex-row"><input placeholder="Units" value="3400"><span>weight/unit (kg)</span><input style="width:100px" value="0.025"></div><div class="input-label mt-2">Purchased Scale (formula)</div><input value="85 kg"><div class="input-label">Price Per Unit (LKR)</div><input value="12.50"><div class="input-label">Total Purchase Cost</div><input value="42500"><button class="btn-secondary mt-2">📎 Upload Bill</button><div class="flex-row mt-3"><button class="btn-primary">Save</button><button class="btn-secondary">Update</button></div></div>
+                <div><table class="data-grid"><thead><tr><th>Month</th><th>Category</th><th>Total KG</th><th>Cost LKR</th></tr></thead><tbody><tr><td>May 2025</td><td>Bags</td><td>85</td><td>42,500</td></tr><tr><td>Apr 2025</td><td>Containers</td><td>112</td><td>61,200</td></tr></tbody></table><button class="btn-primary mt-3">Export Excel</button></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
