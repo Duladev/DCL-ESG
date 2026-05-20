@@ -176,7 +176,7 @@ Manage ESG data in Diamond Cutters LTD
       Save Button, Update Button, Delete Button(when select a data from grid view fetch all data to textboxes for update and delete)
       Bill Upload Button to server(should be save month bill path in database)
       Excel Export Button
->          #HSE Training, Safety Incident & Grievances
+>     #HSE Training, Safety Incident & Grievances
             Data Entry Panel For HSE Training
             Number of people that attended health & safety training, 
             Number of people that attended first-aid class/workshop, 
