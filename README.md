@@ -6,7 +6,12 @@ Manage ESG data in Diamond Cutters LTD
     EMPLOYEE DETAILS
     CSR ACTIVITIES
     WASTE MANAGEMENT
-    PLASTIC INVENTORY
+    INVENTORY
+        Electricity
+        Water
+        Gas
+        Plastic
+        Paper
     HSE TRAINING & SAFETY
     SOCIAL
     Minorities
