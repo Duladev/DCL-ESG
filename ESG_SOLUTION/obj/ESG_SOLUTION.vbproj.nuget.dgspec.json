@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "F:\\DCL-ESG\\ESG_SOLUTION\\ESG_SOLUTION.csproj": {}
+    "F:\\DCL-ESG\\ESG_SOLUTION\\ESG_SOLUTION.vbproj": {}
   },
   "projects": {
-    "F:\\DCL-ESG\\ESG_SOLUTION\\ESG_SOLUTION.csproj": {
+    "F:\\DCL-ESG\\ESG_SOLUTION\\ESG_SOLUTION.vbproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\DCL-ESG\\ESG_SOLUTION\\ESG_SOLUTION.csproj",
+        "projectUniqueName": "F:\\DCL-ESG\\ESG_SOLUTION\\ESG_SOLUTION.vbproj",
         "projectName": "ESG_SOLUTION",
-        "projectPath": "F:\\DCL-ESG\\ESG_SOLUTION\\ESG_SOLUTION.csproj",
+        "projectPath": "F:\\DCL-ESG\\ESG_SOLUTION\\ESG_SOLUTION.vbproj",
         "packagesPath": "C:\\Users\\dularad\\.nuget\\packages\\",
         "outputPath": "F:\\DCL-ESG\\ESG_SOLUTION\\obj\\",
         "projectStyle": "PackageReference",
@@ -52,6 +52,16 @@
         "net8.0-windows": {
           "framework": "net8.0-windows7.0",
           "targetAlias": "net8.0-windows",
+          "dependencies": {
+            "Microsoft.VisualBasic": {
+              "target": "Package",
+              "version": "[10.3.0, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.9.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
