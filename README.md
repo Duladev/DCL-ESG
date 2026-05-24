@@ -6,6 +6,7 @@ Manage ESG data in Diamond Cutters LTD
     EMPLOYEE DETAILS
     CSR ACTIVITIES
     WASTE MANAGEMENT
+        WASTE COLLECTORS MANAGEMENT
     INVENTORY
         Electricity
         Water
@@ -21,7 +22,7 @@ Manage ESG data in Diamond Cutters LTD
     password entry
     Login Button
     Exit Button
-
+database connect from login page
 > # Employee Details
     #Data Grid View
       Fields: Emp_No, Emp_Name,Gender, Category, Department, Date of Join, To or Present, Date of Birth, Age(y),Tenure (y), (if manager distance), Nationalities
@@ -36,6 +37,7 @@ Manage ESG data in Diamond Cutters LTD
       Date, Action, Description, Fequency, Location, Time of Engagement, Employees Envolved(Count), Hours Invested, People Impacted(count), Quantity, Cost(USD), Type
       Save Button, Refresh Button
     #Data Grid View with Date range Filter(for show entered data)
+        excel export button(all data export as an excel sheet)
       Update Button Delete Button(when select a data from grid view fetch all data to textboxes for update and delete)
 
 > #  Waste Management
@@ -46,6 +48,8 @@ Manage ESG data in Diamond Cutters LTD
         Plastic
            Data Entrie - Qty(in Kg)
       Add New Item Button(for add new recycled waste item)
+      Select a collector from dropdown menu
+      documents upload button for if have any documents
     # Recycled Waste
         Paper
            Data Entrie - Qty(in Kg)
@@ -56,6 +60,8 @@ Manage ESG data in Diamond Cutters LTD
         Other Plastic Recycled
            Data Entrie - Qty(in Kg)
       Add New Item Button(for add new recycled waste item)
+      Select a collector from dropdown menu
+      documents upload button for if have any documents
     # Other Recycled Waste
         Organic Waste(Food)
            Data Entrie - Qty(in Kg)
@@ -69,6 +75,8 @@ Manage ESG data in Diamond Cutters LTD
         Electronic Waste
            Data Entrie - Qty(in Kg)
       Add New Item Button(for add new recycled waste item)
+      Select a collector from dropdown menu
+      documents upload button for if have any documents
     # Chemical Waste
         Used Chemical Liquds
            Data Entrie - Qty(in Kg)
@@ -77,12 +85,21 @@ Manage ESG data in Diamond Cutters LTD
         Chemical Fabric
            Data Entrie - Qty(in Kg)
       Add New Item Button(for add new recycled waste item)
+      Select a collector from dropdown menu
+      documents upload button for if have any documents
     Daily Total TextBox(Showing realtime calculated data when entering data to particular date)
     # Data Grid View with Filers
         Data Grid View for show entered data
         Filters - Recycled, Non-Recycled, Other Recycled, Chemical
         Update Button, Delete Button(when select a data from grid view fetch all data to textboxes for update and delete)
         Excel Export Button
+    WATSE COLLECTORS MANAGEMENT
+      collector name
+      address
+      telephone number
+      license number
+      license documents upload
+      data grid view for view registered collectors view and update.
 > # Inventory
         # Electricity
 >         Electricity Purchase
