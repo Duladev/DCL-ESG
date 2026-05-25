@@ -74,3 +74,502 @@
 === frmPaper ===
   (Identical control names to frmPlastic — different class name)
   DataGridView: dgvPaper
+
+
+Inventory management sql quary
+USE ESG;
+GO
+
+-- ============================================================
+-- TABLE: GasTypes  (lookup)
+-- ============================================================
+IF OBJECT_ID('dbo.tblESG_GasTypes', 'U') IS NOT NULL DROP TABLE dbo.tblESG_GasTypes;
+CREATE TABLE dbo.tblESG_GasTypes (
+    GasTypeID   INT IDENTITY(1,1) PRIMARY KEY,
+    GasName     NVARCHAR(100)  NOT NULL,
+    IsActive    BIT            NOT NULL DEFAULT 1,
+    CreatedAt   DATETIME       NOT NULL DEFAULT GETDATE()
+);
+GO
+
+INSERT INTO dbo.tblESG_GasTypes (GasName) VALUES
+    ('LPG'),
+    ('Natural Gas'),
+    ('Biogas'),
+    ('Hydrogen'),
+    ('Propane');
+GO
+
+-- ============================================================
+-- TABLE: ElectricityPurchase  (Main + Additional)
+-- ============================================================
+IF OBJECT_ID('dbo.tblESG_ElectricityPurchase', 'U') IS NOT NULL DROP TABLE dbo.tblESG_ElectricityPurchase;
+CREATE TABLE dbo.tblESG_ElectricityPurchase (
+    PurchaseID          INT IDENTITY(1,1) PRIMARY KEY,
+    PurchaseYear        SMALLINT       NOT NULL,
+    PurchaseMonth       TINYINT        NOT NULL CHECK (PurchaseMonth BETWEEN 1 AND 12),
+    PurchaseType        NVARCHAR(20)   NOT NULL CHECK (PurchaseType IN ('Main','Additional')),
+
+    -- Quantities
+    PeakQty_KWh         DECIMAL(12,4)  NOT NULL DEFAULT 0,
+    NormalQty_KWh       DECIMAL(12,4)  NOT NULL DEFAULT 0,
+    OffPeakQty_KWh      DECIMAL(12,4)  NOT NULL DEFAULT 0,
+
+    -- Payments
+    PeakPaid_LKR        DECIMAL(14,2)  NOT NULL DEFAULT 0,
+    NormalPaid_LKR      DECIMAL(14,2)  NOT NULL DEFAULT 0,
+    OffPeakPaid_LKR     DECIMAL(14,2)  NOT NULL DEFAULT 0,
+
+    CreatedAt           DATETIME       NOT NULL DEFAULT GETDATE(),
+    UpdatedAt           DATETIME       NULL,
+
+    CONSTRAINT UQ_ElecPurchase UNIQUE (PurchaseYear, PurchaseMonth, PurchaseType)
+);
+GO
+
+-- ============================================================
+-- TABLE: ElectricityOutsource
+-- ============================================================
+IF OBJECT_ID('dbo.tblESG_ElectricityOutsource', 'U') IS NOT NULL DROP TABLE dbo.tblESG_ElectricityOutsource;
+CREATE TABLE dbo.tblESG_ElectricityOutsource (
+    OutsourceID             INT IDENTITY(1,1) PRIMARY KEY,
+    PurchaseYear            SMALLINT        NOT NULL,
+    PurchaseMonth           TINYINT         NOT NULL CHECK (PurchaseMonth BETWEEN 1 AND 12),
+
+    RenewableSourceType     NVARCHAR(100)   NULL,
+    RenewableQty_KWh        DECIMAL(12,4)   NOT NULL DEFAULT 0,
+
+    NonRenewableSourceType  NVARCHAR(100)   NULL,
+    NonRenewableQty_KWh     DECIMAL(12,4)   NOT NULL DEFAULT 0,
+
+    CreatedAt               DATETIME        NOT NULL DEFAULT GETDATE(),
+    UpdatedAt               DATETIME        NULL,
+
+    CONSTRAINT UQ_ElecOutsource UNIQUE (PurchaseYear, PurchaseMonth)
+);
+GO
+
+-- ============================================================
+-- TABLE: ElectricityOwnGenerated
+-- ============================================================
+IF OBJECT_ID('dbo.tblESG_ElectricityOwnGenerated', 'U') IS NOT NULL DROP TABLE dbo.tblESG_ElectricityOwnGenerated;
+CREATE TABLE dbo.tblESG_ElectricityOwnGenerated (
+    OwnGenID                INT IDENTITY(1,1) PRIMARY KEY,
+    RecordYear              SMALLINT        NOT NULL,
+    RecordMonth             TINYINT         NOT NULL CHECK (RecordMonth BETWEEN 1 AND 12),
+
+    RenewableType           NVARCHAR(100)   NULL,
+    RenewableQty_KWh        DECIMAL(12,4)   NOT NULL DEFAULT 0,
+
+    NonRenewableType        NVARCHAR(100)   NULL,
+    NonRenewableQty_KWh     DECIMAL(12,4)   NOT NULL DEFAULT 0,
+
+    TotalConsumed_KWh       DECIMAL(12,4)   NOT NULL DEFAULT 0,
+    -- SoldQty = (RenewableQty + NonRenewableQty) - TotalConsumed (computed)
+    SoldQty_KWh AS (RenewableQty_KWh + NonRenewableQty_KWh - TotalConsumed_KWh) PERSISTED,
+
+    Comments                NVARCHAR(MAX)   NULL,
+    CreatedAt               DATETIME        NOT NULL DEFAULT GETDATE(),
+    UpdatedAt               DATETIME        NULL,
+
+    CONSTRAINT UQ_OwnGen UNIQUE (RecordYear, RecordMonth)
+);
+GO
+
+-- ============================================================
+-- TABLE: GasPurchase
+-- ============================================================
+IF OBJECT_ID('dbo.tblESG_GasPurchase', 'U') IS NOT NULL DROP TABLE dbo.tblESG_GasPurchase;
+CREATE TABLE dbo.tblESG_GasPurchase (
+    GasPurchaseID   INT IDENTITY(1,1) PRIMARY KEY,
+    RecordYear      SMALLINT        NOT NULL,
+    RecordMonth     TINYINT         NOT NULL CHECK (RecordMonth BETWEEN 1 AND 12),
+    GasTypeID       INT             NOT NULL REFERENCES dbo.tblESG_GasTypes(GasTypeID),
+    Qty_KWh         DECIMAL(12,4)   NOT NULL DEFAULT 0,
+    Amount_LKR      DECIMAL(14,2)   NOT NULL DEFAULT 0,
+    CreatedAt       DATETIME        NOT NULL DEFAULT GETDATE(),
+    UpdatedAt       DATETIME        NULL
+);
+GO
+
+-- ============================================================
+-- TABLE: WaterPurchase
+-- ============================================================
+IF OBJECT_ID('dbo.tblESG_WaterPurchase', 'U') IS NOT NULL DROP TABLE dbo.tblESG_WaterPurchase;
+CREATE TABLE dbo.tblESG_WaterPurchase (
+    WaterPurchaseID         INT IDENTITY(1,1) PRIMARY KEY,
+    RecordYear              SMALLINT        NOT NULL,
+    RecordMonth             TINYINT         NOT NULL CHECK (RecordMonth BETWEEN 1 AND 12),
+
+    MainQty_M3              DECIMAL(12,4)   NOT NULL DEFAULT 0,
+    MainAmount_LKR          DECIMAL(14,2)   NOT NULL DEFAULT 0,
+
+    AdditionalQty_M3        DECIMAL(12,4)   NOT NULL DEFAULT 0,
+    AdditionalAmount_LKR    DECIMAL(14,2)   NOT NULL DEFAULT 0,
+
+    CreatedAt               DATETIME        NOT NULL DEFAULT GETDATE(),
+    UpdatedAt               DATETIME        NULL,
+
+    CONSTRAINT UQ_WaterPurchase UNIQUE (RecordYear, RecordMonth)
+);
+GO
+
+-- ============================================================
+-- TABLE: RainwaterManagement
+-- ============================================================
+IF OBJECT_ID('dbo.tblESG_RainwaterManagement', 'U') IS NOT NULL DROP TABLE dbo.tblESG_RainwaterManagement;
+CREATE TABLE dbo.tblESG_RainwaterManagement (
+    RainwaterID     INT IDENTITY(1,1) PRIMARY KEY,
+    RecordYear      SMALLINT        NOT NULL,
+    RecordMonth     TINYINT         NOT NULL CHECK (RecordMonth BETWEEN 1 AND 12),
+    Collected_M3    DECIMAL(12,4)   NOT NULL DEFAULT 0,
+    Consumed_M3     DECIMAL(12,4)   NOT NULL DEFAULT 0,
+    Recycled_M3     DECIMAL(12,4)   NOT NULL DEFAULT 0,
+    Comments        NVARCHAR(MAX)   NULL,
+    CreatedAt       DATETIME        NOT NULL DEFAULT GETDATE(),
+    UpdatedAt       DATETIME        NULL,
+
+    CONSTRAINT UQ_Rainwater UNIQUE (RecordYear, RecordMonth)
+);
+GO
+
+-- ============================================================
+-- TABLE: PlasticPurchase
+-- ============================================================
+IF OBJECT_ID('dbo.tblESG_PlasticPurchase', 'U') IS NOT NULL DROP TABLE dbo.tblESG_PlasticPurchase;
+CREATE TABLE dbo.tblESG_PlasticPurchase (
+    PlasticPurchaseID   INT IDENTITY(1,1) PRIMARY KEY,
+    RecordYear          SMALLINT        NOT NULL,
+    RecordMonth         TINYINT         NOT NULL CHECK (RecordMonth BETWEEN 1 AND 12),
+    ProductCategory     NVARCHAR(100)   NOT NULL,
+    ProductType         NVARCHAR(100)   NOT NULL,
+    UnitType            NVARCHAR(50)    NOT NULL,
+    PurchasedUnitCount  INT             NOT NULL DEFAULT 0,
+    WeightPerUnit_Kg    DECIMAL(10,4)   NOT NULL DEFAULT 0,
+    -- PurchasedScale = WeightPerUnit * UnitCount (computed)
+    PurchasedScale_Kg   AS (WeightPerUnit_Kg * PurchasedUnitCount) PERSISTED,
+    PricePerUnit_LKR    DECIMAL(12,2)   NOT NULL DEFAULT 0,
+    -- TotalCost = PricePerUnit * UnitCount (computed)
+    TotalCost_LKR       AS (PricePerUnit_LKR * PurchasedUnitCount) PERSISTED,
+    Comments            NVARCHAR(MAX)   NULL,
+    CreatedAt           DATETIME        NOT NULL DEFAULT GETDATE(),
+    UpdatedAt           DATETIME        NULL
+);
+GO
+
+-- ============================================================
+-- TABLE: PaperPurchase
+-- ============================================================
+IF OBJECT_ID('dbo.tblESG_PaperPurchase', 'U') IS NOT NULL DROP TABLE dbo.tblESG_PaperPurchase;
+CREATE TABLE dbo.tblESG_PaperPurchase (
+    PaperPurchaseID     INT IDENTITY(1,1) PRIMARY KEY,
+    RecordYear          SMALLINT        NOT NULL,
+    RecordMonth         TINYINT         NOT NULL CHECK (RecordMonth BETWEEN 1 AND 12),
+    ProductCategory     NVARCHAR(100)   NOT NULL,
+    ProductType         NVARCHAR(100)   NOT NULL,
+    UnitType            NVARCHAR(50)    NOT NULL,
+    PurchasedUnitCount  INT             NOT NULL DEFAULT 0,
+    WeightPerUnit_Kg    DECIMAL(10,4)   NOT NULL DEFAULT 0,
+    PurchasedScale_Kg   AS (WeightPerUnit_Kg * PurchasedUnitCount) PERSISTED,
+    PricePerUnit_LKR    DECIMAL(12,2)   NOT NULL DEFAULT 0,
+    TotalCost_LKR       AS (PricePerUnit_LKR * PurchasedUnitCount) PERSISTED,
+    Comments            NVARCHAR(MAX)   NULL,
+    CreatedAt           DATETIME        NOT NULL DEFAULT GETDATE(),
+    UpdatedAt           DATETIME        NULL
+);
+GO
+
+-- ============================================================
+-- TABLE: BillUploads  (polymorphic - shared by all modules)
+-- ============================================================
+IF OBJECT_ID('dbo.tblESG_BillUploads', 'U') IS NOT NULL DROP TABLE dbo.tblESG_BillUploads;
+CREATE TABLE dbo.tblESG_BillUploads (
+    UploadID            INT IDENTITY(1,1) PRIMARY KEY,
+    RefTable            NVARCHAR(100)   NOT NULL,   -- e.g. 'ElectricityPurchase'
+    RefID               INT             NOT NULL,   -- FK to that table's PK
+    OriginalFileName    NVARCHAR(260)   NOT NULL,
+    ServerFilePath      NVARCHAR(500)   NOT NULL,   -- e.g. \\SERVER\Bills\Electricity\2025\Jan\bill1.pdf
+    UploadedAt          DATETIME        NOT NULL DEFAULT GETDATE(),
+    UploadedBy          NVARCHAR(100)   NULL        -- Windows login or app username
+);
+GO
+
+CREATE INDEX IX_BillUploads_Ref ON dbo.tblESG_BillUploads (RefTable, RefID);
+GO
+
+-- ============================================================
+-- STORED PROCEDURES
+-- ============================================================
+
+-- ---- Electricity Purchase CRUD ----
+IF OBJECT_ID('dbo.sp_tblESG_SaveElectricityPurchase','P') IS NOT NULL DROP PROCEDURE dbo.sp_tblESG_SaveElectricityPurchase;
+GO
+CREATE PROCEDURE dbo.sp_tblESG_SaveElectricityPurchase
+    @PurchaseID     INT = 0,
+    @Year           SMALLINT,
+    @Month          TINYINT,
+    @PurchaseType   NVARCHAR(20),
+    @PeakQty        DECIMAL(12,4),
+    @NormalQty      DECIMAL(12,4),
+    @OffPeakQty     DECIMAL(12,4),
+    @PeakPaid       DECIMAL(14,2),
+    @NormalPaid     DECIMAL(14,2),
+    @OffPeakPaid    DECIMAL(14,2),
+    @NewID          INT OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    IF @PurchaseID = 0
+    BEGIN
+        INSERT INTO dbo.tblESG_ElectricityPurchase
+            (PurchaseYear,PurchaseMonth,PurchaseType,PeakQty_KWh,NormalQty_KWh,OffPeakQty_KWh,PeakPaid_LKR,NormalPaid_LKR,OffPeakPaid_LKR)
+        VALUES
+            (@Year,@Month,@PurchaseType,@PeakQty,@NormalQty,@OffPeakQty,@PeakPaid,@NormalPaid,@OffPeakPaid);
+        SET @NewID = SCOPE_IDENTITY();
+    END
+    ELSE
+    BEGIN
+        UPDATE dbo.tblESG_ElectricityPurchase SET
+            PurchaseYear=@Year, PurchaseMonth=@Month, PurchaseType=@PurchaseType,
+            PeakQty_KWh=@PeakQty, NormalQty_KWh=@NormalQty, OffPeakQty_KWh=@OffPeakQty,
+            PeakPaid_LKR=@PeakPaid, NormalPaid_LKR=@NormalPaid, OffPeakPaid_LKR=@OffPeakPaid,
+            UpdatedAt=GETDATE()
+        WHERE PurchaseID=@PurchaseID;
+        SET @NewID = @PurchaseID;
+    END
+END
+GO
+
+IF OBJECT_ID('dbo.sp_tblESG_DeleteElectricityPurchase','P') IS NOT NULL DROP PROCEDURE dbo.sp_tblESG_DeleteElectricityPurchase;
+GO
+CREATE PROCEDURE dbo.sp_tblESG_DeleteElectricityPurchase @PurchaseID INT
+AS
+BEGIN
+    DELETE FROM dbo.tblESG_BillUploads  WHERE RefTable='ElectricityPurchase' AND RefID=@PurchaseID;
+    DELETE FROM dbo.tblESG_ElectricityPurchase WHERE PurchaseID=@PurchaseID;
+END
+GO
+
+IF OBJECT_ID('dbo.sp_tblESG_GetElectricityPurchase','P') IS NOT NULL DROP PROCEDURE dbo.sp_tblESG_GetElectricityPurchase;
+GO
+CREATE PROCEDURE dbo.sp_tblESG_GetElectricityPurchase @Year SMALLINT=0, @Month TINYINT=0
+AS
+BEGIN
+    SELECT e.*, (e.PeakPaid_LKR+e.NormalPaid_LKR+e.OffPeakPaid_LKR) AS TotalPaid_LKR
+    FROM dbo.tblESG_ElectricityPurchase e
+    WHERE (@Year=0 OR e.PurchaseYear=@Year)
+      AND (@Month=0 OR e.PurchaseMonth=@Month)
+    ORDER BY e.PurchaseYear DESC, e.PurchaseMonth DESC;
+END
+GO
+
+-- ---- Gas Purchase CRUD ----
+IF OBJECT_ID('dbo.sp_tblESG_SaveGasPurchase','P') IS NOT NULL DROP PROCEDURE dbo.sp_tblESG_SaveGasPurchase;
+GO
+CREATE PROCEDURE dbo.sp_tblESG_SaveGasPurchase
+    @GasPurchaseID  INT=0,
+    @Year           SMALLINT,
+    @Month          TINYINT,
+    @GasTypeID      INT,
+    @Qty_KWh        DECIMAL(12,4),
+    @Amount_LKR     DECIMAL(14,2),
+    @NewID          INT OUTPUT
+AS
+BEGIN
+    IF @GasPurchaseID=0
+    BEGIN
+        INSERT INTO dbo.tblESG_GasPurchase (RecordYear,RecordMonth,GasTypeID,Qty_KWh,Amount_LKR)
+        VALUES (@Year,@Month,@GasTypeID,@Qty_KWh,@Amount_LKR);
+        SET @NewID=SCOPE_IDENTITY();
+    END
+    ELSE
+    BEGIN
+        UPDATE dbo.tblESG_GasPurchase SET
+            RecordYear=@Year, RecordMonth=@Month, GasTypeID=@GasTypeID,
+            Qty_KWh=@Qty_KWh, Amount_LKR=@Amount_LKR, UpdatedAt=GETDATE()
+        WHERE GasPurchaseID=@GasPurchaseID;
+        SET @NewID=@GasPurchaseID;
+    END
+END
+GO
+
+-- ---- Water Purchase CRUD ----
+IF OBJECT_ID('dbo.sp_tblESG_SaveWaterPurchase','P') IS NOT NULL DROP PROCEDURE dbo.sp_tblESG_SaveWaterPurchase;
+GO
+CREATE PROCEDURE dbo.sp_tblESG_SaveWaterPurchase
+    @WaterPurchaseID    INT=0,
+    @Year               SMALLINT,
+    @Month              TINYINT,
+    @MainQty            DECIMAL(12,4),
+    @MainAmt            DECIMAL(14,2),
+    @AddQty             DECIMAL(12,4),
+    @AddAmt             DECIMAL(14,2),
+    @NewID              INT OUTPUT
+AS
+BEGIN
+    IF @WaterPurchaseID=0
+    BEGIN
+        INSERT INTO dbo.tblESG_WaterPurchase (RecordYear,RecordMonth,MainQty_M3,MainAmount_LKR,AdditionalQty_M3,AdditionalAmount_LKR)
+        VALUES (@Year,@Month,@MainQty,@MainAmt,@AddQty,@AddAmt);
+        SET @NewID=SCOPE_IDENTITY();
+    END
+    ELSE
+    BEGIN
+        UPDATE dbo.tblESG_WaterPurchase SET
+            RecordYear=@Year, RecordMonth=@Month,
+            MainQty_M3=@MainQty, MainAmount_LKR=@MainAmt,
+            AdditionalQty_M3=@AddQty, AdditionalAmount_LKR=@AddAmt,
+            UpdatedAt=GETDATE()
+        WHERE WaterPurchaseID=@WaterPurchaseID;
+        SET @NewID=@WaterPurchaseID;
+    END
+END
+GO
+
+-- ---- Rainwater CRUD ----
+IF OBJECT_ID('dbo.sp_tblESG_SaveRainwater','P') IS NOT NULL DROP PROCEDURE dbo.sp_tblESG_SaveRainwater;
+GO
+CREATE PROCEDURE dbo.sp_tblESG_SaveRainwater
+    @RainwaterID    INT=0,
+    @Year           SMALLINT,
+    @Month          TINYINT,
+    @Collected      DECIMAL(12,4),
+    @Consumed       DECIMAL(12,4),
+    @Recycled       DECIMAL(12,4),
+    @Comments       NVARCHAR(MAX),
+    @NewID          INT OUTPUT
+AS
+BEGIN
+    IF @RainwaterID=0
+    BEGIN
+        INSERT INTO dbo.tblESG_RainwaterManagement (RecordYear,RecordMonth,Collected_M3,Consumed_M3,Recycled_M3,Comments)
+        VALUES (@Year,@Month,@Collected,@Consumed,@Recycled,@Comments);
+        SET @NewID=SCOPE_IDENTITY();
+    END
+    ELSE
+    BEGIN
+        UPDATE dbo.tblESG_RainwaterManagement SET
+            RecordYear=@Year, RecordMonth=@Month,
+            Collected_M3=@Collected, Consumed_M3=@Consumed, Recycled_M3=@Recycled,
+            Comments=@Comments, UpdatedAt=GETDATE()
+        WHERE RainwaterID=@RainwaterID;
+        SET @NewID=@RainwaterID;
+    END
+END
+GO
+
+-- ---- Plastic Purchase CRUD ----
+IF OBJECT_ID('dbo.sp_tblESG_SavePlasticPurchase','P') IS NOT NULL DROP PROCEDURE dbo.sp_tblESG_SavePlasticPurchase;
+GO
+CREATE PROCEDURE dbo.sp_tblESG_SavePlasticPurchase
+    @PlasticPurchaseID  INT=0,
+    @Year               SMALLINT,
+    @Month              TINYINT,
+    @Category           NVARCHAR(100),
+    @ProductType        NVARCHAR(100),
+    @UnitType           NVARCHAR(50),
+    @UnitCount          INT,
+    @WeightPerUnit      DECIMAL(10,4),
+    @PricePerUnit       DECIMAL(12,2),
+    @Comments           NVARCHAR(MAX),
+    @NewID              INT OUTPUT
+AS
+BEGIN
+    IF @PlasticPurchaseID=0
+    BEGIN
+        INSERT INTO dbo.tblESG_PlasticPurchase
+            (RecordYear,RecordMonth,ProductCategory,ProductType,UnitType,PurchasedUnitCount,WeightPerUnit_Kg,PricePerUnit_LKR,Comments)
+        VALUES (@Year,@Month,@Category,@ProductType,@UnitType,@UnitCount,@WeightPerUnit,@PricePerUnit,@Comments);
+        SET @NewID=SCOPE_IDENTITY();
+    END
+    ELSE
+    BEGIN
+        UPDATE dbo.tblESG_PlasticPurchase SET
+            RecordYear=@Year, RecordMonth=@Month, ProductCategory=@Category,
+            ProductType=@ProductType, UnitType=@UnitType, PurchasedUnitCount=@UnitCount,
+            WeightPerUnit_Kg=@WeightPerUnit, PricePerUnit_LKR=@PricePerUnit,
+            Comments=@Comments, UpdatedAt=GETDATE()
+        WHERE PlasticPurchaseID=@PlasticPurchaseID;
+        SET @NewID=@PlasticPurchaseID;
+    END
+END
+GO
+
+-- ---- Paper Purchase CRUD (mirrors Plastic) ----
+IF OBJECT_ID('dbo.sp_tblESG_SavePaperPurchase','P') IS NOT NULL DROP PROCEDURE dbo.sp_tblESG_SavePaperPurchase;
+GO
+CREATE PROCEDURE dbo.sp_tblESG_SavePaperPurchase
+    @PaperPurchaseID    INT=0,
+    @Year               SMALLINT,
+    @Month              TINYINT,
+    @Category           NVARCHAR(100),
+    @ProductType        NVARCHAR(100),
+    @UnitType           NVARCHAR(50),
+    @UnitCount          INT,
+    @WeightPerUnit      DECIMAL(10,4),
+    @PricePerUnit       DECIMAL(12,2),
+    @Comments           NVARCHAR(MAX),
+    @NewID              INT OUTPUT
+AS
+BEGIN
+    IF @PaperPurchaseID=0
+    BEGIN
+        INSERT INTO dbo.tblESG_PaperPurchase
+            (RecordYear,RecordMonth,ProductCategory,ProductType,UnitType,PurchasedUnitCount,WeightPerUnit_Kg,PricePerUnit_LKR,Comments)
+        VALUES (@Year,@Month,@Category,@ProductType,@UnitType,@UnitCount,@WeightPerUnit,@PricePerUnit,@Comments);
+        SET @NewID=SCOPE_IDENTITY();
+    END
+    ELSE
+    BEGIN
+        UPDATE dbo.tblESG_PaperPurchase SET
+            RecordYear=@Year, RecordMonth=@Month, ProductCategory=@Category,
+            ProductType=@ProductType, UnitType=@UnitType, PurchasedUnitCount=@UnitCount,
+            WeightPerUnit_Kg=@WeightPerUnit, PricePerUnit_LKR=@PricePerUnit,
+            Comments=@Comments, UpdatedAt=GETDATE()
+        WHERE PaperPurchaseID=@PaperPurchaseID;
+        SET @NewID=@PaperPurchaseID;
+    END
+END
+GO
+
+-- ---- Bill Uploads ----
+IF OBJECT_ID('dbo.sp_tblESG_SaveBillUpload','P') IS NOT NULL DROP PROCEDURE dbo.sp_tblESG_SaveBillUpload;
+GO
+CREATE PROCEDURE dbo.sp_tblESG_SaveBillUpload
+    @RefTable           NVARCHAR(100),
+    @RefID              INT,
+    @OriginalFileName   NVARCHAR(260),
+    @ServerFilePath     NVARCHAR(500),
+    @UploadedBy         NVARCHAR(100)
+AS
+BEGIN
+    INSERT INTO dbo.tblESG_BillUploads (RefTable,RefID,OriginalFileName,ServerFilePath,UploadedBy)
+    VALUES (@RefTable,@RefID,@OriginalFileName,@ServerFilePath,@UploadedBy);
+END
+GO
+
+IF OBJECT_ID('dbo.sp_tblESG_GetBillUploads','P') IS NOT NULL DROP PROCEDURE dbo.sp_tblESG_GetBillUploads;
+GO
+CREATE PROCEDURE dbo.sp_tblESG_GetBillUploads
+    @RefTable   NVARCHAR(100),
+    @RefID      INT
+AS
+BEGIN
+    SELECT UploadID, OriginalFileName, ServerFilePath, UploadedAt, UploadedBy
+    FROM dbo.tblESG_BillUploads
+    WHERE RefTable=@RefTable AND RefID=@RefID
+    ORDER BY UploadedAt DESC;
+END
+GO
+
+IF OBJECT_ID('dbo.sp_tblESG_DeleteBillUpload','P') IS NOT NULL DROP PROCEDURE dbo.sp_tblESG_DeleteBillUpload;
+GO
+CREATE PROCEDURE dbo.sp_tblESG_DeleteBillUpload @UploadID INT
+AS
+BEGIN
+    DELETE FROM dbo.tblESG_BillUploads WHERE UploadID=@UploadID;
+END
+GO
+
+PRINT 'InventoryDB script completed successfully.';
+GO
