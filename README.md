@@ -34,12 +34,11 @@ database connect from login page
 
 > #  CSR ACTIVITIES
     # Data Entries
-      Date, Action, Description, Fequency, Location, Time of Engagement, Employees Envolved(Count), Hours Invested, People Impacted(count), Quantity, Cost(USD), Type
+      Activity Date, Action, Description, Fequency, Location, Time of Engagement, Employees Envolved(Count), Hours Invested, People Impacted(count), Quantity, Cost(USD), Type, Photos Uploaded(can be multiple photos upload to specific folder in server.should be save in database that path)
       Save Button, Refresh Button
     #Data Grid View with Date range Filter(for show entered data)
         excel export button(all data export as an excel sheet)
       Update Button Delete Button(when select a data from grid view fetch all data to textboxes for update and delete)
-
 > #  Waste Management
     # Non-Recycled Waste
       Date Picker(for select date)
@@ -102,7 +101,7 @@ database connect from login page
       data grid view for view registered collectors view and update.
 > # Inventory
         # Electricity
->         Electricity Purchase
+>  Electricity Purchase
         Data Entry Panel
            DropDown Menu
             Main Purchase and Additional Purchase
@@ -114,6 +113,7 @@ database connect from login page
                 Paid Amount For Peak Time - Data Entry - Amount(LKR)
                 Paid Amount For Normal Time - Data Entry - Amount(LKR)
                 Paid Amount For Off-Peak Time - Data Entry - Amount(LKR)
+                Bill Upload (can be multiple bills upload to specific folder in server.should be save in database that path)
               Additional Purchased
                 Peak Time - Data Entry - Qty(KWh)
                 Normal Time - Data Entry - Qty(KWh)
@@ -122,12 +122,13 @@ database connect from login page
                 Paid Amount For Peak Time - Data Entry - Amount(LKR)
                 Paid Amount For Normal Time - Data Entry - Amount(LKR)
                 Paid Amount For Off-Peak Time - Data Entry - Amount(LKR)
+                Bill Upload (can be multiple bills upload to specific folder in server.should be save in database that path)
               Out-Source Purchased
                 Type Of Renewable Source - DropDownMenu
                 Total Purchased Capacity - Data Entry - Qty(KWh)
                 Type Of Non-Renewable Source - DropDownMenu
                 Total Purchased Capacity - Data Entry - Qty(KWh)
-              Bill Upload Button to server(should be save month bill path in database)
+                Bill Upload (can be multiple bills upload to specific folder in server.should be save in database that path)
          Own Generated Electricity
                 Type Of Own Generated Electricity Type(renewable) - DropDownMenu(solar/wind power/hydropower/geothermal/biomass energy/wave energy/green hydregon/tidal energy)
                 Monthly Generated Electricity capacity(renewable) - Data Entry Qty(KWh)
@@ -135,6 +136,7 @@ database connect from login page
                 Monthly Generated Electricity capacity(non-renewable) - Data Entry Qty(KWh)
                 Total Own Generated Capacity(Consumed) - Data Entry Qty(KWh)
                 Own Generated Sold Capacity - Formular((Monthly Generated Electricity capacity(renewable)+Monthly Generated Electricity capacity(non-renewable))-Total Own Generated Capacity(Consumed))
+                Bill Upload (can be multiple bills upload to specific folder in server.should be save in database that path)
                 Comments
         Data View Panel
         Calendar(for select year and month)
@@ -151,7 +153,7 @@ database connect from login page
       Data Grid View for show entered data
       Filters - Gas Type
       Save Button, Update Button, Delete Button(when select a data from grid view fetch all data to textboxes for update and delete)
-      Bill Upload Button to server(should be save month bill path in database)
+      Bill Upload (can be multiple bills upload to specific folder in server.should be save in database that path)
       Excel Export
     # Water
     Water Purchased
@@ -160,6 +162,7 @@ database connect from login page
       Amount paid - Data Entry(LKR)
       Additional Water Monthly Purchased - Data Entry Qty(cubic meter)
       Additional Amount Paid - Data Entry(LKR)
+      Bill Upload (can be multiple bills upload to specific folder in server.should be save in database that path)
     RainWater Management
       RainWater Collected - Data Entry Qty(cubic meter)
       RainWater Consumed - Data Entry Qty(cubic meter)
@@ -180,7 +183,7 @@ database connect from login page
       Data Grid View for show entered data
       Filter - Product Category, Product Type
       Save Button, Update Button, Delete Button(when select a data from grid view fetch all data to textboxes for update and delete)
-      Bill Upload Button to server(should be save month bill path in database)
+      Bill Upload (can be multiple bills upload to specific folder in server.should be save in database that path)
       Excel Export Button
     # Paper
       Data Entry Panel
@@ -191,7 +194,7 @@ database connect from login page
       Data Grid View for show entered data
       Filter - Product Category, Product Type
       Save Button, Update Button, Delete Button(when select a data from grid view fetch all data to textboxes for update and delete)
-      Bill Upload Button to server(should be save month bill path in database)
+      Bill Upload (can be multiple bills upload to specific folder in server.should be save in database that path)
       Excel Export Button
 >     #HSE Training, Safety Incident & Grievances
             Data Entry Panel For HSE Training
