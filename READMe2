@@ -1,0 +1,76 @@
+2. Add reference: Microsoft.Office.Interop.Excel (for Excel export)
+   → NuGet: Install-Package Microsoft.Office.Interop.Excel
+3. Add System.Data.SqlClient (built-in for .NET Framework;
+   for .NET 6+ install NuGet: Microsoft.Data.SqlClient
+   and change Imports accordingly).
+4. Run SQL/InventoryDB_Script.sql against your SQL Server.
+5. Update DatabaseModule.vb → ConnStr with your server name.
+6. Update ServerBillRoot in each form to your network share.
+ 
+------------------------------------------------------------
+2. CONTROL NAMES PER FORM
+------------------------------------------------------------
+ 
+=== frmElectricity ===
+  ComboBoxes : cmbYear, cmbMonth, cmbPurchaseType
+               cmbRenewSrc, cmbNonRenewSrc
+               cmbOwnRenewType, cmbOwnNonRenewType
+               cmbViewYear, cmbViewMonth
+  Panels     : pnlMainAdditional, pnlOutSource, pnlOwnGenerated
+  -- pnlMainAdditional:
+  TextBoxes  : txtPeakQty, txtNormalQty, txtOffPeakQty
+               txtPeakPaid, txtNormalPaid, txtOffPeakPaid
+  -- pnlOutSource:
+  TextBoxes  : txtRenewQty, txtNonRenewQty
+  -- pnlOwnGenerated:
+  TextBoxes  : txtOwnRenewKWh, txtOwnNonRenewKWh
+               txtOwnConsumed, txtOwnSold (ReadOnly=True)
+  RichTextBox: txtOwnComments
+  Buttons    : btnSave, btnDelete, btnFilter, btnExport
+               btnUploadBill
+  Labels     : lblSelectedFiles
+  DataGridView: dgvElectricity
+ 
+=== frmGas ===
+  ComboBoxes : cmbYear, cmbMonth, cmbGasType, cmbViewYear, cmbViewGasType
+  TextBoxes  : txtQtyKWh, txtAmountLKR
+  Buttons    : btnSave, btnUpdate, btnDelete, btnFilter
+               btnExport, btnUploadBill, btnAddGasType
+  Labels     : lblSelectedFiles
+  DataGridView: dgvGas
+ 
+=== frmWater ===
+  TabControl : tabWater  (TabPages: tabPurchase, tabRainwater)
+  -- tabPurchase:
+  ComboBoxes : cmbYear, cmbMonth, cmbViewYear, cmbViewMonth
+  TextBoxes  : txtMainQty, txtMainAmt, txtAddQty, txtAddAmt
+  Buttons    : btnSaveWater, btnUpdateWater, btnDeleteWater
+               btnFilterWater, btnExportWater, btnUploadWaterBill
+  Labels     : lblWaterFiles
+  DataGridView: dgvWater
+  -- tabRainwater:
+  ComboBoxes : cmbRainYear, cmbRainMonth, cmbRainViewYear, cmbRainViewMonth
+  TextBoxes  : txtCollected, txtConsumed, txtRecycled
+  RichTextBox: txtRainComments
+  Buttons    : btnSaveRain, btnUpdateRain, btnDeleteRain
+               btnFilterRain, btnExportRain, btnUploadRainBill
+  Labels     : lblRainFiles
+  DataGridView: dgvRain
+ 
+=== frmPlastic ===
+  ComboBoxes : cmbYear, cmbMonth, cmbViewYear, cmbViewMonth
+               cmbFilterCategory, cmbFilterType
+  TextBoxes  : txtProductCategory, txtProductType, txtUnitType
+               txtUnitCount, txtWeightPerUnit
+               txtPurchasedScale (ReadOnly=True)
+               txtPricePerUnit
+               txtTotalCost (ReadOnly=True)
+               txtComments (Multiline=True)
+  Buttons    : btnSave, btnUpdate, btnDelete, btnFilter
+               btnExport, btnUploadBill
+  Labels     : lblSelectedFiles
+  DataGridView: dgvPlastic
+ 
+=== frmPaper ===
+  (Identical control names to frmPlastic — different class name)
+  DataGridView: dgvPaper
