@@ -40,6 +40,14 @@ database connect from login page
         excel export button(all data export as an excel sheet)
       Update Button Delete Button(when select a data from grid view fetch all data to textboxes for update and delete)
 > #  Waste Management
+>   WATSE COLLECTORS MANAGEMENT
+      collector name
+      address
+      telephone number
+      license number
+      license documents upload
+      data grid view for view registered collectors view and update.
+>   Waste management
     # Non-Recycled Waste
       Date Picker(for select date)
         Polythene
@@ -86,19 +94,12 @@ database connect from login page
       Add New Item Button(for add new recycled waste item)
       Select a collector from dropdown menu
       documents upload button for if have any documents
-    Daily Total TextBox(Showing realtime calculated data when entering data to particular date)
+>Daily Total TextBox(Showing realtime calculated data when entering data to particular date)
     # Data Grid View with Filers
         Data Grid View for show entered data
         Filters - Recycled, Non-Recycled, Other Recycled, Chemical
         Update Button, Delete Button(when select a data from grid view fetch all data to textboxes for update and delete)
         Excel Export Button
-    WATSE COLLECTORS MANAGEMENT
-      collector name
-      address
-      telephone number
-      license number
-      license documents upload
-      data grid view for view registered collectors view and update.
 > # Inventory
         # Electricity
 >  Electricity Purchase
