@@ -75,6 +75,69 @@
   (Identical control names to frmPlastic — different class name)
   DataGridView: dgvPaper
 
+=== Corrected ===
+Product Management Form
+Product, category, type, type of unit, weight per unit, reuse or not(yes or no)
+
+ ============================================================
+'  Form: frmProductManagement.vb
+'  Manage the Product master catalogue for Plastic and Paper.
+'
+'  Fields : Product (Plastic/Paper), Category, Type,
+'           Unit Type, Weight Per Unit (grams), Reusable
+'
+'  Features:
+'    - Module toggle filters category/type combos
+'    - Category cascade → Type combo
+'    - Add new Category / Type inline via "+" buttons
+'    - Grid filters: Module, Category, Type, Active/All
+'    - Soft-delete (Deactivate) keeps purchase history intact
+'    - Reactivate button restores deactivated products
+'    - Excel export
+' ============================================================
+'
+'  CONTROL NAMES — create in Form Designer
+'  ─────────────────────────────────────────────────────────
+'  ── Data Entry Panel (GroupBox "Product Details") ─────────
+'  cmbModule         ComboBox  DropDownStyle=DropDownList
+'                    Items: "Plastic", "Paper"
+'  cmbCategory       ComboBox  DropDownStyle=DropDownList
+'  btnAddCategory    Button    Text="+"  Width=28  ToolTip="Add Category"
+'  cmbType           ComboBox  DropDownStyle=DropDownList
+'  btnAddType        Button    Text="+"  Width=28  ToolTip="Add Type"
+'  txtUnitType       TextBox   MaxLength=50
+'  txtWeightGrams    TextBox   MaxLength=15
+'  chkReusable       CheckBox  Text="Reusable"
+'  lblProductID      Label     Text="(new)"  ForeColor=Gray
+'                              (shows current ProductID when editing)
+'
+'  ── Action Buttons ────────────────────────────────────────
+'  btnSave           Button    Text="Save"
+'  btnUpdate         Button    Text="Update"
+'  btnDeactivate     Button    Text="Deactivate"  (soft-delete)
+'  btnReactivate     Button    Text="Reactivate"
+'  btnClear          Button    Text="Clear"
+'  btnExport         Button    Text="Export Excel"
+'
+'  ── Data View Panel (GroupBox "Product List") ─────────────
+'  cmbFilterModule   ComboBox  DropDownStyle=DropDownList
+'                    Items: "All","Plastic","Paper"
+'  cmbFilterCategory ComboBox  DropDownStyle=DropDownList
+'  cmbFilterType     ComboBox  DropDownStyle=DropDownList
+'  cmbFilterActive   ComboBox  DropDownStyle=DropDownList
+'                    Items: "Active Only","All (incl. Inactive)"
+'  btnFilter         Button    Text="Filter"
+'  dgvProducts       DataGridView
+'                      ReadOnly=True
+'                      SelectionMode=FullRowSelect
+'                      MultiSelect=False
+' ===========================================================
+
+
+
+
+
+
 
 Inventory management sql quary
 USE ESG;
