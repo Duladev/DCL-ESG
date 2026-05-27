@@ -18,6 +18,7 @@
             lblCompany = New Label()
             pnlStatLine = New Panel()
             pnlRight = New Panel()
+            btnexitbtn = New RoundedButton()
             btnLogin1 = New RoundedButton()
             lblWelcome = New Label()
             lblSub = New Label()
@@ -38,7 +39,7 @@
             ' 
             ' pnlLeft
             ' 
-            pnlLeft.BackColor = Color.FromArgb(CByte(15), CByte(22), CByte(30))
+            pnlLeft.BackColor = SystemColors.Control
             pnlLeft.Controls.Add(lblBrand)
             pnlLeft.Controls.Add(lblTagline)
             pnlLeft.Controls.Add(lblCompany)
@@ -52,9 +53,9 @@
             ' lblBrand
             ' 
             lblBrand.BackColor = Color.Transparent
-            lblBrand.Font = New Font("Georgia", 36.0F, FontStyle.Bold)
-            lblBrand.ForeColor = Color.FromArgb(CByte(240), CByte(245), CByte(248))
-            lblBrand.Location = New Point(28, 194)
+            lblBrand.Font = New Font("Georgia", 36F, FontStyle.Bold)
+            lblBrand.ForeColor = Color.Gray
+            lblBrand.Location = New Point(28, 188)
             lblBrand.Name = "lblBrand"
             lblBrand.Size = New Size(280, 58)
             lblBrand.TabIndex = 1
@@ -66,7 +67,7 @@
             lblTagline.BackColor = Color.Transparent
             lblTagline.Font = New Font("Segoe UI", 8.5F)
             lblTagline.ForeColor = Color.FromArgb(CByte(16), CByte(185), CByte(129))
-            lblTagline.Location = New Point(38, 258)
+            lblTagline.Location = New Point(38, 252)
             lblTagline.Name = "lblTagline"
             lblTagline.Size = New Size(290, 18)
             lblTagline.TabIndex = 2
@@ -77,7 +78,7 @@
             lblCompany.BackColor = Color.Transparent
             lblCompany.Font = New Font("Segoe UI", 9.5F)
             lblCompany.ForeColor = Color.FromArgb(CByte(100), CByte(116), CByte(139))
-            lblCompany.Location = New Point(38, 280)
+            lblCompany.Location = New Point(38, 274)
             lblCompany.Name = "lblCompany"
             lblCompany.Size = New Size(280, 20)
             lblCompany.TabIndex = 3
@@ -93,7 +94,8 @@
             ' 
             ' pnlRight
             ' 
-            pnlRight.BackColor = Color.FromArgb(CByte(26), CByte(34), CByte(44))
+            pnlRight.BackColor = SystemColors.Control
+            pnlRight.Controls.Add(btnexitbtn)
             pnlRight.Controls.Add(btnLogin1)
             pnlRight.Controls.Add(lblWelcome)
             pnlRight.Controls.Add(lblSub)
@@ -114,12 +116,24 @@
             pnlRight.Size = New Size(520, 560)
             pnlRight.TabIndex = 1
             ' 
+            ' btnexitbtn
+            ' 
+            btnexitbtn.BackColor = SystemColors.ControlDark
+            btnexitbtn.CornerRadius = 8
+            btnexitbtn.ForeColor = SystemColors.ActiveCaptionText
+            btnexitbtn.Location = New Point(156, 426)
+            btnexitbtn.Name = "btnexitbtn"
+            btnexitbtn.Size = New Size(199, 23)
+            btnexitbtn.TabIndex = 16
+            btnexitbtn.Text = "Exit"
+            btnexitbtn.UseVisualStyleBackColor = False
+            ' 
             ' btnLogin1
             ' 
-            btnLogin1.BackColor = Color.Green
+            btnLogin1.BackColor = SystemColors.ControlDark
             btnLogin1.CornerRadius = 8
-            btnLogin1.ForeColor = SystemColors.Control
-            btnLogin1.Location = New Point(116, 445)
+            btnLogin1.ForeColor = SystemColors.ActiveCaptionText
+            btnLogin1.Location = New Point(156, 384)
             btnLogin1.Name = "btnLogin1"
             btnLogin1.Size = New Size(199, 23)
             btnLogin1.TabIndex = 15
@@ -129,8 +143,8 @@
             ' lblWelcome
             ' 
             lblWelcome.BackColor = Color.Transparent
-            lblWelcome.Font = New Font("Georgia", 26.0F, FontStyle.Bold)
-            lblWelcome.ForeColor = Color.FromArgb(CByte(240), CByte(245), CByte(248))
+            lblWelcome.Font = New Font("Georgia", 26F, FontStyle.Bold)
+            lblWelcome.ForeColor = Color.Gray
             lblWelcome.Location = New Point(48, 82)
             lblWelcome.Name = "lblWelcome"
             lblWelcome.Size = New Size(200, 48)
@@ -162,7 +176,7 @@
             ' lblUserIcon
             ' 
             lblUserIcon.BackColor = Color.Transparent
-            lblUserIcon.Font = New Font("Segoe UI Emoji", 12.0F)
+            lblUserIcon.Font = New Font("Segoe UI Emoji", 12F)
             lblUserIcon.ForeColor = Color.FromArgb(CByte(71), CByte(85), CByte(105))
             lblUserIcon.Location = New Point(50, 194)
             lblUserIcon.Name = "lblUserIcon"
@@ -173,10 +187,10 @@
             ' 
             ' txtUsername
             ' 
-            txtUsername.BackColor = Color.FromArgb(CByte(36), CByte(46), CByte(58))
+            txtUsername.BackColor = Color.FromArgb(CByte(224), CByte(224), CByte(224))
             txtUsername.BorderStyle = BorderStyle.None
             txtUsername.Font = New Font("Segoe UI", 10.5F)
-            txtUsername.ForeColor = Color.FromArgb(CByte(226), CByte(232), CByte(240))
+            txtUsername.ForeColor = Color.Black
             txtUsername.Location = New Point(84, 200)
             txtUsername.Name = "txtUsername"
             txtUsername.PlaceholderText = "Enter username"
@@ -205,7 +219,7 @@
             ' lblPassIcon
             ' 
             lblPassIcon.BackColor = Color.Transparent
-            lblPassIcon.Font = New Font("Segoe UI Emoji", 12.0F)
+            lblPassIcon.Font = New Font("Segoe UI Emoji", 12F)
             lblPassIcon.ForeColor = Color.FromArgb(CByte(71), CByte(85), CByte(105))
             lblPassIcon.Location = New Point(50, 274)
             lblPassIcon.Name = "lblPassIcon"
@@ -216,10 +230,10 @@
             ' 
             ' txtPassword
             ' 
-            txtPassword.BackColor = Color.FromArgb(CByte(36), CByte(46), CByte(58))
+            txtPassword.BackColor = Color.FromArgb(CByte(224), CByte(224), CByte(224))
             txtPassword.BorderStyle = BorderStyle.None
             txtPassword.Font = New Font("Segoe UI", 10.5F)
-            txtPassword.ForeColor = Color.FromArgb(CByte(226), CByte(232), CByte(240))
+            txtPassword.ForeColor = Color.Black
             txtPassword.Location = New Point(84, 280)
             txtPassword.Name = "txtPassword"
             txtPassword.PasswordChar = "●"c
@@ -239,7 +253,7 @@
             ' 
             chkShow.BackColor = Color.Transparent
             chkShow.Cursor = Cursors.Hand
-            chkShow.Font = New Font("Segoe UI", 9.0F)
+            chkShow.Font = New Font("Segoe UI", 9F)
             chkShow.ForeColor = Color.FromArgb(CByte(100), CByte(116), CByte(139))
             chkShow.Location = New Point(50, 324)
             chkShow.Name = "chkShow"
@@ -251,7 +265,7 @@
             ' lblError
             ' 
             lblError.BackColor = Color.Transparent
-            lblError.Font = New Font("Segoe UI", 9.0F)
+            lblError.Font = New Font("Segoe UI", 9F)
             lblError.ForeColor = Color.FromArgb(CByte(239), CByte(68), CByte(68))
             lblError.Location = New Point(48, 387)
             lblError.Name = "lblError"
@@ -308,6 +322,7 @@
         Private lblVersion As System.Windows.Forms.Label
         Private btnExit As RoundedButton
         Friend WithEvents btnLogin1 As RoundedButton
+        Friend WithEvents btnexitbtn As RoundedButton
     End Class
 
 End Namespace

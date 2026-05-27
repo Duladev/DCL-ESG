@@ -1,5 +1,1 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
-
-/ESG_SOLUTION/ESG_SOLUTION.csproj
+﻿.vs/

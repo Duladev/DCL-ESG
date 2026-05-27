@@ -21,18 +21,17 @@ Namespace ESG_SOLUTION
 
         ' ── DB connection — update before deployment ──────────────────────────
         Private Const ConnStr As String =
-            "Server=DCL-ICT-007/DEVELOPER;Database=ESG;Integrated Security=True;"
+            "Server=DCL-ICT-007\DEVELOPER;Database=ESG;Integrated Security=True;"
 
-        ' ═════════════════════════════════════════════════════════════════════
+
         Public Sub New()
             InitializeComponent()
             WireEvents()
             SetRoundedCorners(14)
         End Sub
 
-        ' ═════════════════════════════════════════════════════════════════════
-        '  Wire events (kept out of Designer file)
-        ' ═════════════════════════════════════════════════════════════════════
+        ' 
+        '  Wire events
         Private Sub WireEvents()
             ' Focus highlight on input lines
             AddHandler txtUsername.GotFocus, Sub(s, e) pnlUserLine.BackColor = Emerald
@@ -41,9 +40,9 @@ Namespace ESG_SOLUTION
             AddHandler txtPassword.LostFocus, Sub(s, e) pnlPassLine.BackColor = BorderColor
 
             ' Show / hide password
-            'AddHandler chkShow.CheckedChanged, Sub(s, e)
-            'txtPassword.PasswordChar = If(chkShow.Checked, ChrW(0), "●"c)
-            'End Sub
+            AddHandler chkShow.CheckedChanged, Sub(s, e)
+                                                   txtPassword.PasswordChar = If(chkShow.Checked, ChrW(0), "●"c)
+                                               End Sub
 
 
 
@@ -135,7 +134,7 @@ Namespace ESG_SOLUTION
         Private Function AuthenticateUser(username As String, password As String) As Boolean
             ' Matches Users table: Username and UserPws columns
             Const sql As String =
-                "SELECT COUNT(1) FROM vw_UserLogin WHERE Username = @user AND UserPws = @pass"
+                "SELECT COUNT(1) FROM vw_tblUserLogin WHERE Username = @user AND UserPws = @pass"
 
             Using conn As New SqlConnection(ConnStr)
                 conn.Open()
@@ -182,8 +181,8 @@ Namespace ESG_SOLUTION
 
         Private Sub btnLogin1_Click(sender As Object, e As EventArgs) Handles btnLogin1.Click
             lblError.Text = ""
-            Dim user As String = txtUsername.Text.Trim()
-            Dim pass As String = txtPassword.Text
+            Dim user = txtUsername.Text.Trim
+            Dim pass = txtPassword.Text
 
             If String.IsNullOrEmpty(user) OrElse String.IsNullOrEmpty(pass) Then
                 ShowError("Please enter both username and password.")
@@ -196,18 +195,12 @@ Namespace ESG_SOLUTION
             Try
                 If AuthenticateUser(user, pass) Then
                     ' TODO: open main dashboard
-                    ' Dim main As New MainForm(user)
-                    ' main.Show()
-                    ' Me.Hide()
-                    MessageBox.Show(
-                        $"Welcome, {user}!" & Environment.NewLine & "Login successful.",
-                        "DCL-ESG",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.None)
+                    Dim main As New frmWasteManagement
+                    main.Show
                 Else
                     ShowError("Invalid username or password.")
-                    txtPassword.Clear()
-                    txtUsername.Focus()
+                    txtPassword.Clear
+                    txtUsername.Focus
                 End If
             Catch sqlEx As SqlException
                 ShowError("Database error: " & sqlEx.Message)
@@ -219,11 +212,9 @@ Namespace ESG_SOLUTION
             End Try
         End Sub
 
-
-
-        'Private Sub btnExit_Click(sender As Object, e As EventArgs) Handles btnExit.Click
-        'Me.Close()
-        'End Sub
+        Private Sub RoundedButton1_Click(sender As Object, e As EventArgs) Handles btnexitbtn.Click
+            Me.Close()
+        End Sub
     End Class
 
     ' ═════════════════════════════════════════════════════════════════════════

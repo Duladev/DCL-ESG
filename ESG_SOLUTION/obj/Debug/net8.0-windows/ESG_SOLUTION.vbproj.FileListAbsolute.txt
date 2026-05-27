@@ -10,6 +10,10 @@ F:\DCL-ESG\ESG_SOLUTION\bin\Debug\net8.0-windows\runtimes\win-x86\native\sni.dll
 F:\DCL-ESG\ESG_SOLUTION\bin\Debug\net8.0-windows\runtimes\unix\lib\net8.0\System.Data.SqlClient.dll
 F:\DCL-ESG\ESG_SOLUTION\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Data.SqlClient.dll
 F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.vbproj.AssemblyReference.cache
+F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.frmCollectorManagement.resources
+F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.frmCSRActivity.resources
+F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.frmDashboard.resources
+F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.frmWasteManagement.resources
 F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.ESG_SOLUTION.LoginForm.resources
 F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.vbproj.GenerateResource.cache
 F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.GeneratedMSBuildEditorConfig.editorconfig
