@@ -31,6 +31,11 @@ database connect from login page
     #Filters with Counter
       Gender, Category, Department, Nationalities
     #Export Excel Button
+Emp_Details View
+SELECT        TOP (100) PERCENT FullEmpNo, EMP_NO, EPF_NO, SURNAME, INITIALS, NAME, NIC, DATE_JOINED, DEPT_CODE, DepartmentName, GRP_CODE, GRP_DESC, SECT_CODE, SECTION_DESC, DESIGNATION, SEX, GRADE, 
+                         PROCESS_TYPE, WanCode, Pay, PreFix, CATEGORY, ProductName, ADD1, ADD2, ADD3, TargetDate, DEACTIVATE, RELIGION, Nationality
+FROM            PAYROLL.dbo.vw_pay_emp_master
+WHERE        (Pay = 1)
 
 > #  CSR ACTIVITIES
     # Data Entries
