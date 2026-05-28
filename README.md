@@ -300,3 +300,4 @@ sql server database.
 should be guide all components how to apply and their names and other attributes.
 when upload the particular documents when data entry should be save file path in database.
 should be can multiple documents upload for same record same time.
+Data Grid views shold be clear when loadint the forms.
