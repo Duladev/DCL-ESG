@@ -18,8 +18,8 @@
             lblCompany = New Label()
             pnlStatLine = New Panel()
             pnlRight = New Panel()
-            btnexitbtn = New RoundedButton()
-            btnLogin1 = New RoundedButton()
+            Button2 = New Button()
+            btnLogin2 = New Button()
             lblWelcome = New Label()
             lblSub = New Label()
             lblUserLbl = New Label()
@@ -95,8 +95,8 @@
             ' pnlRight
             ' 
             pnlRight.BackColor = SystemColors.Control
-            pnlRight.Controls.Add(btnexitbtn)
-            pnlRight.Controls.Add(btnLogin1)
+            pnlRight.Controls.Add(Button2)
+            pnlRight.Controls.Add(btnLogin2)
             pnlRight.Controls.Add(lblWelcome)
             pnlRight.Controls.Add(lblSub)
             pnlRight.Controls.Add(lblUserLbl)
@@ -116,29 +116,23 @@
             pnlRight.Size = New Size(520, 560)
             pnlRight.TabIndex = 1
             ' 
-            ' btnexitbtn
+            ' Button2
             ' 
-            btnexitbtn.BackColor = SystemColors.ControlDark
-            btnexitbtn.CornerRadius = 8
-            btnexitbtn.ForeColor = SystemColors.ActiveCaptionText
-            btnexitbtn.Location = New Point(156, 426)
-            btnexitbtn.Name = "btnexitbtn"
-            btnexitbtn.Size = New Size(199, 23)
-            btnexitbtn.TabIndex = 16
-            btnexitbtn.Text = "Exit"
-            btnexitbtn.UseVisualStyleBackColor = False
+            Button2.Location = New Point(147, 426)
+            Button2.Name = "Button2"
+            Button2.Size = New Size(179, 29)
+            Button2.TabIndex = 16
+            Button2.Text = "Exit"
+            Button2.UseVisualStyleBackColor = True
             ' 
-            ' btnLogin1
+            ' btnLogin2
             ' 
-            btnLogin1.BackColor = SystemColors.ControlDark
-            btnLogin1.CornerRadius = 8
-            btnLogin1.ForeColor = SystemColors.ActiveCaptionText
-            btnLogin1.Location = New Point(156, 384)
-            btnLogin1.Name = "btnLogin1"
-            btnLogin1.Size = New Size(199, 23)
-            btnLogin1.TabIndex = 15
-            btnLogin1.Text = "Sign In"
-            btnLogin1.UseVisualStyleBackColor = False
+            btnLogin2.Location = New Point(147, 382)
+            btnLogin2.Name = "btnLogin2"
+            btnLogin2.Size = New Size(179, 29)
+            btnLogin2.TabIndex = 15
+            btnLogin2.Text = "Login"
+            btnLogin2.UseVisualStyleBackColor = True
             ' 
             ' lblWelcome
             ' 
@@ -267,7 +261,7 @@
             lblError.BackColor = Color.Transparent
             lblError.Font = New Font("Segoe UI", 9F)
             lblError.ForeColor = Color.FromArgb(CByte(239), CByte(68), CByte(68))
-            lblError.Location = New Point(48, 387)
+            lblError.Location = New Point(50, 359)
             lblError.Name = "lblError"
             lblError.Size = New Size(368, 20)
             lblError.TabIndex = 11
@@ -281,7 +275,7 @@
             lblVersion.Name = "lblVersion"
             lblVersion.Size = New Size(170, 16)
             lblVersion.TabIndex = 14
-            lblVersion.Text = "v1.0.0  ·  © 2024 Diamond Cutters Ltd"
+            lblVersion.Text = "v1.0.0  ·  © 2026 Diamond Cutters Ltd"
             ' 
             ' LoginForm
             ' 
@@ -323,6 +317,8 @@
         Private btnExit As RoundedButton
         Friend WithEvents btnLogin1 As RoundedButton
         Friend WithEvents btnexitbtn As RoundedButton
+        Friend WithEvents Button2 As Button
+        Friend WithEvents btnLogin2 As Button
     End Class
 
 End Namespace

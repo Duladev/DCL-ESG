@@ -195,7 +195,7 @@ Namespace ESG_SOLUTION
             Try
                 If AuthenticateUser(user, pass) Then
                     ' TODO: open main dashboard
-                    Dim main As New frmWasteManagement
+                    Dim main As New frmMain
                     main.Show
                 Else
                     ShowError("Invalid username or password.")
@@ -213,6 +213,43 @@ Namespace ESG_SOLUTION
         End Sub
 
         Private Sub RoundedButton1_Click(sender As Object, e As EventArgs) Handles btnexitbtn.Click
+            Me.Close()
+        End Sub
+
+        Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnLogin2.Click
+            lblError.Text = ""
+            Dim user = txtUsername.Text.Trim
+            Dim pass = txtPassword.Text
+
+            If String.IsNullOrEmpty(user) OrElse String.IsNullOrEmpty(pass) Then
+                ShowError("Please enter both username and password.")
+                Return
+            End If
+
+            btnLogin2.Enabled = True
+            btnLogin2.Text = "Signing in..."
+
+            Try
+                If AuthenticateUser(user, pass) Then
+                    ' TODO: open main dashboard
+                    Dim main As New frmMain
+                    main.Show()
+                Else
+                    ShowError("Invalid username or password.")
+                    txtPassword.Clear()
+                    txtUsername.Focus()
+                End If
+            Catch sqlEx As SqlException
+                ShowError("Database error: " & sqlEx.Message)
+            Catch ex As Exception
+                ShowError("Connection error: " & ex.Message)
+            Finally
+                btnLogin2.Enabled = True
+                btnLogin2.Text = "SIGN  IN"
+            End Try
+        End Sub
+
+        Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
             Me.Close()
         End Sub
     End Class

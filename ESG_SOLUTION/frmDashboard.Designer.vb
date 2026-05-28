@@ -31,7 +31,7 @@ Partial Class frmDashboard
         ' 
         ' btnCSR
         ' 
-        btnCSR.Location = New Point(63, 132)
+        btnCSR.Location = New Point(54, 132)
         btnCSR.Name = "btnCSR"
         btnCSR.Size = New Size(98, 40)
         btnCSR.TabIndex = 0

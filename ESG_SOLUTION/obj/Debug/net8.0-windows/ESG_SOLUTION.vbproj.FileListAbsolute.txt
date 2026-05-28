@@ -13,8 +13,17 @@ F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.vbproj.AssemblyRef
 F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.frmCollectorManagement.resources
 F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.frmCSRActivity.resources
 F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.frmDashboard.resources
+F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.frmElectricity.resources
+F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.frmGas.resources
+F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.frmMain.resources
+F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.frmOwnElectricity.resources
+F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.frmPaper.resources
+F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.frmPlastic.resources
+F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.frmProductManagement.resources
 F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.frmWasteManagement.resources
+F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.frmWater.resources
 F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.ESG_SOLUTION.LoginForm.resources
+F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.Resources.resources
 F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.vbproj.GenerateResource.cache
 F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.GeneratedMSBuildEditorConfig.editorconfig
 F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.AssemblyInfoInputs.cache
