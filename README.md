@@ -162,14 +162,14 @@ WHERE        (Pay = 1)
       Bill Upload (can be multiple bills upload to specific folder in server.should be save in database that path)
       Excel Export
     # Water
-    Water Purchased
+    Water Purchased(frmMain)
       Calender(for month and year select)
       Water Monthly Purchased - Data Entry Qty(cubic meter)
       Amount paid - Data Entry(LKR)
       Additional Water Monthly Purchased - Data Entry Qty(cubic meter)
       Additional Amount Paid - Data Entry(LKR)
       Bill Upload (can be multiple bills upload to specific folder in server.should be save in database that path)
-    RainWater Management
+    >RainWater Management(Removed)
       RainWater Collected - Data Entry Qty(cubic meter)
       RainWater Consumed - Data Entry Qty(cubic meter)
       RainWater Recycled - Data Entry Qty(cubic meter)
@@ -293,7 +293,10 @@ WHERE        (Pay = 1)
 
 
 
-        
+
+
+
+
 
 
 Conditions
@@ -305,4 +308,6 @@ sql server database.
 should be guide all components how to apply and their names and other attributes.
 when upload the particular documents when data entry should be save file path in database.
 should be can multiple documents upload for same record same time.
-Data Grid views shold be clear when loadint the forms.
+Data Grid views shold be clear when loading the forms.
+when sql table create name start as tbl_ESG_
+if create sql views names start as vw_
