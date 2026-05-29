@@ -31,6 +31,11 @@ database connect from login page
     #Filters with Counter
       Gender, Category, Department, Nationalities
     #Export Excel Button
+Emp_Details View
+SELECT        TOP (100) PERCENT FullEmpNo, EMP_NO, EPF_NO, SURNAME, INITIALS, NAME, NIC, DATE_JOINED, DEPT_CODE, DepartmentName, GRP_CODE, GRP_DESC, SECT_CODE, SECTION_DESC, DESIGNATION, SEX, GRADE, 
+                         PROCESS_TYPE, WanCode, Pay, PreFix, CATEGORY, ProductName, ADD1, ADD2, ADD3, TargetDate, DEACTIVATE, RELIGION, Nationality
+FROM            PAYROLL.dbo.vw_pay_emp_master
+WHERE        (Pay = 1)
 
 > #  CSR ACTIVITIES
     # Data Entries
@@ -157,14 +162,14 @@ database connect from login page
       Bill Upload (can be multiple bills upload to specific folder in server.should be save in database that path)
       Excel Export
     # Water
-    Water Purchased
+    Water Purchased(frmMain)
       Calender(for month and year select)
       Water Monthly Purchased - Data Entry Qty(cubic meter)
       Amount paid - Data Entry(LKR)
       Additional Water Monthly Purchased - Data Entry Qty(cubic meter)
       Additional Amount Paid - Data Entry(LKR)
       Bill Upload (can be multiple bills upload to specific folder in server.should be save in database that path)
-    RainWater Management
+    >RainWater Management(Removed)
       RainWater Collected - Data Entry Qty(cubic meter)
       RainWater Consumed - Data Entry Qty(cubic meter)
       RainWater Recycled - Data Entry Qty(cubic meter)
@@ -288,7 +293,10 @@ database connect from login page
 
 
 
-        
+
+
+
+
 
 
 Conditions
@@ -300,4 +308,6 @@ sql server database.
 should be guide all components how to apply and their names and other attributes.
 when upload the particular documents when data entry should be save file path in database.
 should be can multiple documents upload for same record same time.
-Data Grid views shold be clear when loadint the forms.
+Data Grid views shold be clear when loading the forms.
+when sql table create name start as tbl_ESG_
+if create sql views names start as vw_
