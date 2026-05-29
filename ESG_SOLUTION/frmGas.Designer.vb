@@ -70,7 +70,7 @@ Partial Class frmGas
         ' 
         ' btnAddGasType
         ' 
-        btnAddGasType.Location = New Point(514, 52)
+        btnAddGasType.Location = New Point(410, 54)
         btnAddGasType.Margin = New Padding(3, 2, 3, 2)
         btnAddGasType.Name = "btnAddGasType"
         btnAddGasType.Size = New Size(94, 22)

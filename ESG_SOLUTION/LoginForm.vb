@@ -77,7 +77,7 @@ Namespace ESG_SOLUTION
             g.SmoothingMode = SmoothingMode.AntiAlias
 
             ' Hexagon grid pattern
-            Using pen As New Pen(Color.FromArgb(28, 255, 255, 255), 0.6F)
+            Using pen As New Pen(Color.FromArgb(28, 100, 50, 19), 0.6F)
                 Dim s As Integer = 50
                 Dim y As Integer = -s
                 Do While y < pnlLeft.Height + s
@@ -232,7 +232,7 @@ Namespace ESG_SOLUTION
             Try
                 If AuthenticateUser(user, pass) Then
                     ' TODO: open main dashboard
-                    Dim main As New frmMain
+                    Dim main As New frmDashboard
                     main.Show()
                 Else
                     ShowError("Invalid username or password.")

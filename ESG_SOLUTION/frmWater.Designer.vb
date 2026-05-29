@@ -17,6 +17,7 @@ Partial Class frmWater
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
         grpWaterPurchased = New GroupBox()
         txtAdditionalAmount = New TextBox()
         lblAdditionalAmount = New Label()
@@ -62,6 +63,7 @@ Partial Class frmWater
         cmbRainMonthFilter = New ComboBox()
         lblRainFilter = New Label()
         grdRainWater = New DataGridView()
+        ToolTip1 = New ToolTip(components)
         grpWaterPurchased.SuspendLayout()
         grpWaterButtons.SuspendLayout()
         CType(grdWater, ComponentModel.ISupportInitialize).BeginInit()
@@ -89,23 +91,24 @@ Partial Class frmWater
         grpWaterPurchased.Margin = New Padding(3, 2, 3, 2)
         grpWaterPurchased.Name = "grpWaterPurchased"
         grpWaterPurchased.Padding = New Padding(3, 2, 3, 2)
-        grpWaterPurchased.Size = New Size(622, 135)
+        grpWaterPurchased.Size = New Size(622, 149)
         grpWaterPurchased.TabIndex = 0
         grpWaterPurchased.TabStop = False
         grpWaterPurchased.Text = "Water Purchased"
         ' 
         ' txtAdditionalAmount
         ' 
-        txtAdditionalAmount.Location = New Point(436, 105)
+        txtAdditionalAmount.Location = New Point(436, 95)
         txtAdditionalAmount.Margin = New Padding(3, 2, 3, 2)
         txtAdditionalAmount.Name = "txtAdditionalAmount"
         txtAdditionalAmount.Size = New Size(118, 23)
         txtAdditionalAmount.TabIndex = 11
+        ToolTip1.SetToolTip(txtAdditionalAmount, "(Additional  can be for other offices, like NLE, SILOM, etc)")
         ' 
         ' lblAdditionalAmount
         ' 
         lblAdditionalAmount.AutoSize = True
-        lblAdditionalAmount.Location = New Point(318, 107)
+        lblAdditionalAmount.Location = New Point(318, 97)
         lblAdditionalAmount.Name = "lblAdditionalAmount"
         lblAdditionalAmount.Size = New Size(112, 15)
         lblAdditionalAmount.TabIndex = 10
@@ -113,16 +116,17 @@ Partial Class frmWater
         ' 
         ' txtAdditionalWaterQty
         ' 
-        txtAdditionalWaterQty.Location = New Point(178, 105)
+        txtAdditionalWaterQty.Location = New Point(178, 95)
         txtAdditionalWaterQty.Margin = New Padding(3, 2, 3, 2)
         txtAdditionalWaterQty.Name = "txtAdditionalWaterQty"
         txtAdditionalWaterQty.Size = New Size(118, 23)
         txtAdditionalWaterQty.TabIndex = 9
+        ToolTip1.SetToolTip(txtAdditionalWaterQty, "(Additional  can be for other offices, like NLE, SILOM, etc)")
         ' 
         ' lblAdditionalWaterQty
         ' 
         lblAdditionalWaterQty.AutoSize = True
-        lblAdditionalWaterQty.Location = New Point(16, 107)
+        lblAdditionalWaterQty.Location = New Point(16, 97)
         lblAdditionalWaterQty.Name = "lblAdditionalWaterQty"
         lblAdditionalWaterQty.Size = New Size(157, 15)
         lblAdditionalWaterQty.TabIndex = 8
@@ -130,7 +134,7 @@ Partial Class frmWater
         ' 
         ' txtWaterAmount
         ' 
-        txtWaterAmount.Location = New Point(436, 75)
+        txtWaterAmount.Location = New Point(436, 60)
         txtWaterAmount.Margin = New Padding(3, 2, 3, 2)
         txtWaterAmount.Name = "txtWaterAmount"
         txtWaterAmount.Size = New Size(118, 23)
@@ -139,7 +143,7 @@ Partial Class frmWater
         ' lblWaterAmount
         ' 
         lblWaterAmount.AutoSize = True
-        lblWaterAmount.Location = New Point(318, 77)
+        lblWaterAmount.Location = New Point(318, 62)
         lblWaterAmount.Name = "lblWaterAmount"
         lblWaterAmount.Size = New Size(54, 15)
         lblWaterAmount.TabIndex = 6
@@ -147,7 +151,7 @@ Partial Class frmWater
         ' 
         ' txtWaterQty
         ' 
-        txtWaterQty.Location = New Point(178, 75)
+        txtWaterQty.Location = New Point(178, 60)
         txtWaterQty.Margin = New Padding(3, 2, 3, 2)
         txtWaterQty.Name = "txtWaterQty"
         txtWaterQty.Size = New Size(118, 23)
@@ -156,7 +160,7 @@ Partial Class frmWater
         ' lblWaterQty
         ' 
         lblWaterQty.AutoSize = True
-        lblWaterQty.Location = New Point(16, 77)
+        lblWaterQty.Location = New Point(16, 62)
         lblWaterQty.Name = "lblWaterQty"
         lblWaterQty.Size = New Size(99, 15)
         lblWaterQty.TabIndex = 4
@@ -296,12 +300,12 @@ Partial Class frmWater
         ' 
         grdWater.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         grdWater.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        grdWater.Location = New Point(10, 148)
+        grdWater.Location = New Point(10, 162)
         grdWater.Margin = New Padding(3, 2, 3, 2)
         grdWater.Name = "grdWater"
         grdWater.RowHeadersWidth = 62
         grdWater.RowTemplate.Height = 28
-        grdWater.Size = New Size(908, 112)
+        grdWater.Size = New Size(929, 112)
         grdWater.TabIndex = 2
         ' 
         ' grpRainWater
@@ -567,15 +571,21 @@ Partial Class frmWater
         grdRainWater.Name = "grdRainWater"
         grdRainWater.RowHeadersWidth = 62
         grdRainWater.RowTemplate.Height = 28
-        grdRainWater.Size = New Size(908, 112)
+        grdRainWater.Size = New Size(929, 112)
         grdRainWater.TabIndex = 6
+        ' 
+        ' ToolTip1
+        ' 
+        ToolTip1.BackColor = SystemColors.GrayText
+        ToolTip1.IsBalloon = True
+        ToolTip1.ToolTipIcon = ToolTipIcon.Info
         ' 
         ' frmWater
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         AutoScroll = True
-        ClientSize = New Size(928, 580)
+        ClientSize = New Size(949, 627)
         Controls.Add(grdRainWater)
         Controls.Add(grpRainFilter)
         Controls.Add(grpRainButtons)
@@ -647,4 +657,5 @@ Partial Class frmWater
     Friend WithEvents cmbRainMonthFilter As ComboBox
     Friend WithEvents lblRainFilter As Label
     Friend WithEvents grdRainWater As DataGridView
+    Friend WithEvents ToolTip1 As ToolTip
 End Class

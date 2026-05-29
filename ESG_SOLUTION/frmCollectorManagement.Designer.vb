@@ -49,7 +49,7 @@ Partial Class frmCollectorManagement
         grpCollectorInfo.Controls.Add(lblAddress)
         grpCollectorInfo.Controls.Add(txtCollectorName)
         grpCollectorInfo.Controls.Add(lblCollectorName)
-        grpCollectorInfo.Font = New Font("Georgia", 13F, FontStyle.Bold)
+        grpCollectorInfo.Font = New Font("Georgia", 11.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         grpCollectorInfo.Location = New Point(14, 14)
         grpCollectorInfo.Margin = New Padding(4, 3, 4, 3)
         grpCollectorInfo.Name = "grpCollectorInfo"
