@@ -196,11 +196,11 @@ Namespace ESG_SOLUTION
                 If AuthenticateUser(user, pass) Then
                     ' TODO: open main dashboard
                     Dim main As New frmMain
-                    main.Show
+                    main.Show()
                 Else
                     ShowError("Invalid username or password.")
-                    txtPassword.Clear
-                    txtUsername.Focus
+                    txtPassword.Clear()
+                    txtUsername.Focus()
                 End If
             Catch sqlEx As SqlException
                 ShowError("Database error: " & sqlEx.Message)

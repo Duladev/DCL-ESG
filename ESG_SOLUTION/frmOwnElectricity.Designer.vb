@@ -343,14 +343,14 @@ Partial Class frmOwnElectricity
         grdData.Name = "grdData"
         grdData.RowHeadersWidth = 62
         grdData.RowTemplate.Height = 28
-        grdData.Size = New Size(908, 266)
+        grdData.Size = New Size(908, 269)
         grdData.TabIndex = 2
         ' 
         ' frmOwnElectricity
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(928, 501)
+        ClientSize = New Size(928, 504)
         Controls.Add(grdData)
         Controls.Add(grpButtons)
         Controls.Add(grpInput)

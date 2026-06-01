@@ -3,8 +3,9 @@ Imports System.IO
 Imports System.Windows.Forms
 
 Module modShared
+    ' existing connection string
     Public connString As String = "Server=DCL-ICT-007\DEVELOPER;Database=ESG;Integrated Security=True;"
-    Public uploadFolderPath As String = "D:\Environment project\Upload"
+    Public uploadFolderPath As String = "C:\ESG_Uploads\"
 
     Public Function GetConnection() As SqlConnection
         Return New SqlConnection(connString)
@@ -78,4 +79,40 @@ Module modShared
             End If
         End Using
     End Sub
+
+    ' Additional helper methods for ESG application
+
+    Public Sub ClearFormControls(ByVal container As Control)
+        For Each ctrl As Control In container.Controls
+            If TypeOf ctrl Is TextBox Then
+                ctrl.Text = ""
+            ElseIf TypeOf ctrl Is NumericUpDown Then
+                DirectCast(ctrl, NumericUpDown).Value = 0
+            ElseIf TypeOf ctrl Is DateTimePicker Then
+                DirectCast(ctrl, DateTimePicker).Value = DateTime.Now
+            ElseIf TypeOf ctrl Is ComboBox Then
+                If DirectCast(ctrl, ComboBox).Items.Count > 0 Then
+                    DirectCast(ctrl, ComboBox).SelectedIndex = 0
+                End If
+            ElseIf TypeOf ctrl Is GroupBox Then
+                ClearFormControls(ctrl)
+            ElseIf TypeOf ctrl Is TabPage Then
+                ClearFormControls(ctrl)
+            ElseIf TypeOf ctrl Is Panel Then
+                ClearFormControls(ctrl)
+            End If
+        Next
+    End Sub
+
+    Public Function ValidateDateRange(ByVal startDate As DateTime, ByVal endDate As DateTime) As Boolean
+        Return startDate <= endDate
+    End Function
+
+    Public Function GetCurrentMonthYear() As String
+        Return DateTime.Now.ToString("MMMM yyyy")
+    End Function
+
+    Public Function GetMonthName(ByVal month As Integer) As String
+        Return New DateTime(DateTime.Now.Year, month, 1).ToString("MMMM")
+    End Function
 End Module

@@ -131,10 +131,10 @@ Partial Class frmMain
         ' btnExit
         ' 
         btnExit.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
-        btnExit.BackColor = Color.Crimson
+        btnExit.BackColor = SystemColors.Control
         btnExit.FlatStyle = FlatStyle.Flat
         btnExit.Font = New Font("Microsoft Sans Serif", 10F, FontStyle.Bold)
-        btnExit.ForeColor = Color.White
+        btnExit.ForeColor = Color.Black
         btnExit.Location = New Point(856, 540)
         btnExit.Margin = New Padding(3, 2, 3, 2)
         btnExit.Name = "btnExit"

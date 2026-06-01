@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Compile Update="ESGCard.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="ESGTitleBar.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="frmCollectorManagement.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -16,7 +22,13 @@
     <Compile Update="frmEmployee.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="frmESGMain.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="frmGas.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="frmMain.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="frmMinorities.vb">
