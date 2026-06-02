@@ -181,3 +181,4 @@ Public Class ESGTitleBar
     End Sub
 
 End Class
+' 
