@@ -288,6 +288,12 @@ WHERE        (Pay = 1)
             Language C => French
             Language D => Hindi
 
+Repots export as individualy(for each tabs).
+Added final summerized report with all tabs.(filter by year).
+Save button add as seperately for each tabs.
+reduce row size in data grid view(too much size).
+Age added categories should be show when added the count.
+Add date picker for all tabs.
 
 
 
