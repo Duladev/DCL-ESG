@@ -2,3 +2,12 @@ Add individual save button for each sub tabs in social tab section.
 Add date picker for all sub tabs in social category.
 can be filter date in data grid view from year and month. also add this function to main tabs.
 when add a count for an age category should be show as a labe added category and count, also can be delete added category.
+
+
+Social Tab
+Remove main data grid view.
+Add own data grid view for all tbas in Social tab.
+Add update funcion.
+Add seperate save function.
+Add summery tab as a sub tab under social main tab.
+add all sub tabs saved data fetching grid view with year and month filter option.
