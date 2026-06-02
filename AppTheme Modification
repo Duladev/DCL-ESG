@@ -1,0 +1,12 @@
+Modify AppTheme as follow,
+10 form included,10 images as source images
+Apptheme.vb write as common.
+image assign to particular form on the form code behind.
+Colour themes
+  e6ffbf rgb(230, 255, 191)
+  215600 rgb(33, 86, 0)
+  f8fbf5 rgb(248, 251, 245)
+round borders
+Transparent Background(image showing)
+image can blure(blure controller)
+textboxes, combo boxes transparent(hover add)
