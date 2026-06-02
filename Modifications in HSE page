@@ -5,9 +5,9 @@ when add a count for an age category should be show as a labe added category and
 
 
 Social Tab
-Remove main data grid view.
+Remove main data grid view in social tab.
 Add own data grid view for all tbas in Social tab.
-Add update funcion.
-Add seperate save function.
-Add summery tab as a sub tab under social main tab.
+when click data grid view should be load data particular fields and can be update that data.
+Add seperate update funcion.
+Add seperate save function to all tabs in social tab.
 add all sub tabs saved data fetching grid view with year and month filter option.
