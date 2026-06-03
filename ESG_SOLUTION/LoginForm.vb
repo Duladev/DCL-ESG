@@ -11,7 +11,7 @@ Namespace ESG_SOLUTION
     Public Class LoginForm
         Inherits Form
 
-        ' ── Colours ───────────────────────────────────────────────────────────
+        '' ── Colours ───────────────────────────────────────────────────────────
         Private ReadOnly Emerald As Color = Color.FromArgb(16, 185, 129)
         Private ReadOnly EmeraldHov As Color = Color.FromArgb(5, 150, 105)
         Private ReadOnly BorderColor As Color = Color.FromArgb(50, 65, 80)
@@ -33,7 +33,7 @@ Namespace ESG_SOLUTION
         ' 
         '  Wire events
         Private Sub WireEvents()
-            ' Focus highlight on input lines
+            '' Focus highlight on input lines
             AddHandler txtUsername.GotFocus, Sub(s, e) pnlUserLine.BackColor = Emerald
             AddHandler txtUsername.LostFocus, Sub(s, e) pnlUserLine.BackColor = BorderColor
             AddHandler txtPassword.GotFocus, Sub(s, e) pnlPassLine.BackColor = Emerald
@@ -251,6 +251,10 @@ Namespace ESG_SOLUTION
 
         Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
             Me.Close()
+        End Sub
+
+        Private Sub lblError_Click(sender As Object, e As EventArgs)
+
         End Sub
     End Class
 

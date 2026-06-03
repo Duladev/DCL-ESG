@@ -144,7 +144,7 @@ Partial Class frmWasteManagement
         flpNonRecycledItems.Location = New Point(7, 173)
         flpNonRecycledItems.Margin = New Padding(4, 3, 4, 3)
         flpNonRecycledItems.Name = "flpNonRecycledItems"
-        flpNonRecycledItems.Size = New Size(526, 207)
+        flpNonRecycledItems.Size = New Size(472, 207)
         flpNonRecycledItems.TabIndex = 10
         ' 
         ' btnAddNonRecycledItem
@@ -523,7 +523,7 @@ Partial Class frmWasteManagement
         ' 
         flpChemicalItems.AutoScroll = True
         flpChemicalItems.BorderStyle = BorderStyle.FixedSingle
-        flpChemicalItems.Location = New Point(7, 234)
+        flpChemicalItems.Location = New Point(7, 203)
         flpChemicalItems.Margin = New Padding(4, 3, 4, 3)
         flpChemicalItems.Name = "flpChemicalItems"
         flpChemicalItems.Size = New Size(526, 146)
@@ -533,7 +533,7 @@ Partial Class frmWasteManagement
         ' 
         btnAddChemicalItem.BackColor = SystemColors.Control
         btnAddChemicalItem.Font = New Font("Microsoft Sans Serif", 9F, FontStyle.Bold)
-        btnAddChemicalItem.Location = New Point(7, 181)
+        btnAddChemicalItem.Location = New Point(7, 151)
         btnAddChemicalItem.Margin = New Padding(4, 3, 4, 3)
         btnAddChemicalItem.Name = "btnAddChemicalItem"
         btnAddChemicalItem.Size = New Size(123, 35)
@@ -619,7 +619,7 @@ Partial Class frmWasteManagement
         grpCommon.Margin = New Padding(4, 3, 4, 3)
         grpCommon.Name = "grpCommon"
         grpCommon.Padding = New Padding(4, 3, 4, 3)
-        grpCommon.Size = New Size(545, 138)
+        grpCommon.Size = New Size(513, 138)
         grpCommon.TabIndex = 1
         grpCommon.TabStop = False
         grpCommon.Text = "Record Information"
@@ -734,7 +734,7 @@ Partial Class frmWasteManagement
         grpDataView.Margin = New Padding(4, 3, 4, 3)
         grpDataView.Name = "grpDataView"
         grpDataView.Padding = New Padding(4, 3, 4, 3)
-        grpDataView.Size = New Size(627, 585)
+        grpDataView.Size = New Size(627, 601)
         grpDataView.TabIndex = 2
         grpDataView.TabStop = False
         grpDataView.Text = "Waste Records"
@@ -742,10 +742,10 @@ Partial Class frmWasteManagement
         ' btnExportExcel
         ' 
         btnExportExcel.BackColor = SystemColors.Control
-        btnExportExcel.Location = New Point(453, 564)
+        btnExportExcel.Location = New Point(482, 24)
         btnExportExcel.Margin = New Padding(4, 3, 4, 3)
         btnExportExcel.Name = "btnExportExcel"
-        btnExportExcel.Size = New Size(128, 35)
+        btnExportExcel.Size = New Size(105, 25)
         btnExportExcel.TabIndex = 7
         btnExportExcel.Text = "Export to Excel"
         btnExportExcel.UseVisualStyleBackColor = False
@@ -753,10 +753,10 @@ Partial Class frmWasteManagement
         ' btnDelete
         ' 
         btnDelete.BackColor = SystemColors.Control
-        btnDelete.Location = New Point(318, 564)
+        btnDelete.Location = New Point(380, 24)
         btnDelete.Margin = New Padding(4, 3, 4, 3)
         btnDelete.Name = "btnDelete"
-        btnDelete.Size = New Size(117, 35)
+        btnDelete.Size = New Size(94, 25)
         btnDelete.TabIndex = 6
         btnDelete.Text = "Delete"
         btnDelete.UseVisualStyleBackColor = False
@@ -764,10 +764,10 @@ Partial Class frmWasteManagement
         ' btnUpdate
         ' 
         btnUpdate.BackColor = SystemColors.Control
-        btnUpdate.Location = New Point(184, 564)
+        btnUpdate.Location = New Point(277, 24)
         btnUpdate.Margin = New Padding(4, 3, 4, 3)
         btnUpdate.Name = "btnUpdate"
-        btnUpdate.Size = New Size(117, 35)
+        btnUpdate.Size = New Size(94, 25)
         btnUpdate.TabIndex = 5
         btnUpdate.Text = "Update"
         btnUpdate.UseVisualStyleBackColor = False
@@ -804,7 +804,7 @@ Partial Class frmWasteManagement
         dgvWasteRecords.Name = "dgvWasteRecords"
         dgvWasteRecords.RowHeadersWidth = 51
         dgvWasteRecords.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        dgvWasteRecords.Size = New Size(612, 494)
+        dgvWasteRecords.Size = New Size(612, 531)
         dgvWasteRecords.TabIndex = 0
         ' 
         ' ofdDocuments

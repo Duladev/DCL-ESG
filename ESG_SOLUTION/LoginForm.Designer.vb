@@ -54,7 +54,7 @@
             ' 
             lblBrand.BackColor = Color.Transparent
             lblBrand.Font = New Font("Georgia", 36F, FontStyle.Bold)
-            lblBrand.ForeColor = Color.Gray
+            lblBrand.ForeColor = Color.White
             lblBrand.Location = New Point(28, 188)
             lblBrand.Name = "lblBrand"
             lblBrand.Size = New Size(280, 58)
@@ -65,19 +65,19 @@
             ' lblTagline
             ' 
             lblTagline.BackColor = Color.Transparent
-            lblTagline.Font = New Font("Segoe UI", 8.5F)
-            lblTagline.ForeColor = Color.FromArgb(CByte(16), CByte(185), CByte(129))
+            lblTagline.Font = New Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+            lblTagline.ForeColor = Color.White
             lblTagline.Location = New Point(38, 252)
             lblTagline.Name = "lblTagline"
-            lblTagline.Size = New Size(290, 18)
+            lblTagline.Size = New Size(280, 18)
             lblTagline.TabIndex = 2
             lblTagline.Text = "Environmental  ·  Social  ·  Governance"
             ' 
             ' lblCompany
             ' 
             lblCompany.BackColor = Color.Transparent
-            lblCompany.Font = New Font("Segoe UI", 9.5F)
-            lblCompany.ForeColor = Color.FromArgb(CByte(100), CByte(116), CByte(139))
+            lblCompany.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+            lblCompany.ForeColor = Color.White
             lblCompany.Location = New Point(38, 274)
             lblCompany.Name = "lblCompany"
             lblCompany.Size = New Size(280, 20)

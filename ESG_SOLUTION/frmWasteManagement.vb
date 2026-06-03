@@ -481,4 +481,7 @@ Public Class frmWasteManagement
         LoadCollectors() ' Refresh collector list
     End Sub
 
+    Private Sub tpNonRecycled_Click(sender As Object, e As EventArgs) Handles tpNonRecycled.Click
+
+    End Sub
 End Class

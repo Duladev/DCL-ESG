@@ -25,7 +25,6 @@ Partial Class frmEmployee
         DataGridViewEmployees = New DataGridView()
         GroupBoxGrid = New GroupBox()
         lblRecordCount = New Label()
-        btnExportExcel = New Button()
         Label12 = New Label()
         GroupBoxFilters = New GroupBox()
         lblNationalityCount = New Label()
@@ -68,6 +67,7 @@ Partial Class frmEmployee
         lblGender = New Label()
         lblEmpName = New Label()
         lblEmpNo = New Label()
+        btnExportExcel = New Button()
         CType(DataGridViewEmployees, ComponentModel.ISupportInitialize).BeginInit()
         GroupBoxGrid.SuspendLayout()
         GroupBoxFilters.SuspendLayout()
@@ -89,20 +89,20 @@ Partial Class frmEmployee
         DataGridViewEmployees.RowHeadersWidth = 51
         DataGridViewEmployees.RowTemplate.Height = 24
         DataGridViewEmployees.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        DataGridViewEmployees.Size = New Size(960, 310)
+        DataGridViewEmployees.Size = New Size(957, 310)
         DataGridViewEmployees.TabIndex = 0
         ' 
         ' GroupBoxGrid
         ' 
         GroupBoxGrid.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
-        GroupBoxGrid.Controls.Add(lblRecordCount)
         GroupBoxGrid.Controls.Add(btnExportExcel)
+        GroupBoxGrid.Controls.Add(lblRecordCount)
         GroupBoxGrid.Controls.Add(DataGridViewEmployees)
         GroupBoxGrid.Controls.Add(Label12)
         GroupBoxGrid.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         GroupBoxGrid.Location = New Point(10, 291)
         GroupBoxGrid.Name = "GroupBoxGrid"
-        GroupBoxGrid.Size = New Size(977, 385)
+        GroupBoxGrid.Size = New Size(974, 385)
         GroupBoxGrid.TabIndex = 1
         GroupBoxGrid.TabStop = False
         GroupBoxGrid.Text = "EMPLOYEE DATA"
@@ -117,20 +117,6 @@ Partial Class frmEmployee
         lblRecordCount.Size = New Size(13, 15)
         lblRecordCount.TabIndex = 3
         lblRecordCount.Text = "0"
-        ' 
-        ' btnExportExcel
-        ' 
-        btnExportExcel.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        btnExportExcel.BackColor = SystemColors.Control
-        btnExportExcel.FlatStyle = FlatStyle.Flat
-        btnExportExcel.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        btnExportExcel.ForeColor = SystemColors.ActiveCaptionText
-        btnExportExcel.Location = New Point(13, 22)
-        btnExportExcel.Name = "btnExportExcel"
-        btnExportExcel.Size = New Size(98, 28)
-        btnExportExcel.TabIndex = 1
-        btnExportExcel.Text = "Export Excel"
-        btnExportExcel.UseVisualStyleBackColor = False
         ' 
         ' Label12
         ' 
@@ -161,7 +147,7 @@ Partial Class frmEmployee
         GroupBoxFilters.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         GroupBoxFilters.Location = New Point(10, 97)
         GroupBoxFilters.Name = "GroupBoxFilters"
-        GroupBoxFilters.Size = New Size(426, 167)
+        GroupBoxFilters.Size = New Size(397, 167)
         GroupBoxFilters.TabIndex = 2
         GroupBoxFilters.TabStop = False
         GroupBoxFilters.Text = "FILTERS"
@@ -308,7 +294,7 @@ Partial Class frmEmployee
         GroupBoxSearch.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         GroupBoxSearch.Location = New Point(10, 11)
         GroupBoxSearch.Name = "GroupBoxSearch"
-        GroupBoxSearch.Size = New Size(426, 80)
+        GroupBoxSearch.Size = New Size(397, 80)
         GroupBoxSearch.TabIndex = 3
         GroupBoxSearch.TabStop = False
         GroupBoxSearch.Text = "SEARCH"
@@ -369,9 +355,9 @@ Partial Class frmEmployee
         GroupBoxDetails.Controls.Add(lblEmpName)
         GroupBoxDetails.Controls.Add(lblEmpNo)
         GroupBoxDetails.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        GroupBoxDetails.Location = New Point(442, 24)
+        GroupBoxDetails.Location = New Point(413, 25)
         GroupBoxDetails.Name = "GroupBoxDetails"
-        GroupBoxDetails.Size = New Size(587, 269)
+        GroupBoxDetails.Size = New Size(571, 269)
         GroupBoxDetails.TabIndex = 4
         GroupBoxDetails.TabStop = False
         GroupBoxDetails.Text = "EMPLOYEE DETAILS (Click on row to view)"
@@ -379,7 +365,7 @@ Partial Class frmEmployee
         ' txtDistance
         ' 
         txtDistance.Font = New Font("Segoe UI", 9F)
-        txtDistance.Location = New Point(426, 150)
+        txtDistance.Location = New Point(403, 142)
         txtDistance.Name = "txtDistance"
         txtDistance.ReadOnly = True
         txtDistance.Size = New Size(132, 23)
@@ -389,7 +375,7 @@ Partial Class frmEmployee
         ' 
         Label7.AutoSize = True
         Label7.Font = New Font("Segoe UI", 9F)
-        Label7.Location = New Point(330, 158)
+        Label7.Location = New Point(307, 150)
         Label7.Name = "Label7"
         Label7.Size = New Size(83, 15)
         Label7.TabIndex = 20
@@ -398,7 +384,7 @@ Partial Class frmEmployee
         ' txtNationality
         ' 
         txtNationality.Font = New Font("Segoe UI", 9F)
-        txtNationality.Location = New Point(426, 197)
+        txtNationality.Location = New Point(403, 189)
         txtNationality.Name = "txtNationality"
         txtNationality.ReadOnly = True
         txtNationality.Size = New Size(132, 23)
@@ -408,7 +394,7 @@ Partial Class frmEmployee
         ' 
         Label6.AutoSize = True
         Label6.Font = New Font("Segoe UI", 9F)
-        Label6.Location = New Point(331, 205)
+        Label6.Location = New Point(308, 197)
         Label6.Name = "Label6"
         Label6.Size = New Size(68, 15)
         Label6.TabIndex = 18
@@ -417,7 +403,7 @@ Partial Class frmEmployee
         ' txtTenure
         ' 
         txtTenure.Font = New Font("Segoe UI", 9F)
-        txtTenure.Location = New Point(426, 112)
+        txtTenure.Location = New Point(403, 104)
         txtTenure.Name = "txtTenure"
         txtTenure.ReadOnly = True
         txtTenure.Size = New Size(132, 23)
@@ -427,7 +413,7 @@ Partial Class frmEmployee
         ' 
         Label5.AutoSize = True
         Label5.Font = New Font("Segoe UI", 9F)
-        Label5.Location = New Point(328, 120)
+        Label5.Location = New Point(305, 112)
         Label5.Name = "Label5"
         Label5.Size = New Size(72, 15)
         Label5.TabIndex = 16
@@ -455,7 +441,7 @@ Partial Class frmEmployee
         ' txtDOB
         ' 
         txtDOB.Font = New Font("Segoe UI", 9F)
-        txtDOB.Location = New Point(426, 73)
+        txtDOB.Location = New Point(403, 65)
         txtDOB.Name = "txtDOB"
         txtDOB.ReadOnly = True
         txtDOB.Size = New Size(132, 23)
@@ -465,7 +451,7 @@ Partial Class frmEmployee
         ' 
         Label3.AutoSize = True
         Label3.Font = New Font("Segoe UI", 9F)
-        Label3.Location = New Point(328, 81)
+        Label3.Location = New Point(305, 73)
         Label3.Name = "Label3"
         Label3.Size = New Size(76, 15)
         Label3.TabIndex = 12
@@ -474,7 +460,7 @@ Partial Class frmEmployee
         ' txtDOJ
         ' 
         txtDOJ.Font = New Font("Segoe UI", 9F)
-        txtDOJ.Location = New Point(426, 33)
+        txtDOJ.Location = New Point(403, 25)
         txtDOJ.Name = "txtDOJ"
         txtDOJ.ReadOnly = True
         txtDOJ.Size = New Size(132, 23)
@@ -484,7 +470,7 @@ Partial Class frmEmployee
         ' 
         Label2.AutoSize = True
         Label2.Font = New Font("Segoe UI", 9F)
-        Label2.Location = New Point(328, 41)
+        Label2.Location = New Point(305, 33)
         Label2.Name = "Label2"
         Label2.Size = New Size(85, 15)
         Label2.TabIndex = 10
@@ -585,6 +571,15 @@ Partial Class frmEmployee
         lblEmpNo.TabIndex = 0
         lblEmpNo.Text = "Employee No:"
         ' 
+        ' btnExportExcel
+        ' 
+        btnExportExcel.Location = New Point(13, 25)
+        btnExportExcel.Name = "btnExportExcel"
+        btnExportExcel.Size = New Size(94, 23)
+        btnExportExcel.TabIndex = 4
+        btnExportExcel.Text = "Export Excel"
+        btnExportExcel.UseVisualStyleBackColor = True
+        ' 
         ' frmEmployee
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -615,7 +610,6 @@ Partial Class frmEmployee
     Friend WithEvents GroupBoxFilters As GroupBox
     Friend WithEvents GroupBoxSearch As GroupBox
     Friend WithEvents GroupBoxDetails As GroupBox
-    Friend WithEvents btnExportExcel As Button
     Friend WithEvents btnClearFilters As Button
     Friend WithEvents cmbGender As ComboBox
     Friend WithEvents cmbNationality As ComboBox
@@ -656,4 +650,5 @@ Partial Class frmEmployee
     Friend WithEvents lblGender As Label
     Friend WithEvents lblEmpName As Label
     Friend WithEvents lblEmpNo As Label
+    Friend WithEvents btnExportExcel As Button
 End Class

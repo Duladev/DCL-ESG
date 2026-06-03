@@ -39,6 +39,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="1.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Import Include="ESG_SOLUTION.ESG_SOLUTION" />
     <Import Include="System.Data" />
     <Import Include="System.Drawing" />
@@ -46,6 +50,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="bootstrap" Version="5.3.8" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.9.1" />
   </ItemGroup>

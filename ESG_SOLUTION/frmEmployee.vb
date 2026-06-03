@@ -9,9 +9,14 @@ Public Class frmEmployee
     Private dtEmployees As New DataTable()
 
     Private Sub frmEmployee_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        AppTheme.Apply(Me)
         LoadEmployeeData()
         SetupFilters()
+        AppTheme.StyleGroupBox(GroupBoxSearch)
         SetupDetailsGroupBox()
+
+        'Dim formImage = My.Resources.
+        'AppTheme.SetFormImage(Me, formImage, enableBlur:=False)
     End Sub
 
     Private Sub LoadEmployeeData()
@@ -407,7 +412,4 @@ Public Class frmEmployee
         End Try
     End Sub
 
-    Private Sub GroupBoxDetails_Enter(sender As Object, e As EventArgs) Handles GroupBoxDetails.Enter
-
-    End Sub
 End Class

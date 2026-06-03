@@ -55,94 +55,79 @@ Public Class frmDashboard
     '  InitializeComponent
     ' ═══════════════════════════════════════════════════════════════
     Private Sub InitializeComponent()
-        Me.Text = "ESG Management System"
-        Me.ClientSize = New Size(920, 580)
-        Me.StartPosition = FormStartPosition.CenterScreen
-        Me.MinimumSize = New Size(800, 520)
-
+        Text = "ESG Management System"
+        ClientSize = New Size(920, 580)
+        StartPosition = FormStartPosition.CenterScreen
+        MinimumSize = New Size(800, 520)
         ' ── Title bar ────────────────────────────────────────────────────────
         titleBar = New ESGTitleBar()
         titleBar.Title = "ESG Management System"
         titleBar.Subtitle = "Environmental · Social · Governance"
         titleBar.ShowBackButton = False
-        AddHandler titleBar.CloseClicked, AddressOf TitleBar_CloseClicked
-        AddHandler titleBar.MinimizeClicked, AddressOf TitleBar_MinimizeClicked
-
         ' ── Animated colour bar ───────────────────────────────────────────────
         picBanner = New PictureBox()
         picBanner.Location = New Point(0, 64)
         picBanner.Size = New Size(920, 5)
-        picBanner.BackColor = AppTheme.ColorPrimary
-
+        picBanner.BackColor = ColorPrimary
         ' ── Left nav panel ───────────────────────────────────────────────────
         pnlNav = New Panel()
         pnlNav.Location = New Point(0, 69)
         pnlNav.Size = New Size(200, 511)
-        pnlNav.BackColor = AppTheme.ColorSurface
-        AddHandler pnlNav.Paint, AddressOf PnlNav_Paint
-
+        pnlNav.BackColor = ColorSurface
         lblSectionNav = New Label()
         lblSectionNav.Text = "NAVIGATION"
         lblSectionNav.Location = New Point(12, 12)
         lblSectionNav.Size = New Size(176, 20)
-        lblSectionNav.Font = AppTheme.FontBadge
-        lblSectionNav.ForeColor = AppTheme.ColorTextMuted
+        lblSectionNav.Font = FontBadge
+        lblSectionNav.ForeColor = ColorTextMuted
         lblSectionNav.BackColor = Color.Transparent
-
         btnEmp = MakeNavButton("Employee", 44)
         btnCSR = MakeNavButton("CSR", 92)
         btnWaste = MakeNavButton("Waste Mgmt", 140)
         btnInventory = MakeNavButton("Inventory", 188)
         btnHSE = MakeNavButton("HSE", 236)
-
         pnlNav.Controls.Add(lblSectionNav)
         pnlNav.Controls.Add(btnEmp)
         pnlNav.Controls.Add(btnCSR)
         pnlNav.Controls.Add(btnWaste)
         pnlNav.Controls.Add(btnInventory)
         pnlNav.Controls.Add(btnHSE)
-
         ' ── Main content panel ───────────────────────────────────────────────
         pnlContent = New Panel()
         pnlContent.Location = New Point(200, 69)
         pnlContent.Size = New Size(720, 511)
-        pnlContent.BackColor = AppTheme.ColorBackground
-
+        pnlContent.BackColor = ColorBackground
         lblSectionMetrics = New Label()
         lblSectionMetrics.Text = "KEY METRICS"
         lblSectionMetrics.Location = New Point(16, 12)
         lblSectionMetrics.Size = New Size(200, 20)
-        lblSectionMetrics.Font = AppTheme.FontBadge
-        lblSectionMetrics.ForeColor = AppTheme.ColorTextMuted
+        lblSectionMetrics.Font = FontBadge
+        lblSectionMetrics.ForeColor = ColorTextMuted
         lblSectionMetrics.BackColor = Color.Transparent
-
         cardEmissions = New ESGCard()
         cardEmissions.Location = New Point(16, 40)
         cardEmissions.Size = New Size(158, 90)
         cardEmissions.MetricLabel = "CO2 Emissions"
         cardEmissions.MetricValue = "1,240 t"
         cardEmissions.Badge = "Down 8%"
-        cardEmissions.AccentColor = AppTheme.ColorPrimary
+        cardEmissions.AccentColor = ColorPrimary
         cardEmissions.IconChar = "C"
-
         cardWasteCard = New ESGCard()
         cardWasteCard.Location = New Point(186, 40)
         cardWasteCard.Size = New Size(158, 90)
         cardWasteCard.MetricLabel = "Waste Recycled"
         cardWasteCard.MetricValue = "76%"
         cardWasteCard.Badge = "Up 3%"
-        cardWasteCard.AccentColor = AppTheme.ColorAccent
+        cardWasteCard.AccentColor = ColorAccent
         cardWasteCard.IconChar = "W"
-
         cardEnergy = New ESGCard()
         cardEnergy.Location = New Point(356, 40)
         cardEnergy.Size = New Size(158, 90)
         cardEnergy.MetricLabel = "Energy (kWh)"
         cardEnergy.MetricValue = "84,200"
         cardEnergy.Badge = "Down 5%"
-        cardEnergy.AccentColor = AppTheme.ColorWarning
+        cardEnergy.AccentColor = ColorWarning
         cardEnergy.IconChar = "E"
-
         cardEmployees = New ESGCard()
         cardEmployees.Location = New Point(526, 40)
         cardEmployees.Size = New Size(158, 90)
@@ -151,27 +136,24 @@ Public Class frmDashboard
         cardEmployees.Badge = "Stable"
         cardEmployees.AccentColor = Color.FromArgb(167, 139, 250)
         cardEmployees.IconChar = "P"
-
         lblFooter = New Label()
-        lblFooter.Text = "ESG System  -  " & DateTime.Now.Year & "  -  All rights reserved"
+        'lblFooter.Text = "ESG System  -  " + Date.Now.Year + "  -  All rights reserved"
         lblFooter.Location = New Point(0, 490)
         lblFooter.Size = New Size(720, 20)
         lblFooter.TextAlign = ContentAlignment.MiddleCenter
-        lblFooter.Font = AppTheme.FontSmall
-        lblFooter.ForeColor = AppTheme.ColorTextMuted
+        lblFooter.Font = FontSmall
+        lblFooter.ForeColor = ColorTextMuted
         lblFooter.BackColor = Color.Transparent
-
         pnlContent.Controls.Add(lblSectionMetrics)
         pnlContent.Controls.Add(cardEmissions)
         pnlContent.Controls.Add(cardWasteCard)
         pnlContent.Controls.Add(cardEnergy)
         pnlContent.Controls.Add(cardEmployees)
         pnlContent.Controls.Add(lblFooter)
-
-        Me.Controls.Add(titleBar)
-        Me.Controls.Add(picBanner)
-        Me.Controls.Add(pnlNav)
-        Me.Controls.Add(pnlContent)
+        Controls.Add(titleBar)
+        Controls.Add(picBanner)
+        Controls.Add(pnlNav)
+        Controls.Add(pnlContent)
     End Sub
 
     ' ═══════════════════════════════════════════════════════════════
@@ -246,34 +228,34 @@ Public Class frmDashboard
     ' ═══════════════════════════════════════════════════════════════
     '  Navigation clicks
     ' ═══════════════════════════════════════════════════════════════
-    Private Sub btnWaste_Click(sender As Object, e As EventArgs) Handles btnWaste.Click
-        Dim form As New frmWasteManagement()
+    Private Sub btnWaste_Click(sender As Object, e As EventArgs)
+        Dim form As New frmWasteManagement
         form.Show()
-        Me.Hide()
+        Hide()
     End Sub
 
-    Private Sub btnInventory_Click(sender As Object, e As EventArgs) Handles btnInventory.Click
-        Dim form As New frmMain()
+    Private Sub btnInventory_Click(sender As Object, e As EventArgs)
+        Dim form As New frmMain
         form.Show()
-        Me.Hide()
+        Hide()
     End Sub
 
-    Private Sub btnEmp_Click(sender As Object, e As EventArgs) Handles btnEmp.Click
-        Dim form As New frmEmployee()
+    Private Sub btnEmp_Click(sender As Object, e As EventArgs)
+        Dim form As New frmEmployee
         form.Show()
-        Me.Hide()
+        Hide()
     End Sub
 
-    Private Sub btnCSR_Click(sender As Object, e As EventArgs) Handles btnCSR.Click
-        Dim form As New frmCSRActivity()
+    Private Sub btnCSR_Click(sender As Object, e As EventArgs)
+        Dim form As New frmCSRActivity
         form.Show()
-        Me.Hide()
+        Hide()
     End Sub
 
-    Private Sub btnHSE_Click(sender As Object, e As EventArgs) Handles btnHSE.Click
-        Dim form As New frmESGMain()
+    Private Sub btnHSE_Click(sender As Object, e As EventArgs)
+        Dim form As New frmESGMain
         form.Show()
-        Me.Hide()
+        Hide()
     End Sub
 
 End Class
