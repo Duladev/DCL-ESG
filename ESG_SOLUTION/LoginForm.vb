@@ -252,10 +252,6 @@ Namespace ESG_SOLUTION
         Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
             Me.Close()
         End Sub
-
-        Private Sub lblError_Click(sender As Object, e As EventArgs)
-
-        End Sub
     End Class
 
     ' ═════════════════════════════════════════════════════════════════════════

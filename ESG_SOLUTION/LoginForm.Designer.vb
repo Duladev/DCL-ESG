@@ -12,6 +12,7 @@
         End Sub
 
         Private Sub InitializeComponent()
+            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(LoginForm))
             pnlLeft = New Panel()
             lblBrand = New Label()
             lblTagline = New Label()
@@ -40,6 +41,8 @@
             ' pnlLeft
             ' 
             pnlLeft.BackColor = SystemColors.Control
+            pnlLeft.BackgroundImage = CType(resources.GetObject("pnlLeft.BackgroundImage"), Image)
+            pnlLeft.BackgroundImageLayout = ImageLayout.Stretch
             pnlLeft.Controls.Add(lblBrand)
             pnlLeft.Controls.Add(lblTagline)
             pnlLeft.Controls.Add(lblCompany)
@@ -47,7 +50,7 @@
             pnlLeft.Dock = DockStyle.Left
             pnlLeft.Location = New Point(0, 0)
             pnlLeft.Name = "pnlLeft"
-            pnlLeft.Size = New Size(360, 560)
+            pnlLeft.Size = New Size(422, 560)
             pnlLeft.TabIndex = 0
             ' 
             ' lblBrand
@@ -55,7 +58,7 @@
             lblBrand.BackColor = Color.Transparent
             lblBrand.Font = New Font("Georgia", 36F, FontStyle.Bold)
             lblBrand.ForeColor = Color.White
-            lblBrand.Location = New Point(28, 188)
+            lblBrand.Location = New Point(87, 194)
             lblBrand.Name = "lblBrand"
             lblBrand.Size = New Size(280, 58)
             lblBrand.TabIndex = 1
@@ -67,7 +70,7 @@
             lblTagline.BackColor = Color.Transparent
             lblTagline.Font = New Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
             lblTagline.ForeColor = Color.White
-            lblTagline.Location = New Point(38, 252)
+            lblTagline.Location = New Point(97, 258)
             lblTagline.Name = "lblTagline"
             lblTagline.Size = New Size(280, 18)
             lblTagline.TabIndex = 2
@@ -78,7 +81,7 @@
             lblCompany.BackColor = Color.Transparent
             lblCompany.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
             lblCompany.ForeColor = Color.White
-            lblCompany.Location = New Point(38, 274)
+            lblCompany.Location = New Point(97, 280)
             lblCompany.Name = "lblCompany"
             lblCompany.Size = New Size(280, 20)
             lblCompany.TabIndex = 3
@@ -87,7 +90,7 @@
             ' pnlStatLine
             ' 
             pnlStatLine.BackColor = Color.FromArgb(CByte(35), CByte(255), CByte(255), CByte(255))
-            pnlStatLine.Location = New Point(38, 326)
+            pnlStatLine.Location = New Point(97, 332)
             pnlStatLine.Name = "pnlStatLine"
             pnlStatLine.Size = New Size(270, 1)
             pnlStatLine.TabIndex = 4
@@ -111,9 +114,9 @@
             pnlRight.Controls.Add(lblError)
             pnlRight.Controls.Add(lblVersion)
             pnlRight.Dock = DockStyle.Fill
-            pnlRight.Location = New Point(360, 0)
+            pnlRight.Location = New Point(422, 0)
             pnlRight.Name = "pnlRight"
-            pnlRight.Size = New Size(520, 560)
+            pnlRight.Size = New Size(458, 560)
             pnlRight.TabIndex = 1
             ' 
             ' Button2

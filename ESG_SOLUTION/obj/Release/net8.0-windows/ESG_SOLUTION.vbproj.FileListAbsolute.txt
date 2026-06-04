@@ -36,3 +36,14 @@ F:\DCL-ESG\ESG_SOLUTION\obj\Release\net8.0-windows\refint\ESG_SOLUTION.dll
 F:\DCL-ESG\ESG_SOLUTION\obj\Release\net8.0-windows\ESG_SOLUTION.pdb
 F:\DCL-ESG\ESG_SOLUTION\obj\Release\net8.0-windows\ESG_SOLUTION.genruntimeconfig.cache
 F:\DCL-ESG\ESG_SOLUTION\obj\Release\net8.0-windows\ref\ESG_SOLUTION.dll
+F:\DCL-ESG\ESG_SOLUTION\bin\Release\net8.0-windows\Interop.WMPLib.dll
+F:\DCL-ESG\ESG_SOLUTION\bin\Release\net8.0-windows\AxInterop.WMPLib.dll
+F:\DCL-ESG\ESG_SOLUTION\obj\Release\net8.0-windows\Interop.Microsoft.Office.Interop.Excel.dll
+F:\DCL-ESG\ESG_SOLUTION\obj\Release\net8.0-windows\Interop.WMPLib.dll
+F:\DCL-ESG\ESG_SOLUTION\obj\Release\net8.0-windows\AxInterop.WMPLib.dll
+F:\DCL-ESG\ESG_SOLUTION\obj\Release\net8.0-windows\ESG_SOLUTION.vbproj.ResolveComReference.cache
+F:\DCL-ESG\ESG_SOLUTION\obj\Release\net8.0-windows\ESG_SOLUTION.ESGCard.resources
+F:\DCL-ESG\ESG_SOLUTION\obj\Release\net8.0-windows\ESG_SOLUTION.ESGTitleBar.resources
+F:\DCL-ESG\ESG_SOLUTION\obj\Release\net8.0-windows\ESG_SOLUTION.frmEmployee.resources
+F:\DCL-ESG\ESG_SOLUTION\obj\Release\net8.0-windows\ESG_SOLUTION.frmESGMain.resources
+F:\DCL-ESG\ESG_SOLUTION\obj\Release\net8.0-windows\ESG_SOLUTION.frmMinorities.resources

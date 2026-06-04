@@ -10,6 +10,9 @@
     <Compile Update="frmCollectorManagement.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="frmCSR.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="frmCSRActivity.vb">
       <SubType>Form</SubType>
     </Compile>

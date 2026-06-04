@@ -56,6 +56,16 @@ Public Class frmOwnElectricity
         End Using
     End Sub
 
+    'decimal helper
+    Private Function GetSafeDecimal(inputText As String) As Decimal
+        Dim result As Decimal = 0
+        If Decimal.TryParse(inputText, result) Then
+            Return result
+        End If
+        Return 0
+    End Function
+
+
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         Try
             Using conn As SqlConnection = GetConnection()
@@ -67,11 +77,11 @@ Public Class frmOwnElectricity
                     cmd.Parameters.AddWithValue("@Year", dtpYear.Value.Year)
                     cmd.Parameters.AddWithValue("@Month", dtpMonth.Value.Month)
                     cmd.Parameters.AddWithValue("@RenewableType", cmbRenewableType.Text)
-                    cmd.Parameters.AddWithValue("@RenewableCap", Convert.ToDecimal(txtRenewableCap.Text))
+                    cmd.Parameters.AddWithValue("@RenewableCap", GetSafeDecimal(txtRenewableCap.Text))
                     cmd.Parameters.AddWithValue("@NonRenewableType", cmbNonRenewableType.Text)
-                    cmd.Parameters.AddWithValue("@NonRenewableCap", Convert.ToDecimal(txtNonRenewableCap.Text))
-                    cmd.Parameters.AddWithValue("@TotalConsumed", Convert.ToDecimal(txtTotalConsumed.Text))
-                    cmd.Parameters.AddWithValue("@SoldCapacity", Convert.ToDecimal(txtSoldCapacity.Text))
+                    cmd.Parameters.AddWithValue("@NonRenewableCap", GetSafeDecimal(txtNonRenewableCap.Text))
+                    cmd.Parameters.AddWithValue("@TotalConsumed", GetSafeDecimal(txtTotalConsumed.Text))
+                    cmd.Parameters.AddWithValue("@SoldCapacity", GetSafeDecimal(txtSoldCapacity.Text))
                     cmd.Parameters.AddWithValue("@Comments", txtComments.Text)
 
                     Dim recordId = $"OwnElec_{dtpYear.Value.Year}_{dtpMonth.Value.Month}_{DateTime.Now.Ticks}"
