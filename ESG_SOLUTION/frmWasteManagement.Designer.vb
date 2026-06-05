@@ -24,6 +24,7 @@ Partial Class frmWasteManagement
     Private Sub InitializeComponent()
         tabWasteCategories = New TabControl()
         tpNonRecycled = New TabPage()
+        dgvNonRecycled = New DataGridView()
         flpNonRecycledItems = New FlowLayoutPanel()
         btnAddNonRecycledItem = New Button()
         lblNonPolyethene = New Label()
@@ -31,6 +32,7 @@ Partial Class frmWasteManagement
         lblNonPlastic = New Label()
         numNonPlastic = New NumericUpDown()
         tpRecycled = New TabPage()
+        dgvRecycled = New DataGridView()
         flpRecycledItems = New FlowLayoutPanel()
         btnAddRecycledItem = New Button()
         lblRecPaper = New Label()
@@ -42,6 +44,7 @@ Partial Class frmWasteManagement
         lblRecOtherPlastic = New Label()
         numRecOtherPlastic = New NumericUpDown()
         tpOtherRecycled = New TabPage()
+        dgvOtherRecycled = New DataGridView()
         flpOtherRecycledItems = New FlowLayoutPanel()
         btnAddOtherRecycledItem = New Button()
         lblOrgFood = New Label()
@@ -57,6 +60,7 @@ Partial Class frmWasteManagement
         lblEWaste = New Label()
         numEWaste = New NumericUpDown()
         tpChemical = New TabPage()
+        dgvChemical = New DataGridView()
         flpChemicalItems = New FlowLayoutPanel()
         btnAddChemicalItem = New Button()
         lblChemLiquids = New Label()
@@ -79,32 +83,32 @@ Partial Class frmWasteManagement
         btnExportExcel = New Button()
         btnDelete = New Button()
         btnUpdate = New Button()
-        cmbFilter = New ComboBox()
-        lblFilter = New Label()
-        dgvWasteRecords = New DataGridView()
         ofdDocuments = New OpenFileDialog()
         tabWasteCategories.SuspendLayout()
         tpNonRecycled.SuspendLayout()
+        CType(dgvNonRecycled, ComponentModel.ISupportInitialize).BeginInit()
         CType(numNonPolyethene, ComponentModel.ISupportInitialize).BeginInit()
         CType(numNonPlastic, ComponentModel.ISupportInitialize).BeginInit()
         tpRecycled.SuspendLayout()
+        CType(dgvRecycled, ComponentModel.ISupportInitialize).BeginInit()
         CType(numRecPaper, ComponentModel.ISupportInitialize).BeginInit()
         CType(numRecCardboard, ComponentModel.ISupportInitialize).BeginInit()
         CType(numRecPlastic, ComponentModel.ISupportInitialize).BeginInit()
         CType(numRecOtherPlastic, ComponentModel.ISupportInitialize).BeginInit()
         tpOtherRecycled.SuspendLayout()
+        CType(dgvOtherRecycled, ComponentModel.ISupportInitialize).BeginInit()
         CType(numOrgFood, ComponentModel.ISupportInitialize).BeginInit()
         CType(numCopper, ComponentModel.ISupportInitialize).BeginInit()
         CType(numAluminium, ComponentModel.ISupportInitialize).BeginInit()
         CType(numGlass, ComponentModel.ISupportInitialize).BeginInit()
         CType(numEWaste, ComponentModel.ISupportInitialize).BeginInit()
         tpChemical.SuspendLayout()
+        CType(dgvChemical, ComponentModel.ISupportInitialize).BeginInit()
         CType(numChemLiquids, ComponentModel.ISupportInitialize).BeginInit()
         CType(numChemPacking, ComponentModel.ISupportInitialize).BeginInit()
         CType(numChemFabric, ComponentModel.ISupportInitialize).BeginInit()
         grpCommon.SuspendLayout()
         grpDataView.SuspendLayout()
-        CType(dgvWasteRecords, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' tabWasteCategories
@@ -113,15 +117,15 @@ Partial Class frmWasteManagement
         tabWasteCategories.Controls.Add(tpRecycled)
         tabWasteCategories.Controls.Add(tpOtherRecycled)
         tabWasteCategories.Controls.Add(tpChemical)
-        tabWasteCategories.Location = New Point(14, 14)
-        tabWasteCategories.Margin = New Padding(4, 3, 4, 3)
+        tabWasteCategories.Location = New Point(12, 12)
         tabWasteCategories.Name = "tabWasteCategories"
         tabWasteCategories.SelectedIndex = 0
-        tabWasteCategories.Size = New Size(545, 462)
+        tabWasteCategories.Size = New Size(600, 650)
         tabWasteCategories.TabIndex = 0
         ' 
         ' tpNonRecycled
         ' 
+        tpNonRecycled.Controls.Add(dgvNonRecycled)
         tpNonRecycled.Controls.Add(flpNonRecycledItems)
         tpNonRecycled.Controls.Add(btnAddNonRecycledItem)
         tpNonRecycled.Controls.Add(lblNonPolyethene)
@@ -129,32 +133,43 @@ Partial Class frmWasteManagement
         tpNonRecycled.Controls.Add(lblNonPlastic)
         tpNonRecycled.Controls.Add(numNonPlastic)
         tpNonRecycled.Location = New Point(4, 24)
-        tpNonRecycled.Margin = New Padding(4, 3, 4, 3)
         tpNonRecycled.Name = "tpNonRecycled"
-        tpNonRecycled.Padding = New Padding(4, 3, 4, 3)
-        tpNonRecycled.Size = New Size(537, 434)
+        tpNonRecycled.Padding = New Padding(3)
+        tpNonRecycled.Size = New Size(592, 622)
         tpNonRecycled.TabIndex = 0
         tpNonRecycled.Text = "Non-Recycled Waste"
         tpNonRecycled.UseVisualStyleBackColor = True
         ' 
+        ' dgvNonRecycled
+        ' 
+        dgvNonRecycled.AllowUserToAddRows = False
+        dgvNonRecycled.AllowUserToDeleteRows = False
+        dgvNonRecycled.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        dgvNonRecycled.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgvNonRecycled.Location = New Point(6, 183)
+        dgvNonRecycled.Name = "dgvNonRecycled"
+        dgvNonRecycled.ReadOnly = True
+        dgvNonRecycled.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        dgvNonRecycled.Size = New Size(580, 190)
+        dgvNonRecycled.TabIndex = 11
+        ' 
         ' flpNonRecycledItems
         ' 
+        flpNonRecycledItems.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         flpNonRecycledItems.AutoScroll = True
         flpNonRecycledItems.BorderStyle = BorderStyle.FixedSingle
-        flpNonRecycledItems.Location = New Point(7, 173)
-        flpNonRecycledItems.Margin = New Padding(4, 3, 4, 3)
+        flpNonRecycledItems.Location = New Point(6, 82)
         flpNonRecycledItems.Name = "flpNonRecycledItems"
-        flpNonRecycledItems.Size = New Size(472, 207)
+        flpNonRecycledItems.Size = New Size(580, 95)
         flpNonRecycledItems.TabIndex = 10
         ' 
         ' btnAddNonRecycledItem
         ' 
         btnAddNonRecycledItem.BackColor = SystemColors.Control
         btnAddNonRecycledItem.Font = New Font("Microsoft Sans Serif", 9F, FontStyle.Bold)
-        btnAddNonRecycledItem.Location = New Point(8, 132)
-        btnAddNonRecycledItem.Margin = New Padding(4, 3, 4, 3)
+        btnAddNonRecycledItem.Location = New Point(343, 20)
         btnAddNonRecycledItem.Name = "btnAddNonRecycledItem"
-        btnAddNonRecycledItem.Size = New Size(115, 35)
+        btnAddNonRecycledItem.Size = New Size(120, 34)
         btnAddNonRecycledItem.TabIndex = 9
         btnAddNonRecycledItem.Text = "+ Add New Item"
         btnAddNonRecycledItem.UseVisualStyleBackColor = False
@@ -163,8 +178,7 @@ Partial Class frmWasteManagement
         ' 
         lblNonPolyethene.AutoSize = True
         lblNonPolyethene.Font = New Font("Microsoft Sans Serif", 10F)
-        lblNonPolyethene.Location = New Point(7, 23)
-        lblNonPolyethene.Margin = New Padding(4, 0, 4, 0)
+        lblNonPolyethene.Location = New Point(6, 20)
         lblNonPolyethene.Name = "lblNonPolyethene"
         lblNonPolyethene.Size = New Size(83, 17)
         lblNonPolyethene.TabIndex = 0
@@ -173,19 +187,17 @@ Partial Class frmWasteManagement
         ' numNonPolyethene
         ' 
         numNonPolyethene.DecimalPlaces = 2
-        numNonPolyethene.Location = New Point(175, 21)
-        numNonPolyethene.Margin = New Padding(4, 3, 4, 3)
+        numNonPolyethene.Location = New Point(150, 18)
         numNonPolyethene.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         numNonPolyethene.Name = "numNonPolyethene"
-        numNonPolyethene.Size = New Size(140, 23)
+        numNonPolyethene.Size = New Size(120, 23)
         numNonPolyethene.TabIndex = 1
         ' 
         ' lblNonPlastic
         ' 
         lblNonPlastic.AutoSize = True
         lblNonPlastic.Font = New Font("Microsoft Sans Serif", 10F)
-        lblNonPlastic.Location = New Point(7, 58)
-        lblNonPlastic.Margin = New Padding(4, 0, 4, 0)
+        lblNonPlastic.Location = New Point(6, 55)
         lblNonPlastic.Name = "lblNonPlastic"
         lblNonPlastic.Size = New Size(53, 17)
         lblNonPlastic.TabIndex = 2
@@ -194,15 +206,15 @@ Partial Class frmWasteManagement
         ' numNonPlastic
         ' 
         numNonPlastic.DecimalPlaces = 2
-        numNonPlastic.Location = New Point(175, 55)
-        numNonPlastic.Margin = New Padding(4, 3, 4, 3)
+        numNonPlastic.Location = New Point(150, 53)
         numNonPlastic.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         numNonPlastic.Name = "numNonPlastic"
-        numNonPlastic.Size = New Size(140, 23)
+        numNonPlastic.Size = New Size(120, 23)
         numNonPlastic.TabIndex = 3
         ' 
         ' tpRecycled
         ' 
+        tpRecycled.Controls.Add(dgvRecycled)
         tpRecycled.Controls.Add(flpRecycledItems)
         tpRecycled.Controls.Add(btnAddRecycledItem)
         tpRecycled.Controls.Add(lblRecPaper)
@@ -214,32 +226,43 @@ Partial Class frmWasteManagement
         tpRecycled.Controls.Add(lblRecOtherPlastic)
         tpRecycled.Controls.Add(numRecOtherPlastic)
         tpRecycled.Location = New Point(4, 24)
-        tpRecycled.Margin = New Padding(4, 3, 4, 3)
         tpRecycled.Name = "tpRecycled"
-        tpRecycled.Padding = New Padding(4, 3, 4, 3)
-        tpRecycled.Size = New Size(537, 434)
+        tpRecycled.Padding = New Padding(3)
+        tpRecycled.Size = New Size(592, 622)
         tpRecycled.TabIndex = 1
         tpRecycled.Text = "Recycled Waste"
         tpRecycled.UseVisualStyleBackColor = True
         ' 
+        ' dgvRecycled
+        ' 
+        dgvRecycled.AllowUserToAddRows = False
+        dgvRecycled.AllowUserToDeleteRows = False
+        dgvRecycled.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        dgvRecycled.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgvRecycled.Location = New Point(6, 200)
+        dgvRecycled.Name = "dgvRecycled"
+        dgvRecycled.ReadOnly = True
+        dgvRecycled.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        dgvRecycled.Size = New Size(580, 198)
+        dgvRecycled.TabIndex = 13
+        ' 
         ' flpRecycledItems
         ' 
+        flpRecycledItems.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         flpRecycledItems.AutoScroll = True
         flpRecycledItems.BorderStyle = BorderStyle.FixedSingle
-        flpRecycledItems.Location = New Point(7, 173)
-        flpRecycledItems.Margin = New Padding(4, 3, 4, 3)
+        flpRecycledItems.Location = New Point(285, 19)
         flpRecycledItems.Name = "flpRecycledItems"
-        flpRecycledItems.Size = New Size(491, 207)
+        flpRecycledItems.Size = New Size(291, 127)
         flpRecycledItems.TabIndex = 12
         ' 
         ' btnAddRecycledItem
         ' 
         btnAddRecycledItem.BackColor = SystemColors.Control
         btnAddRecycledItem.Font = New Font("Microsoft Sans Serif", 9F, FontStyle.Bold)
-        btnAddRecycledItem.Location = New Point(290, 36)
-        btnAddRecycledItem.Margin = New Padding(4, 3, 4, 3)
+        btnAddRecycledItem.Location = New Point(456, 160)
         btnAddRecycledItem.Name = "btnAddRecycledItem"
-        btnAddRecycledItem.Size = New Size(121, 35)
+        btnAddRecycledItem.Size = New Size(120, 34)
         btnAddRecycledItem.TabIndex = 11
         btnAddRecycledItem.Text = "+ Add New Item"
         btnAddRecycledItem.UseVisualStyleBackColor = False
@@ -248,8 +271,7 @@ Partial Class frmWasteManagement
         ' 
         lblRecPaper.AutoSize = True
         lblRecPaper.Font = New Font("Microsoft Sans Serif", 10F)
-        lblRecPaper.Location = New Point(9, 23)
-        lblRecPaper.Margin = New Padding(4, 0, 4, 0)
+        lblRecPaper.Location = New Point(6, 20)
         lblRecPaper.Name = "lblRecPaper"
         lblRecPaper.Size = New Size(50, 17)
         lblRecPaper.TabIndex = 0
@@ -258,19 +280,17 @@ Partial Class frmWasteManagement
         ' numRecPaper
         ' 
         numRecPaper.DecimalPlaces = 2
-        numRecPaper.Location = New Point(130, 22)
-        numRecPaper.Margin = New Padding(4, 3, 4, 3)
+        numRecPaper.Location = New Point(150, 18)
         numRecPaper.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         numRecPaper.Name = "numRecPaper"
-        numRecPaper.Size = New Size(140, 23)
+        numRecPaper.Size = New Size(120, 23)
         numRecPaper.TabIndex = 1
         ' 
         ' lblRecCardboard
         ' 
         lblRecCardboard.AutoSize = True
         lblRecCardboard.Font = New Font("Microsoft Sans Serif", 10F)
-        lblRecCardboard.Location = New Point(7, 58)
-        lblRecCardboard.Margin = New Padding(4, 0, 4, 0)
+        lblRecCardboard.Location = New Point(6, 55)
         lblRecCardboard.Name = "lblRecCardboard"
         lblRecCardboard.Size = New Size(79, 17)
         lblRecCardboard.TabIndex = 2
@@ -279,19 +299,17 @@ Partial Class frmWasteManagement
         ' numRecCardboard
         ' 
         numRecCardboard.DecimalPlaces = 2
-        numRecCardboard.Location = New Point(130, 55)
-        numRecCardboard.Margin = New Padding(4, 3, 4, 3)
+        numRecCardboard.Location = New Point(150, 53)
         numRecCardboard.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         numRecCardboard.Name = "numRecCardboard"
-        numRecCardboard.Size = New Size(140, 23)
+        numRecCardboard.Size = New Size(120, 23)
         numRecCardboard.TabIndex = 3
         ' 
         ' lblRecPlastic
         ' 
         lblRecPlastic.AutoSize = True
         lblRecPlastic.Font = New Font("Microsoft Sans Serif", 10F)
-        lblRecPlastic.Location = New Point(9, 90)
-        lblRecPlastic.Margin = New Padding(4, 0, 4, 0)
+        lblRecPlastic.Location = New Point(6, 90)
         lblRecPlastic.Name = "lblRecPlastic"
         lblRecPlastic.Size = New Size(115, 17)
         lblRecPlastic.TabIndex = 4
@@ -300,19 +318,17 @@ Partial Class frmWasteManagement
         ' numRecPlastic
         ' 
         numRecPlastic.DecimalPlaces = 2
-        numRecPlastic.Location = New Point(130, 84)
-        numRecPlastic.Margin = New Padding(4, 3, 4, 3)
+        numRecPlastic.Location = New Point(150, 88)
         numRecPlastic.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         numRecPlastic.Name = "numRecPlastic"
-        numRecPlastic.Size = New Size(140, 23)
+        numRecPlastic.Size = New Size(120, 23)
         numRecPlastic.TabIndex = 5
         ' 
         ' lblRecOtherPlastic
         ' 
         lblRecOtherPlastic.AutoSize = True
         lblRecOtherPlastic.Font = New Font("Microsoft Sans Serif", 10F)
-        lblRecOtherPlastic.Location = New Point(9, 119)
-        lblRecOtherPlastic.Margin = New Padding(4, 0, 4, 0)
+        lblRecOtherPlastic.Location = New Point(6, 125)
         lblRecOtherPlastic.Name = "lblRecOtherPlastic"
         lblRecOtherPlastic.Size = New Size(93, 17)
         lblRecOtherPlastic.TabIndex = 6
@@ -321,15 +337,15 @@ Partial Class frmWasteManagement
         ' numRecOtherPlastic
         ' 
         numRecOtherPlastic.DecimalPlaces = 2
-        numRecOtherPlastic.Location = New Point(130, 113)
-        numRecOtherPlastic.Margin = New Padding(4, 3, 4, 3)
+        numRecOtherPlastic.Location = New Point(150, 123)
         numRecOtherPlastic.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         numRecOtherPlastic.Name = "numRecOtherPlastic"
-        numRecOtherPlastic.Size = New Size(140, 23)
+        numRecOtherPlastic.Size = New Size(120, 23)
         numRecOtherPlastic.TabIndex = 7
         ' 
         ' tpOtherRecycled
         ' 
+        tpOtherRecycled.Controls.Add(dgvOtherRecycled)
         tpOtherRecycled.Controls.Add(flpOtherRecycledItems)
         tpOtherRecycled.Controls.Add(btnAddOtherRecycledItem)
         tpOtherRecycled.Controls.Add(lblOrgFood)
@@ -345,31 +361,42 @@ Partial Class frmWasteManagement
         tpOtherRecycled.Controls.Add(lblEWaste)
         tpOtherRecycled.Controls.Add(numEWaste)
         tpOtherRecycled.Location = New Point(4, 24)
-        tpOtherRecycled.Margin = New Padding(4, 3, 4, 3)
         tpOtherRecycled.Name = "tpOtherRecycled"
-        tpOtherRecycled.Size = New Size(537, 434)
+        tpOtherRecycled.Size = New Size(592, 622)
         tpOtherRecycled.TabIndex = 2
         tpOtherRecycled.Text = "Other Recycled Waste"
         tpOtherRecycled.UseVisualStyleBackColor = True
         ' 
+        ' dgvOtherRecycled
+        ' 
+        dgvOtherRecycled.AllowUserToAddRows = False
+        dgvOtherRecycled.AllowUserToDeleteRows = False
+        dgvOtherRecycled.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        dgvOtherRecycled.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgvOtherRecycled.Location = New Point(3, 210)
+        dgvOtherRecycled.Name = "dgvOtherRecycled"
+        dgvOtherRecycled.ReadOnly = True
+        dgvOtherRecycled.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        dgvOtherRecycled.Size = New Size(580, 183)
+        dgvOtherRecycled.TabIndex = 15
+        ' 
         ' flpOtherRecycledItems
         ' 
+        flpOtherRecycledItems.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         flpOtherRecycledItems.AutoScroll = True
         flpOtherRecycledItems.BorderStyle = BorderStyle.FixedSingle
-        flpOtherRecycledItems.Location = New Point(7, 208)
-        flpOtherRecycledItems.Margin = New Padding(4, 3, 4, 3)
+        flpOtherRecycledItems.Location = New Point(308, 53)
         flpOtherRecycledItems.Name = "flpOtherRecycledItems"
-        flpOtherRecycledItems.Size = New Size(526, 173)
+        flpOtherRecycledItems.Size = New Size(266, 111)
         flpOtherRecycledItems.TabIndex = 14
         ' 
         ' btnAddOtherRecycledItem
         ' 
         btnAddOtherRecycledItem.BackColor = SystemColors.Control
         btnAddOtherRecycledItem.Font = New Font("Microsoft Sans Serif", 9F, FontStyle.Bold)
-        btnAddOtherRecycledItem.Location = New Point(335, 167)
-        btnAddOtherRecycledItem.Margin = New Padding(4, 3, 4, 3)
+        btnAddOtherRecycledItem.Location = New Point(454, 170)
         btnAddOtherRecycledItem.Name = "btnAddOtherRecycledItem"
-        btnAddOtherRecycledItem.Size = New Size(120, 35)
+        btnAddOtherRecycledItem.Size = New Size(120, 34)
         btnAddOtherRecycledItem.TabIndex = 13
         btnAddOtherRecycledItem.Text = "+ Add New Item"
         btnAddOtherRecycledItem.UseVisualStyleBackColor = False
@@ -378,8 +405,7 @@ Partial Class frmWasteManagement
         ' 
         lblOrgFood.AutoSize = True
         lblOrgFood.Font = New Font("Microsoft Sans Serif", 10F)
-        lblOrgFood.Location = New Point(7, 17)
-        lblOrgFood.Margin = New Padding(4, 0, 4, 0)
+        lblOrgFood.Location = New Point(6, 20)
         lblOrgFood.Name = "lblOrgFood"
         lblOrgFood.Size = New Size(106, 17)
         lblOrgFood.TabIndex = 0
@@ -388,18 +414,16 @@ Partial Class frmWasteManagement
         ' numOrgFood
         ' 
         numOrgFood.DecimalPlaces = 2
-        numOrgFood.Location = New Point(142, 15)
-        numOrgFood.Margin = New Padding(4, 3, 4, 3)
+        numOrgFood.Location = New Point(150, 18)
         numOrgFood.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         numOrgFood.Name = "numOrgFood"
-        numOrgFood.Size = New Size(140, 23)
+        numOrgFood.Size = New Size(120, 23)
         numOrgFood.TabIndex = 1
         ' 
         ' chkCompost
         ' 
         chkCompost.AutoSize = True
-        chkCompost.Location = New Point(303, 17)
-        chkCompost.Margin = New Padding(4, 3, 4, 3)
+        chkCompost.Location = New Point(290, 20)
         chkCompost.Name = "chkCompost"
         chkCompost.Size = New Size(75, 19)
         chkCompost.TabIndex = 2
@@ -409,8 +433,7 @@ Partial Class frmWasteManagement
         ' chkAnimalFeed
         ' 
         chkAnimalFeed.AutoSize = True
-        chkAnimalFeed.Location = New Point(386, 17)
-        chkAnimalFeed.Margin = New Padding(4, 3, 4, 3)
+        chkAnimalFeed.Location = New Point(380, 20)
         chkAnimalFeed.Name = "chkAnimalFeed"
         chkAnimalFeed.Size = New Size(92, 19)
         chkAnimalFeed.TabIndex = 3
@@ -421,8 +444,7 @@ Partial Class frmWasteManagement
         ' 
         lblCopper.AutoSize = True
         lblCopper.Font = New Font("Microsoft Sans Serif", 10F)
-        lblCopper.Location = New Point(7, 52)
-        lblCopper.Margin = New Padding(4, 0, 4, 0)
+        lblCopper.Location = New Point(6, 55)
         lblCopper.Name = "lblCopper"
         lblCopper.Size = New Size(58, 17)
         lblCopper.TabIndex = 4
@@ -431,19 +453,17 @@ Partial Class frmWasteManagement
         ' numCopper
         ' 
         numCopper.DecimalPlaces = 2
-        numCopper.Location = New Point(142, 50)
-        numCopper.Margin = New Padding(4, 3, 4, 3)
+        numCopper.Location = New Point(150, 53)
         numCopper.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         numCopper.Name = "numCopper"
-        numCopper.Size = New Size(140, 23)
+        numCopper.Size = New Size(120, 23)
         numCopper.TabIndex = 5
         ' 
         ' lblAluminium
         ' 
         lblAluminium.AutoSize = True
         lblAluminium.Font = New Font("Microsoft Sans Serif", 10F)
-        lblAluminium.Location = New Point(7, 87)
-        lblAluminium.Margin = New Padding(4, 0, 4, 0)
+        lblAluminium.Location = New Point(6, 90)
         lblAluminium.Name = "lblAluminium"
         lblAluminium.Size = New Size(76, 17)
         lblAluminium.TabIndex = 6
@@ -452,19 +472,17 @@ Partial Class frmWasteManagement
         ' numAluminium
         ' 
         numAluminium.DecimalPlaces = 2
-        numAluminium.Location = New Point(142, 84)
-        numAluminium.Margin = New Padding(4, 3, 4, 3)
+        numAluminium.Location = New Point(150, 88)
         numAluminium.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         numAluminium.Name = "numAluminium"
-        numAluminium.Size = New Size(140, 23)
+        numAluminium.Size = New Size(120, 23)
         numAluminium.TabIndex = 7
         ' 
         ' lblGlass
         ' 
         lblGlass.AutoSize = True
         lblGlass.Font = New Font("Microsoft Sans Serif", 10F)
-        lblGlass.Location = New Point(7, 121)
-        lblGlass.Margin = New Padding(4, 0, 4, 0)
+        lblGlass.Location = New Point(6, 125)
         lblGlass.Name = "lblGlass"
         lblGlass.Size = New Size(48, 17)
         lblGlass.TabIndex = 8
@@ -473,19 +491,17 @@ Partial Class frmWasteManagement
         ' numGlass
         ' 
         numGlass.DecimalPlaces = 2
-        numGlass.Location = New Point(142, 119)
-        numGlass.Margin = New Padding(4, 3, 4, 3)
+        numGlass.Location = New Point(150, 123)
         numGlass.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         numGlass.Name = "numGlass"
-        numGlass.Size = New Size(140, 23)
+        numGlass.Size = New Size(120, 23)
         numGlass.TabIndex = 9
         ' 
         ' lblEWaste
         ' 
         lblEWaste.AutoSize = True
         lblEWaste.Font = New Font("Microsoft Sans Serif", 10F)
-        lblEWaste.Location = New Point(7, 160)
-        lblEWaste.Margin = New Padding(4, 0, 4, 0)
+        lblEWaste.Location = New Point(6, 160)
         lblEWaste.Name = "lblEWaste"
         lblEWaste.Size = New Size(97, 17)
         lblEWaste.TabIndex = 10
@@ -494,15 +510,15 @@ Partial Class frmWasteManagement
         ' numEWaste
         ' 
         numEWaste.DecimalPlaces = 2
-        numEWaste.Location = New Point(142, 154)
-        numEWaste.Margin = New Padding(4, 3, 4, 3)
+        numEWaste.Location = New Point(150, 158)
         numEWaste.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         numEWaste.Name = "numEWaste"
-        numEWaste.Size = New Size(140, 23)
+        numEWaste.Size = New Size(120, 23)
         numEWaste.TabIndex = 11
         ' 
         ' tpChemical
         ' 
+        tpChemical.Controls.Add(dgvChemical)
         tpChemical.Controls.Add(flpChemicalItems)
         tpChemical.Controls.Add(btnAddChemicalItem)
         tpChemical.Controls.Add(lblChemLiquids)
@@ -512,31 +528,42 @@ Partial Class frmWasteManagement
         tpChemical.Controls.Add(lblChemFabric)
         tpChemical.Controls.Add(numChemFabric)
         tpChemical.Location = New Point(4, 24)
-        tpChemical.Margin = New Padding(4, 3, 4, 3)
         tpChemical.Name = "tpChemical"
-        tpChemical.Size = New Size(537, 434)
+        tpChemical.Size = New Size(592, 622)
         tpChemical.TabIndex = 3
         tpChemical.Text = "Chemical Waste"
         tpChemical.UseVisualStyleBackColor = True
         ' 
+        ' dgvChemical
+        ' 
+        dgvChemical.AllowUserToAddRows = False
+        dgvChemical.AllowUserToDeleteRows = False
+        dgvChemical.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        dgvChemical.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgvChemical.Location = New Point(3, 175)
+        dgvChemical.Name = "dgvChemical"
+        dgvChemical.ReadOnly = True
+        dgvChemical.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        dgvChemical.Size = New Size(580, 218)
+        dgvChemical.TabIndex = 15
+        ' 
         ' flpChemicalItems
         ' 
+        flpChemicalItems.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         flpChemicalItems.AutoScroll = True
         flpChemicalItems.BorderStyle = BorderStyle.FixedSingle
-        flpChemicalItems.Location = New Point(7, 203)
-        flpChemicalItems.Margin = New Padding(4, 3, 4, 3)
+        flpChemicalItems.Location = New Point(349, 20)
         flpChemicalItems.Name = "flpChemicalItems"
-        flpChemicalItems.Size = New Size(526, 146)
+        flpChemicalItems.Size = New Size(221, 109)
         flpChemicalItems.TabIndex = 14
         ' 
         ' btnAddChemicalItem
         ' 
         btnAddChemicalItem.BackColor = SystemColors.Control
         btnAddChemicalItem.Font = New Font("Microsoft Sans Serif", 9F, FontStyle.Bold)
-        btnAddChemicalItem.Location = New Point(7, 151)
-        btnAddChemicalItem.Margin = New Padding(4, 3, 4, 3)
+        btnAddChemicalItem.Location = New Point(450, 135)
         btnAddChemicalItem.Name = "btnAddChemicalItem"
-        btnAddChemicalItem.Size = New Size(123, 35)
+        btnAddChemicalItem.Size = New Size(120, 34)
         btnAddChemicalItem.TabIndex = 13
         btnAddChemicalItem.Text = "+ Add New Item"
         btnAddChemicalItem.UseVisualStyleBackColor = False
@@ -545,8 +572,7 @@ Partial Class frmWasteManagement
         ' 
         lblChemLiquids.AutoSize = True
         lblChemLiquids.Font = New Font("Microsoft Sans Serif", 10F)
-        lblChemLiquids.Location = New Point(7, 23)
-        lblChemLiquids.Margin = New Padding(4, 0, 4, 0)
+        lblChemLiquids.Location = New Point(6, 20)
         lblChemLiquids.Name = "lblChemLiquids"
         lblChemLiquids.Size = New Size(155, 17)
         lblChemLiquids.TabIndex = 0
@@ -555,19 +581,17 @@ Partial Class frmWasteManagement
         ' numChemLiquids
         ' 
         numChemLiquids.DecimalPlaces = 2
-        numChemLiquids.Location = New Point(195, 23)
-        numChemLiquids.Margin = New Padding(4, 3, 4, 3)
+        numChemLiquids.Location = New Point(170, 18)
         numChemLiquids.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         numChemLiquids.Name = "numChemLiquids"
-        numChemLiquids.Size = New Size(140, 23)
+        numChemLiquids.Size = New Size(120, 23)
         numChemLiquids.TabIndex = 1
         ' 
         ' lblChemPacking
         ' 
         lblChemPacking.AutoSize = True
         lblChemPacking.Font = New Font("Microsoft Sans Serif", 10F)
-        lblChemPacking.Location = New Point(7, 58)
-        lblChemPacking.Margin = New Padding(4, 0, 4, 0)
+        lblChemPacking.Location = New Point(6, 55)
         lblChemPacking.Name = "lblChemPacking"
         lblChemPacking.Size = New Size(123, 17)
         lblChemPacking.TabIndex = 2
@@ -576,19 +600,17 @@ Partial Class frmWasteManagement
         ' numChemPacking
         ' 
         numChemPacking.DecimalPlaces = 2
-        numChemPacking.Location = New Point(195, 54)
-        numChemPacking.Margin = New Padding(4, 3, 4, 3)
+        numChemPacking.Location = New Point(170, 53)
         numChemPacking.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         numChemPacking.Name = "numChemPacking"
-        numChemPacking.Size = New Size(140, 23)
+        numChemPacking.Size = New Size(120, 23)
         numChemPacking.TabIndex = 3
         ' 
         ' lblChemFabric
         ' 
         lblChemFabric.AutoSize = True
         lblChemFabric.Font = New Font("Microsoft Sans Serif", 10F)
-        lblChemFabric.Location = New Point(7, 95)
-        lblChemFabric.Margin = New Padding(4, 0, 4, 0)
+        lblChemFabric.Location = New Point(6, 90)
         lblChemFabric.Name = "lblChemFabric"
         lblChemFabric.Size = New Size(112, 17)
         lblChemFabric.TabIndex = 4
@@ -597,11 +619,10 @@ Partial Class frmWasteManagement
         ' numChemFabric
         ' 
         numChemFabric.DecimalPlaces = 2
-        numChemFabric.Location = New Point(195, 89)
-        numChemFabric.Margin = New Padding(4, 3, 4, 3)
+        numChemFabric.Location = New Point(170, 88)
         numChemFabric.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         numChemFabric.Name = "numChemFabric"
-        numChemFabric.Size = New Size(140, 23)
+        numChemFabric.Size = New Size(120, 23)
         numChemFabric.TabIndex = 5
         ' 
         ' grpCommon
@@ -615,11 +636,9 @@ Partial Class frmWasteManagement
         grpCommon.Controls.Add(lblDate)
         grpCommon.Controls.Add(lblDailyTotal)
         grpCommon.Controls.Add(txtDailyTotal)
-        grpCommon.Location = New Point(14, 482)
-        grpCommon.Margin = New Padding(4, 3, 4, 3)
+        grpCommon.Location = New Point(618, 12)
         grpCommon.Name = "grpCommon"
-        grpCommon.Padding = New Padding(4, 3, 4, 3)
-        grpCommon.Size = New Size(513, 138)
+        grpCommon.Size = New Size(450, 150)
         grpCommon.TabIndex = 1
         grpCommon.TabStop = False
         grpCommon.Text = "Record Information"
@@ -627,10 +646,9 @@ Partial Class frmWasteManagement
         ' btnManageCollectors
         ' 
         btnManageCollectors.BackColor = SystemColors.Control
-        btnManageCollectors.Location = New Point(423, 22)
-        btnManageCollectors.Margin = New Padding(4, 3, 4, 3)
+        btnManageCollectors.Location = New Point(370, 25)
         btnManageCollectors.Name = "btnManageCollectors"
-        btnManageCollectors.Size = New Size(60, 27)
+        btnManageCollectors.Size = New Size(70, 25)
         btnManageCollectors.TabIndex = 9
         btnManageCollectors.Text = "Manage"
         btnManageCollectors.UseVisualStyleBackColor = False
@@ -639,8 +657,7 @@ Partial Class frmWasteManagement
         ' 
         lblCollector.AutoSize = True
         lblCollector.Font = New Font("Microsoft Sans Serif", 10F)
-        lblCollector.Location = New Point(233, 29)
-        lblCollector.Margin = New Padding(4, 0, 4, 0)
+        lblCollector.Location = New Point(200, 28)
         lblCollector.Name = "lblCollector"
         lblCollector.Size = New Size(67, 17)
         lblCollector.TabIndex = 6
@@ -650,19 +667,17 @@ Partial Class frmWasteManagement
         ' 
         cmbCollector.DropDownStyle = ComboBoxStyle.DropDownList
         cmbCollector.FormattingEnabled = True
-        cmbCollector.Location = New Point(315, 25)
-        cmbCollector.Margin = New Padding(4, 3, 4, 3)
+        cmbCollector.Location = New Point(275, 26)
         cmbCollector.Name = "cmbCollector"
-        cmbCollector.Size = New Size(100, 23)
+        cmbCollector.Size = New Size(90, 23)
         cmbCollector.TabIndex = 7
         ' 
         ' btnUploadDocuments
         ' 
         btnUploadDocuments.BackColor = Color.LightYellow
-        btnUploadDocuments.Location = New Point(220, 99)
-        btnUploadDocuments.Margin = New Padding(4, 3, 4, 3)
+        btnUploadDocuments.Location = New Point(200, 110)
         btnUploadDocuments.Name = "btnUploadDocuments"
-        btnUploadDocuments.Size = New Size(119, 23)
+        btnUploadDocuments.Size = New Size(120, 25)
         btnUploadDocuments.TabIndex = 5
         btnUploadDocuments.Text = "Upload Documents"
         btnUploadDocuments.UseVisualStyleBackColor = False
@@ -671,10 +686,9 @@ Partial Class frmWasteManagement
         ' 
         btnSaveRecord.BackColor = SystemColors.Control
         btnSaveRecord.Font = New Font("Microsoft Sans Serif", 10F, FontStyle.Bold)
-        btnSaveRecord.Location = New Point(423, 99)
-        btnSaveRecord.Margin = New Padding(4, 3, 4, 3)
+        btnSaveRecord.Location = New Point(360, 105)
         btnSaveRecord.Name = "btnSaveRecord"
-        btnSaveRecord.Size = New Size(83, 32)
+        btnSaveRecord.Size = New Size(80, 30)
         btnSaveRecord.TabIndex = 4
         btnSaveRecord.Text = "Save"
         btnSaveRecord.UseVisualStyleBackColor = False
@@ -682,18 +696,16 @@ Partial Class frmWasteManagement
         ' dtpRecordDate
         ' 
         dtpRecordDate.Format = DateTimePickerFormat.Short
-        dtpRecordDate.Location = New Point(93, 25)
-        dtpRecordDate.Margin = New Padding(4, 3, 4, 3)
+        dtpRecordDate.Location = New Point(80, 26)
         dtpRecordDate.Name = "dtpRecordDate"
-        dtpRecordDate.Size = New Size(116, 23)
+        dtpRecordDate.Size = New Size(110, 23)
         dtpRecordDate.TabIndex = 3
         ' 
         ' lblDate
         ' 
         lblDate.AutoSize = True
         lblDate.Font = New Font("Microsoft Sans Serif", 10F)
-        lblDate.Location = New Point(7, 29)
-        lblDate.Margin = New Padding(4, 0, 4, 0)
+        lblDate.Location = New Point(10, 28)
         lblDate.Name = "lblDate"
         lblDate.Size = New Size(42, 17)
         lblDate.TabIndex = 2
@@ -703,8 +715,7 @@ Partial Class frmWasteManagement
         ' 
         lblDailyTotal.AutoSize = True
         lblDailyTotal.Font = New Font("Microsoft Sans Serif", 10F, FontStyle.Bold)
-        lblDailyTotal.Location = New Point(7, 69)
-        lblDailyTotal.Margin = New Padding(4, 0, 4, 0)
+        lblDailyTotal.Location = New Point(10, 70)
         lblDailyTotal.Name = "lblDailyTotal"
         lblDailyTotal.Size = New Size(91, 17)
         lblDailyTotal.TabIndex = 0
@@ -714,11 +725,10 @@ Partial Class frmWasteManagement
         ' 
         txtDailyTotal.BackColor = Color.LightYellow
         txtDailyTotal.Font = New Font("Microsoft Sans Serif", 12F, FontStyle.Bold)
-        txtDailyTotal.Location = New Point(114, 63)
-        txtDailyTotal.Margin = New Padding(4, 3, 4, 3)
+        txtDailyTotal.Location = New Point(110, 65)
         txtDailyTotal.Name = "txtDailyTotal"
         txtDailyTotal.ReadOnly = True
-        txtDailyTotal.Size = New Size(95, 26)
+        txtDailyTotal.Size = New Size(80, 26)
         txtDailyTotal.TabIndex = 1
         txtDailyTotal.Text = "0 KG"
         ' 
@@ -727,25 +737,19 @@ Partial Class frmWasteManagement
         grpDataView.Controls.Add(btnExportExcel)
         grpDataView.Controls.Add(btnDelete)
         grpDataView.Controls.Add(btnUpdate)
-        grpDataView.Controls.Add(cmbFilter)
-        grpDataView.Controls.Add(lblFilter)
-        grpDataView.Controls.Add(dgvWasteRecords)
-        grpDataView.Location = New Point(567, 38)
-        grpDataView.Margin = New Padding(4, 3, 4, 3)
+        grpDataView.Location = New Point(618, 170)
         grpDataView.Name = "grpDataView"
-        grpDataView.Padding = New Padding(4, 3, 4, 3)
-        grpDataView.Size = New Size(627, 601)
+        grpDataView.Size = New Size(450, 60)
         grpDataView.TabIndex = 2
         grpDataView.TabStop = False
-        grpDataView.Text = "Waste Records"
+        grpDataView.Text = "Actions"
         ' 
         ' btnExportExcel
         ' 
         btnExportExcel.BackColor = SystemColors.Control
-        btnExportExcel.Location = New Point(482, 24)
-        btnExportExcel.Margin = New Padding(4, 3, 4, 3)
+        btnExportExcel.Location = New Point(340, 22)
         btnExportExcel.Name = "btnExportExcel"
-        btnExportExcel.Size = New Size(105, 25)
+        btnExportExcel.Size = New Size(100, 25)
         btnExportExcel.TabIndex = 7
         btnExportExcel.Text = "Export to Excel"
         btnExportExcel.UseVisualStyleBackColor = False
@@ -753,10 +757,9 @@ Partial Class frmWasteManagement
         ' btnDelete
         ' 
         btnDelete.BackColor = SystemColors.Control
-        btnDelete.Location = New Point(380, 24)
-        btnDelete.Margin = New Padding(4, 3, 4, 3)
+        btnDelete.Location = New Point(120, 22)
         btnDelete.Name = "btnDelete"
-        btnDelete.Size = New Size(94, 25)
+        btnDelete.Size = New Size(100, 25)
         btnDelete.TabIndex = 6
         btnDelete.Text = "Delete"
         btnDelete.UseVisualStyleBackColor = False
@@ -764,48 +767,12 @@ Partial Class frmWasteManagement
         ' btnUpdate
         ' 
         btnUpdate.BackColor = SystemColors.Control
-        btnUpdate.Location = New Point(277, 24)
-        btnUpdate.Margin = New Padding(4, 3, 4, 3)
+        btnUpdate.Location = New Point(10, 22)
         btnUpdate.Name = "btnUpdate"
-        btnUpdate.Size = New Size(94, 25)
+        btnUpdate.Size = New Size(100, 25)
         btnUpdate.TabIndex = 5
         btnUpdate.Text = "Update"
         btnUpdate.UseVisualStyleBackColor = False
-        ' 
-        ' cmbFilter
-        ' 
-        cmbFilter.DropDownStyle = ComboBoxStyle.DropDownList
-        cmbFilter.FormattingEnabled = True
-        cmbFilter.Items.AddRange(New Object() {"All", "Non-Recycled", "Recycled", "Other Recycled", "Chemical"})
-        cmbFilter.Location = New Point(70, 25)
-        cmbFilter.Margin = New Padding(4, 3, 4, 3)
-        cmbFilter.Name = "cmbFilter"
-        cmbFilter.Size = New Size(174, 23)
-        cmbFilter.TabIndex = 4
-        ' 
-        ' lblFilter
-        ' 
-        lblFilter.AutoSize = True
-        lblFilter.Font = New Font("Microsoft Sans Serif", 10F)
-        lblFilter.Location = New Point(7, 28)
-        lblFilter.Margin = New Padding(4, 0, 4, 0)
-        lblFilter.Name = "lblFilter"
-        lblFilter.Size = New Size(43, 17)
-        lblFilter.TabIndex = 3
-        lblFilter.Text = "Filter:"
-        ' 
-        ' dgvWasteRecords
-        ' 
-        dgvWasteRecords.AllowUserToAddRows = False
-        dgvWasteRecords.AllowUserToDeleteRows = False
-        dgvWasteRecords.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgvWasteRecords.Location = New Point(7, 58)
-        dgvWasteRecords.Margin = New Padding(4, 3, 4, 3)
-        dgvWasteRecords.Name = "dgvWasteRecords"
-        dgvWasteRecords.RowHeadersWidth = 51
-        dgvWasteRecords.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        dgvWasteRecords.Size = New Size(612, 531)
-        dgvWasteRecords.TabIndex = 0
         ' 
         ' ofdDocuments
         ' 
@@ -816,27 +783,29 @@ Partial Class frmWasteManagement
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1199, 639)
+        ClientSize = New Size(1084, 441)
         Controls.Add(grpDataView)
         Controls.Add(grpCommon)
         Controls.Add(tabWasteCategories)
-        Margin = New Padding(4, 3, 4, 3)
         Name = "frmWasteManagement"
         StartPosition = FormStartPosition.CenterScreen
         Text = "ESG Waste Management System"
         tabWasteCategories.ResumeLayout(False)
         tpNonRecycled.ResumeLayout(False)
         tpNonRecycled.PerformLayout()
+        CType(dgvNonRecycled, ComponentModel.ISupportInitialize).EndInit()
         CType(numNonPolyethene, ComponentModel.ISupportInitialize).EndInit()
         CType(numNonPlastic, ComponentModel.ISupportInitialize).EndInit()
         tpRecycled.ResumeLayout(False)
         tpRecycled.PerformLayout()
+        CType(dgvRecycled, ComponentModel.ISupportInitialize).EndInit()
         CType(numRecPaper, ComponentModel.ISupportInitialize).EndInit()
         CType(numRecCardboard, ComponentModel.ISupportInitialize).EndInit()
         CType(numRecPlastic, ComponentModel.ISupportInitialize).EndInit()
         CType(numRecOtherPlastic, ComponentModel.ISupportInitialize).EndInit()
         tpOtherRecycled.ResumeLayout(False)
         tpOtherRecycled.PerformLayout()
+        CType(dgvOtherRecycled, ComponentModel.ISupportInitialize).EndInit()
         CType(numOrgFood, ComponentModel.ISupportInitialize).EndInit()
         CType(numCopper, ComponentModel.ISupportInitialize).EndInit()
         CType(numAluminium, ComponentModel.ISupportInitialize).EndInit()
@@ -844,14 +813,13 @@ Partial Class frmWasteManagement
         CType(numEWaste, ComponentModel.ISupportInitialize).EndInit()
         tpChemical.ResumeLayout(False)
         tpChemical.PerformLayout()
+        CType(dgvChemical, ComponentModel.ISupportInitialize).EndInit()
         CType(numChemLiquids, ComponentModel.ISupportInitialize).EndInit()
         CType(numChemPacking, ComponentModel.ISupportInitialize).EndInit()
         CType(numChemFabric, ComponentModel.ISupportInitialize).EndInit()
         grpCommon.ResumeLayout(False)
         grpCommon.PerformLayout()
         grpDataView.ResumeLayout(False)
-        grpDataView.PerformLayout()
-        CType(dgvWasteRecords, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
 
     End Sub
@@ -899,9 +867,6 @@ Partial Class frmWasteManagement
     Friend WithEvents btnSaveRecord As Button
     Friend WithEvents btnUploadDocuments As Button
     Friend WithEvents grpDataView As GroupBox
-    Friend WithEvents dgvWasteRecords As DataGridView
-    Friend WithEvents lblFilter As Label
-    Friend WithEvents cmbFilter As ComboBox
     Friend WithEvents btnExportExcel As Button
     Friend WithEvents btnDelete As Button
     Friend WithEvents btnUpdate As Button
@@ -917,5 +882,9 @@ Partial Class frmWasteManagement
     Friend WithEvents btnAddChemicalItem As Button
     Friend WithEvents flpChemicalItems As FlowLayoutPanel
     Friend WithEvents btnManageCollectors As Button
+    Friend WithEvents dgvNonRecycled As DataGridView
+    Friend WithEvents dgvRecycled As DataGridView
+    Friend WithEvents dgvOtherRecycled As DataGridView
+    Friend WithEvents dgvChemical As DataGridView
 
 End Class

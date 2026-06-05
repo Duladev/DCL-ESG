@@ -9,10 +9,10 @@ Public Class frmEmployee
     Private dtEmployees As New DataTable()
 
     Private Sub frmEmployee_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        AppTheme.Apply(Me)
+        'AppTheme.Apply(Me)
         LoadEmployeeData()
         SetupFilters()
-        AppTheme.StyleGroupBox(GroupBoxSearch)
+        'AppTheme.StyleGroupBox(GroupBoxSearch)
         SetupDetailsGroupBox()
 
         'Dim formImage = My.Resources.
@@ -412,4 +412,6 @@ Public Class frmEmployee
         End Try
     End Sub
 
+    Private Sub txtEmpID_TextChanged(sender As Object, e As EventArgs) Handles txtEmpID.TextChanged
+    End Sub
 End Class

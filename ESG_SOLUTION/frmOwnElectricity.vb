@@ -6,17 +6,16 @@ Public Class frmOwnElectricity
     Private currentEditID As Integer = -1
 
     Private Sub frmOwnElectricity_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' Configure DateTimePickers
+        SetupForm(Me)
+
         dtpYear.CustomFormat = "yyyy"
         dtpYear.ShowUpDown = True
         dtpMonth.CustomFormat = "MMMM"
         dtpMonth.ShowUpDown = True
 
-        ' Set default values
         dtpYear.Value = DateTime.Now
         dtpMonth.Value = DateTime.Now
 
-        ' Configure ComboBoxes
         cmbRenewableType.Items.AddRange(New String() {"Solar", "Wind Power", "Hydropower", "Geothermal", "Biomass Energy", "Wave Energy", "Green Hydrogen", "Tidal Energy"})
         cmbNonRenewableType.Items.AddRange(New String() {"Coal", "Natural Gas", "Oil", "Nuclear Energy", "Diesel", "Peat", "Shale Gas and Oil", "Tar Sand"})
 
@@ -24,19 +23,40 @@ Public Class frmOwnElectricity
         AddHandler txtNonRenewableCap.TextChanged, AddressOf CalculateSoldCapacity
         AddHandler txtTotalConsumed.TextChanged, AddressOf CalculateSoldCapacity
 
+        SetupFilters()
+        AddKeyPressHandlers(Me.Controls)
         LoadDataGridView()
     End Sub
 
+    Private Sub SetupFilters()
+        For year As Integer = 2020 To DateTime.Now.Year + 1
+            cmbYearFilter.Items.Add(year)
+        Next
+        cmbYearFilter.SelectedItem = DateTime.Now.Year
+
+        For month As Integer = 1 To 12
+            cmbMonthFilter.Items.Add(New DateTime(2000, month, 1).ToString("MMMM"))
+        Next
+        cmbMonthFilter.SelectedIndex = DateTime.Now.Month - 1
+    End Sub
+
+    'added'
+    Private Function GetSafeDecimal(inputText As String) As Decimal
+        Dim result As Decimal = 0
+        If Decimal.TryParse(inputText, result) Then
+            Return result
+        End If
+        Return 0
+    End Function
     Private Sub CalculateSoldCapacity(sender As Object, e As EventArgs)
         Try
-            Dim renewable As Decimal = If(String.IsNullOrEmpty(txtRenewableCap.Text), 0, Convert.ToDecimal(txtRenewableCap.Text))
-            Dim nonRenewable As Decimal = If(String.IsNullOrEmpty(txtNonRenewableCap.Text), 0, Convert.ToDecimal(txtNonRenewableCap.Text))
-            Dim consumed As Decimal = If(String.IsNullOrEmpty(txtTotalConsumed.Text), 0, Convert.ToDecimal(txtTotalConsumed.Text))
+            Dim renewable As Decimal = GetSafeDecimal(txtRenewableCap.Text)
+            Dim nonRenewable As Decimal = GetSafeDecimal(txtNonRenewableCap.Text)
+            Dim consumed As Decimal = GetSafeDecimal(txtTotalConsumed.Text)
 
             Dim sold As Decimal = (renewable + nonRenewable) - consumed
             txtSoldCapacity.Text = If(sold < 0, 0, sold).ToString("N2")
         Catch ex As Exception
-            ' Handle conversion errors silently
         End Try
     End Sub
 
@@ -55,16 +75,6 @@ Public Class frmOwnElectricity
             End If
         End Using
     End Sub
-
-    'decimal helper
-    Private Function GetSafeDecimal(inputText As String) As Decimal
-        Dim result As Decimal = 0
-        If Decimal.TryParse(inputText, result) Then
-            Return result
-        End If
-        Return 0
-    End Function
-
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         Try
@@ -86,7 +96,7 @@ Public Class frmOwnElectricity
 
                     Dim recordId = $"OwnElec_{dtpYear.Value.Year}_{dtpMonth.Value.Month}_{DateTime.Now.Ticks}"
                     Dim filesPath = SaveMultipleFiles(currentFiles, recordId, "OwnElectricity")
-                    cmd.Parameters.AddWithValue("@BillFiles", filesPath)
+                    cmd.Parameters.AddWithValue("@BillFiles", If(String.IsNullOrEmpty(filesPath), DBNull.Value, filesPath))
 
                     cmd.ExecuteNonQuery()
                 End Using
@@ -106,51 +116,105 @@ Public Class frmOwnElectricity
         Try
             Using conn As SqlConnection = GetConnection()
                 conn.Open()
-                Dim query As String = "SELECT ID, Year, Month, RenewableType, RenewableCapacity, NonRenewableType, NonRenewableCapacity, TotalConsumedCapacity, SoldCapacity, Comments, BillFilesPath FROM vw_ESG_OwnElectricity ORDER BY Year DESC, Month DESC"
+                Dim query As String = "SELECT ID, Year, Month, RenewableType, RenewableCapacity, NonRenewableType, NonRenewableCapacity, TotalConsumedCapacity, SoldCapacity, Comments, BillFilesPath FROM tbl_ESG_OwnElectricity ORDER BY Year DESC, Month DESC"
 
                 Dim da As New SqlDataAdapter(query, conn)
                 Dim dt As New DataTable()
                 da.Fill(dt)
 
-                grdData.DataSource = dt
+                Dim dv As New DataView(dt)
+                If cmbYearFilter.SelectedItem IsNot Nothing Then
+                    dv.RowFilter = $"Year = {cmbYearFilter.SelectedItem}"
+                End If
+                If cmbMonthFilter.SelectedIndex >= 0 Then
+                    Dim monthNum As Integer = cmbMonthFilter.SelectedIndex + 1
+                    dv.RowFilter = If(String.IsNullOrEmpty(dv.RowFilter), $"Month = {monthNum}", $"{dv.RowFilter} AND Month = {monthNum}")
+                End If
 
-                If grdData.Columns.Contains("BillFilesPath") AndAlso Not grdData.Columns.Contains("ViewFiles") Then
+                grdData.DataSource = dv
+
+                If Not grdData.Columns.Contains("ViewFiles") Then
                     Dim linkColumn As New DataGridViewLinkColumn()
                     linkColumn.Name = "ViewFiles"
                     linkColumn.HeaderText = "View Bills"
                     linkColumn.Text = "View Files"
                     linkColumn.UseColumnTextForLinkValue = True
                     grdData.Columns.Add(linkColumn)
+                End If
+
+                If grdData.Columns.Contains("BillFilesPath") Then
                     grdData.Columns("BillFilesPath").Visible = False
                 End If
+
+                grdData.ClearSelection()
             End Using
         Catch ex As Exception
             MessageBox.Show($"Error loading data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
-    Private Sub grdData_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles grdData.CellContentClick
+    Private Sub grdData_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles grdData.CellClick
         If e.RowIndex >= 0 Then
             If e.ColumnIndex >= 0 AndAlso grdData.Columns(e.ColumnIndex).Name = "ViewFiles" Then
-                Dim filesPath As String = grdData.Rows(e.RowIndex).Cells("BillFilesPath").Value.ToString()
-                If Not String.IsNullOrEmpty(filesPath) Then
-                    Dim files = GetFilesFromPath(filesPath)
-                    For Each file As String In files
-                        If System.IO.File.Exists(file) Then
-                            System.Diagnostics.Process.Start(file)
-                        Else
-                            MessageBox.Show($"File not found: {file}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                        End If
-                    Next
-                End If
+                ViewFiles(e.RowIndex)
             Else
-                currentEditID = Convert.ToInt32(grdData.Rows(e.RowIndex).Cells("ID").Value)
-                LoadDataToForm(grdData.Rows(e.RowIndex))
+                LoadDataToForm(e.RowIndex)
             End If
         End If
     End Sub
 
-    Private Sub LoadDataToForm(row As DataGridViewRow)
+    'Private Sub ViewFiles(rowIndex As Integer)
+    '    Dim filesPath As String = grdData.Rows(rowIndex).Cells("BillFilesPath").Value?.ToString()
+    '    If Not String.IsNullOrEmpty(filesPath) Then
+    '        Dim files = GetFilesFromPath(filesPath)
+    '        If files.Count > 0 Then
+    '            For Each file As String In files
+    '                If System.IO.File.Exists(file) Then
+    '                    System.Diagnostics.Process.Start(file)
+    '                Else
+    '                    MessageBox.Show($"File not found: {file}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+    '                End If
+    '            Next
+    '        Else
+    '            MessageBox.Show("No files available for this record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    '        End If
+    '    Else
+    '        MessageBox.Show("No files uploaded for this record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    '    End If
+    'End Sub
+
+    'view file fixed method
+    Private Sub ViewFiles(rowIndex As Integer)
+        Dim filesPath As String = grdData.Rows(rowIndex).Cells("BillFilesPath").Value?.ToString()
+        If Not String.IsNullOrEmpty(filesPath) Then
+            Dim files = GetFilesFromPath(filesPath)
+            If files.Count > 0 Then
+                For Each file As String In files
+                    If System.IO.File.Exists(file) Then
+                        Try
+                            Dim psi As New ProcessStartInfo()
+                            psi.FileName = file
+                            psi.UseShellExecute = True
+                            Process.Start(psi)
+                        Catch ex As Exception
+                            MessageBox.Show($"Error opening file '{Path.GetFileName(file)}': {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        End Try
+                    Else
+                        MessageBox.Show($"File not found: {file}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End If
+                Next
+            Else
+                MessageBox.Show("No files available for this record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+        Else
+            MessageBox.Show("No files uploaded for this record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+    End Sub
+
+    Private Sub LoadDataToForm(rowIndex As Integer)
+        Dim row As DataGridViewRow = grdData.Rows(rowIndex)
+        currentEditID = Convert.ToInt32(row.Cells("ID").Value)
+
         dtpYear.Value = New Date(Convert.ToInt32(row.Cells("Year").Value), 1, 1)
         dtpMonth.Value = New Date(DateTime.Now.Year, Convert.ToInt32(row.Cells("Month").Value), 1)
         cmbRenewableType.Text = row.Cells("RenewableType").Value.ToString()
@@ -182,11 +246,11 @@ Public Class frmOwnElectricity
                     cmd.Parameters.AddWithValue("@Year", dtpYear.Value.Year)
                     cmd.Parameters.AddWithValue("@Month", dtpMonth.Value.Month)
                     cmd.Parameters.AddWithValue("@RenewableType", cmbRenewableType.Text)
-                    cmd.Parameters.AddWithValue("@RenewableCap", Convert.ToDecimal(txtRenewableCap.Text))
+                    cmd.Parameters.AddWithValue("@RenewableCap", GetSafeDecimal(txtRenewableCap.Text))
                     cmd.Parameters.AddWithValue("@NonRenewableType", cmbNonRenewableType.Text)
-                    cmd.Parameters.AddWithValue("@NonRenewableCap", Convert.ToDecimal(txtNonRenewableCap.Text))
-                    cmd.Parameters.AddWithValue("@TotalConsumed", Convert.ToDecimal(txtTotalConsumed.Text))
-                    cmd.Parameters.AddWithValue("@SoldCapacity", Convert.ToDecimal(txtSoldCapacity.Text))
+                    cmd.Parameters.AddWithValue("@NonRenewableCap", GetSafeDecimal(txtNonRenewableCap.Text))
+                    cmd.Parameters.AddWithValue("@TotalConsumed", GetSafeDecimal(txtTotalConsumed.Text))
+                    cmd.Parameters.AddWithValue("@SoldCapacity", GetSafeDecimal(txtSoldCapacity.Text))
                     cmd.Parameters.AddWithValue("@Comments", txtComments.Text)
 
                     cmd.ExecuteNonQuery()
@@ -228,8 +292,27 @@ Public Class frmOwnElectricity
         End If
     End Sub
 
+    Private Sub btnRefresh_Click(sender As Object, e As EventArgs) Handles btnRefresh.Click
+        LoadDataGridView()
+        ClearForm()
+    End Sub
+
+    Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
+        ClearForm()
+    End Sub
+
+    Private Sub btnHome_Click(sender As Object, e As EventArgs) Handles btnHome.Click
+        Dim dashboard As New frmDashboard()
+        dashboard.Show()
+        Me.Close()
+    End Sub
+
     Private Sub btnExportExcel_Click(sender As Object, e As EventArgs) Handles btnExportExcel.Click
         ExportToExcel(grdData, "Own_Electricity_Data")
+    End Sub
+
+    Private Sub ApplyFilters(sender As Object, e As EventArgs) Handles cmbYearFilter.SelectedIndexChanged, cmbMonthFilter.SelectedIndexChanged
+        LoadDataGridView()
     End Sub
 
     Private Sub ClearForm()
@@ -239,8 +322,11 @@ Public Class frmOwnElectricity
         txtTotalConsumed.Clear()
         txtSoldCapacity.Clear()
         txtComments.Clear()
+        currentFiles.Clear()
+        lblFileCount.Text = "No files selected"
         btnUpdate.Enabled = False
         btnDelete.Enabled = False
         btnSave.Enabled = True
+        grdData.ClearSelection()
     End Sub
 End Class

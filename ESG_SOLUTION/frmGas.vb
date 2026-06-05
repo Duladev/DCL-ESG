@@ -6,19 +6,41 @@ Public Class frmGas
     Private currentEditID As Integer = -1
 
     Private Sub frmGas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' Configure DateTimePickers
+        SetupForm(Me)
+
         dtpYear.CustomFormat = "yyyy"
         dtpYear.ShowUpDown = True
         dtpMonth.CustomFormat = "MMMM"
         dtpMonth.ShowUpDown = True
 
-        ' Set default values
         dtpYear.Value = DateTime.Now
         dtpMonth.Value = DateTime.Now
 
+        SetupFilters()
         LoadGasTypes()
+        AddKeyPressHandlers(Me.Controls)
         LoadDataGridView()
     End Sub
+
+    Private Sub SetupFilters()
+        For year As Integer = 2020 To DateTime.Now.Year + 1
+            cmbYearFilter.Items.Add(year)
+        Next
+        cmbYearFilter.SelectedItem = DateTime.Now.Year
+
+        For month As Integer = 1 To 12
+            cmbMonthFilter.Items.Add(New DateTime(2000, month, 1).ToString("MMMM"))
+        Next
+        cmbMonthFilter.SelectedIndex = DateTime.Now.Month - 1
+    End Sub
+
+    Private Function GetSafeDecimal(inputText As String) As Decimal
+        Dim result As Decimal = 0
+        If Decimal.TryParse(inputText, result) Then
+            Return result
+        End If
+        Return 0
+    End Function
 
     Private Sub LoadGasTypes()
         Try
@@ -97,12 +119,12 @@ Public Class frmGas
                     cmd.Parameters.AddWithValue("@Year", dtpYear.Value.Year)
                     cmd.Parameters.AddWithValue("@Month", dtpMonth.Value.Month)
                     cmd.Parameters.AddWithValue("@GasType", cmbGasType.Text)
-                    cmd.Parameters.AddWithValue("@Quantity", Convert.ToDecimal(txtQuantity.Text))
-                    cmd.Parameters.AddWithValue("@Amount", Convert.ToDecimal(txtAmount.Text))
+                    cmd.Parameters.AddWithValue("@Quantity", GetSafeDecimal(txtQuantity.Text))
+                    cmd.Parameters.AddWithValue("@Amount", GetSafeDecimal(txtAmount.Text))
 
                     Dim recordId = $"Gas_{cmbGasType.Text}_{dtpYear.Value.Year}_{dtpMonth.Value.Month}_{DateTime.Now.Ticks}"
                     Dim filesPath = SaveMultipleFiles(currentFiles, recordId, "Gas")
-                    cmd.Parameters.AddWithValue("@BillFiles", filesPath)
+                    cmd.Parameters.AddWithValue("@BillFiles", If(String.IsNullOrEmpty(filesPath), DBNull.Value, filesPath))
 
                     cmd.ExecuteNonQuery()
                 End Using
@@ -122,30 +144,44 @@ Public Class frmGas
         Try
             Using conn As SqlConnection = GetConnection()
                 conn.Open()
-                Dim query As String = "SELECT ID, Year, Month, GasType, Quantity, Amount, BillFilesPath FROM vw_ESG_Gas ORDER BY Year DESC, Month DESC"
+                Dim query As String = "SELECT ID, Year, Month, GasType, Quantity, Amount, BillFilesPath FROM tbl_ESG_Gas ORDER BY Year DESC, Month DESC"
 
                 Dim da As New SqlDataAdapter(query, conn)
                 Dim dt As New DataTable()
                 da.Fill(dt)
 
-                ' Apply filter
-                If cmbGasFilter.SelectedItem IsNot Nothing AndAlso cmbGasFilter.SelectedItem.ToString() <> "All" Then
-                    Dim dv As New DataView(dt)
-                    dv.RowFilter = $"GasType = '{cmbGasFilter.SelectedItem.ToString()}'"
-                    grdData.DataSource = dv
-                Else
-                    grdData.DataSource = dt
+                Dim dv As New DataView(dt)
+
+                ' Apply filters
+                If cmbYearFilter.SelectedItem IsNot Nothing Then
+                    dv.RowFilter = $"Year = {cmbYearFilter.SelectedItem}"
+                End If
+                If cmbMonthFilter.SelectedIndex >= 0 Then
+                    Dim monthNum As Integer = cmbMonthFilter.SelectedIndex + 1
+                    dv.RowFilter = If(String.IsNullOrEmpty(dv.RowFilter), $"Month = {monthNum}", $"{dv.RowFilter} AND Month = {monthNum}")
                 End If
 
-                If grdData.Columns.Contains("BillFilesPath") AndAlso Not grdData.Columns.Contains("ViewFiles") Then
+                ' Apply gas type filter
+                If cmbGasFilter.SelectedItem IsNot Nothing AndAlso cmbGasFilter.SelectedItem.ToString() <> "All" Then
+                    dv.RowFilter = If(String.IsNullOrEmpty(dv.RowFilter), $"GasType = '{cmbGasFilter.SelectedItem.ToString()}'", $"{dv.RowFilter} AND GasType = '{cmbGasFilter.SelectedItem.ToString()}'")
+                End If
+
+                grdData.DataSource = dv
+
+                If Not grdData.Columns.Contains("ViewFiles") Then
                     Dim linkColumn As New DataGridViewLinkColumn()
                     linkColumn.Name = "ViewFiles"
                     linkColumn.HeaderText = "View Bills"
                     linkColumn.Text = "View Files"
                     linkColumn.UseColumnTextForLinkValue = True
                     grdData.Columns.Add(linkColumn)
+                End If
+
+                If grdData.Columns.Contains("BillFilesPath") Then
                     grdData.Columns("BillFilesPath").Visible = False
                 End If
+
+                grdData.ClearSelection()
             End Using
         Catch ex As Exception
             MessageBox.Show($"Error loading data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -156,28 +192,68 @@ Public Class frmGas
         LoadDataGridView()
     End Sub
 
-    Private Sub grdData_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles grdData.CellContentClick
+    Private Sub grdData_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles grdData.CellClick
         If e.RowIndex >= 0 Then
             If e.ColumnIndex >= 0 AndAlso grdData.Columns(e.ColumnIndex).Name = "ViewFiles" Then
-                Dim filesPath As String = grdData.Rows(e.RowIndex).Cells("BillFilesPath").Value.ToString()
-                If Not String.IsNullOrEmpty(filesPath) Then
-                    Dim files = GetFilesFromPath(filesPath)
-                    For Each file As String In files
-                        If System.IO.File.Exists(file) Then
-                            System.Diagnostics.Process.Start(file)
-                        Else
-                            MessageBox.Show($"File not found: {file}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                        End If
-                    Next
-                End If
+                ViewFiles(e.RowIndex)
             Else
-                currentEditID = Convert.ToInt32(grdData.Rows(e.RowIndex).Cells("ID").Value)
-                LoadDataToForm(grdData.Rows(e.RowIndex))
+                LoadDataToForm(e.RowIndex)
             End If
         End If
     End Sub
 
-    Private Sub LoadDataToForm(row As DataGridViewRow)
+    'Private Sub ViewFiles(rowIndex As Integer)
+    '    Dim filesPath As String = grdData.Rows(rowIndex).Cells("BillFilesPath").Value?.ToString()
+    '    If Not String.IsNullOrEmpty(filesPath) Then
+    '        Dim files = GetFilesFromPath(filesPath)
+    '        If files.Count > 0 Then
+    '            For Each file As String In files
+    '                If System.IO.File.Exists(file) Then
+    '                    System.Diagnostics.Process.Start(file)
+    '                Else
+    '                    MessageBox.Show($"File not found: {file}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+    '                End If
+    '            Next
+    '        Else
+    '            MessageBox.Show("No files available for this record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    '        End If
+    '    Else
+    '        MessageBox.Show("No files uploaded for this record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    '    End If
+    'End Sub
+
+    'vew file fixed method
+    Private Sub ViewFiles(rowIndex As Integer)
+        Dim filesPath As String = grdData.Rows(rowIndex).Cells("BillFilesPath").Value?.ToString()
+        If Not String.IsNullOrEmpty(filesPath) Then
+            Dim files = GetFilesFromPath(filesPath)
+            If files.Count > 0 Then
+                For Each file As String In files
+                    If System.IO.File.Exists(file) Then
+                        Try
+                            Dim psi As New ProcessStartInfo()
+                            psi.FileName = file
+                            psi.UseShellExecute = True
+                            Process.Start(psi)
+                        Catch ex As Exception
+                            MessageBox.Show($"Error opening file '{Path.GetFileName(file)}': {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        End Try
+                    Else
+                        MessageBox.Show($"File not found: {file}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End If
+                Next
+            Else
+                MessageBox.Show("No files available for this record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+        Else
+            MessageBox.Show("No files uploaded for this record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+    End Sub
+
+    Private Sub LoadDataToForm(rowIndex As Integer)
+        Dim row As DataGridViewRow = grdData.Rows(rowIndex)
+        currentEditID = Convert.ToInt32(row.Cells("ID").Value)
+
         dtpYear.Value = New Date(Convert.ToInt32(row.Cells("Year").Value), 1, 1)
         dtpMonth.Value = New Date(DateTime.Now.Year, Convert.ToInt32(row.Cells("Month").Value), 1)
         cmbGasType.Text = row.Cells("GasType").Value.ToString()
@@ -205,8 +281,8 @@ Public Class frmGas
                     cmd.Parameters.AddWithValue("@Year", dtpYear.Value.Year)
                     cmd.Parameters.AddWithValue("@Month", dtpMonth.Value.Month)
                     cmd.Parameters.AddWithValue("@GasType", cmbGasType.Text)
-                    cmd.Parameters.AddWithValue("@Quantity", Convert.ToDecimal(txtQuantity.Text))
-                    cmd.Parameters.AddWithValue("@Amount", Convert.ToDecimal(txtAmount.Text))
+                    cmd.Parameters.AddWithValue("@Quantity", GetSafeDecimal(txtQuantity.Text))
+                    cmd.Parameters.AddWithValue("@Amount", GetSafeDecimal(txtAmount.Text))
 
                     cmd.ExecuteNonQuery()
                 End Using
@@ -247,16 +323,42 @@ Public Class frmGas
         End If
     End Sub
 
+    Private Sub btnRefresh_Click(sender As Object, e As EventArgs) Handles btnRefresh.Click
+        LoadDataGridView()
+        ClearForm()
+    End Sub
+
+    Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
+        ClearForm()
+    End Sub
+
+    Private Sub btnHome_Click(sender As Object, e As EventArgs) Handles btnHome.Click
+        Dim dashboard As New frmDashboard()
+        dashboard.Show()
+        Me.Close()
+    End Sub
+
     Private Sub btnExportExcel_Click(sender As Object, e As EventArgs) Handles btnExportExcel.Click
         ExportToExcel(grdData, "Gas_Data")
+    End Sub
+
+    Private Sub ApplyFilters(sender As Object, e As EventArgs) Handles cmbYearFilter.SelectedIndexChanged, cmbMonthFilter.SelectedIndexChanged
+        LoadDataGridView()
     End Sub
 
     Private Sub ClearForm()
         currentEditID = -1
         txtQuantity.Clear()
         txtAmount.Clear()
+        currentFiles.Clear()
+        lblFileCount.Text = "No files selected"
         btnUpdate.Enabled = False
         btnDelete.Enabled = False
         btnSave.Enabled = True
+        grdData.ClearSelection()
+    End Sub
+
+    Private Sub lblFileCount_Click(sender As Object, e As EventArgs) Handles lblFileCount.Click
+
     End Sub
 End Class

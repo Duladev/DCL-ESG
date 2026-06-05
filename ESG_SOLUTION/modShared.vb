@@ -2,117 +2,218 @@
 Imports System.IO
 Imports System.Windows.Forms
 
-Module modShared
-    ' existing connection string
-    Public connString As String = "Server=DCL-ICT-007\DEVELOPER;Database=ESG;Integrated Security=True;"
-    Public uploadFolderPath As String = "C:\ESG_Uploads\"
+Module ModShared
+    Public connString As String = "Data Source=DCL-ICT-007\DEVELOPER;Initial Catalog=ESG;Integrated Security=True"
+    Public baseFolderPath As String = "D:\Environment project\Upload"
 
     Public Function GetConnection() As SqlConnection
         Return New SqlConnection(connString)
     End Function
 
-    Public Sub EnsureUploadFolder()
-        If Not Directory.Exists(uploadFolderPath) Then
-            Directory.CreateDirectory(uploadFolderPath)
+    Public Function SaveMultipleFiles(files As List(Of String), recordId As String, category As String) As String
+        If files Is Nothing OrElse files.Count = 0 Then
+            Return ""
         End If
-    End Sub
 
-    Public Function SaveMultipleFiles(files As List(Of String), recordIdentifier As String, category As String) As String
-        EnsureUploadFolder()
+        Dim categoryFolder As String = Path.Combine(baseFolderPath, category)
+        If Not Directory.Exists(categoryFolder) Then
+            Directory.CreateDirectory(categoryFolder)
+        End If
+
+        Dim recordFolder As String = Path.Combine(categoryFolder, recordId)
+        If Not Directory.Exists(recordFolder) Then
+            Directory.CreateDirectory(recordFolder)
+        End If
+
         Dim savedPaths As New List(Of String)
 
         For Each filePath As String In files
-            Dim fileName As String = $"{category}_{recordIdentifier}_{DateTime.Now.Ticks}_{Path.GetFileName(filePath)}"
-            Dim destPath As String = Path.Combine(uploadFolderPath, fileName)
-            File.Copy(filePath, destPath, True)
+            Dim fileName As String = Path.GetFileName(filePath)
+            Dim destPath As String = Path.Combine(recordFolder, fileName)
+            Dim counter As Integer = 1
+
+            While File.Exists(destPath)
+                Dim nameWithoutExt As String = Path.GetFileNameWithoutExtension(fileName)
+                Dim ext As String = Path.GetExtension(fileName)
+                destPath = Path.Combine(recordFolder, $"{nameWithoutExt}_{counter}{ext}")
+                counter += 1
+            End While
+
+            File.Copy(filePath, destPath, False)
             savedPaths.Add(destPath)
         Next
 
         Return String.Join("|", savedPaths)
     End Function
 
-    Public Function GetFilesFromPath(pathsString As String) As List(Of String)
-        Dim files As New List(Of String)
-        If Not String.IsNullOrEmpty(pathsString) Then
-            files.AddRange(pathsString.Split("|"c))
+    Public Function GetSafeDecimal(inputText As String) As Decimal
+        Dim result As Decimal = 0
+        If Decimal.TryParse(inputText, result) Then
+            Return result
         End If
-        Return files
+        Return 0
+    End Function
+
+    Public Function GetFilesFromPath(paths As String) As List(Of String)
+        Dim fileList As New List(Of String)
+
+        If String.IsNullOrEmpty(paths) Then
+            Return fileList
+        End If
+
+        For Each path As String In paths.Split("|"c)
+            If File.Exists(path) Then
+                fileList.Add(path)
+            End If
+        Next
+
+        Return fileList
     End Function
 
     Public Sub ExportToExcel(grid As DataGridView, fileName As String)
-        Using sfd As New SaveFileDialog()
-            sfd.Filter = "Excel Files|*.xlsx|CSV Files|*.csv"
-            sfd.FileName = $"{fileName}_{DateTime.Now:yyyyMMdd_HHmmss}"
+        Try
+            Dim saveFileDialog As New SaveFileDialog()
+            saveFileDialog.Filter = "Excel Files|*.xlsx"
+            saveFileDialog.Title = "Export to Excel"
+            saveFileDialog.FileName = $"{fileName}_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx"
 
-            If sfd.ShowDialog() = DialogResult.OK Then
-                Try
-                    Dim csvContent As String = ""
+            If saveFileDialog.ShowDialog() = DialogResult.OK Then
+                ' Create Excel application
+                Dim excelApp As Object = CreateObject("Excel.Application")
+                Dim workbook As Object = excelApp.Workbooks.Add()
+                Dim worksheet As Object = workbook.Worksheets(1)
 
-                    ' Headers
-                    For i As Integer = 0 To grid.Columns.Count - 1
-                        If grid.Columns(i).Visible AndAlso grid.Columns(i).Name <> "ViewFiles" Then
-                            csvContent &= """" & grid.Columns(i).HeaderText & """"
-                            If i < grid.Columns.Count - 1 Then csvContent &= ","
+                ' Add headers
+                For col As Integer = 0 To grid.Columns.Count - 1
+                    If grid.Columns(col).Visible AndAlso grid.Columns(col).Name <> "ViewFiles" Then
+                        worksheet.Cells(1, col + 1) = grid.Columns(col).HeaderText
+                    End If
+                Next
+
+                ' Add data
+                Dim visibleColIndex As Integer = 1
+                For row As Integer = 0 To grid.Rows.Count - 1
+                    visibleColIndex = 1
+                    For col As Integer = 0 To grid.Columns.Count - 1
+                        If grid.Columns(col).Visible AndAlso grid.Columns(col).Name <> "ViewFiles" Then
+                            worksheet.Cells(row + 2, visibleColIndex) = grid.Rows(row).Cells(col).Value?.ToString()
+                            visibleColIndex += 1
                         End If
                     Next
-                    csvContent &= vbCrLf
+                Next
 
-                    ' Data
-                    For Each row As DataGridViewRow In grid.Rows
-                        If Not row.IsNewRow Then
-                            For i As Integer = 0 To grid.Columns.Count - 1
-                                If grid.Columns(i).Visible AndAlso grid.Columns(i).Name <> "ViewFiles" Then
-                                    Dim value As String = If(row.Cells(i).Value Is Nothing, "", row.Cells(i).Value.ToString().Replace("""", """"""))
-                                    csvContent &= """" & value & """"
-                                    If i < grid.Columns.Count - 1 Then csvContent &= ","
-                                End If
-                            Next
-                            csvContent &= vbCrLf
-                        End If
-                    Next
+                ' Auto-fit columns
+                worksheet.Columns.AutoFit()
 
-                    File.WriteAllText(sfd.FileName, csvContent)
-                    MessageBox.Show($"Data exported successfully to {sfd.FileName}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Catch ex As Exception
-                    MessageBox.Show($"Error exporting data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                End Try
+                ' Save and close
+                workbook.SaveAs(saveFileDialog.FileName)
+                workbook.Close()
+                excelApp.Quit()
+
+                ' Release COM objects
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(worksheet)
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook)
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp)
+
+                MessageBox.Show($"Data exported successfully to {saveFileDialog.FileName}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
-        End Using
+        Catch ex As Exception
+            MessageBox.Show($"Error exporting to Excel: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
-    ' Additional helper methods for ESG application
+    Public Sub ApplyBackground(form As Form, imagePath As String)
+        Try
+            If File.Exists(imagePath) Then
+                form.BackgroundImage = Image.FromFile(imagePath)
+                form.BackgroundImageLayout = ImageLayout.Stretch
+            End If
+        Catch ex As Exception
+            ' Silently fail if background image can't be loaded
+        End Try
+    End Sub
+    ' Add this function to ModShared.vb
+    Public Sub OpenFileWithDefaultApp(filePath As String)
+        Try
+            If Not System.IO.File.Exists(filePath) Then
+                MessageBox.Show($"File not found: {filePath}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return
+            End If
 
-    Public Sub ClearFormControls(ByVal container As Control)
-        For Each ctrl As Control In container.Controls
+            Dim psi As New ProcessStartInfo()
+            psi.FileName = filePath
+            psi.UseShellExecute = True
+            Process.Start(psi)
+        Catch ex As Exception
+            MessageBox.Show($"Error opening file: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Public Sub OpenMultipleFiles(files As List(Of String))
+        For Each file As String In files
+            OpenFileWithDefaultApp(file)
+        Next
+    End Sub
+
+    'Public Sub SetupForm(form As Form)
+    '    form.SetStyle(ControlStyles.SupportsTransparentBackColor, True)
+    '    form.BackColor = Color.Transparent
+    '    ApplyBackground(form, Application.StartupPath & "F:\DCL-ESG\ESG_SOLUTION\1.jpg")
+    'End Sub
+
+    'test
+    Public Sub SetupForm(form As Form)
+        ' Use Reflection to access the Protected SetStyle method
+        Dim method As System.Reflection.MethodInfo = GetType(Control).GetMethod("SetStyle",
+        System.Reflection.BindingFlags.NonPublic Or System.Reflection.BindingFlags.Instance)
+
+        If method IsNot Nothing Then
+            method.Invoke(form, New Object() {ControlStyles.SupportsTransparentBackColor, True})
+        End If
+
+        form.BackColor = Color.Transparent
+
+        ' FIX: Removed Application.StartupPath because you are using an absolute path (F:\)
+        'ApplyBackground(form, "F:\DCL-ESG\ESG_SOLUTION\1.jpg")
+    End Sub
+
+    'end test
+    Public Sub AddKeyPressHandlers(container As Control.ControlCollection)
+        For Each ctrl As Control In container
             If TypeOf ctrl Is TextBox Then
-                ctrl.Text = ""
-            ElseIf TypeOf ctrl Is NumericUpDown Then
-                DirectCast(ctrl, NumericUpDown).Value = 0
-            ElseIf TypeOf ctrl Is DateTimePicker Then
-                DirectCast(ctrl, DateTimePicker).Value = DateTime.Now
-            ElseIf TypeOf ctrl Is ComboBox Then
-                If DirectCast(ctrl, ComboBox).Items.Count > 0 Then
-                    DirectCast(ctrl, ComboBox).SelectedIndex = 0
-                End If
-            ElseIf TypeOf ctrl Is GroupBox Then
-                ClearFormControls(ctrl)
-            ElseIf TypeOf ctrl Is TabPage Then
-                ClearFormControls(ctrl)
-            ElseIf TypeOf ctrl Is Panel Then
-                ClearFormControls(ctrl)
+                AddHandler ctrl.KeyPress, AddressOf TextBox_KeyPress
+            ElseIf ctrl.HasChildren Then
+                AddKeyPressHandlers(ctrl.Controls)
             End If
         Next
     End Sub
 
-    Public Function ValidateDateRange(ByVal startDate As DateTime, ByVal endDate As DateTime) As Boolean
-        Return startDate <= endDate
-    End Function
+    Private Sub TextBox_KeyPress(sender As Object, e As KeyPressEventArgs)
+        If e.KeyChar = Convert.ToChar(13) Then ' Enter key
+            SendKeys.Send("{TAB}")
+            e.Handled = True
+        End If
+    End Sub
 
-    Public Function GetCurrentMonthYear() As String
-        Return DateTime.Now.ToString("MMMM yyyy")
-    End Function
+    'new opening function
+    ' Add this function to ModShared.vb
+    Public Sub OpenFileWithDefaultProgram(filePath As String)
+        Try
+            If Not System.IO.File.Exists(filePath) Then
+                MessageBox.Show($"File not found: {filePath}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return
+            End If
 
-    Public Function GetMonthName(ByVal month As Integer) As String
-        Return New DateTime(DateTime.Now.Year, month, 1).ToString("MMMM")
-    End Function
+            ' Use System.Diagnostics.Process with UseShellExecute = True
+            Dim psi As New ProcessStartInfo()
+            psi.FileName = filePath
+            psi.UseShellExecute = True
+
+            Process.Start(psi)
+        Catch ex As Exception
+            MessageBox.Show($"Error opening file: {ex.Message}{Environment.NewLine}File: {filePath}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    ' Update the ViewFiles function in each form to use this new method
 End Module

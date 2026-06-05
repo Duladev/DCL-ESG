@@ -41,6 +41,9 @@ Partial Class frmPaper
         lblMonth = New Label()
         lblYear = New Label()
         grpButtons = New GroupBox()
+        btnHome = New Button()
+        btnClear = New Button()
+        btnRefresh = New Button()
         btnExportExcel = New Button()
         btnDelete = New Button()
         btnUpdate = New Button()
@@ -48,14 +51,18 @@ Partial Class frmPaper
         btnUploadBill = New Button()
         lblFileCount = New Label()
         grpFilter = New GroupBox()
-        cmbPlasticTypeFilter = New ComboBox()
-        lblTypeFilter = New Label()
         cmbPaperCategoryFilter = New ComboBox()
         lblCategoryFilter = New Label()
+        grpDateFilters = New GroupBox()
+        lblYearFilter = New Label()
+        cmbYearFilter = New ComboBox()
+        lblMonthFilter = New Label()
+        cmbMonthFilter = New ComboBox()
         grdData = New DataGridView()
         grpInput.SuspendLayout()
         grpButtons.SuspendLayout()
         grpFilter.SuspendLayout()
+        grpDateFilters.SuspendLayout()
         CType(grdData, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -83,11 +90,9 @@ Partial Class frmPaper
         grpInput.Controls.Add(dtpYear)
         grpInput.Controls.Add(lblMonth)
         grpInput.Controls.Add(lblYear)
-        grpInput.Location = New Point(10, 9)
-        grpInput.Margin = New Padding(3, 2, 3, 2)
+        grpInput.Location = New Point(12, 12)
         grpInput.Name = "grpInput"
-        grpInput.Padding = New Padding(3, 2, 3, 2)
-        grpInput.Size = New Size(662, 210)
+        grpInput.Size = New Size(620, 210)
         grpInput.TabIndex = 0
         grpInput.TabStop = False
         grpInput.Text = "Paper Inventory Entry"
@@ -95,15 +100,14 @@ Partial Class frmPaper
         ' txtComments
         ' 
         txtComments.Location = New Point(140, 180)
-        txtComments.Margin = New Padding(3, 2, 3, 2)
         txtComments.Name = "txtComments"
-        txtComments.Size = New Size(506, 23)
+        txtComments.Size = New Size(460, 23)
         txtComments.TabIndex = 21
         ' 
         ' lblComments
         ' 
         lblComments.AutoSize = True
-        lblComments.Location = New Point(16, 182)
+        lblComments.Location = New Point(16, 183)
         lblComments.Name = "lblComments"
         lblComments.Size = New Size(69, 15)
         lblComments.TabIndex = 20
@@ -114,15 +118,14 @@ Partial Class frmPaper
         txtTotalCost.BackColor = Color.LightGray
         txtTotalCost.Enabled = False
         txtTotalCost.Location = New Point(528, 150)
-        txtTotalCost.Margin = New Padding(3, 2, 3, 2)
         txtTotalCost.Name = "txtTotalCost"
-        txtTotalCost.Size = New Size(118, 23)
+        txtTotalCost.Size = New Size(72, 23)
         txtTotalCost.TabIndex = 19
         ' 
         ' lblTotalCost
         ' 
         lblTotalCost.AutoSize = True
-        lblTotalCost.Location = New Point(452, 152)
+        lblTotalCost.Location = New Point(452, 153)
         lblTotalCost.Name = "lblTotalCost"
         lblTotalCost.Size = New Size(63, 15)
         lblTotalCost.TabIndex = 18
@@ -130,16 +133,15 @@ Partial Class frmPaper
         ' 
         ' txtPricePerUnit
         ' 
-        txtPricePerUnit.Location = New Point(312, 149)
-        txtPricePerUnit.Margin = New Padding(3, 2, 3, 2)
+        txtPricePerUnit.Location = New Point(312, 150)
         txtPricePerUnit.Name = "txtPricePerUnit"
-        txtPricePerUnit.Size = New Size(102, 23)
+        txtPricePerUnit.Size = New Size(118, 23)
         txtPricePerUnit.TabIndex = 17
         ' 
         ' lblPricePerUnit
         ' 
         lblPricePerUnit.AutoSize = True
-        lblPricePerUnit.Location = New Point(218, 152)
+        lblPricePerUnit.Location = New Point(218, 153)
         lblPricePerUnit.Name = "lblPricePerUnit"
         lblPricePerUnit.Size = New Size(81, 15)
         lblPricePerUnit.TabIndex = 16
@@ -150,7 +152,6 @@ Partial Class frmPaper
         txtPurchasedScale.BackColor = Color.LightGray
         txtPurchasedScale.Enabled = False
         txtPurchasedScale.Location = New Point(140, 150)
-        txtPurchasedScale.Margin = New Padding(3, 2, 3, 2)
         txtPurchasedScale.Name = "txtPurchasedScale"
         txtPurchasedScale.Size = New Size(64, 23)
         txtPurchasedScale.TabIndex = 15
@@ -158,7 +159,7 @@ Partial Class frmPaper
         ' lblPurchasedScale
         ' 
         lblPurchasedScale.AutoSize = True
-        lblPurchasedScale.Location = New Point(16, 152)
+        lblPurchasedScale.Location = New Point(16, 153)
         lblPurchasedScale.Name = "lblPurchasedScale"
         lblPurchasedScale.Size = New Size(95, 15)
         lblPurchasedScale.TabIndex = 14
@@ -169,15 +170,14 @@ Partial Class frmPaper
         txtWeightPerUnit.BackColor = Color.LightGray
         txtWeightPerUnit.Enabled = False
         txtWeightPerUnit.Location = New Point(528, 120)
-        txtWeightPerUnit.Margin = New Padding(3, 2, 3, 2)
         txtWeightPerUnit.Name = "txtWeightPerUnit"
-        txtWeightPerUnit.Size = New Size(118, 23)
+        txtWeightPerUnit.Size = New Size(72, 23)
         txtWeightPerUnit.TabIndex = 13
         ' 
         ' lblWeightPerUnit
         ' 
         lblWeightPerUnit.AutoSize = True
-        lblWeightPerUnit.Location = New Point(436, 122)
+        lblWeightPerUnit.Location = New Point(436, 123)
         lblWeightPerUnit.Name = "lblWeightPerUnit"
         lblWeightPerUnit.Size = New Size(93, 15)
         lblWeightPerUnit.TabIndex = 12
@@ -186,7 +186,6 @@ Partial Class frmPaper
         ' txtUnitCount
         ' 
         txtUnitCount.Location = New Point(312, 120)
-        txtUnitCount.Margin = New Padding(3, 2, 3, 2)
         txtUnitCount.Name = "txtUnitCount"
         txtUnitCount.Size = New Size(102, 23)
         txtUnitCount.TabIndex = 11
@@ -194,7 +193,7 @@ Partial Class frmPaper
         ' lblUnitCount
         ' 
         lblUnitCount.AutoSize = True
-        lblUnitCount.Location = New Point(218, 122)
+        lblUnitCount.Location = New Point(218, 123)
         lblUnitCount.Name = "lblUnitCount"
         lblUnitCount.Size = New Size(98, 15)
         lblUnitCount.TabIndex = 10
@@ -205,7 +204,6 @@ Partial Class frmPaper
         txtUnitType.BackColor = Color.LightGray
         txtUnitType.Enabled = False
         txtUnitType.Location = New Point(140, 120)
-        txtUnitType.Margin = New Padding(3, 2, 3, 2)
         txtUnitType.Name = "txtUnitType"
         txtUnitType.Size = New Size(64, 23)
         txtUnitType.TabIndex = 9
@@ -213,7 +211,7 @@ Partial Class frmPaper
         ' lblUnitType
         ' 
         lblUnitType.AutoSize = True
-        lblUnitType.Location = New Point(16, 122)
+        lblUnitType.Location = New Point(16, 123)
         lblUnitType.Name = "lblUnitType"
         lblUnitType.Size = New Size(60, 15)
         lblUnitType.TabIndex = 8
@@ -224,7 +222,6 @@ Partial Class frmPaper
         cmbProductType.DropDownStyle = ComboBoxStyle.DropDownList
         cmbProductType.FormattingEnabled = True
         cmbProductType.Location = New Point(312, 90)
-        cmbProductType.Margin = New Padding(3, 2, 3, 2)
         cmbProductType.Name = "cmbProductType"
         cmbProductType.Size = New Size(156, 23)
         cmbProductType.TabIndex = 7
@@ -232,7 +229,7 @@ Partial Class frmPaper
         ' lblProductType
         ' 
         lblProductType.AutoSize = True
-        lblProductType.Location = New Point(218, 92)
+        lblProductType.Location = New Point(218, 93)
         lblProductType.Name = "lblProductType"
         lblProductType.Size = New Size(80, 15)
         lblProductType.TabIndex = 6
@@ -243,7 +240,6 @@ Partial Class frmPaper
         cmbProductCategory.DropDownStyle = ComboBoxStyle.DropDownList
         cmbProductCategory.FormattingEnabled = True
         cmbProductCategory.Location = New Point(140, 90)
-        cmbProductCategory.Margin = New Padding(3, 2, 3, 2)
         cmbProductCategory.Name = "cmbProductCategory"
         cmbProductCategory.Size = New Size(64, 23)
         cmbProductCategory.TabIndex = 5
@@ -251,7 +247,7 @@ Partial Class frmPaper
         ' lblProductCategory
         ' 
         lblProductCategory.AutoSize = True
-        lblProductCategory.Location = New Point(16, 92)
+        lblProductCategory.Location = New Point(16, 93)
         lblProductCategory.Name = "lblProductCategory"
         lblProductCategory.Size = New Size(103, 15)
         lblProductCategory.TabIndex = 4
@@ -262,7 +258,6 @@ Partial Class frmPaper
         dtpMonth.CustomFormat = "MMMM"
         dtpMonth.Format = DateTimePickerFormat.Custom
         dtpMonth.Location = New Point(436, 26)
-        dtpMonth.Margin = New Padding(3, 2, 3, 2)
         dtpMonth.Name = "dtpMonth"
         dtpMonth.ShowUpDown = True
         dtpMonth.Size = New Size(94, 23)
@@ -273,7 +268,6 @@ Partial Class frmPaper
         dtpYear.CustomFormat = "yyyy"
         dtpYear.Format = DateTimePickerFormat.Custom
         dtpYear.Location = New Point(178, 26)
-        dtpYear.Margin = New Padding(3, 2, 3, 2)
         dtpYear.Name = "dtpYear"
         dtpYear.ShowUpDown = True
         dtpYear.Size = New Size(78, 23)
@@ -282,7 +276,7 @@ Partial Class frmPaper
         ' lblMonth
         ' 
         lblMonth.AutoSize = True
-        lblMonth.Location = New Point(374, 28)
+        lblMonth.Location = New Point(384, 28)
         lblMonth.Name = "lblMonth"
         lblMonth.Size = New Size(46, 15)
         lblMonth.TabIndex = 1
@@ -299,30 +293,66 @@ Partial Class frmPaper
         ' 
         ' grpButtons
         ' 
+        grpButtons.Controls.Add(btnHome)
+        grpButtons.Controls.Add(btnClear)
+        grpButtons.Controls.Add(btnRefresh)
         grpButtons.Controls.Add(btnExportExcel)
         grpButtons.Controls.Add(btnDelete)
         grpButtons.Controls.Add(btnUpdate)
         grpButtons.Controls.Add(btnSave)
         grpButtons.Controls.Add(btnUploadBill)
         grpButtons.Controls.Add(lblFileCount)
-        grpButtons.Location = New Point(676, 9)
-        grpButtons.Margin = New Padding(3, 2, 3, 2)
+        grpButtons.Location = New Point(638, 12)
         grpButtons.Name = "grpButtons"
-        grpButtons.Padding = New Padding(3, 2, 3, 2)
-        grpButtons.Size = New Size(242, 210)
+        grpButtons.Size = New Size(280, 210)
         grpButtons.TabIndex = 1
         grpButtons.TabStop = False
         grpButtons.Text = "Actions"
+        ' 
+        ' btnHome
+        ' 
+        btnHome.BackColor = SystemColors.AppWorkspace
+        btnHome.FlatStyle = FlatStyle.Flat
+        btnHome.ForeColor = Color.White
+        btnHome.Location = New Point(15, 172)
+        btnHome.Name = "btnHome"
+        btnHome.Size = New Size(250, 26)
+        btnHome.TabIndex = 8
+        btnHome.Text = "Home"
+        btnHome.UseVisualStyleBackColor = False
+        ' 
+        ' btnClear
+        ' 
+        btnClear.BackColor = SystemColors.AppWorkspace
+        btnClear.FlatStyle = FlatStyle.Flat
+        btnClear.ForeColor = Color.White
+        btnClear.Location = New Point(148, 140)
+        btnClear.Name = "btnClear"
+        btnClear.Size = New Size(116, 26)
+        btnClear.TabIndex = 7
+        btnClear.Text = "Clear"
+        btnClear.UseVisualStyleBackColor = False
+        ' 
+        ' btnRefresh
+        ' 
+        btnRefresh.BackColor = SystemColors.AppWorkspace
+        btnRefresh.FlatStyle = FlatStyle.Flat
+        btnRefresh.ForeColor = Color.White
+        btnRefresh.Location = New Point(15, 140)
+        btnRefresh.Name = "btnRefresh"
+        btnRefresh.Size = New Size(116, 26)
+        btnRefresh.TabIndex = 6
+        btnRefresh.Text = "Refresh"
+        btnRefresh.UseVisualStyleBackColor = False
         ' 
         ' btnExportExcel
         ' 
         btnExportExcel.BackColor = SystemColors.AppWorkspace
         btnExportExcel.FlatStyle = FlatStyle.Flat
         btnExportExcel.ForeColor = Color.White
-        btnExportExcel.Location = New Point(16, 172)
-        btnExportExcel.Margin = New Padding(3, 2, 3, 2)
+        btnExportExcel.Location = New Point(15, 105)
         btnExportExcel.Name = "btnExportExcel"
-        btnExportExcel.Size = New Size(94, 26)
+        btnExportExcel.Size = New Size(116, 26)
         btnExportExcel.TabIndex = 5
         btnExportExcel.Text = "Export to Excel"
         btnExportExcel.UseVisualStyleBackColor = False
@@ -333,10 +363,9 @@ Partial Class frmPaper
         btnDelete.Enabled = False
         btnDelete.FlatStyle = FlatStyle.Flat
         btnDelete.ForeColor = Color.White
-        btnDelete.Location = New Point(116, 172)
-        btnDelete.Margin = New Padding(3, 2, 3, 2)
+        btnDelete.Location = New Point(148, 105)
         btnDelete.Name = "btnDelete"
-        btnDelete.Size = New Size(108, 26)
+        btnDelete.Size = New Size(116, 26)
         btnDelete.TabIndex = 4
         btnDelete.Text = "Delete"
         btnDelete.UseVisualStyleBackColor = False
@@ -347,10 +376,9 @@ Partial Class frmPaper
         btnUpdate.Enabled = False
         btnUpdate.FlatStyle = FlatStyle.Flat
         btnUpdate.ForeColor = Color.White
-        btnUpdate.Location = New Point(16, 135)
-        btnUpdate.Margin = New Padding(3, 2, 3, 2)
+        btnUpdate.Location = New Point(15, 70)
         btnUpdate.Name = "btnUpdate"
-        btnUpdate.Size = New Size(94, 26)
+        btnUpdate.Size = New Size(116, 26)
         btnUpdate.TabIndex = 3
         btnUpdate.Text = "Update"
         btnUpdate.UseVisualStyleBackColor = False
@@ -360,18 +388,16 @@ Partial Class frmPaper
         btnSave.BackColor = SystemColors.AppWorkspace
         btnSave.FlatStyle = FlatStyle.Flat
         btnSave.ForeColor = Color.White
-        btnSave.Location = New Point(116, 135)
-        btnSave.Margin = New Padding(3, 2, 3, 2)
+        btnSave.Location = New Point(148, 70)
         btnSave.Name = "btnSave"
-        btnSave.Size = New Size(108, 26)
+        btnSave.Size = New Size(116, 26)
         btnSave.TabIndex = 2
         btnSave.Text = "Save"
         btnSave.UseVisualStyleBackColor = False
         ' 
         ' btnUploadBill
         ' 
-        btnUploadBill.Location = New Point(16, 22)
-        btnUploadBill.Margin = New Padding(3, 2, 3, 2)
+        btnUploadBill.Location = New Point(15, 22)
         btnUploadBill.Name = "btnUploadBill"
         btnUploadBill.Size = New Size(116, 26)
         btnUploadBill.TabIndex = 1
@@ -381,7 +407,7 @@ Partial Class frmPaper
         ' lblFileCount
         ' 
         lblFileCount.AutoSize = True
-        lblFileCount.Location = New Point(16, 60)
+        lblFileCount.Location = New Point(148, 30)
         lblFileCount.Name = "lblFileCount"
         lblFileCount.Size = New Size(93, 15)
         lblFileCount.TabIndex = 0
@@ -389,44 +415,20 @@ Partial Class frmPaper
         ' 
         ' grpFilter
         ' 
-        grpFilter.Controls.Add(cmbPlasticTypeFilter)
-        grpFilter.Controls.Add(lblTypeFilter)
         grpFilter.Controls.Add(cmbPaperCategoryFilter)
         grpFilter.Controls.Add(lblCategoryFilter)
-        grpFilter.Location = New Point(10, 223)
-        grpFilter.Margin = New Padding(3, 2, 3, 2)
+        grpFilter.Location = New Point(12, 228)
         grpFilter.Name = "grpFilter"
-        grpFilter.Padding = New Padding(3, 2, 3, 2)
-        grpFilter.Size = New Size(908, 45)
+        grpFilter.Size = New Size(300, 45)
         grpFilter.TabIndex = 2
         grpFilter.TabStop = False
-        grpFilter.Text = "Filters"
-        ' 
-        ' cmbPlasticTypeFilter
-        ' 
-        cmbPlasticTypeFilter.DropDownStyle = ComboBoxStyle.DropDownList
-        cmbPlasticTypeFilter.FormattingEnabled = True
-        cmbPlasticTypeFilter.Location = New Point(398, 18)
-        cmbPlasticTypeFilter.Margin = New Padding(3, 2, 3, 2)
-        cmbPlasticTypeFilter.Name = "cmbPlasticTypeFilter"
-        cmbPlasticTypeFilter.Size = New Size(118, 23)
-        cmbPlasticTypeFilter.TabIndex = 5
-        ' 
-        ' lblTypeFilter
-        ' 
-        lblTypeFilter.AutoSize = True
-        lblTypeFilter.Location = New Point(312, 21)
-        lblTypeFilter.Name = "lblTypeFilter"
-        lblTypeFilter.Size = New Size(80, 15)
-        lblTypeFilter.TabIndex = 4
-        lblTypeFilter.Text = "Product Type:"
+        grpFilter.Text = "Category Filter"
         ' 
         ' cmbPaperCategoryFilter
         ' 
         cmbPaperCategoryFilter.DropDownStyle = ComboBoxStyle.DropDownList
         cmbPaperCategoryFilter.FormattingEnabled = True
-        cmbPaperCategoryFilter.Location = New Point(125, 18)
-        cmbPaperCategoryFilter.Margin = New Padding(3, 2, 3, 2)
+        cmbPaperCategoryFilter.Location = New Point(125, 16)
         cmbPaperCategoryFilter.Name = "cmbPaperCategoryFilter"
         cmbPaperCategoryFilter.Size = New Size(156, 23)
         cmbPaperCategoryFilter.TabIndex = 1
@@ -434,35 +436,86 @@ Partial Class frmPaper
         ' lblCategoryFilter
         ' 
         lblCategoryFilter.AutoSize = True
-        lblCategoryFilter.Location = New Point(16, 21)
+        lblCategoryFilter.Location = New Point(16, 19)
         lblCategoryFilter.Name = "lblCategoryFilter"
         lblCategoryFilter.Size = New Size(103, 15)
         lblCategoryFilter.TabIndex = 0
         lblCategoryFilter.Text = "Product Category:"
         ' 
+        ' grpDateFilters
+        ' 
+        grpDateFilters.Controls.Add(lblYearFilter)
+        grpDateFilters.Controls.Add(cmbYearFilter)
+        grpDateFilters.Controls.Add(lblMonthFilter)
+        grpDateFilters.Controls.Add(cmbMonthFilter)
+        grpDateFilters.Location = New Point(320, 228)
+        grpDateFilters.Name = "grpDateFilters"
+        grpDateFilters.Size = New Size(312, 45)
+        grpDateFilters.TabIndex = 3
+        grpDateFilters.TabStop = False
+        grpDateFilters.Text = "Date Filters"
+        ' 
+        ' lblYearFilter
+        ' 
+        lblYearFilter.AutoSize = True
+        lblYearFilter.Location = New Point(16, 19)
+        lblYearFilter.Name = "lblYearFilter"
+        lblYearFilter.Size = New Size(32, 15)
+        lblYearFilter.TabIndex = 0
+        lblYearFilter.Text = "Year:"
+        ' 
+        ' cmbYearFilter
+        ' 
+        cmbYearFilter.DropDownStyle = ComboBoxStyle.DropDownList
+        cmbYearFilter.FormattingEnabled = True
+        cmbYearFilter.Location = New Point(54, 16)
+        cmbYearFilter.Name = "cmbYearFilter"
+        cmbYearFilter.Size = New Size(85, 23)
+        cmbYearFilter.TabIndex = 1
+        ' 
+        ' lblMonthFilter
+        ' 
+        lblMonthFilter.AutoSize = True
+        lblMonthFilter.Location = New Point(155, 19)
+        lblMonthFilter.Name = "lblMonthFilter"
+        lblMonthFilter.Size = New Size(46, 15)
+        lblMonthFilter.TabIndex = 2
+        lblMonthFilter.Text = "Month:"
+        ' 
+        ' cmbMonthFilter
+        ' 
+        cmbMonthFilter.DropDownStyle = ComboBoxStyle.DropDownList
+        cmbMonthFilter.FormattingEnabled = True
+        cmbMonthFilter.Location = New Point(207, 16)
+        cmbMonthFilter.Name = "cmbMonthFilter"
+        cmbMonthFilter.Size = New Size(85, 23)
+        cmbMonthFilter.TabIndex = 3
+        ' 
         ' grdData
         ' 
+        grdData.AllowUserToAddRows = False
+        grdData.AllowUserToDeleteRows = False
         grdData.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         grdData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        grdData.Location = New Point(10, 273)
-        grdData.Margin = New Padding(3, 2, 3, 2)
+        grdData.Location = New Point(12, 280)
         grdData.Name = "grdData"
-        grdData.RowHeadersWidth = 62
-        grdData.RowTemplate.Height = 28
-        grdData.Size = New Size(908, 218)
-        grdData.TabIndex = 3
+        grdData.ReadOnly = True
+        grdData.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        grdData.Size = New Size(906, 210)
+        grdData.TabIndex = 4
         ' 
         ' frmPaper
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(928, 501)
+        ClientSize = New Size(930, 502)
         Controls.Add(grdData)
+        Controls.Add(grpDateFilters)
         Controls.Add(grpFilter)
         Controls.Add(grpButtons)
         Controls.Add(grpInput)
-        Margin = New Padding(3, 2, 3, 2)
         Name = "frmPaper"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "Paper Inventory Management"
         grpInput.ResumeLayout(False)
         grpInput.PerformLayout()
@@ -470,6 +523,8 @@ Partial Class frmPaper
         grpButtons.PerformLayout()
         grpFilter.ResumeLayout(False)
         grpFilter.PerformLayout()
+        grpDateFilters.ResumeLayout(False)
+        grpDateFilters.PerformLayout()
         CType(grdData, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
 
@@ -509,6 +564,12 @@ Partial Class frmPaper
     Friend WithEvents cmbPaperCategoryFilter As ComboBox
     Friend WithEvents lblCategoryFilter As Label
     Friend WithEvents grdData As DataGridView
-    Friend WithEvents cmbPlasticTypeFilter As ComboBox
-    Friend WithEvents lblTypeFilter As Label
+    Friend WithEvents grpDateFilters As GroupBox
+    Friend WithEvents lblYearFilter As Label
+    Friend WithEvents cmbYearFilter As ComboBox
+    Friend WithEvents lblMonthFilter As Label
+    Friend WithEvents cmbMonthFilter As ComboBox
+    Friend WithEvents btnRefresh As Button
+    Friend WithEvents btnClear As Button
+    Friend WithEvents btnHome As Button
 End Class

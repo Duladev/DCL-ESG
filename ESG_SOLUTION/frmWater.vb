@@ -8,6 +8,8 @@ Public Class frmWater
     Private currentRainEditID As Integer = -1
 
     Private Sub frmWater_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        SetupForm(Me)
+
         ' Configure Water DateTimePickers
         dtpYear.CustomFormat = "yyyy"
         dtpYear.ShowUpDown = True
@@ -26,8 +28,35 @@ Public Class frmWater
         dtpRainYear.Value = DateTime.Now
         dtpRainMonth.Value = DateTime.Now
 
+        SetupFilters()
+        AddKeyPressHandlers(Me.Controls)
+
         LoadWaterData()
         LoadRainWaterData()
+    End Sub
+
+    Private Sub SetupFilters()
+        ' Water year filter
+        For year As Integer = 2020 To DateTime.Now.Year + 1
+            cmbWaterYearFilter.Items.Add(year)
+        Next
+        cmbWaterYearFilter.SelectedItem = DateTime.Now.Year
+
+        For month As Integer = 1 To 12
+            cmbWaterMonthFilter.Items.Add(New DateTime(2000, month, 1).ToString("MMMM"))
+        Next
+        cmbWaterMonthFilter.SelectedIndex = DateTime.Now.Month - 1
+
+        ' Rain water year filter
+        For year As Integer = 2020 To DateTime.Now.Year + 1
+            cmbRainYearFilter.Items.Add(year)
+        Next
+        cmbRainYearFilter.SelectedItem = DateTime.Now.Year
+
+        For month As Integer = 1 To 12
+            cmbRainMonthFilter.Items.Add(New DateTime(2000, month, 1).ToString("MMMM"))
+        Next
+        cmbRainMonthFilter.SelectedIndex = DateTime.Now.Month - 1
     End Sub
 
     Private Sub btnUploadWaterBill_Click(sender As Object, e As EventArgs) Handles btnUploadWaterBill.Click
@@ -45,7 +74,14 @@ Public Class frmWater
             End If
         End Using
     End Sub
-
+    'added
+    Private Function GetSafeDecimal(inputText As String) As Decimal
+        Dim result As Decimal = 0
+        If Decimal.TryParse(inputText, result) Then
+            Return result
+        End If
+        Return 0
+    End Function
     Private Sub btnSaveWater_Click(sender As Object, e As EventArgs) Handles btnSaveWater.Click
         Try
             Using conn As SqlConnection = GetConnection()
@@ -56,14 +92,14 @@ Public Class frmWater
                 Using cmd As New SqlCommand(sql, conn)
                     cmd.Parameters.AddWithValue("@Year", dtpYear.Value.Year)
                     cmd.Parameters.AddWithValue("@Month", dtpMonth.Value.Month)
-                    cmd.Parameters.AddWithValue("@WaterQty", Convert.ToDecimal(txtWaterQty.Text))
-                    cmd.Parameters.AddWithValue("@Amount", Convert.ToDecimal(txtWaterAmount.Text))
-                    cmd.Parameters.AddWithValue("@AdditionalQty", Convert.ToDecimal(txtAdditionalWaterQty.Text))
-                    cmd.Parameters.AddWithValue("@AdditionalAmount", Convert.ToDecimal(txtAdditionalAmount.Text))
+                    cmd.Parameters.AddWithValue("@WaterQty", GetSafeDecimal(txtWaterQty.Text))
+                    cmd.Parameters.AddWithValue("@Amount", GetSafeDecimal(txtWaterAmount.Text))
+                    cmd.Parameters.AddWithValue("@AdditionalQty", GetSafeDecimal(txtAdditionalWaterQty.Text))
+                    cmd.Parameters.AddWithValue("@AdditionalAmount", GetSafeDecimal(txtAdditionalAmount.Text))
 
                     Dim recordId = $"Water_{dtpYear.Value.Year}_{dtpMonth.Value.Month}_{DateTime.Now.Ticks}"
                     Dim filesPath = SaveMultipleFiles(currentWaterFiles, recordId, "Water")
-                    cmd.Parameters.AddWithValue("@BillFiles", filesPath)
+                    cmd.Parameters.AddWithValue("@BillFiles", If(String.IsNullOrEmpty(filesPath), DBNull.Value, filesPath))
 
                     cmd.ExecuteNonQuery()
                 End Using
@@ -83,23 +119,37 @@ Public Class frmWater
         Try
             Using conn As SqlConnection = GetConnection()
                 conn.Open()
-                Dim query As String = "SELECT ID, Year, Month, WaterPurchasedQty, AmountPaid, AdditionalWaterQty, AdditionalAmountPaid, BillFilesPath FROM vw_ESG_Water ORDER BY Year DESC, Month DESC"
+                Dim query As String = "SELECT ID, Year, Month, WaterPurchasedQty, AmountPaid, AdditionalWaterQty, AdditionalAmountPaid, BillFilesPath FROM tbl_ESG_Water ORDER BY Year DESC, Month DESC"
 
                 Dim da As New SqlDataAdapter(query, conn)
                 Dim dt As New DataTable()
                 da.Fill(dt)
 
-                grdWater.DataSource = dt
+                Dim dv As New DataView(dt)
+                If cmbWaterYearFilter.SelectedItem IsNot Nothing Then
+                    dv.RowFilter = $"Year = {cmbWaterYearFilter.SelectedItem}"
+                End If
+                If cmbWaterMonthFilter.SelectedIndex >= 0 Then
+                    Dim monthNum As Integer = cmbWaterMonthFilter.SelectedIndex + 1
+                    dv.RowFilter = If(String.IsNullOrEmpty(dv.RowFilter), $"Month = {monthNum}", $"{dv.RowFilter} AND Month = {monthNum}")
+                End If
 
-                If grdWater.Columns.Contains("BillFilesPath") AndAlso Not grdWater.Columns.Contains("ViewFiles") Then
+                grdWater.DataSource = dv
+
+                If Not grdWater.Columns.Contains("ViewFiles") Then
                     Dim linkColumn As New DataGridViewLinkColumn()
                     linkColumn.Name = "ViewFiles"
                     linkColumn.HeaderText = "View Bills"
                     linkColumn.Text = "View Files"
                     linkColumn.UseColumnTextForLinkValue = True
                     grdWater.Columns.Add(linkColumn)
+                End If
+
+                If grdWater.Columns.Contains("BillFilesPath") Then
                     grdWater.Columns("BillFilesPath").Visible = False
                 End If
+
+                grdWater.ClearSelection()
             End Using
         Catch ex As Exception
             MessageBox.Show($"Error loading water data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -132,14 +182,14 @@ Public Class frmWater
                 Using cmd As New SqlCommand(sql, conn)
                     cmd.Parameters.AddWithValue("@Year", dtpRainYear.Value.Year)
                     cmd.Parameters.AddWithValue("@Month", dtpRainMonth.Value.Month)
-                    cmd.Parameters.AddWithValue("@Collected", Convert.ToDecimal(txtRainCollected.Text))
-                    cmd.Parameters.AddWithValue("@Consumed", Convert.ToDecimal(txtRainConsumed.Text))
-                    cmd.Parameters.AddWithValue("@Recycled", Convert.ToDecimal(txtRainRecycled.Text))
+                    cmd.Parameters.AddWithValue("@Collected", GetSafeDecimal(txtRainCollected.Text))
+                    cmd.Parameters.AddWithValue("@Consumed", GetSafeDecimal(txtRainConsumed.Text))
+                    cmd.Parameters.AddWithValue("@Recycled", GetSafeDecimal(txtRainRecycled.Text))
                     cmd.Parameters.AddWithValue("@Comments", txtRainComments.Text)
 
                     Dim recordId = $"RainWater_{dtpRainYear.Value.Year}_{dtpRainMonth.Value.Month}_{DateTime.Now.Ticks}"
                     Dim filesPath = SaveMultipleFiles(currentRainFiles, recordId, "RainWater")
-                    cmd.Parameters.AddWithValue("@BillFiles", filesPath)
+                    cmd.Parameters.AddWithValue("@BillFiles", If(String.IsNullOrEmpty(filesPath), DBNull.Value, filesPath))
 
                     cmd.ExecuteNonQuery()
                 End Using
@@ -165,72 +215,155 @@ Public Class frmWater
                 Dim dt As New DataTable()
                 da.Fill(dt)
 
-                ' Apply month filter
-                If cmbRainMonthFilter.SelectedItem IsNot Nothing AndAlso cmbRainMonthFilter.SelectedItem.ToString() <> "All" Then
-                    Dim dv As New DataView(dt)
-                    dv.RowFilter = $"Month = {Convert.ToInt32(cmbRainMonthFilter.SelectedItem.ToString())}"
-                    grdRainWater.DataSource = dv
-                Else
-                    grdRainWater.DataSource = dt
+                Dim dv As New DataView(dt)
+                If cmbRainYearFilter.SelectedItem IsNot Nothing Then
+                    dv.RowFilter = $"Year = {cmbRainYearFilter.SelectedItem}"
+                End If
+                If cmbRainMonthFilter.SelectedIndex >= 0 Then
+                    Dim monthNum As Integer = cmbRainMonthFilter.SelectedIndex + 1
+                    dv.RowFilter = If(String.IsNullOrEmpty(dv.RowFilter), $"Month = {monthNum}", $"{dv.RowFilter} AND Month = {monthNum}")
                 End If
 
-                If grdRainWater.Columns.Contains("BillFilesPath") AndAlso Not grdRainWater.Columns.Contains("ViewFiles") Then
+                grdRainWater.DataSource = dv
+
+                If Not grdRainWater.Columns.Contains("ViewFiles") Then
                     Dim linkColumn As New DataGridViewLinkColumn()
                     linkColumn.Name = "ViewFiles"
                     linkColumn.HeaderText = "View Bills"
                     linkColumn.Text = "View Files"
                     linkColumn.UseColumnTextForLinkValue = True
                     grdRainWater.Columns.Add(linkColumn)
+                End If
+
+                If grdRainWater.Columns.Contains("BillFilesPath") Then
                     grdRainWater.Columns("BillFilesPath").Visible = False
                 End If
+
+                grdRainWater.ClearSelection()
             End Using
         Catch ex As Exception
             MessageBox.Show($"Error loading rain water data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
-    Private Sub grdWater_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles grdWater.CellContentClick
+
+    Private Sub grdWater_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles grdWater.CellClick
         If e.RowIndex >= 0 Then
             If e.ColumnIndex >= 0 AndAlso grdWater.Columns(e.ColumnIndex).Name = "ViewFiles" Then
-                Dim filesPath As String = grdWater.Rows(e.RowIndex).Cells("BillFilesPath").Value.ToString()
-                If Not String.IsNullOrEmpty(filesPath) Then
-                    Dim files = GetFilesFromPath(filesPath)
-                    For Each file As String In files
-                        If System.IO.File.Exists(file) Then
-                            System.Diagnostics.Process.Start(file)
-                        Else
-                            MessageBox.Show($"File not found: {file}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                        End If
-                    Next
-                End If
+                ViewWaterFiles(e.RowIndex)
             Else
-                currentWaterEditID = Convert.ToInt32(grdWater.Rows(e.RowIndex).Cells("ID").Value)
-                LoadWaterToForm(grdWater.Rows(e.RowIndex))
+                LoadWaterToForm(e.RowIndex)
             End If
         End If
     End Sub
 
-    Private Sub grdRainWater_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles grdRainWater.CellContentClick
+    Private Sub grdRainWater_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles grdRainWater.CellClick
         If e.RowIndex >= 0 Then
             If e.ColumnIndex >= 0 AndAlso grdRainWater.Columns(e.ColumnIndex).Name = "ViewFiles" Then
-                Dim filesPath As String = grdRainWater.Rows(e.RowIndex).Cells("BillFilesPath").Value.ToString()
-                If Not String.IsNullOrEmpty(filesPath) Then
-                    Dim files = GetFilesFromPath(filesPath)
-                    For Each file As String In files
-                        If System.IO.File.Exists(file) Then
-                            System.Diagnostics.Process.Start(file)
-                        Else
-                            MessageBox.Show($"File not found: {file}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                        End If
-                    Next
-                End If
+                ViewRainFiles(e.RowIndex)
             Else
-                currentRainEditID = Convert.ToInt32(grdRainWater.Rows(e.RowIndex).Cells("ID").Value)
-                LoadRainWaterToForm(grdRainWater.Rows(e.RowIndex))
+                LoadRainWaterToForm(e.RowIndex)
             End If
         End If
     End Sub
 
-    Private Sub LoadWaterToForm(row As DataGridViewRow)
+    'Private Sub ViewWaterFiles(rowIndex As Integer)
+    '    Dim filesPath As String = grdWater.Rows(rowIndex).Cells("BillFilesPath").Value?.ToString()
+    '    If Not String.IsNullOrEmpty(filesPath) Then
+    '        Dim files = GetFilesFromPath(filesPath)
+    '        If files.Count > 0 Then
+    '            For Each file As String In files
+    '                If System.IO.File.Exists(file) Then
+    '                    System.Diagnostics.Process.Start(file)
+    '                Else
+    '                    MessageBox.Show($"File not found: {file}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+    '                End If
+    '            Next
+    '        Else
+    '            MessageBox.Show("No files available for this record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    '        End If
+    '    Else
+    '        MessageBox.Show("No files uploaded for this record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    '    End If
+    'End Sub
+    '
+    'view file fixed method
+    Private Sub ViewWaterFiles(rowIndex As Integer)
+        Dim filesPath As String = grdWater.Rows(rowIndex).Cells("BillFilesPath").Value?.ToString()
+        If Not String.IsNullOrEmpty(filesPath) Then
+            Dim files = GetFilesFromPath(filesPath)
+            If files.Count > 0 Then
+                For Each file As String In files
+                    If System.IO.File.Exists(file) Then
+                        Try
+                            Dim psi As New ProcessStartInfo()
+                            psi.FileName = file
+                            psi.UseShellExecute = True
+                            Process.Start(psi)
+                        Catch ex As Exception
+                            MessageBox.Show($"Error opening file '{Path.GetFileName(file)}': {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        End Try
+                    Else
+                        MessageBox.Show($"File not found: {file}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End If
+                Next
+            Else
+                MessageBox.Show("No files available for this record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+        Else
+            MessageBox.Show("No files uploaded for this record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+    End Sub
+    'Private Sub ViewRainFiles(rowIndex As Integer)
+    '    Dim filesPath As String = grdRainWater.Rows(rowIndex).Cells("BillFilesPath").Value?.ToString()
+    '    If Not String.IsNullOrEmpty(filesPath) Then
+    '        Dim files = GetFilesFromPath(filesPath)
+    '        If files.Count > 0 Then
+    '            For Each file As String In files
+    '                If System.IO.File.Exists(file) Then
+    '                    System.Diagnostics.Process.Start(file)
+    '                Else
+    '                    MessageBox.Show($"File not found: {file}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+    '                End If
+    '            Next
+    '        Else
+    '            MessageBox.Show("No files available for this record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    '        End If
+    '    Else
+    '        MessageBox.Show("No files uploaded for this record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    '    End If
+    'End Sub
+    '
+    'view file fixed method
+    Private Sub ViewRainFiles(rowIndex As Integer)
+        Dim filesPath As String = grdRainWater.Rows(rowIndex).Cells("BillFilesPath").Value?.ToString()
+        If Not String.IsNullOrEmpty(filesPath) Then
+            Dim files = GetFilesFromPath(filesPath)
+            If files.Count > 0 Then
+                For Each file As String In files
+                    If System.IO.File.Exists(file) Then
+                        Try
+                            Dim psi As New ProcessStartInfo()
+                            psi.FileName = file
+                            psi.UseShellExecute = True
+                            Process.Start(psi)
+                        Catch ex As Exception
+                            MessageBox.Show($"Error opening file '{Path.GetFileName(file)}': {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        End Try
+                    Else
+                        MessageBox.Show($"File not found: {file}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End If
+                Next
+            Else
+                MessageBox.Show("No files available for this record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+        Else
+            MessageBox.Show("No files uploaded for this record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+    End Sub
+    Private Sub LoadWaterToForm(rowIndex As Integer)
+        Dim row As DataGridViewRow = grdWater.Rows(rowIndex)
+        currentWaterEditID = Convert.ToInt32(row.Cells("ID").Value)
+
         dtpYear.Value = New Date(Convert.ToInt32(row.Cells("Year").Value), 1, 1)
         dtpMonth.Value = New Date(DateTime.Now.Year, Convert.ToInt32(row.Cells("Month").Value), 1)
         txtWaterQty.Text = row.Cells("WaterPurchasedQty").Value.ToString()
@@ -243,7 +376,10 @@ Public Class frmWater
         btnSaveWater.Enabled = False
     End Sub
 
-    Private Sub LoadRainWaterToForm(row As DataGridViewRow)
+    Private Sub LoadRainWaterToForm(rowIndex As Integer)
+        Dim row As DataGridViewRow = grdRainWater.Rows(rowIndex)
+        currentRainEditID = Convert.ToInt32(row.Cells("ID").Value)
+
         dtpRainYear.Value = New Date(Convert.ToInt32(row.Cells("Year").Value), 1, 1)
         dtpRainMonth.Value = New Date(DateTime.Now.Year, Convert.ToInt32(row.Cells("Month").Value), 1)
         txtRainCollected.Text = row.Cells("RainWaterCollected").Value.ToString()
@@ -271,10 +407,10 @@ Public Class frmWater
                     cmd.Parameters.AddWithValue("@ID", currentWaterEditID)
                     cmd.Parameters.AddWithValue("@Year", dtpYear.Value.Year)
                     cmd.Parameters.AddWithValue("@Month", dtpMonth.Value.Month)
-                    cmd.Parameters.AddWithValue("@WaterQty", Convert.ToDecimal(txtWaterQty.Text))
-                    cmd.Parameters.AddWithValue("@Amount", Convert.ToDecimal(txtWaterAmount.Text))
-                    cmd.Parameters.AddWithValue("@AdditionalQty", Convert.ToDecimal(txtAdditionalWaterQty.Text))
-                    cmd.Parameters.AddWithValue("@AdditionalAmount", Convert.ToDecimal(txtAdditionalAmount.Text))
+                    cmd.Parameters.AddWithValue("@WaterQty", GetSafeDecimal(txtWaterQty.Text))
+                    cmd.Parameters.AddWithValue("@Amount", GetSafeDecimal(txtWaterAmount.Text))
+                    cmd.Parameters.AddWithValue("@AdditionalQty", GetSafeDecimal(txtAdditionalWaterQty.Text))
+                    cmd.Parameters.AddWithValue("@AdditionalAmount", GetSafeDecimal(txtAdditionalAmount.Text))
 
                     cmd.ExecuteNonQuery()
                 End Using
@@ -330,9 +466,9 @@ Public Class frmWater
                     cmd.Parameters.AddWithValue("@ID", currentRainEditID)
                     cmd.Parameters.AddWithValue("@Year", dtpRainYear.Value.Year)
                     cmd.Parameters.AddWithValue("@Month", dtpRainMonth.Value.Month)
-                    cmd.Parameters.AddWithValue("@Collected", Convert.ToDecimal(txtRainCollected.Text))
-                    cmd.Parameters.AddWithValue("@Consumed", Convert.ToDecimal(txtRainConsumed.Text))
-                    cmd.Parameters.AddWithValue("@Recycled", Convert.ToDecimal(txtRainRecycled.Text))
+                    cmd.Parameters.AddWithValue("@Collected", GetSafeDecimal(txtRainCollected.Text))
+                    cmd.Parameters.AddWithValue("@Consumed", GetSafeDecimal(txtRainConsumed.Text))
+                    cmd.Parameters.AddWithValue("@Recycled", GetSafeDecimal(txtRainRecycled.Text))
                     cmd.Parameters.AddWithValue("@Comments", txtRainComments.Text)
 
                     cmd.ExecuteNonQuery()
@@ -374,6 +510,31 @@ Public Class frmWater
         End If
     End Sub
 
+    Private Sub btnRefreshWater_Click(sender As Object, e As EventArgs) Handles btnRefreshWater.Click
+        LoadWaterData()
+        ClearWaterForm()
+    End Sub
+
+    Private Sub btnClearWater_Click(sender As Object, e As EventArgs) Handles btnClearWater.Click
+        ClearWaterForm()
+    End Sub
+
+    Private Sub btnRefreshRain_Click(sender As Object, e As EventArgs) Handles btnRefreshRain.Click
+        LoadRainWaterData()
+        ClearRainWaterForm()
+    End Sub
+
+    Private Sub btnClearRain_Click(sender As Object, e As EventArgs) Handles btnClearRain.Click
+        ClearRainWaterForm()
+    End Sub
+
+    Private Sub btnHome_Click(sender As Object, e As EventArgs) Handles btnHome.Click
+        Dim dashboard As New frmDashboard()
+        dashboard.Show()
+        frmMain.Close()
+        Me.Close()
+    End Sub
+
     Private Sub btnExportWaterExcel_Click(sender As Object, e As EventArgs) Handles btnExportWaterExcel.Click
         ExportToExcel(grdWater, "Water_Data")
     End Sub
@@ -382,7 +543,11 @@ Public Class frmWater
         ExportToExcel(grdRainWater, "RainWater_Data")
     End Sub
 
-    Private Sub cmbRainMonthFilter_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbRainMonthFilter.SelectedIndexChanged
+    Private Sub ApplyWaterFilters(sender As Object, e As EventArgs) Handles cmbWaterYearFilter.SelectedIndexChanged, cmbWaterMonthFilter.SelectedIndexChanged
+        LoadWaterData()
+    End Sub
+
+    Private Sub ApplyRainFilters(sender As Object, e As EventArgs) Handles cmbRainYearFilter.SelectedIndexChanged, cmbRainMonthFilter.SelectedIndexChanged
         LoadRainWaterData()
     End Sub
 
@@ -392,9 +557,12 @@ Public Class frmWater
         txtWaterAmount.Clear()
         txtAdditionalWaterQty.Clear()
         txtAdditionalAmount.Clear()
+        currentWaterFiles.Clear()
+        lblWaterFileCount.Text = "No files selected"
         btnUpdateWater.Enabled = False
         btnDeleteWater.Enabled = False
         btnSaveWater.Enabled = True
+        grdWater.ClearSelection()
     End Sub
 
     Private Sub ClearRainWaterForm()
@@ -403,10 +571,11 @@ Public Class frmWater
         txtRainConsumed.Clear()
         txtRainRecycled.Clear()
         txtRainComments.Clear()
+        currentRainFiles.Clear()
+        lblRainFileCount.Text = "No files selected"
         btnUpdateRain.Enabled = False
         btnDeleteRain.Enabled = False
         btnSaveRainWater.Enabled = True
+        grdRainWater.ClearSelection()
     End Sub
-
-
 End Class

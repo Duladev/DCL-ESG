@@ -32,6 +32,9 @@ Partial Class frmWater
         lblMonth = New Label()
         lblYear = New Label()
         grpWaterButtons = New GroupBox()
+        btnHome = New Button()
+        btnClearWater = New Button()
+        btnRefreshWater = New Button()
         btnExportWaterExcel = New Button()
         btnDeleteWater = New Button()
         btnUpdateWater = New Button()
@@ -53,24 +56,34 @@ Partial Class frmWater
         lblRainMonth = New Label()
         lblRainYear = New Label()
         grpRainButtons = New GroupBox()
+        btnClearRain = New Button()
+        btnRefreshRain = New Button()
         btnExportRainExcel = New Button()
         btnDeleteRain = New Button()
         btnUpdateRain = New Button()
         btnSaveRainWater = New Button()
         btnUploadRainBill = New Button()
         lblRainFileCount = New Label()
-        grpRainFilter = New GroupBox()
-        cmbRainMonthFilter = New ComboBox()
-        lblRainFilter = New Label()
         grdRainWater = New DataGridView()
         ToolTip1 = New ToolTip(components)
+        grpWaterFilters = New GroupBox()
+        lblWaterYearFilter = New Label()
+        cmbWaterYearFilter = New ComboBox()
+        lblWaterMonthFilter = New Label()
+        cmbWaterMonthFilter = New ComboBox()
+        grpRainFilters = New GroupBox()
+        lblRainYearFilter = New Label()
+        cmbRainYearFilter = New ComboBox()
+        lblRainMonthFilter = New Label()
+        cmbRainMonthFilter = New ComboBox()
         grpWaterPurchased.SuspendLayout()
         grpWaterButtons.SuspendLayout()
         CType(grdWater, ComponentModel.ISupportInitialize).BeginInit()
         grpRainWater.SuspendLayout()
         grpRainButtons.SuspendLayout()
-        grpRainFilter.SuspendLayout()
         CType(grdRainWater, ComponentModel.ISupportInitialize).BeginInit()
+        grpWaterFilters.SuspendLayout()
+        grpRainFilters.SuspendLayout()
         SuspendLayout()
         ' 
         ' grpWaterPurchased
@@ -87,11 +100,9 @@ Partial Class frmWater
         grpWaterPurchased.Controls.Add(dtpYear)
         grpWaterPurchased.Controls.Add(lblMonth)
         grpWaterPurchased.Controls.Add(lblYear)
-        grpWaterPurchased.Location = New Point(10, 9)
-        grpWaterPurchased.Margin = New Padding(3, 2, 3, 2)
+        grpWaterPurchased.Location = New Point(12, 12)
         grpWaterPurchased.Name = "grpWaterPurchased"
-        grpWaterPurchased.Padding = New Padding(3, 2, 3, 2)
-        grpWaterPurchased.Size = New Size(622, 149)
+        grpWaterPurchased.Size = New Size(620, 135)
         grpWaterPurchased.TabIndex = 0
         grpWaterPurchased.TabStop = False
         grpWaterPurchased.Text = "Water Purchased"
@@ -99,11 +110,10 @@ Partial Class frmWater
         ' txtAdditionalAmount
         ' 
         txtAdditionalAmount.Location = New Point(436, 95)
-        txtAdditionalAmount.Margin = New Padding(3, 2, 3, 2)
         txtAdditionalAmount.Name = "txtAdditionalAmount"
         txtAdditionalAmount.Size = New Size(118, 23)
         txtAdditionalAmount.TabIndex = 11
-        ToolTip1.SetToolTip(txtAdditionalAmount, "(Additional  can be for other offices, like NLE, SILOM, etc)")
+        ToolTip1.SetToolTip(txtAdditionalAmount, "(Additional can be for other offices, like NLE, SILOM, etc)")
         ' 
         ' lblAdditionalAmount
         ' 
@@ -117,11 +127,10 @@ Partial Class frmWater
         ' txtAdditionalWaterQty
         ' 
         txtAdditionalWaterQty.Location = New Point(178, 95)
-        txtAdditionalWaterQty.Margin = New Padding(3, 2, 3, 2)
         txtAdditionalWaterQty.Name = "txtAdditionalWaterQty"
         txtAdditionalWaterQty.Size = New Size(118, 23)
         txtAdditionalWaterQty.TabIndex = 9
-        ToolTip1.SetToolTip(txtAdditionalWaterQty, "(Additional  can be for other offices, like NLE, SILOM, etc)")
+        ToolTip1.SetToolTip(txtAdditionalWaterQty, "(Additional can be for other offices, like NLE, SILOM, etc)")
         ' 
         ' lblAdditionalWaterQty
         ' 
@@ -135,7 +144,6 @@ Partial Class frmWater
         ' txtWaterAmount
         ' 
         txtWaterAmount.Location = New Point(436, 60)
-        txtWaterAmount.Margin = New Padding(3, 2, 3, 2)
         txtWaterAmount.Name = "txtWaterAmount"
         txtWaterAmount.Size = New Size(118, 23)
         txtWaterAmount.TabIndex = 7
@@ -152,7 +160,6 @@ Partial Class frmWater
         ' txtWaterQty
         ' 
         txtWaterQty.Location = New Point(178, 60)
-        txtWaterQty.Margin = New Padding(3, 2, 3, 2)
         txtWaterQty.Name = "txtWaterQty"
         txtWaterQty.Size = New Size(118, 23)
         txtWaterQty.TabIndex = 5
@@ -171,7 +178,6 @@ Partial Class frmWater
         dtpMonth.CustomFormat = "MMMM"
         dtpMonth.Format = DateTimePickerFormat.Custom
         dtpMonth.Location = New Point(436, 26)
-        dtpMonth.Margin = New Padding(3, 2, 3, 2)
         dtpMonth.Name = "dtpMonth"
         dtpMonth.ShowUpDown = True
         dtpMonth.Size = New Size(94, 23)
@@ -182,7 +188,6 @@ Partial Class frmWater
         dtpYear.CustomFormat = "yyyy"
         dtpYear.Format = DateTimePickerFormat.Custom
         dtpYear.Location = New Point(178, 26)
-        dtpYear.Margin = New Padding(3, 2, 3, 2)
         dtpYear.Name = "dtpYear"
         dtpYear.ShowUpDown = True
         dtpYear.Size = New Size(78, 23)
@@ -191,7 +196,7 @@ Partial Class frmWater
         ' lblMonth
         ' 
         lblMonth.AutoSize = True
-        lblMonth.Location = New Point(374, 28)
+        lblMonth.Location = New Point(384, 28)
         lblMonth.Name = "lblMonth"
         lblMonth.Size = New Size(46, 15)
         lblMonth.TabIndex = 1
@@ -200,7 +205,7 @@ Partial Class frmWater
         ' lblYear
         ' 
         lblYear.AutoSize = True
-        lblYear.Location = New Point(132, 28)
+        lblYear.Location = New Point(140, 28)
         lblYear.Name = "lblYear"
         lblYear.Size = New Size(32, 15)
         lblYear.TabIndex = 0
@@ -208,28 +213,64 @@ Partial Class frmWater
         ' 
         ' grpWaterButtons
         ' 
+        grpWaterButtons.Controls.Add(btnHome)
+        grpWaterButtons.Controls.Add(btnClearWater)
+        grpWaterButtons.Controls.Add(btnRefreshWater)
         grpWaterButtons.Controls.Add(btnExportWaterExcel)
         grpWaterButtons.Controls.Add(btnDeleteWater)
         grpWaterButtons.Controls.Add(btnUpdateWater)
         grpWaterButtons.Controls.Add(btnSaveWater)
         grpWaterButtons.Controls.Add(btnUploadWaterBill)
         grpWaterButtons.Controls.Add(lblWaterFileCount)
-        grpWaterButtons.Location = New Point(638, 9)
-        grpWaterButtons.Margin = New Padding(3, 2, 3, 2)
+        grpWaterButtons.Location = New Point(638, 12)
         grpWaterButtons.Name = "grpWaterButtons"
-        grpWaterButtons.Padding = New Padding(3, 2, 3, 2)
-        grpWaterButtons.Size = New Size(280, 135)
+        grpWaterButtons.Size = New Size(280, 178)
         grpWaterButtons.TabIndex = 1
         grpWaterButtons.TabStop = False
-        grpWaterButtons.Text = "Actions"
+        grpWaterButtons.Text = "Water Actions"
+        ' 
+        ' btnHome
+        ' 
+        btnHome.BackColor = SystemColors.AppWorkspace
+        btnHome.FlatStyle = FlatStyle.Flat
+        btnHome.ForeColor = Color.White
+        btnHome.Location = New Point(148, 140)
+        btnHome.Name = "btnHome"
+        btnHome.Size = New Size(116, 26)
+        btnHome.TabIndex = 8
+        btnHome.Text = "Home"
+        btnHome.UseVisualStyleBackColor = False
+        ' 
+        ' btnClearWater
+        ' 
+        btnClearWater.BackColor = SystemColors.AppWorkspace
+        btnClearWater.FlatStyle = FlatStyle.Flat
+        btnClearWater.ForeColor = Color.White
+        btnClearWater.Location = New Point(15, 140)
+        btnClearWater.Name = "btnClearWater"
+        btnClearWater.Size = New Size(116, 26)
+        btnClearWater.TabIndex = 7
+        btnClearWater.Text = "Clear"
+        btnClearWater.UseVisualStyleBackColor = False
+        ' 
+        ' btnRefreshWater
+        ' 
+        btnRefreshWater.BackColor = SystemColors.AppWorkspace
+        btnRefreshWater.FlatStyle = FlatStyle.Flat
+        btnRefreshWater.ForeColor = Color.White
+        btnRefreshWater.Location = New Point(148, 105)
+        btnRefreshWater.Name = "btnRefreshWater"
+        btnRefreshWater.Size = New Size(116, 26)
+        btnRefreshWater.TabIndex = 6
+        btnRefreshWater.Text = "Refresh"
+        btnRefreshWater.UseVisualStyleBackColor = False
         ' 
         ' btnExportWaterExcel
         ' 
         btnExportWaterExcel.BackColor = SystemColors.AppWorkspace
         btnExportWaterExcel.FlatStyle = FlatStyle.Flat
         btnExportWaterExcel.ForeColor = Color.White
-        btnExportWaterExcel.Location = New Point(16, 105)
-        btnExportWaterExcel.Margin = New Padding(3, 2, 3, 2)
+        btnExportWaterExcel.Location = New Point(15, 105)
         btnExportWaterExcel.Name = "btnExportWaterExcel"
         btnExportWaterExcel.Size = New Size(116, 26)
         btnExportWaterExcel.TabIndex = 5
@@ -242,8 +283,7 @@ Partial Class frmWater
         btnDeleteWater.Enabled = False
         btnDeleteWater.FlatStyle = FlatStyle.Flat
         btnDeleteWater.ForeColor = Color.White
-        btnDeleteWater.Location = New Point(148, 68)
-        btnDeleteWater.Margin = New Padding(3, 2, 3, 2)
+        btnDeleteWater.Location = New Point(148, 70)
         btnDeleteWater.Name = "btnDeleteWater"
         btnDeleteWater.Size = New Size(116, 26)
         btnDeleteWater.TabIndex = 4
@@ -256,8 +296,7 @@ Partial Class frmWater
         btnUpdateWater.Enabled = False
         btnUpdateWater.FlatStyle = FlatStyle.Flat
         btnUpdateWater.ForeColor = Color.White
-        btnUpdateWater.Location = New Point(16, 68)
-        btnUpdateWater.Margin = New Padding(3, 2, 3, 2)
+        btnUpdateWater.Location = New Point(15, 70)
         btnUpdateWater.Name = "btnUpdateWater"
         btnUpdateWater.Size = New Size(116, 26)
         btnUpdateWater.TabIndex = 3
@@ -269,8 +308,7 @@ Partial Class frmWater
         btnSaveWater.BackColor = SystemColors.AppWorkspace
         btnSaveWater.FlatStyle = FlatStyle.Flat
         btnSaveWater.ForeColor = Color.White
-        btnSaveWater.Location = New Point(148, 30)
-        btnSaveWater.Margin = New Padding(3, 2, 3, 2)
+        btnSaveWater.Location = New Point(148, 35)
         btnSaveWater.Name = "btnSaveWater"
         btnSaveWater.Size = New Size(116, 26)
         btnSaveWater.TabIndex = 2
@@ -279,8 +317,7 @@ Partial Class frmWater
         ' 
         ' btnUploadWaterBill
         ' 
-        btnUploadWaterBill.Location = New Point(16, 22)
-        btnUploadWaterBill.Margin = New Padding(3, 2, 3, 2)
+        btnUploadWaterBill.Location = New Point(15, 22)
         btnUploadWaterBill.Name = "btnUploadWaterBill"
         btnUploadWaterBill.Size = New Size(116, 26)
         btnUploadWaterBill.TabIndex = 1
@@ -290,7 +327,7 @@ Partial Class frmWater
         ' lblWaterFileCount
         ' 
         lblWaterFileCount.AutoSize = True
-        lblWaterFileCount.Location = New Point(148, 30)
+        lblWaterFileCount.Location = New Point(148, 17)
         lblWaterFileCount.Name = "lblWaterFileCount"
         lblWaterFileCount.Size = New Size(93, 15)
         lblWaterFileCount.TabIndex = 0
@@ -298,14 +335,15 @@ Partial Class frmWater
         ' 
         ' grdWater
         ' 
+        grdWater.AllowUserToAddRows = False
+        grdWater.AllowUserToDeleteRows = False
         grdWater.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         grdWater.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        grdWater.Location = New Point(10, 162)
-        grdWater.Margin = New Padding(3, 2, 3, 2)
+        grdWater.Location = New Point(12, 200)
         grdWater.Name = "grdWater"
-        grdWater.RowHeadersWidth = 62
-        grdWater.RowTemplate.Height = 28
-        grdWater.Size = New Size(929, 112)
+        grdWater.ReadOnly = True
+        grdWater.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        grdWater.Size = New Size(906, 120)
         grdWater.TabIndex = 2
         ' 
         ' grpRainWater
@@ -322,11 +360,9 @@ Partial Class frmWater
         grpRainWater.Controls.Add(dtpRainYear)
         grpRainWater.Controls.Add(lblRainMonth)
         grpRainWater.Controls.Add(lblRainYear)
-        grpRainWater.Location = New Point(10, 278)
-        grpRainWater.Margin = New Padding(3, 2, 3, 2)
+        grpRainWater.Location = New Point(12, 340)
         grpRainWater.Name = "grpRainWater"
-        grpRainWater.Padding = New Padding(3, 2, 3, 2)
-        grpRainWater.Size = New Size(622, 135)
+        grpRainWater.Size = New Size(620, 135)
         grpRainWater.TabIndex = 3
         grpRainWater.TabStop = False
         grpRainWater.Text = "RainWater Management"
@@ -334,7 +370,6 @@ Partial Class frmWater
         ' txtRainComments
         ' 
         txtRainComments.Location = New Point(178, 105)
-        txtRainComments.Margin = New Padding(3, 2, 3, 2)
         txtRainComments.Name = "txtRainComments"
         txtRainComments.Size = New Size(428, 23)
         txtRainComments.TabIndex = 15
@@ -351,7 +386,6 @@ Partial Class frmWater
         ' txtRainRecycled
         ' 
         txtRainRecycled.Location = New Point(436, 75)
-        txtRainRecycled.Margin = New Padding(3, 2, 3, 2)
         txtRainRecycled.Name = "txtRainRecycled"
         txtRainRecycled.Size = New Size(118, 23)
         txtRainRecycled.TabIndex = 13
@@ -368,7 +402,6 @@ Partial Class frmWater
         ' txtRainConsumed
         ' 
         txtRainConsumed.Location = New Point(178, 75)
-        txtRainConsumed.Margin = New Padding(3, 2, 3, 2)
         txtRainConsumed.Name = "txtRainConsumed"
         txtRainConsumed.Size = New Size(118, 23)
         txtRainConsumed.TabIndex = 11
@@ -385,7 +418,6 @@ Partial Class frmWater
         ' txtRainCollected
         ' 
         txtRainCollected.Location = New Point(436, 45)
-        txtRainCollected.Margin = New Padding(3, 2, 3, 2)
         txtRainCollected.Name = "txtRainCollected"
         txtRainCollected.Size = New Size(118, 23)
         txtRainCollected.TabIndex = 9
@@ -404,7 +436,6 @@ Partial Class frmWater
         dtpRainMonth.CustomFormat = "MMMM"
         dtpRainMonth.Format = DateTimePickerFormat.Custom
         dtpRainMonth.Location = New Point(436, 19)
-        dtpRainMonth.Margin = New Padding(3, 2, 3, 2)
         dtpRainMonth.Name = "dtpRainMonth"
         dtpRainMonth.ShowUpDown = True
         dtpRainMonth.Size = New Size(94, 23)
@@ -415,7 +446,6 @@ Partial Class frmWater
         dtpRainYear.CustomFormat = "yyyy"
         dtpRainYear.Format = DateTimePickerFormat.Custom
         dtpRainYear.Location = New Point(178, 19)
-        dtpRainYear.Margin = New Padding(3, 2, 3, 2)
         dtpRainYear.Name = "dtpRainYear"
         dtpRainYear.ShowUpDown = True
         dtpRainYear.Size = New Size(78, 23)
@@ -424,7 +454,7 @@ Partial Class frmWater
         ' lblRainMonth
         ' 
         lblRainMonth.AutoSize = True
-        lblRainMonth.Location = New Point(374, 21)
+        lblRainMonth.Location = New Point(384, 21)
         lblRainMonth.Name = "lblRainMonth"
         lblRainMonth.Size = New Size(46, 15)
         lblRainMonth.TabIndex = 5
@@ -433,7 +463,7 @@ Partial Class frmWater
         ' lblRainYear
         ' 
         lblRainYear.AutoSize = True
-        lblRainYear.Location = New Point(132, 21)
+        lblRainYear.Location = New Point(140, 21)
         lblRainYear.Name = "lblRainYear"
         lblRainYear.Size = New Size(32, 15)
         lblRainYear.TabIndex = 4
@@ -441,28 +471,51 @@ Partial Class frmWater
         ' 
         ' grpRainButtons
         ' 
+        grpRainButtons.Controls.Add(btnClearRain)
+        grpRainButtons.Controls.Add(btnRefreshRain)
         grpRainButtons.Controls.Add(btnExportRainExcel)
         grpRainButtons.Controls.Add(btnDeleteRain)
         grpRainButtons.Controls.Add(btnUpdateRain)
         grpRainButtons.Controls.Add(btnSaveRainWater)
         grpRainButtons.Controls.Add(btnUploadRainBill)
         grpRainButtons.Controls.Add(lblRainFileCount)
-        grpRainButtons.Location = New Point(638, 278)
-        grpRainButtons.Margin = New Padding(3, 2, 3, 2)
+        grpRainButtons.Location = New Point(638, 340)
         grpRainButtons.Name = "grpRainButtons"
-        grpRainButtons.Padding = New Padding(3, 2, 3, 2)
-        grpRainButtons.Size = New Size(280, 135)
+        grpRainButtons.Size = New Size(280, 173)
         grpRainButtons.TabIndex = 4
         grpRainButtons.TabStop = False
-        grpRainButtons.Text = "Actions"
+        grpRainButtons.Text = "Rain Water Actions"
+        ' 
+        ' btnClearRain
+        ' 
+        btnClearRain.BackColor = SystemColors.AppWorkspace
+        btnClearRain.FlatStyle = FlatStyle.Flat
+        btnClearRain.ForeColor = Color.White
+        btnClearRain.Location = New Point(15, 140)
+        btnClearRain.Name = "btnClearRain"
+        btnClearRain.Size = New Size(116, 26)
+        btnClearRain.TabIndex = 7
+        btnClearRain.Text = "Clear"
+        btnClearRain.UseVisualStyleBackColor = False
+        ' 
+        ' btnRefreshRain
+        ' 
+        btnRefreshRain.BackColor = SystemColors.AppWorkspace
+        btnRefreshRain.FlatStyle = FlatStyle.Flat
+        btnRefreshRain.ForeColor = Color.White
+        btnRefreshRain.Location = New Point(148, 140)
+        btnRefreshRain.Name = "btnRefreshRain"
+        btnRefreshRain.Size = New Size(116, 26)
+        btnRefreshRain.TabIndex = 6
+        btnRefreshRain.Text = "Refresh"
+        btnRefreshRain.UseVisualStyleBackColor = False
         ' 
         ' btnExportRainExcel
         ' 
         btnExportRainExcel.BackColor = SystemColors.AppWorkspace
         btnExportRainExcel.FlatStyle = FlatStyle.Flat
         btnExportRainExcel.ForeColor = Color.White
-        btnExportRainExcel.Location = New Point(16, 105)
-        btnExportRainExcel.Margin = New Padding(3, 2, 3, 2)
+        btnExportRainExcel.Location = New Point(15, 101)
         btnExportRainExcel.Name = "btnExportRainExcel"
         btnExportRainExcel.Size = New Size(116, 26)
         btnExportRainExcel.TabIndex = 5
@@ -475,8 +528,7 @@ Partial Class frmWater
         btnDeleteRain.Enabled = False
         btnDeleteRain.FlatStyle = FlatStyle.Flat
         btnDeleteRain.ForeColor = Color.White
-        btnDeleteRain.Location = New Point(148, 68)
-        btnDeleteRain.Margin = New Padding(3, 2, 3, 2)
+        btnDeleteRain.Location = New Point(148, 101)
         btnDeleteRain.Name = "btnDeleteRain"
         btnDeleteRain.Size = New Size(116, 26)
         btnDeleteRain.TabIndex = 4
@@ -489,8 +541,7 @@ Partial Class frmWater
         btnUpdateRain.Enabled = False
         btnUpdateRain.FlatStyle = FlatStyle.Flat
         btnUpdateRain.ForeColor = Color.White
-        btnUpdateRain.Location = New Point(16, 68)
-        btnUpdateRain.Margin = New Padding(3, 2, 3, 2)
+        btnUpdateRain.Location = New Point(15, 66)
         btnUpdateRain.Name = "btnUpdateRain"
         btnUpdateRain.Size = New Size(116, 26)
         btnUpdateRain.TabIndex = 3
@@ -502,8 +553,7 @@ Partial Class frmWater
         btnSaveRainWater.BackColor = SystemColors.AppWorkspace
         btnSaveRainWater.FlatStyle = FlatStyle.Flat
         btnSaveRainWater.ForeColor = Color.White
-        btnSaveRainWater.Location = New Point(148, 30)
-        btnSaveRainWater.Margin = New Padding(3, 2, 3, 2)
+        btnSaveRainWater.Location = New Point(148, 66)
         btnSaveRainWater.Name = "btnSaveRainWater"
         btnSaveRainWater.Size = New Size(116, 26)
         btnSaveRainWater.TabIndex = 2
@@ -512,8 +562,7 @@ Partial Class frmWater
         ' 
         ' btnUploadRainBill
         ' 
-        btnUploadRainBill.Location = New Point(16, 22)
-        btnUploadRainBill.Margin = New Padding(3, 2, 3, 2)
+        btnUploadRainBill.Location = New Point(15, 22)
         btnUploadRainBill.Name = "btnUploadRainBill"
         btnUploadRainBill.Size = New Size(116, 26)
         btnUploadRainBill.TabIndex = 1
@@ -529,72 +578,133 @@ Partial Class frmWater
         lblRainFileCount.TabIndex = 0
         lblRainFileCount.Text = "No files selected"
         ' 
-        ' grpRainFilter
+        ' grdRainWater
         ' 
-        grpRainFilter.Controls.Add(cmbRainMonthFilter)
-        grpRainFilter.Controls.Add(lblRainFilter)
-        grpRainFilter.Location = New Point(10, 417)
-        grpRainFilter.Margin = New Padding(3, 2, 3, 2)
-        grpRainFilter.Name = "grpRainFilter"
-        grpRainFilter.Padding = New Padding(3, 2, 3, 2)
-        grpRainFilter.Size = New Size(908, 38)
-        grpRainFilter.TabIndex = 5
-        grpRainFilter.TabStop = False
-        grpRainFilter.Text = "Filters"
+        grdRainWater.AllowUserToAddRows = False
+        grdRainWater.AllowUserToDeleteRows = False
+        grdRainWater.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
+        grdRainWater.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        grdRainWater.Location = New Point(12, 519)
+        grdRainWater.Name = "grdRainWater"
+        grdRainWater.ReadOnly = True
+        grdRainWater.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        grdRainWater.Size = New Size(906, 134)
+        grdRainWater.TabIndex = 6
+        ' 
+        ' grpWaterFilters
+        ' 
+        grpWaterFilters.Controls.Add(lblWaterYearFilter)
+        grpWaterFilters.Controls.Add(cmbWaterYearFilter)
+        grpWaterFilters.Controls.Add(lblWaterMonthFilter)
+        grpWaterFilters.Controls.Add(cmbWaterMonthFilter)
+        grpWaterFilters.Location = New Point(12, 150)
+        grpWaterFilters.Name = "grpWaterFilters"
+        grpWaterFilters.Size = New Size(300, 45)
+        grpWaterFilters.TabIndex = 7
+        grpWaterFilters.TabStop = False
+        grpWaterFilters.Text = "Water Filters"
+        ' 
+        ' lblWaterYearFilter
+        ' 
+        lblWaterYearFilter.AutoSize = True
+        lblWaterYearFilter.Location = New Point(16, 19)
+        lblWaterYearFilter.Name = "lblWaterYearFilter"
+        lblWaterYearFilter.Size = New Size(32, 15)
+        lblWaterYearFilter.TabIndex = 0
+        lblWaterYearFilter.Text = "Year:"
+        ' 
+        ' cmbWaterYearFilter
+        ' 
+        cmbWaterYearFilter.DropDownStyle = ComboBoxStyle.DropDownList
+        cmbWaterYearFilter.FormattingEnabled = True
+        cmbWaterYearFilter.Location = New Point(60, 16)
+        cmbWaterYearFilter.Name = "cmbWaterYearFilter"
+        cmbWaterYearFilter.Size = New Size(85, 23)
+        cmbWaterYearFilter.TabIndex = 1
+        ' 
+        ' lblWaterMonthFilter
+        ' 
+        lblWaterMonthFilter.AutoSize = True
+        lblWaterMonthFilter.Location = New Point(160, 19)
+        lblWaterMonthFilter.Name = "lblWaterMonthFilter"
+        lblWaterMonthFilter.Size = New Size(46, 15)
+        lblWaterMonthFilter.TabIndex = 2
+        lblWaterMonthFilter.Text = "Month:"
+        ' 
+        ' cmbWaterMonthFilter
+        ' 
+        cmbWaterMonthFilter.DropDownStyle = ComboBoxStyle.DropDownList
+        cmbWaterMonthFilter.FormattingEnabled = True
+        cmbWaterMonthFilter.Location = New Point(212, 16)
+        cmbWaterMonthFilter.Name = "cmbWaterMonthFilter"
+        cmbWaterMonthFilter.Size = New Size(85, 23)
+        cmbWaterMonthFilter.TabIndex = 3
+        ' 
+        ' grpRainFilters
+        ' 
+        grpRainFilters.Controls.Add(lblRainYearFilter)
+        grpRainFilters.Controls.Add(cmbRainYearFilter)
+        grpRainFilters.Controls.Add(lblRainMonthFilter)
+        grpRainFilters.Controls.Add(cmbRainMonthFilter)
+        grpRainFilters.Location = New Point(12, 474)
+        grpRainFilters.Name = "grpRainFilters"
+        grpRainFilters.Size = New Size(300, 45)
+        grpRainFilters.TabIndex = 8
+        grpRainFilters.TabStop = False
+        grpRainFilters.Text = "Rain Water Filters"
+        ' 
+        ' lblRainYearFilter
+        ' 
+        lblRainYearFilter.AutoSize = True
+        lblRainYearFilter.Location = New Point(16, 19)
+        lblRainYearFilter.Name = "lblRainYearFilter"
+        lblRainYearFilter.Size = New Size(32, 15)
+        lblRainYearFilter.TabIndex = 0
+        lblRainYearFilter.Text = "Year:"
+        ' 
+        ' cmbRainYearFilter
+        ' 
+        cmbRainYearFilter.DropDownStyle = ComboBoxStyle.DropDownList
+        cmbRainYearFilter.FormattingEnabled = True
+        cmbRainYearFilter.Location = New Point(60, 16)
+        cmbRainYearFilter.Name = "cmbRainYearFilter"
+        cmbRainYearFilter.Size = New Size(85, 23)
+        cmbRainYearFilter.TabIndex = 1
+        ' 
+        ' lblRainMonthFilter
+        ' 
+        lblRainMonthFilter.AutoSize = True
+        lblRainMonthFilter.Location = New Point(160, 19)
+        lblRainMonthFilter.Name = "lblRainMonthFilter"
+        lblRainMonthFilter.Size = New Size(46, 15)
+        lblRainMonthFilter.TabIndex = 2
+        lblRainMonthFilter.Text = "Month:"
         ' 
         ' cmbRainMonthFilter
         ' 
         cmbRainMonthFilter.DropDownStyle = ComboBoxStyle.DropDownList
         cmbRainMonthFilter.FormattingEnabled = True
-        cmbRainMonthFilter.Items.AddRange(New Object() {"All", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"})
-        cmbRainMonthFilter.Location = New Point(102, 15)
-        cmbRainMonthFilter.Margin = New Padding(3, 2, 3, 2)
+        cmbRainMonthFilter.Location = New Point(212, 16)
         cmbRainMonthFilter.Name = "cmbRainMonthFilter"
-        cmbRainMonthFilter.Size = New Size(78, 23)
-        cmbRainMonthFilter.TabIndex = 1
-        ' 
-        ' lblRainFilter
-        ' 
-        lblRainFilter.AutoSize = True
-        lblRainFilter.Location = New Point(16, 17)
-        lblRainFilter.Name = "lblRainFilter"
-        lblRainFilter.Size = New Size(46, 15)
-        lblRainFilter.TabIndex = 0
-        lblRainFilter.Text = "Month:"
-        ' 
-        ' grdRainWater
-        ' 
-        grdRainWater.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
-        grdRainWater.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        grdRainWater.Location = New Point(10, 459)
-        grdRainWater.Margin = New Padding(3, 2, 3, 2)
-        grdRainWater.Name = "grdRainWater"
-        grdRainWater.RowHeadersWidth = 62
-        grdRainWater.RowTemplate.Height = 28
-        grdRainWater.Size = New Size(929, 112)
-        grdRainWater.TabIndex = 6
-        ' 
-        ' ToolTip1
-        ' 
-        ToolTip1.BackColor = SystemColors.GrayText
-        ToolTip1.IsBalloon = True
-        ToolTip1.ToolTipIcon = ToolTipIcon.Info
+        cmbRainMonthFilter.Size = New Size(85, 23)
+        cmbRainMonthFilter.TabIndex = 3
         ' 
         ' frmWater
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         AutoScroll = True
-        ClientSize = New Size(949, 627)
+        ClientSize = New Size(930, 665)
+        Controls.Add(grpRainFilters)
+        Controls.Add(grpWaterFilters)
         Controls.Add(grdRainWater)
-        Controls.Add(grpRainFilter)
         Controls.Add(grpRainButtons)
         Controls.Add(grpRainWater)
         Controls.Add(grdWater)
         Controls.Add(grpWaterButtons)
         Controls.Add(grpWaterPurchased)
-        Margin = New Padding(3, 2, 3, 2)
         Name = "frmWater"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "Water Management"
         grpWaterPurchased.ResumeLayout(False)
         grpWaterPurchased.PerformLayout()
@@ -605,9 +715,11 @@ Partial Class frmWater
         grpRainWater.PerformLayout()
         grpRainButtons.ResumeLayout(False)
         grpRainButtons.PerformLayout()
-        grpRainFilter.ResumeLayout(False)
-        grpRainFilter.PerformLayout()
         CType(grdRainWater, ComponentModel.ISupportInitialize).EndInit()
+        grpWaterFilters.ResumeLayout(False)
+        grpWaterFilters.PerformLayout()
+        grpRainFilters.ResumeLayout(False)
+        grpRainFilters.PerformLayout()
         ResumeLayout(False)
 
     End Sub
@@ -653,9 +765,21 @@ Partial Class frmWater
     Friend WithEvents btnSaveRainWater As Button
     Friend WithEvents btnUploadRainBill As Button
     Friend WithEvents lblRainFileCount As Label
-    Friend WithEvents grpRainFilter As GroupBox
-    Friend WithEvents cmbRainMonthFilter As ComboBox
-    Friend WithEvents lblRainFilter As Label
     Friend WithEvents grdRainWater As DataGridView
     Friend WithEvents ToolTip1 As ToolTip
+    Friend WithEvents grpWaterFilters As GroupBox
+    Friend WithEvents lblWaterYearFilter As Label
+    Friend WithEvents cmbWaterYearFilter As ComboBox
+    Friend WithEvents lblWaterMonthFilter As Label
+    Friend WithEvents cmbWaterMonthFilter As ComboBox
+    Friend WithEvents grpRainFilters As GroupBox
+    Friend WithEvents lblRainYearFilter As Label
+    Friend WithEvents cmbRainYearFilter As ComboBox
+    Friend WithEvents lblRainMonthFilter As Label
+    Friend WithEvents cmbRainMonthFilter As ComboBox
+    Friend WithEvents btnHome As Button
+    Friend WithEvents btnClearWater As Button
+    Friend WithEvents btnRefreshWater As Button
+    Friend WithEvents btnClearRain As Button
+    Friend WithEvents btnRefreshRain As Button
 End Class

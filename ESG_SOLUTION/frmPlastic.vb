@@ -1,11 +1,15 @@
 ﻿Imports System.Data.SqlClient
 Imports System.IO
+Imports System.Diagnostics
 
 Public Class frmPlastic
     Private currentFiles As New List(Of String)
     Private currentEditID As Integer = -1
+    Private productsDataTable As DataTable
 
     Private Sub frmPlastic_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        SetupForm(Me)
+
         ' Configure DateTimePickers
         dtpYear.CustomFormat = "yyyy"
         dtpYear.ShowUpDown = True
@@ -19,8 +23,24 @@ Public Class frmPlastic
         AddHandler txtUnitCount.TextChanged, AddressOf CalculateFields
         AddHandler txtPricePerUnit.TextChanged, AddressOf CalculateFields
 
+        SetupFilters()
         LoadProducts()
+        AddKeyPressHandlers(Me.Controls)
         LoadPlasticData()
+    End Sub
+
+    Private Sub SetupFilters()
+        ' Load years for filter
+        For year As Integer = 2020 To DateTime.Now.Year + 1
+            cmbYearFilter.Items.Add(year)
+        Next
+        cmbYearFilter.SelectedItem = DateTime.Now.Year
+
+        ' Load months for filter
+        For month As Integer = 1 To 12
+            cmbMonthFilter.Items.Add(New DateTime(2000, month, 1).ToString("MMMM"))
+        Next
+        cmbMonthFilter.SelectedIndex = DateTime.Now.Month - 1
     End Sub
 
     Private Sub LoadProducts()
@@ -30,19 +50,20 @@ Public Class frmPlastic
                 Dim query As String = "SELECT ID, ProductCategory, ProductTypeName, UnitType, WeightPerUnit FROM tbl_ESG_ProductMaster WHERE ProductType='Plastic' AND IsActive=1 ORDER BY ProductCategory, ProductTypeName"
 
                 Dim da As New SqlDataAdapter(query, conn)
-                Dim dt As New DataTable()
-                da.Fill(dt)
+                productsDataTable = New DataTable()
+                da.Fill(productsDataTable)
 
-                cmbProductCategory.DataSource = dt
-                cmbProductCategory.DisplayMember = "ProductCategory"
-                cmbProductCategory.ValueMember = "ID"
-
-                cmbProductType.DataSource = dt.Copy()
-                cmbProductType.DisplayMember = "ProductTypeName"
-                cmbProductType.ValueMember = "ID"
+                ' Load unique categories for category dropdown
+                Dim categories = productsDataTable.AsEnumerable().Select(Function(r) r("ProductCategory").ToString()).Distinct().ToList()
+                cmbProductCategory.Items.Clear()
+                For Each cat In categories
+                    cmbProductCategory.Items.Add(cat)
+                Next
+                If cmbProductCategory.Items.Count > 0 Then
+                    cmbProductCategory.SelectedIndex = 0
+                End If
 
                 ' Load filters
-                Dim categories = dt.AsEnumerable().Select(Function(r) r("ProductCategory").ToString()).Distinct().ToList()
                 cmbPlasticCategoryFilter.Items.Clear()
                 cmbPlasticCategoryFilter.Items.Add("All")
                 For Each cat In categories
@@ -50,7 +71,8 @@ Public Class frmPlastic
                 Next
                 cmbPlasticCategoryFilter.SelectedIndex = 0
 
-                Dim types = dt.AsEnumerable().Select(Function(r) r("ProductTypeName").ToString()).Distinct().ToList()
+                ' Load type filter
+                Dim types = productsDataTable.AsEnumerable().Select(Function(r) r("ProductTypeName").ToString()).Distinct().ToList()
                 cmbPlasticTypeFilter.Items.Clear()
                 cmbPlasticTypeFilter.Items.Add("All")
                 For Each t In types
@@ -63,51 +85,42 @@ Public Class frmPlastic
         End Try
     End Sub
 
-    ' Fixed
     Private Sub cmbProductCategory_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbProductCategory.SelectedIndexChanged
-        If cmbProductCategory.SelectedValue IsNot Nothing AndAlso
-       TypeOf cmbProductCategory.SelectedValue Is Integer Then
-            Dim productId As Integer = Convert.ToInt32(cmbProductCategory.SelectedValue)
-            LoadProductDetails(productId)
+        If cmbProductCategory.SelectedItem IsNot Nothing Then
+            Dim selectedCategory As String = cmbProductCategory.SelectedItem.ToString()
+
+            ' Filter product types based on selected category
+            cmbProductType.Items.Clear()
+            Dim filteredRows = productsDataTable.AsEnumerable().Where(Function(r) r("ProductCategory").ToString() = selectedCategory)
+
+            For Each row In filteredRows
+                cmbProductType.Items.Add(row("ProductTypeName").ToString())
+            Next
+
+            If cmbProductType.Items.Count > 0 Then
+                cmbProductType.SelectedIndex = 0
+            End If
         End If
     End Sub
 
-    'Fixed
     Private Sub cmbProductType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbProductType.SelectedIndexChanged
-        If cmbProductType.SelectedValue IsNot Nothing AndAlso
-       TypeOf cmbProductType.SelectedValue Is Integer Then
-            Dim productId As Integer = Convert.ToInt32(cmbProductType.SelectedValue)
-            LoadProductDetails(productId)
+        If cmbProductType.SelectedItem IsNot Nothing Then
+            Dim selectedType As String = cmbProductType.SelectedItem.ToString()
+            Dim productRow = productsDataTable.AsEnumerable().FirstOrDefault(Function(r) r("ProductTypeName").ToString() = selectedType)
+
+            If productRow IsNot Nothing Then
+                txtUnitType.Text = productRow("UnitType").ToString()
+                txtWeightPerUnit.Text = productRow("WeightPerUnit").ToString()
+                CalculateFields(Nothing, Nothing)
+            End If
         End If
-    End Sub
-
-    Private Sub LoadProductDetails(productId As Integer)
-        Try
-            Using conn As SqlConnection = GetConnection()
-                conn.Open()
-                Dim query As String = "SELECT UnitType, WeightPerUnit FROM tbl_ESG_ProductMaster WHERE ID=@ID"
-
-                Using cmd As New SqlCommand(query, conn)
-                    cmd.Parameters.AddWithValue("@ID", productId)
-                    Dim reader As SqlDataReader = cmd.ExecuteReader()
-                    If reader.Read() Then
-                        txtUnitType.Text = reader("UnitType").ToString()
-                        txtWeightPerUnit.Text = reader("WeightPerUnit").ToString()
-                    End If
-                    reader.Close()
-                End Using
-            End Using
-            CalculateFields(Nothing, Nothing)
-        Catch ex As Exception
-            MessageBox.Show($"Error loading product details: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
     End Sub
 
     Private Sub CalculateFields(sender As Object, e As EventArgs)
         Try
-            Dim unitCount As Integer = If(String.IsNullOrEmpty(txtUnitCount.Text), 0, Convert.ToInt32(txtUnitCount.Text))
-            Dim weightPerUnit As Decimal = If(String.IsNullOrEmpty(txtWeightPerUnit.Text), 0, Convert.ToDecimal(txtWeightPerUnit.Text))
-            Dim pricePerUnit As Decimal = If(String.IsNullOrEmpty(txtPricePerUnit.Text), 0, Convert.ToDecimal(txtPricePerUnit.Text))
+            Dim unitCount As Decimal = GetSafeDecimal(txtUnitCount.Text)
+            Dim weightPerUnit As Decimal = GetSafeDecimal(txtWeightPerUnit.Text)
+            Dim pricePerUnit As Decimal = GetSafeDecimal(txtPricePerUnit.Text)
 
             txtPurchasedScale.Text = (unitCount * weightPerUnit).ToString("N2")
             txtTotalCost.Text = (unitCount * pricePerUnit).ToString("N2")
@@ -119,7 +132,7 @@ Public Class frmPlastic
     Private Sub btnUploadBill_Click(sender As Object, e As EventArgs) Handles btnUploadBill.Click
         Using ofd As New OpenFileDialog()
             ofd.Multiselect = True
-            ofd.Filter = "PDF Files|*.pdf|Image Files|*.jpg;*.png|All Files|*.*"
+            ofd.Filter = "PDF Files|*.pdf|Image Files|*.jpg;*.png|Excel Files|*.xlsx;*.xls|All Files|*.*"
             ofd.Title = "Select Bill Documents"
 
             If ofd.ShowDialog() = DialogResult.OK Then
@@ -138,21 +151,28 @@ Public Class frmPlastic
                 Using conn As SqlConnection = GetConnection()
                     conn.Open()
 
+                    ' Get ProductMasterID
+                    Dim productId As Integer = GetProductMasterID()
+                    If productId = -1 Then
+                        MessageBox.Show("Please select valid product", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Return
+                    End If
+
                     Dim sql As String = "INSERT INTO tbl_ESG_Plastic (Year, Month, ProductMasterID, PurchasedUnitCount, PurchasedScale, PricePerUnit, TotalPurchaseCost, Comments, BillFilesPath) VALUES (@Year, @Month, @ProductID, @UnitCount, @Scale, @Price, @TotalCost, @Comments, @BillFiles)"
 
                     Using cmd As New SqlCommand(sql, conn)
                         cmd.Parameters.AddWithValue("@Year", dtpYear.Value.Year)
                         cmd.Parameters.AddWithValue("@Month", dtpMonth.Value.Month)
-                        cmd.Parameters.AddWithValue("@ProductID", cmbProductCategory.SelectedValue)
-                        cmd.Parameters.AddWithValue("@UnitCount", Convert.ToInt32(txtUnitCount.Text))
-                        cmd.Parameters.AddWithValue("@Scale", Convert.ToDecimal(txtPurchasedScale.Text))
-                        cmd.Parameters.AddWithValue("@Price", Convert.ToDecimal(txtPricePerUnit.Text))
-                        cmd.Parameters.AddWithValue("@TotalCost", Convert.ToDecimal(txtTotalCost.Text))
+                        cmd.Parameters.AddWithValue("@ProductID", productId)
+                        cmd.Parameters.AddWithValue("@UnitCount", GetSafeDecimal(txtUnitCount.Text))
+                        cmd.Parameters.AddWithValue("@Scale", GetSafeDecimal(txtPurchasedScale.Text))
+                        cmd.Parameters.AddWithValue("@Price", GetSafeDecimal(txtPricePerUnit.Text))
+                        cmd.Parameters.AddWithValue("@TotalCost", GetSafeDecimal(txtTotalCost.Text))
                         cmd.Parameters.AddWithValue("@Comments", txtComments.Text)
 
                         Dim recordId = $"Plastic_{dtpYear.Value.Year}_{dtpMonth.Value.Month}_{DateTime.Now.Ticks}"
                         Dim filesPath = SaveMultipleFiles(currentFiles, recordId, "Plastic")
-                        cmd.Parameters.AddWithValue("@BillFiles", filesPath)
+                        cmd.Parameters.AddWithValue("@BillFiles", If(String.IsNullOrEmpty(filesPath), DBNull.Value, filesPath))
 
                         cmd.ExecuteNonQuery()
                     End Using
@@ -169,6 +189,20 @@ Public Class frmPlastic
         End If
     End Sub
 
+    Private Function GetProductMasterID() As Integer
+        If cmbProductType.SelectedItem Is Nothing Then
+            Return -1
+        End If
+
+        Dim selectedType As String = cmbProductType.SelectedItem.ToString()
+        Dim productRow = productsDataTable.AsEnumerable().FirstOrDefault(Function(r) r("ProductTypeName").ToString() = selectedType)
+
+        If productRow IsNot Nothing Then
+            Return Convert.ToInt32(productRow("ID"))
+        End If
+        Return -1
+    End Function
+
     Private Sub LoadPlasticData()
         Try
             Using conn As SqlConnection = GetConnection()
@@ -181,57 +215,86 @@ Public Class frmPlastic
 
                 ' Apply filters
                 Dim dv As New DataView(dt)
-                If cmbPlasticCategoryFilter.SelectedItem IsNot Nothing AndAlso cmbPlasticCategoryFilter.SelectedItem.ToString() <> "All" Then
-                    dv.RowFilter = $"ProductCategory = '{cmbPlasticCategoryFilter.SelectedItem.ToString()}'"
+
+                ' Year filter
+                If cmbYearFilter.SelectedItem IsNot Nothing Then
+                    dv.RowFilter = $"Year = {cmbYearFilter.SelectedItem}"
                 End If
+
+                ' Month filter
+                If cmbMonthFilter.SelectedIndex >= 0 Then
+                    Dim monthNum As Integer = cmbMonthFilter.SelectedIndex + 1
+                    dv.RowFilter = If(String.IsNullOrEmpty(dv.RowFilter), $"Month = {monthNum}", $"{dv.RowFilter} AND Month = {monthNum}")
+                End If
+
+                ' Category filter
+                If cmbPlasticCategoryFilter.SelectedItem IsNot Nothing AndAlso cmbPlasticCategoryFilter.SelectedItem.ToString() <> "All" Then
+                    dv.RowFilter = If(String.IsNullOrEmpty(dv.RowFilter), $"ProductCategory = '{cmbPlasticCategoryFilter.SelectedItem.ToString()}'", $"{dv.RowFilter} AND ProductCategory = '{cmbPlasticCategoryFilter.SelectedItem.ToString()}'")
+                End If
+
+                ' Type filter
                 If cmbPlasticTypeFilter.SelectedItem IsNot Nothing AndAlso cmbPlasticTypeFilter.SelectedItem.ToString() <> "All" Then
-                    If dv.RowFilter <> "" Then dv.RowFilter += " AND "
-                    dv.RowFilter += $"ProductType = '{cmbPlasticTypeFilter.SelectedItem.ToString()}'"
+                    dv.RowFilter = If(String.IsNullOrEmpty(dv.RowFilter), $"ProductType = '{cmbPlasticTypeFilter.SelectedItem.ToString()}'", $"{dv.RowFilter} AND ProductType = '{cmbPlasticTypeFilter.SelectedItem.ToString()}'")
                 End If
 
                 grdData.DataSource = dv
 
-                If grdData.Columns.Contains("BillFilesPath") AndAlso Not grdData.Columns.Contains("ViewFiles") Then
+                ' Add view files link column if not exists
+                If Not grdData.Columns.Contains("ViewFiles") Then
                     Dim linkColumn As New DataGridViewLinkColumn()
                     linkColumn.Name = "ViewFiles"
                     linkColumn.HeaderText = "View Bills"
                     linkColumn.Text = "View Files"
                     linkColumn.UseColumnTextForLinkValue = True
                     grdData.Columns.Add(linkColumn)
+                End If
+
+                If grdData.Columns.Contains("BillFilesPath") Then
                     grdData.Columns("BillFilesPath").Visible = False
                 End If
+
+                grdData.ClearSelection()
             End Using
         Catch ex As Exception
             MessageBox.Show($"Error loading plastic data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
-    Private Sub grdData_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles grdData.CellContentClick
+    Private Sub grdData_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles grdData.CellClick
         If e.RowIndex >= 0 Then
             If e.ColumnIndex >= 0 AndAlso grdData.Columns(e.ColumnIndex).Name = "ViewFiles" Then
-                Dim filesPath As String = grdData.Rows(e.RowIndex).Cells("BillFilesPath").Value.ToString()
-                If Not String.IsNullOrEmpty(filesPath) Then
-                    Dim files = System.IO.Directory.GetFiles(filesPath)
-                    For Each file As String In files
-                        If System.IO.File.Exists(file) Then
-                            System.Diagnostics.Process.Start(file)
-                        Else
-                            MessageBox.Show($"File not found: {file}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                        End If
-                    Next
-                End If
+                ViewFiles(e.RowIndex)
             Else
-                currentEditID = Convert.ToInt32(grdData.Rows(e.RowIndex).Cells("ID").Value)
-                LoadDataToForm(grdData.Rows(e.RowIndex))
+                LoadDataToForm(e.RowIndex)
             End If
         End If
     End Sub
 
-    Private Sub LoadDataToForm(row As DataGridViewRow)
+    Private Sub ViewFiles(rowIndex As Integer)
+        Dim filesPath As String = grdData.Rows(rowIndex).Cells("BillFilesPath").Value?.ToString()
+        If Not String.IsNullOrEmpty(filesPath) Then
+            Dim files = GetFilesFromPath(filesPath)
+            If files.Count > 0 Then
+                OpenMultipleFiles(files)
+            Else
+                MessageBox.Show("No files available for this record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+        Else
+            MessageBox.Show("No files uploaded for this record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+    End Sub
+
+    Private Sub LoadDataToForm(rowIndex As Integer)
+        Dim row As DataGridViewRow = grdData.Rows(rowIndex)
+        currentEditID = Convert.ToInt32(row.Cells("ID").Value)
+
         dtpYear.Value = New Date(Convert.ToInt32(row.Cells("Year").Value), 1, 1)
         dtpMonth.Value = New Date(DateTime.Now.Year, Convert.ToInt32(row.Cells("Month").Value), 1)
+
+        ' Set category and type
         cmbProductCategory.Text = row.Cells("ProductCategory").Value.ToString()
         cmbProductType.Text = row.Cells("ProductType").Value.ToString()
+
         txtUnitCount.Text = row.Cells("PurchasedUnitCount").Value.ToString()
         txtPricePerUnit.Text = row.Cells("PricePerUnit").Value.ToString()
         txtComments.Text = If(row.Cells("Comments").Value Is DBNull.Value, "", row.Cells("Comments").Value.ToString())
@@ -251,17 +314,24 @@ Public Class frmPlastic
             Try
                 Using conn As SqlConnection = GetConnection()
                     conn.Open()
+
+                    Dim productId As Integer = GetProductMasterID()
+                    If productId = -1 Then
+                        MessageBox.Show("Please select valid product", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Return
+                    End If
+
                     Dim sql As String = "UPDATE tbl_ESG_Plastic SET Year=@Year, Month=@Month, ProductMasterID=@ProductID, PurchasedUnitCount=@UnitCount, PurchasedScale=@Scale, PricePerUnit=@Price, TotalPurchaseCost=@TotalCost, Comments=@Comments, UpdatedDate=GETDATE() WHERE ID=@ID"
 
                     Using cmd As New SqlCommand(sql, conn)
                         cmd.Parameters.AddWithValue("@ID", currentEditID)
                         cmd.Parameters.AddWithValue("@Year", dtpYear.Value.Year)
                         cmd.Parameters.AddWithValue("@Month", dtpMonth.Value.Month)
-                        cmd.Parameters.AddWithValue("@ProductID", cmbProductCategory.SelectedValue)
-                        cmd.Parameters.AddWithValue("@UnitCount", Convert.ToInt32(txtUnitCount.Text))
-                        cmd.Parameters.AddWithValue("@Scale", Convert.ToDecimal(txtPurchasedScale.Text))
-                        cmd.Parameters.AddWithValue("@Price", Convert.ToDecimal(txtPricePerUnit.Text))
-                        cmd.Parameters.AddWithValue("@TotalCost", Convert.ToDecimal(txtTotalCost.Text))
+                        cmd.Parameters.AddWithValue("@ProductID", productId)
+                        cmd.Parameters.AddWithValue("@UnitCount", GetSafeDecimal(txtUnitCount.Text))
+                        cmd.Parameters.AddWithValue("@Scale", GetSafeDecimal(txtPurchasedScale.Text))
+                        cmd.Parameters.AddWithValue("@Price", GetSafeDecimal(txtPricePerUnit.Text))
+                        cmd.Parameters.AddWithValue("@TotalCost", GetSafeDecimal(txtTotalCost.Text))
                         cmd.Parameters.AddWithValue("@Comments", txtComments.Text)
 
                         cmd.ExecuteNonQuery()
@@ -304,9 +374,36 @@ Public Class frmPlastic
         End If
     End Sub
 
+    Private Sub btnRefresh_Click(sender As Object, e As EventArgs) Handles btnRefresh.Click
+        LoadPlasticData()
+        ClearForm()
+    End Sub
+
+    Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
+        ClearForm()
+    End Sub
+
+    Private Sub btnHome_Click(sender As Object, e As EventArgs) Handles btnHome.Click
+        Dim dashboard As New frmDashboard()
+        dashboard.Show()
+        Me.Close()
+    End Sub
+
+    Private Sub btnExportExcel_Click(sender As Object, e As EventArgs) Handles btnExportExcel.Click
+        ExportToExcel(grdData, "Plastic_Inventory_Data")
+    End Sub
+
+    Private Sub ApplyFilters(sender As Object, e As EventArgs) Handles cmbYearFilter.SelectedIndexChanged, cmbMonthFilter.SelectedIndexChanged, cmbPlasticCategoryFilter.SelectedIndexChanged, cmbPlasticTypeFilter.SelectedIndexChanged
+        LoadPlasticData()
+    End Sub
+
     Private Function ValidateForm() As Boolean
-        If cmbProductCategory.SelectedValue Is Nothing Then
+        If cmbProductCategory.SelectedItem Is Nothing Then
             MessageBox.Show("Please select product category", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return False
+        End If
+        If cmbProductType.SelectedItem Is Nothing Then
+            MessageBox.Show("Please select product type", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return False
         End If
         If String.IsNullOrEmpty(txtUnitCount.Text) OrElse Not IsNumeric(txtUnitCount.Text) Then
@@ -327,20 +424,18 @@ Public Class frmPlastic
         txtPurchasedScale.Clear()
         txtTotalCost.Clear()
         txtComments.Clear()
+        currentFiles.Clear()
+        lblFileCount.Text = "No files selected"
         btnUpdate.Enabled = False
         btnDelete.Enabled = False
         btnSave.Enabled = True
-    End Sub
+        grdData.ClearSelection()
+        cmbProductType.SelectedIndex = -1
+        cmbProductCategory.SelectedIndex = -1
 
-    Private Sub btnExportExcel_Click(sender As Object, e As EventArgs) Handles btnExportExcel.Click
-        ExportToExcel(grdData, "Plastic_Inventory_Data")
-    End Sub
-
-    Private Sub cmbPlasticCategoryFilter_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbPlasticCategoryFilter.SelectedIndexChanged
-        LoadPlasticData()
-    End Sub
-
-    Private Sub cmbPlasticTypeFilter_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbPlasticTypeFilter.SelectedIndexChanged
-        LoadPlasticData()
+        ' Reset product selections if needed
+        If cmbProductCategory.Items.Count > 0 Then
+            cmbProductCategory.SelectedIndex = 0
+        End If
     End Sub
 End Class

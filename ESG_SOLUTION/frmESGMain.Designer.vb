@@ -1402,7 +1402,7 @@ Partial Class frmESGMain
         ' 
         ' btnApplySocialFilter
         ' 
-        btnApplySocialFilter.BackColor = Color.LightBlue
+        btnApplySocialFilter.BackColor = SystemColors.Control
         btnApplySocialFilter.Location = New Point(271, 14)
         btnApplySocialFilter.Margin = New Padding(3, 2, 3, 2)
         btnApplySocialFilter.Name = "btnApplySocialFilter"
@@ -1479,7 +1479,7 @@ Partial Class frmESGMain
         ' 
         ' btnDeleteAgeCategory
         ' 
-        btnDeleteAgeCategory.BackColor = Color.LightCoral
+        btnDeleteAgeCategory.BackColor = SystemColors.Control
         btnDeleteAgeCategory.Location = New Point(298, 163)
         btnDeleteAgeCategory.Margin = New Padding(3, 2, 3, 2)
         btnDeleteAgeCategory.Name = "btnDeleteAgeCategory"
@@ -1510,7 +1510,7 @@ Partial Class frmESGMain
         ' 
         ' btnSaveBasic
         ' 
-        btnSaveBasic.BackColor = Color.LightGreen
+        btnSaveBasic.BackColor = SystemColors.Control
         btnSaveBasic.Location = New Point(423, 209)
         btnSaveBasic.Margin = New Padding(3, 2, 3, 2)
         btnSaveBasic.Name = "btnSaveBasic"
@@ -1530,7 +1530,7 @@ Partial Class frmESGMain
         ' 
         ' btnUpdateBasic
         ' 
-        btnUpdateBasic.BackColor = Color.LightGreen
+        btnUpdateBasic.BackColor = SystemColors.Control
         btnUpdateBasic.Location = New Point(519, 209)
         btnUpdateBasic.Margin = New Padding(3, 2, 3, 2)
         btnUpdateBasic.Name = "btnUpdateBasic"
@@ -1553,7 +1553,7 @@ Partial Class frmESGMain
         ' 
         ' btnCancelBasic
         ' 
-        btnCancelBasic.BackColor = Color.LightCoral
+        btnCancelBasic.BackColor = SystemColors.Control
         btnCancelBasic.Location = New Point(615, 209)
         btnCancelBasic.Margin = New Padding(3, 2, 3, 2)
         btnCancelBasic.Name = "btnCancelBasic"
@@ -1699,7 +1699,7 @@ Partial Class frmESGMain
         ' 
         ' btnApplySkillsFilter
         ' 
-        btnApplySkillsFilter.BackColor = Color.LightBlue
+        btnApplySkillsFilter.BackColor = SystemColors.Control
         btnApplySkillsFilter.Location = New Point(271, 14)
         btnApplySkillsFilter.Margin = New Padding(3, 2, 3, 2)
         btnApplySkillsFilter.Name = "btnApplySkillsFilter"
@@ -1798,7 +1798,7 @@ Partial Class frmESGMain
         ' 
         ' btnSaveSkills
         ' 
-        btnSaveSkills.BackColor = Color.LightGreen
+        btnSaveSkills.BackColor = SystemColors.Control
         btnSaveSkills.Location = New Point(349, 196)
         btnSaveSkills.Margin = New Padding(3, 2, 3, 2)
         btnSaveSkills.Name = "btnSaveSkills"
@@ -1818,7 +1818,7 @@ Partial Class frmESGMain
         ' 
         ' btnUpdateSkills
         ' 
-        btnUpdateSkills.BackColor = Color.LightGreen
+        btnUpdateSkills.BackColor = SystemColors.Control
         btnUpdateSkills.Location = New Point(445, 196)
         btnUpdateSkills.Margin = New Padding(3, 2, 3, 2)
         btnUpdateSkills.Name = "btnUpdateSkills"
@@ -1839,7 +1839,7 @@ Partial Class frmESGMain
         ' 
         ' btnCancelSkills
         ' 
-        btnCancelSkills.BackColor = Color.LightCoral
+        btnCancelSkills.BackColor = SystemColors.Control
         btnCancelSkills.Location = New Point(541, 196)
         btnCancelSkills.Margin = New Padding(3, 2, 3, 2)
         btnCancelSkills.Name = "btnCancelSkills"
@@ -1939,7 +1939,7 @@ Partial Class frmESGMain
         ' 
         ' btnApplyPromotionsFilter
         ' 
-        btnApplyPromotionsFilter.BackColor = Color.LightBlue
+        btnApplyPromotionsFilter.BackColor = SystemColors.Control
         btnApplyPromotionsFilter.Location = New Point(271, 14)
         btnApplyPromotionsFilter.Margin = New Padding(3, 2, 3, 2)
         btnApplyPromotionsFilter.Name = "btnApplyPromotionsFilter"
@@ -2038,7 +2038,7 @@ Partial Class frmESGMain
         ' 
         ' btnSavePromotions
         ' 
-        btnSavePromotions.BackColor = Color.LightGreen
+        btnSavePromotions.BackColor = SystemColors.Control
         btnSavePromotions.Location = New Point(387, 165)
         btnSavePromotions.Margin = New Padding(3, 2, 3, 2)
         btnSavePromotions.Name = "btnSavePromotions"
@@ -2058,7 +2058,7 @@ Partial Class frmESGMain
         ' 
         ' btnUpdatePromotions
         ' 
-        btnUpdatePromotions.BackColor = Color.LightGreen
+        btnUpdatePromotions.BackColor = SystemColors.Control
         btnUpdatePromotions.Location = New Point(483, 165)
         btnUpdatePromotions.Margin = New Padding(3, 2, 3, 2)
         btnUpdatePromotions.Name = "btnUpdatePromotions"
@@ -2079,7 +2079,7 @@ Partial Class frmESGMain
         ' 
         ' btnCancelPromotions
         ' 
-        btnCancelPromotions.BackColor = Color.LightCoral
+        btnCancelPromotions.BackColor = SystemColors.Control
         btnCancelPromotions.Location = New Point(579, 165)
         btnCancelPromotions.Margin = New Padding(3, 2, 3, 2)
         btnCancelPromotions.Name = "btnCancelPromotions"
@@ -2179,7 +2179,7 @@ Partial Class frmESGMain
         ' 
         ' btnApplyManagementFilter
         ' 
-        btnApplyManagementFilter.BackColor = Color.LightBlue
+        btnApplyManagementFilter.BackColor = SystemColors.Control
         btnApplyManagementFilter.Location = New Point(271, 14)
         btnApplyManagementFilter.Margin = New Padding(3, 2, 3, 2)
         btnApplyManagementFilter.Name = "btnApplyManagementFilter"
@@ -2292,7 +2292,7 @@ Partial Class frmESGMain
         ' 
         ' btnSaveManagement
         ' 
-        btnSaveManagement.BackColor = Color.LightGreen
+        btnSaveManagement.BackColor = SystemColors.Control
         btnSaveManagement.Location = New Point(369, 243)
         btnSaveManagement.Margin = New Padding(3, 2, 3, 2)
         btnSaveManagement.Name = "btnSaveManagement"
@@ -2312,7 +2312,7 @@ Partial Class frmESGMain
         ' 
         ' btnUpdateManagement
         ' 
-        btnUpdateManagement.BackColor = Color.LightGreen
+        btnUpdateManagement.BackColor = SystemColors.Control
         btnUpdateManagement.Location = New Point(465, 243)
         btnUpdateManagement.Margin = New Padding(3, 2, 3, 2)
         btnUpdateManagement.Name = "btnUpdateManagement"
@@ -2334,7 +2334,7 @@ Partial Class frmESGMain
         ' 
         ' btnCancelManagement
         ' 
-        btnCancelManagement.BackColor = Color.LightCoral
+        btnCancelManagement.BackColor = SystemColors.Control
         btnCancelManagement.Location = New Point(561, 243)
         btnCancelManagement.Margin = New Padding(3, 2, 3, 2)
         btnCancelManagement.Name = "btnCancelManagement"
@@ -2563,7 +2563,7 @@ Partial Class frmESGMain
         ' 
         ' btnApplyDisabilitiesFilter
         ' 
-        btnApplyDisabilitiesFilter.BackColor = Color.LightBlue
+        btnApplyDisabilitiesFilter.BackColor = SystemColors.Control
         btnApplyDisabilitiesFilter.Location = New Point(271, 14)
         btnApplyDisabilitiesFilter.Margin = New Padding(3, 2, 3, 2)
         btnApplyDisabilitiesFilter.Name = "btnApplyDisabilitiesFilter"
@@ -2666,7 +2666,7 @@ Partial Class frmESGMain
         ' 
         ' btnSaveDisabilities
         ' 
-        btnSaveDisabilities.BackColor = Color.LightGreen
+        btnSaveDisabilities.BackColor = SystemColors.Control
         btnSaveDisabilities.Location = New Point(340, 186)
         btnSaveDisabilities.Margin = New Padding(3, 2, 3, 2)
         btnSaveDisabilities.Name = "btnSaveDisabilities"
@@ -2686,7 +2686,7 @@ Partial Class frmESGMain
         ' 
         ' btnUpdateDisabilities
         ' 
-        btnUpdateDisabilities.BackColor = Color.LightGreen
+        btnUpdateDisabilities.BackColor = SystemColors.Control
         btnUpdateDisabilities.Location = New Point(436, 186)
         btnUpdateDisabilities.Margin = New Padding(3, 2, 3, 2)
         btnUpdateDisabilities.Name = "btnUpdateDisabilities"
@@ -2707,7 +2707,7 @@ Partial Class frmESGMain
         ' 
         ' btnCancelDisabilities
         ' 
-        btnCancelDisabilities.BackColor = Color.LightCoral
+        btnCancelDisabilities.BackColor = SystemColors.Control
         btnCancelDisabilities.Location = New Point(532, 186)
         btnCancelDisabilities.Margin = New Padding(3, 2, 3, 2)
         btnCancelDisabilities.Name = "btnCancelDisabilities"
@@ -2843,7 +2843,7 @@ Partial Class frmESGMain
         ' 
         ' btnApplyBehaviorFilter
         ' 
-        btnApplyBehaviorFilter.BackColor = Color.LightBlue
+        btnApplyBehaviorFilter.BackColor = SystemColors.Control
         btnApplyBehaviorFilter.Location = New Point(271, 14)
         btnApplyBehaviorFilter.Margin = New Padding(3, 2, 3, 2)
         btnApplyBehaviorFilter.Name = "btnApplyBehaviorFilter"
@@ -2946,7 +2946,7 @@ Partial Class frmESGMain
         ' 
         ' btnSaveBehavior
         ' 
-        btnSaveBehavior.BackColor = Color.LightGreen
+        btnSaveBehavior.BackColor = SystemColors.Control
         btnSaveBehavior.Location = New Point(337, 140)
         btnSaveBehavior.Margin = New Padding(3, 2, 3, 2)
         btnSaveBehavior.Name = "btnSaveBehavior"
@@ -2966,7 +2966,7 @@ Partial Class frmESGMain
         ' 
         ' btnUpdateBehavior
         ' 
-        btnUpdateBehavior.BackColor = Color.LightGreen
+        btnUpdateBehavior.BackColor = SystemColors.Control
         btnUpdateBehavior.Location = New Point(433, 140)
         btnUpdateBehavior.Margin = New Padding(3, 2, 3, 2)
         btnUpdateBehavior.Name = "btnUpdateBehavior"
@@ -2987,7 +2987,7 @@ Partial Class frmESGMain
         ' 
         ' btnCancelBehavior
         ' 
-        btnCancelBehavior.BackColor = Color.LightCoral
+        btnCancelBehavior.BackColor = SystemColors.Control
         btnCancelBehavior.Location = New Point(529, 140)
         btnCancelBehavior.Margin = New Padding(3, 2, 3, 2)
         btnCancelBehavior.Name = "btnCancelBehavior"
@@ -3123,7 +3123,7 @@ Partial Class frmESGMain
         ' 
         ' btnApplyIdentificationFilter
         ' 
-        btnApplyIdentificationFilter.BackColor = Color.LightBlue
+        btnApplyIdentificationFilter.BackColor = SystemColors.Control
         btnApplyIdentificationFilter.Location = New Point(271, 14)
         btnApplyIdentificationFilter.Margin = New Padding(3, 2, 3, 2)
         btnApplyIdentificationFilter.Name = "btnApplyIdentificationFilter"
@@ -3226,7 +3226,7 @@ Partial Class frmESGMain
         ' 
         ' btnSaveIdentification
         ' 
-        btnSaveIdentification.BackColor = Color.LightGreen
+        btnSaveIdentification.BackColor = SystemColors.Control
         btnSaveIdentification.Location = New Point(350, 160)
         btnSaveIdentification.Margin = New Padding(3, 2, 3, 2)
         btnSaveIdentification.Name = "btnSaveIdentification"
@@ -3246,7 +3246,7 @@ Partial Class frmESGMain
         ' 
         ' btnUpdateIdentification
         ' 
-        btnUpdateIdentification.BackColor = Color.LightGreen
+        btnUpdateIdentification.BackColor = SystemColors.Control
         btnUpdateIdentification.Location = New Point(446, 160)
         btnUpdateIdentification.Margin = New Padding(3, 2, 3, 2)
         btnUpdateIdentification.Name = "btnUpdateIdentification"
@@ -3267,7 +3267,7 @@ Partial Class frmESGMain
         ' 
         ' btnCancelIdentification
         ' 
-        btnCancelIdentification.BackColor = Color.LightCoral
+        btnCancelIdentification.BackColor = SystemColors.Control
         btnCancelIdentification.Location = New Point(542, 160)
         btnCancelIdentification.Margin = New Padding(3, 2, 3, 2)
         btnCancelIdentification.Name = "btnCancelIdentification"
@@ -3403,7 +3403,7 @@ Partial Class frmESGMain
         ' 
         ' btnApplyNationsFilter
         ' 
-        btnApplyNationsFilter.BackColor = Color.LightBlue
+        btnApplyNationsFilter.BackColor = SystemColors.Control
         btnApplyNationsFilter.Location = New Point(271, 14)
         btnApplyNationsFilter.Margin = New Padding(3, 2, 3, 2)
         btnApplyNationsFilter.Name = "btnApplyNationsFilter"
@@ -3513,7 +3513,7 @@ Partial Class frmESGMain
         ' 
         ' btnSaveNations
         ' 
-        btnSaveNations.BackColor = Color.LightGreen
+        btnSaveNations.BackColor = SystemColors.Control
         btnSaveNations.Location = New Point(464, 174)
         btnSaveNations.Margin = New Padding(3, 2, 3, 2)
         btnSaveNations.Name = "btnSaveNations"
@@ -3533,7 +3533,7 @@ Partial Class frmESGMain
         ' 
         ' btnUpdateNations
         ' 
-        btnUpdateNations.BackColor = Color.LightGreen
+        btnUpdateNations.BackColor = SystemColors.Control
         btnUpdateNations.Location = New Point(558, 174)
         btnUpdateNations.Margin = New Padding(3, 2, 3, 2)
         btnUpdateNations.Name = "btnUpdateNations"
@@ -3554,7 +3554,7 @@ Partial Class frmESGMain
         ' 
         ' btnCancelNations
         ' 
-        btnCancelNations.BackColor = Color.LightCoral
+        btnCancelNations.BackColor = SystemColors.Control
         btnCancelNations.Location = New Point(654, 174)
         btnCancelNations.Margin = New Padding(3, 2, 3, 2)
         btnCancelNations.Name = "btnCancelNations"
@@ -3762,7 +3762,7 @@ Partial Class frmESGMain
         ' 
         ' btnApplyReligionsFilter
         ' 
-        btnApplyReligionsFilter.BackColor = Color.LightBlue
+        btnApplyReligionsFilter.BackColor = SystemColors.Control
         btnApplyReligionsFilter.Location = New Point(336, 11)
         btnApplyReligionsFilter.Margin = New Padding(3, 2, 3, 2)
         btnApplyReligionsFilter.Name = "btnApplyReligionsFilter"
@@ -3872,7 +3872,7 @@ Partial Class frmESGMain
         ' 
         ' btnSaveReligions
         ' 
-        btnSaveReligions.BackColor = Color.LightGreen
+        btnSaveReligions.BackColor = SystemColors.Control
         btnSaveReligions.Location = New Point(360, 202)
         btnSaveReligions.Margin = New Padding(3, 2, 3, 2)
         btnSaveReligions.Name = "btnSaveReligions"
@@ -3892,7 +3892,7 @@ Partial Class frmESGMain
         ' 
         ' btnUpdateReligions
         ' 
-        btnUpdateReligions.BackColor = Color.LightGreen
+        btnUpdateReligions.BackColor = SystemColors.Control
         btnUpdateReligions.Location = New Point(456, 202)
         btnUpdateReligions.Margin = New Padding(3, 2, 3, 2)
         btnUpdateReligions.Name = "btnUpdateReligions"
@@ -3913,7 +3913,7 @@ Partial Class frmESGMain
         ' 
         ' btnCancelReligions
         ' 
-        btnCancelReligions.BackColor = Color.LightCoral
+        btnCancelReligions.BackColor = SystemColors.Control
         btnCancelReligions.Location = New Point(552, 202)
         btnCancelReligions.Margin = New Padding(3, 2, 3, 2)
         btnCancelReligions.Name = "btnCancelReligions"
@@ -4121,7 +4121,7 @@ Partial Class frmESGMain
         ' 
         ' btnApplyLanguagesFilter
         ' 
-        btnApplyLanguagesFilter.BackColor = Color.LightBlue
+        btnApplyLanguagesFilter.BackColor = SystemColors.Control
         btnApplyLanguagesFilter.Location = New Point(271, 14)
         btnApplyLanguagesFilter.Margin = New Padding(3, 2, 3, 2)
         btnApplyLanguagesFilter.Name = "btnApplyLanguagesFilter"
@@ -4222,7 +4222,7 @@ Partial Class frmESGMain
         ' 
         ' btnSaveLanguages
         ' 
-        btnSaveLanguages.BackColor = Color.LightGreen
+        btnSaveLanguages.BackColor = SystemColors.Control
         btnSaveLanguages.Location = New Point(447, 154)
         btnSaveLanguages.Margin = New Padding(3, 2, 3, 2)
         btnSaveLanguages.Name = "btnSaveLanguages"
@@ -4242,7 +4242,7 @@ Partial Class frmESGMain
         ' 
         ' btnUpdateLanguages
         ' 
-        btnUpdateLanguages.BackColor = Color.LightGreen
+        btnUpdateLanguages.BackColor = SystemColors.Control
         btnUpdateLanguages.Location = New Point(543, 154)
         btnUpdateLanguages.Margin = New Padding(3, 2, 3, 2)
         btnUpdateLanguages.Name = "btnUpdateLanguages"
@@ -4263,7 +4263,7 @@ Partial Class frmESGMain
         ' 
         ' btnCancelLanguages
         ' 
-        btnCancelLanguages.BackColor = Color.LightCoral
+        btnCancelLanguages.BackColor = SystemColors.Control
         btnCancelLanguages.Location = New Point(639, 154)
         btnCancelLanguages.Margin = New Padding(3, 2, 3, 2)
         btnCancelLanguages.Name = "btnCancelLanguages"

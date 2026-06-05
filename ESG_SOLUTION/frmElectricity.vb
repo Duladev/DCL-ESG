@@ -6,6 +6,8 @@ Public Class frmElectricity
     Private currentEditID As Integer = -1
 
     Private Sub frmElectricity_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        SetupForm(Me)
+
         ' Configure DateTimePickers
         dtpYear.CustomFormat = "yyyy"
         dtpYear.ShowUpDown = True
@@ -19,8 +21,30 @@ Public Class frmElectricity
         ' Configure ComboBoxes
         cmbRenewableSource.Items.AddRange(New String() {"Solar", "Wind Power", "Hydropower", "Geothermal", "Biomass Energy", "Wave Energy", "Green Hydrogen", "Tidal Energy"})
         cmbNonRenewableSource.Items.AddRange(New String() {"Coal", "Natural Gas", "Oil", "Nuclear Energy", "Diesel", "Peat", "Shale Gas and Oil", "Tar Sand"})
+        cmbPurchaseType.Items.AddRange(New String() {"Main Purchase", "Additional Purchase", "Out-Source Purchase"})
+        cmbPurchaseType.SelectedIndex = 0
+
+        ' Setup filters
+        SetupFilters()
+
+        ' Add keypress handlers
+        AddKeyPressHandlers(Me.Controls)
 
         LoadDataGridView()
+    End Sub
+
+    Private Sub SetupFilters()
+        ' Load years for filter
+        For year As Integer = 2020 To DateTime.Now.Year + 1
+            cmbYearFilter.Items.Add(year)
+        Next
+        cmbYearFilter.SelectedItem = DateTime.Now.Year
+
+        ' Load months for filter
+        For month As Integer = 1 To 12
+            cmbMonthFilter.Items.Add(New DateTime(2000, month, 1).ToString("MMMM"))
+        Next
+        cmbMonthFilter.SelectedIndex = DateTime.Now.Month - 1
     End Sub
 
     Private Sub cmbPurchaseType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbPurchaseType.SelectedIndexChanged
@@ -46,6 +70,8 @@ Public Class frmElectricity
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        If Not ValidateInputs() Then Return
+
         Try
             Using conn As SqlConnection = GetConnection()
                 conn.Open()
@@ -68,20 +94,20 @@ Public Class frmElectricity
                     cmd.Parameters.AddWithValue("@PurchaseType", purchaseType)
                     cmd.Parameters.AddWithValue("@Year", year)
                     cmd.Parameters.AddWithValue("@Month", month)
-                    cmd.Parameters.AddWithValue("@BillFiles", filesPath)
+                    cmd.Parameters.AddWithValue("@BillFiles", If(String.IsNullOrEmpty(filesPath), DBNull.Value, filesPath))
 
                     If purchaseType = "Out-Source Purchase" Then
                         cmd.Parameters.AddWithValue("@RenewableSource", cmbRenewableSource.Text)
-                        cmd.Parameters.AddWithValue("@RenewableCap", If(String.IsNullOrEmpty(txtRenewableCap.Text), 0, Convert.ToDecimal(txtRenewableCap.Text)))
+                        cmd.Parameters.AddWithValue("@RenewableCap", GetSafeDecimal(txtRenewableCap.Text))
                         cmd.Parameters.AddWithValue("@NonRenewableSource", cmbNonRenewableSource.Text)
-                        cmd.Parameters.AddWithValue("@NonRenewableCap", If(String.IsNullOrEmpty(txtNonRenewableCap.Text), 0, Convert.ToDecimal(txtNonRenewableCap.Text)))
+                        cmd.Parameters.AddWithValue("@NonRenewableCap", GetSafeDecimal(txtNonRenewableCap.Text))
                     Else
-                        cmd.Parameters.AddWithValue("@PeakQty", If(String.IsNullOrEmpty(txtPeakQty.Text), 0, Convert.ToDecimal(txtPeakQty.Text)))
-                        cmd.Parameters.AddWithValue("@NormalQty", If(String.IsNullOrEmpty(txtNormalQty.Text), 0, Convert.ToDecimal(txtNormalQty.Text)))
-                        cmd.Parameters.AddWithValue("@OffPeakQty", If(String.IsNullOrEmpty(txtOffPeakQty.Text), 0, Convert.ToDecimal(txtOffPeakQty.Text)))
-                        cmd.Parameters.AddWithValue("@PeakAmount", If(String.IsNullOrEmpty(txtPeakAmount.Text), 0, Convert.ToDecimal(txtPeakAmount.Text)))
-                        cmd.Parameters.AddWithValue("@NormalAmount", If(String.IsNullOrEmpty(txtNormalAmount.Text), 0, Convert.ToDecimal(txtNormalAmount.Text)))
-                        cmd.Parameters.AddWithValue("@OffPeakAmount", If(String.IsNullOrEmpty(txtOffPeakAmount.Text), 0, Convert.ToDecimal(txtOffPeakAmount.Text)))
+                        cmd.Parameters.AddWithValue("@PeakQty", GetSafeDecimal(txtPeakQty.Text))
+                        cmd.Parameters.AddWithValue("@NormalQty", GetSafeDecimal(txtNormalQty.Text))
+                        cmd.Parameters.AddWithValue("@OffPeakQty", GetSafeDecimal(txtOffPeakQty.Text))
+                        cmd.Parameters.AddWithValue("@PeakAmount", GetSafeDecimal(txtPeakAmount.Text))
+                        cmd.Parameters.AddWithValue("@NormalAmount", GetSafeDecimal(txtNormalAmount.Text))
+                        cmd.Parameters.AddWithValue("@OffPeakAmount", GetSafeDecimal(txtOffPeakAmount.Text))
                     End If
 
                     cmd.ExecuteNonQuery()
@@ -98,63 +124,139 @@ Public Class frmElectricity
         End Try
     End Sub
 
+    Private Function ValidateInputs() As Boolean
+        If cmbPurchaseType.SelectedIndex = -1 Then
+            MessageBox.Show("Please select a purchase type", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return False
+        End If
+        Return True
+    End Function
+
+    Private Function GetSafeDecimal(inputText As String) As Decimal
+        Dim result As Decimal = 0
+        If Decimal.TryParse(inputText, result) Then
+            Return result
+        End If
+        Return 0
+    End Function
+
     Private Sub LoadDataGridView()
         Try
             Using conn As SqlConnection = GetConnection()
                 conn.Open()
-                Dim query As String = "SELECT ID, PurchaseType, Year, Month, PeakTimeQty, NormalTimeQty, OffPeakTimeQty, PeakTimeAmount, NormalTimeAmount, OffPeakTimeAmount, RenewableSourceType, RenewableCapacity, BillFilesPath FROM vw_ESG_ElectricityPurchase ORDER BY Year DESC, Month DESC"
+                Dim query As String = "SELECT ID, PurchaseType, Year, Month, PeakTimeQty, NormalTimeQty, OffPeakTimeQty, PeakTimeAmount, NormalTimeAmount, OffPeakTimeAmount, RenewableSourceType, RenewableCapacity, NonRenewableSourceType, NonRenewableCapacity, BillFilesPath FROM tbl_ESG_ElectricityPurchase ORDER BY Year DESC, Month DESC"
 
                 Dim da As New SqlDataAdapter(query, conn)
                 Dim dt As New DataTable()
                 da.Fill(dt)
 
-                grdData.DataSource = dt
+                ' Apply filters
+                Dim dv As New DataView(dt)
+                If cmbYearFilter.SelectedItem IsNot Nothing Then
+                    dv.RowFilter = $"Year = {cmbYearFilter.SelectedItem}"
+                End If
+                If cmbMonthFilter.SelectedIndex >= 0 Then
+                    Dim monthNum As Integer = cmbMonthFilter.SelectedIndex + 1
+                    dv.RowFilter = If(String.IsNullOrEmpty(dv.RowFilter), $"Month = {monthNum}", $"{dv.RowFilter} AND Month = {monthNum}")
+                End If
+
+                grdData.DataSource = dv
 
                 ' Add view files link column if not exists
-                If grdData.Columns.Contains("BillFilesPath") AndAlso Not grdData.Columns.Contains("ViewFiles") Then
+                If Not grdData.Columns.Contains("ViewFiles") Then
                     Dim linkColumn As New DataGridViewLinkColumn()
                     linkColumn.Name = "ViewFiles"
                     linkColumn.HeaderText = "View Bills"
                     linkColumn.Text = "View Files"
                     linkColumn.UseColumnTextForLinkValue = True
                     grdData.Columns.Add(linkColumn)
+                End If
+
+                If grdData.Columns.Contains("BillFilesPath") Then
                     grdData.Columns("BillFilesPath").Visible = False
                 End If
+
+                ' Clear selection
+                grdData.ClearSelection()
             End Using
         Catch ex As Exception
             MessageBox.Show($"Error loading data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
-    Private Sub grdData_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles grdData.CellContentClick
+    Private Sub grdData_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles grdData.CellClick
         If e.RowIndex >= 0 Then
             If e.ColumnIndex >= 0 AndAlso grdData.Columns(e.ColumnIndex).Name = "ViewFiles" Then
-                Dim filesPath As String = grdData.Rows(e.RowIndex).Cells("BillFilesPath").Value.ToString()
-                If Not String.IsNullOrEmpty(filesPath) Then
-                    Dim files = GetFilesFromPath(filesPath)
-                    For Each file As String In files
-                        If System.IO.File.Exists(file) Then
-                            System.Diagnostics.Process.Start(file)
-                            MessageBox.Show($"File not found: {file}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                        End If
-                    Next
-                End If
+                ViewFiles(e.RowIndex)
             Else
-                ' Load selected row for editing
-                currentEditID = Convert.ToInt32(grdData.Rows(e.RowIndex).Cells("ID").Value)
-                LoadDataToForm(grdData.Rows(e.RowIndex))
+                LoadDataToForm(e.RowIndex)
             End If
         End If
     End Sub
 
-    Private Sub LoadDataToForm(row As DataGridViewRow)
+    'Private Sub ViewFiles(rowIndex As Integer)
+    '    Dim filesPath As String = grdData.Rows(rowIndex).Cells("BillFilesPath").Value?.ToString()
+    '    If Not String.IsNullOrEmpty(filesPath) Then
+    '        Dim files = GetFilesFromPath(filesPath)
+    '        If files.Count > 0 Then
+    '            For Each file As String In files
+    '                If System.IO.File.Exists(file) Then
+    '                    System.Diagnostics.Process.Start(file)
+    '                Else
+    '                    MessageBox.Show($"File not found: {file}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+    '                End If
+    '            Next
+    '        Else
+    '            MessageBox.Show("No files available for this record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    '        End If
+    '    Else
+    '        MessageBox.Show("No files uploaded for this record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    '    End If
+    'End Sub
+
+    'view file testmethod
+    Private Sub ViewFiles(rowIndex As Integer)
+        Dim filesPath As String = grdData.Rows(rowIndex).Cells("BillFilesPath").Value?.ToString()
+        If Not String.IsNullOrEmpty(filesPath) Then
+            Dim files = GetFilesFromPath(filesPath)
+            If files.Count > 0 Then
+                For Each file As String In files
+                    If System.IO.File.Exists(file) Then
+                        Try
+                            ' Use Process.Start with proper error handling
+                            Dim psi As New ProcessStartInfo()
+                            psi.FileName = file
+                            psi.UseShellExecute = True
+                            Process.Start(psi)
+                        Catch ex As Exception
+                            MessageBox.Show($"Error opening file '{Path.GetFileName(file)}': {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        End Try
+                    Else
+                        MessageBox.Show($"File not found: {file}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End If
+                Next
+            Else
+                MessageBox.Show("No files available for this record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+        Else
+            MessageBox.Show("No files uploaded for this record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+    End Sub
+    'end vew file test method
+
+    Private Sub LoadDataToForm(rowIndex As Integer)
+        Dim row As DataGridViewRow = grdData.Rows(rowIndex)
+        currentEditID = Convert.ToInt32(row.Cells("ID").Value)
+
         cmbPurchaseType.Text = row.Cells("PurchaseType").Value.ToString()
         dtpYear.Value = New Date(Convert.ToInt32(row.Cells("Year").Value), 1, 1)
         dtpMonth.Value = New Date(DateTime.Now.Year, Convert.ToInt32(row.Cells("Month").Value), 1)
 
         If cmbPurchaseType.Text = "Out-Source Purchase" Then
-            cmbRenewableSource.Text = row.Cells("RenewableSourceType").Value.ToString()
-            txtRenewableCap.Text = row.Cells("RenewableCapacity").Value.ToString()
+            cmbRenewableSource.Text = row.Cells("RenewableSourceType").Value?.ToString()
+            txtRenewableCap.Text = row.Cells("RenewableCapacity").Value?.ToString()
+            cmbNonRenewableSource.Text = row.Cells("NonRenewableSourceType").Value?.ToString()
+            txtNonRenewableCap.Text = row.Cells("NonRenewableCapacity").Value?.ToString()
         Else
             txtPeakQty.Text = If(row.Cells("PeakTimeQty").Value Is DBNull.Value, "", row.Cells("PeakTimeQty").Value.ToString())
             txtNormalQty.Text = If(row.Cells("NormalTimeQty").Value Is DBNull.Value, "", row.Cells("NormalTimeQty").Value.ToString())
@@ -178,19 +280,33 @@ Public Class frmElectricity
         Try
             Using conn As SqlConnection = GetConnection()
                 conn.Open()
-                Dim sql As String = "UPDATE tbl_ESG_ElectricityPurchase SET PurchaseType=@PurchaseType, Year=@Year, Month=@Month, PeakTimeQty=@PeakQty, NormalTimeQty=@NormalQty, OffPeakTimeQty=@OffPeakQty, PeakTimeAmount=@PeakAmount, NormalTimeAmount=@NormalAmount, OffPeakTimeAmount=@OffPeakAmount, UpdatedDate=GETDATE() WHERE ID=@ID"
+                Dim sql As String
+
+                If cmbPurchaseType.Text = "Out-Source Purchase" Then
+                    sql = "UPDATE tbl_ESG_ElectricityPurchase SET PurchaseType=@PurchaseType, Year=@Year, Month=@Month, RenewableSourceType=@RenewableSource, RenewableCapacity=@RenewableCap, NonRenewableSourceType=@NonRenewableSource, NonRenewableCapacity=@NonRenewableCap, UpdatedDate=GETDATE() WHERE ID=@ID"
+                Else
+                    sql = "UPDATE tbl_ESG_ElectricityPurchase SET PurchaseType=@PurchaseType, Year=@Year, Month=@Month, PeakTimeQty=@PeakQty, NormalTimeQty=@NormalQty, OffPeakTimeQty=@OffPeakQty, PeakTimeAmount=@PeakAmount, NormalTimeAmount=@NormalAmount, OffPeakTimeAmount=@OffPeakAmount, UpdatedDate=GETDATE() WHERE ID=@ID"
+                End If
 
                 Using cmd As New SqlCommand(sql, conn)
                     cmd.Parameters.AddWithValue("@ID", currentEditID)
                     cmd.Parameters.AddWithValue("@PurchaseType", cmbPurchaseType.Text)
                     cmd.Parameters.AddWithValue("@Year", dtpYear.Value.Year)
                     cmd.Parameters.AddWithValue("@Month", dtpMonth.Value.Month)
-                    cmd.Parameters.AddWithValue("@PeakQty", Convert.ToDecimal(txtPeakQty.Text))
-                    cmd.Parameters.AddWithValue("@NormalQty", Convert.ToDecimal(txtNormalQty.Text))
-                    cmd.Parameters.AddWithValue("@OffPeakQty", Convert.ToDecimal(txtOffPeakQty.Text))
-                    cmd.Parameters.AddWithValue("@PeakAmount", Convert.ToDecimal(txtPeakAmount.Text))
-                    cmd.Parameters.AddWithValue("@NormalAmount", Convert.ToDecimal(txtNormalAmount.Text))
-                    cmd.Parameters.AddWithValue("@OffPeakAmount", Convert.ToDecimal(txtOffPeakAmount.Text))
+
+                    If cmbPurchaseType.Text = "Out-Source Purchase" Then
+                        cmd.Parameters.AddWithValue("@RenewableSource", cmbRenewableSource.Text)
+                        cmd.Parameters.AddWithValue("@RenewableCap", GetSafeDecimal(txtRenewableCap.Text))
+                        cmd.Parameters.AddWithValue("@NonRenewableSource", cmbNonRenewableSource.Text)
+                        cmd.Parameters.AddWithValue("@NonRenewableCap", GetSafeDecimal(txtNonRenewableCap.Text))
+                    Else
+                        cmd.Parameters.AddWithValue("@PeakQty", GetSafeDecimal(txtPeakQty.Text))
+                        cmd.Parameters.AddWithValue("@NormalQty", GetSafeDecimal(txtNormalQty.Text))
+                        cmd.Parameters.AddWithValue("@OffPeakQty", GetSafeDecimal(txtOffPeakQty.Text))
+                        cmd.Parameters.AddWithValue("@PeakAmount", GetSafeDecimal(txtPeakAmount.Text))
+                        cmd.Parameters.AddWithValue("@NormalAmount", GetSafeDecimal(txtNormalAmount.Text))
+                        cmd.Parameters.AddWithValue("@OffPeakAmount", GetSafeDecimal(txtOffPeakAmount.Text))
+                    End If
 
                     cmd.ExecuteNonQuery()
                 End Using
@@ -231,6 +347,26 @@ Public Class frmElectricity
         End If
     End Sub
 
+    Private Sub btnRefresh_Click(sender As Object, e As EventArgs) Handles btnRefresh.Click
+        LoadDataGridView()
+        ClearForm()
+    End Sub
+
+    Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
+        ClearForm()
+    End Sub
+
+    Private Sub btnHome_Click(sender As Object, e As EventArgs) Handles btnHome.Click
+        For Each f As Form In Application.OpenForms
+            If f.Name = "frmMain" Then
+                f.Close()
+            End If
+        Next
+        Dim dashboard As New frmDashboard()
+        dashboard.Show()
+        'Me.Close()
+    End Sub
+
     Private Sub btnExportExcel_Click(sender As Object, e As EventArgs) Handles btnExportExcel.Click
         ExportToExcel(grdData, "Electricity_Data")
     End Sub
@@ -245,8 +381,15 @@ Public Class frmElectricity
         txtOffPeakAmount.Clear()
         txtRenewableCap.Clear()
         txtNonRenewableCap.Clear()
+        currentFiles.Clear()
+        lblFileCount.Text = "No files selected"
         btnUpdate.Enabled = False
         btnDelete.Enabled = False
         btnSave.Enabled = True
+        grdData.ClearSelection()
+    End Sub
+
+    Private Sub ApplyFilters(sender As Object, e As EventArgs) Handles cmbYearFilter.SelectedIndexChanged, cmbMonthFilter.SelectedIndexChanged
+        LoadDataGridView()
     End Sub
 End Class
