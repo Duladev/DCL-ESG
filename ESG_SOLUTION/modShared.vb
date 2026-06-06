@@ -1,9 +1,8 @@
 ﻿Imports System.Data.SqlClient
 Imports System.IO
-Imports System.Windows.Forms
+Imports System.Text
 
 Module ModShared
-    ' Update this connection string to match your environment
     Public connString As String = "Data Source=DCL-ICT-007\DEVELOPER;Initial Catalog=ESG;Integrated Security=True"
     Public baseFolderPath As String = "D:\Environment project\Upload"
 
@@ -11,25 +10,23 @@ Module ModShared
         Return New SqlConnection(connString)
     End Function
 
-    Public Function SaveMultipleFiles(files As List(Of String), recordId As String, category As String) As String
-        If files Is Nothing OrElse files.Count = 0 Then
+    Public Function SaveSingleFile(sourceFilePath As String, recordId As String, category As String) As String
+        If String.IsNullOrEmpty(sourceFilePath) OrElse Not File.Exists(sourceFilePath) Then
             Return ""
         End If
 
-        Dim categoryFolder As String = Path.Combine(baseFolderPath, category)
-        If Not Directory.Exists(categoryFolder) Then
-            Directory.CreateDirectory(categoryFolder)
-        End If
+        Try
+            Dim categoryFolder As String = Path.Combine(baseFolderPath, category)
+            If Not Directory.Exists(categoryFolder) Then
+                Directory.CreateDirectory(categoryFolder)
+            End If
 
-        Dim recordFolder As String = Path.Combine(categoryFolder, recordId)
-        If Not Directory.Exists(recordFolder) Then
-            Directory.CreateDirectory(recordFolder)
-        End If
+            Dim recordFolder As String = Path.Combine(categoryFolder, recordId)
+            If Not Directory.Exists(recordFolder) Then
+                Directory.CreateDirectory(recordFolder)
+            End If
 
-        Dim savedPaths As New List(Of String)
-
-        For Each filePath As String In files
-            Dim fileName As String = Path.GetFileName(filePath)
+            Dim fileName As String = Path.GetFileName(sourceFilePath)
             Dim destPath As String = Path.Combine(recordFolder, fileName)
             Dim counter As Integer = 1
 
@@ -40,8 +37,25 @@ Module ModShared
                 counter += 1
             End While
 
-            File.Copy(filePath, destPath, False)
-            savedPaths.Add(destPath)
+            File.Copy(sourceFilePath, destPath, False)
+            Return destPath
+        Catch ex As Exception
+            MessageBox.Show($"Error saving file: {ex.Message}", "File Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return ""
+        End Try
+    End Function
+
+    Public Function SaveMultipleFiles(files As List(Of String), recordId As String, category As String) As String
+        If files Is Nothing OrElse files.Count = 0 Then
+            Return ""
+        End If
+
+        Dim savedPaths As New List(Of String)
+        For Each filePath As String In files
+            Dim savedPath As String = SaveSingleFile(filePath, recordId, category)
+            If Not String.IsNullOrEmpty(savedPath) Then
+                savedPaths.Add(savedPath)
+            End If
         Next
 
         Return String.Join("|", savedPaths)
@@ -74,48 +88,39 @@ Module ModShared
     Public Sub ExportToExcel(grid As DataGridView, fileName As String)
         Try
             Dim saveFileDialog As New SaveFileDialog()
-            saveFileDialog.Filter = "Excel Files|*.xlsx"
-            saveFileDialog.Title = "Export to Excel"
-            saveFileDialog.FileName = $"{fileName}_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx"
+            saveFileDialog.Filter = "CSV Files|*.csv|Excel Files|*.xlsx"
+            saveFileDialog.Title = "Export Data"
+            saveFileDialog.FileName = $"{fileName}_{DateTime.Now:yyyyMMdd_HHmmss}"
 
             If saveFileDialog.ShowDialog() = DialogResult.OK Then
-                ' Create Excel application
-                Dim excelApp As Object = CreateObject("Excel.Application")
-                Dim workbook As Object = excelApp.Workbooks.Add()
-                Dim worksheet As Object = workbook.Worksheets(1)
+                Dim sb As New StringBuilder()
 
                 ' Add headers
+                Dim headers As New List(Of String)
                 For col As Integer = 0 To grid.Columns.Count - 1
-                    If grid.Columns(col).Visible AndAlso grid.Columns(col).Name <> "ViewFiles" AndAlso grid.Columns(col).Name <> "ViewDocument" Then
-                        worksheet.Cells(1, col + 1) = grid.Columns(col).HeaderText
+                    If grid.Columns(col).Visible AndAlso grid.Columns(col).Name <> "ViewDocument" Then
+                        headers.Add("""" & grid.Columns(col).HeaderText & """")
                     End If
                 Next
+                sb.AppendLine(String.Join(",", headers))
 
-                ' Add data
-                Dim visibleColIndex As Integer = 1
+                ' Add data rows
                 For row As Integer = 0 To grid.Rows.Count - 1
-                    visibleColIndex = 1
+                    Dim rowValues As New List(Of String)
                     For col As Integer = 0 To grid.Columns.Count - 1
-                        If grid.Columns(col).Visible AndAlso grid.Columns(col).Name <> "ViewFiles" AndAlso grid.Columns(col).Name <> "ViewDocument" Then
-                            worksheet.Cells(row + 2, visibleColIndex) = grid.Rows(row).Cells(col).Value?.ToString()
-                            visibleColIndex += 1
+                        If grid.Columns(col).Visible AndAlso grid.Columns(col).Name <> "ViewDocument" Then
+                            Dim cellValue As String = ""
+                            If grid.Rows(row).Cells(col).Value IsNot Nothing Then
+                                cellValue = grid.Rows(row).Cells(col).Value.ToString()
+                            End If
+                            cellValue = cellValue.Replace("""", """""")
+                            rowValues.Add("""" & cellValue & """")
                         End If
                     Next
+                    sb.AppendLine(String.Join(",", rowValues))
                 Next
 
-                ' Auto-fit columns
-                worksheet.Columns.AutoFit()
-
-                ' Save and close
-                workbook.SaveAs(saveFileDialog.FileName)
-                workbook.Close()
-                excelApp.Quit()
-
-                ' Release COM objects
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(worksheet)
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook)
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp)
-
+                File.WriteAllText(saveFileDialog.FileName, sb.ToString(), Encoding.UTF8)
                 MessageBox.Show($"Data exported successfully to {saveFileDialog.FileName}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
         Catch ex As Exception
@@ -136,12 +141,11 @@ Module ModShared
 
     Public Sub OpenFileWithDefaultProgram(filePath As String)
         Try
-            If Not System.IO.File.Exists(filePath) Then
+            If Not File.Exists(filePath) Then
                 MessageBox.Show($"File not found: {filePath}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Return
             End If
 
-            ' Use System.Diagnostics.Process with UseShellExecute = True
             Dim psi As New ProcessStartInfo()
             psi.FileName = filePath
             psi.UseShellExecute = True
@@ -159,21 +163,14 @@ Module ModShared
 
     Public Sub SetupForm(form As Form)
         Try
-            ' Use Reflection to access the Protected SetStyle method
             Dim method As System.Reflection.MethodInfo = GetType(Control).GetMethod("SetStyle",
-            System.Reflection.BindingFlags.NonPublic Or System.Reflection.BindingFlags.Instance)
+                System.Reflection.BindingFlags.NonPublic Or System.Reflection.BindingFlags.Instance)
 
             If method IsNot Nothing Then
                 method.Invoke(form, New Object() {ControlStyles.SupportsTransparentBackColor, True})
             End If
 
             form.BackColor = Color.Transparent
-
-            ' Optional: Set background image if available
-            ' Dim bgImagePath As String = Path.Combine(Application.StartupPath, "background.jpg")
-            ' If File.Exists(bgImagePath) Then
-            '     ApplyBackground(form, bgImagePath)
-            ' End If
         Catch ex As Exception
             ' Silently fail
         End Try
@@ -182,7 +179,6 @@ Module ModShared
     Public Sub AddKeyPressHandlers(container As Control.ControlCollection)
         For Each ctrl As Control In container
             If TypeOf ctrl Is TextBox Then
-                ' Remove existing handler to avoid duplicates
                 RemoveHandler ctrl.KeyPress, AddressOf TextBox_KeyPress
                 AddHandler ctrl.KeyPress, AddressOf TextBox_KeyPress
             ElseIf ctrl.HasChildren Then
@@ -198,7 +194,6 @@ Module ModShared
         End If
     End Sub
 
-    ' Helper function to validate email format
     Public Function IsValidEmail(email As String) As Boolean
         Try
             Dim addr As New System.Net.Mail.MailAddress(email)
@@ -208,24 +203,20 @@ Module ModShared
         End Try
     End Function
 
-    ' Helper function to format phone number
     Public Function FormatPhoneNumber(phone As String) As String
         If String.IsNullOrWhiteSpace(phone) Then Return ""
 
-        ' Remove all non-numeric characters
         Dim cleaned As String = New String(phone.Where(Function(c) Char.IsDigit(c)).ToArray())
 
-        ' Format based on length
         If cleaned.Length = 10 Then
             Return String.Format("{0:(###) ###-####}", Double.Parse(cleaned))
         ElseIf cleaned.Length = 11 AndAlso cleaned.StartsWith("1") Then
             Return String.Format("{0:# (###) ###-####}", Double.Parse(cleaned))
         End If
 
-        Return phone ' Return original if doesn't match expected format
+        Return phone
     End Function
 
-    ' Helper function to truncate string
     Public Function TruncateString(text As String, maxLength As Integer) As String
         If String.IsNullOrEmpty(text) Then Return ""
         If text.Length <= maxLength Then Return text

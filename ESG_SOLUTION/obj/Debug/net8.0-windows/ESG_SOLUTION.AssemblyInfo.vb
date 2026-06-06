@@ -16,7 +16,7 @@ Imports System.Reflection
 <Assembly: System.Reflection.AssemblyCompanyAttribute("ESG_SOLUTION"),  _
  Assembly: System.Reflection.AssemblyConfigurationAttribute("Debug"),  _
  Assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0"),  _
- Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+80bfe62618a6bccf816e747d4203532829421cb0"),  _
+ Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3ff39bc89bebd11a5738dff75263d782e4eb46ed"),  _
  Assembly: System.Reflection.AssemblyProductAttribute("ESG_SOLUTION"),  _
  Assembly: System.Reflection.AssemblyTitleAttribute("ESG_SOLUTION"),  _
  Assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0"),  _
