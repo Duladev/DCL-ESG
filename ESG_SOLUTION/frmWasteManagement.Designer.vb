@@ -385,9 +385,9 @@ Partial Class frmWasteManagement
         flpOtherRecycledItems.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         flpOtherRecycledItems.AutoScroll = True
         flpOtherRecycledItems.BorderStyle = BorderStyle.FixedSingle
-        flpOtherRecycledItems.Location = New Point(308, 53)
+        flpOtherRecycledItems.Location = New Point(290, 53)
         flpOtherRecycledItems.Name = "flpOtherRecycledItems"
-        flpOtherRecycledItems.Size = New Size(266, 111)
+        flpOtherRecycledItems.Size = New Size(284, 111)
         flpOtherRecycledItems.TabIndex = 14
         ' 
         ' btnAddOtherRecycledItem

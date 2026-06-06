@@ -656,11 +656,11 @@ Public Class frmWasteManagement
         Next
     End Sub
 
-    Private Sub btnManageCollectors_Click(sender As Object, e As EventArgs) Handles btnManageCollectors.Click
-        Dim collectorForm As New frmCollectorManagement(connString)
-        collectorForm.ShowDialog()
-        LoadCollectors()
-    End Sub
+    'Private Sub btnManageCollectors_Click(sender As Object, e As EventArgs) Handles btnManageCollectors.Click
+    '    Dim collectorForm As New frmCollectorManagement(connString)
+    '    collectorForm.ShowDialog()
+    '    LoadCollectors()
+    'End Sub
 
     Private Sub tabWasteCategories_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tabWasteCategories.SelectedIndexChanged
         CalculateDailyTotal(Nothing, Nothing)

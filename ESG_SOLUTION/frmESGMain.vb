@@ -2176,4 +2176,8 @@ Public Class frmESGMain
         End If
         modShared.ExportToExcel(dgvSocialBasic, "Social_Data_Report")
     End Sub
+
+    Private Sub GroupBoxHSE_Enter(sender As Object, e As EventArgs) Handles GroupBoxHSE.Enter
+
+    End Sub
 End Class

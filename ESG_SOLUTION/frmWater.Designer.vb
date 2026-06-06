@@ -360,7 +360,7 @@ Partial Class frmWater
         grpRainWater.Controls.Add(dtpRainYear)
         grpRainWater.Controls.Add(lblRainMonth)
         grpRainWater.Controls.Add(lblRainYear)
-        grpRainWater.Location = New Point(12, 340)
+        grpRainWater.Location = New Point(12, 333)
         grpRainWater.Name = "grpRainWater"
         grpRainWater.Size = New Size(620, 135)
         grpRainWater.TabIndex = 3
@@ -479,7 +479,7 @@ Partial Class frmWater
         grpRainButtons.Controls.Add(btnSaveRainWater)
         grpRainButtons.Controls.Add(btnUploadRainBill)
         grpRainButtons.Controls.Add(lblRainFileCount)
-        grpRainButtons.Location = New Point(638, 340)
+        grpRainButtons.Location = New Point(638, 334)
         grpRainButtons.Name = "grpRainButtons"
         grpRainButtons.Size = New Size(280, 173)
         grpRainButtons.TabIndex = 4
@@ -584,11 +584,11 @@ Partial Class frmWater
         grdRainWater.AllowUserToDeleteRows = False
         grdRainWater.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         grdRainWater.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        grdRainWater.Location = New Point(12, 519)
+        grdRainWater.Location = New Point(12, 513)
         grdRainWater.Name = "grdRainWater"
         grdRainWater.ReadOnly = True
         grdRainWater.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        grdRainWater.Size = New Size(906, 134)
+        grdRainWater.Size = New Size(906, 140)
         grdRainWater.TabIndex = 6
         ' 
         ' grpWaterFilters
@@ -646,7 +646,7 @@ Partial Class frmWater
         grpRainFilters.Controls.Add(cmbRainYearFilter)
         grpRainFilters.Controls.Add(lblRainMonthFilter)
         grpRainFilters.Controls.Add(cmbRainMonthFilter)
-        grpRainFilters.Location = New Point(12, 474)
+        grpRainFilters.Location = New Point(12, 468)
         grpRainFilters.Name = "grpRainFilters"
         grpRainFilters.Size = New Size(300, 45)
         grpRainFilters.TabIndex = 8

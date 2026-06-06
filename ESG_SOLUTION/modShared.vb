@@ -3,6 +3,7 @@ Imports System.IO
 Imports System.Windows.Forms
 
 Module ModShared
+    ' Update this connection string to match your environment
     Public connString As String = "Data Source=DCL-ICT-007\DEVELOPER;Initial Catalog=ESG;Integrated Security=True"
     Public baseFolderPath As String = "D:\Environment project\Upload"
 
@@ -85,7 +86,7 @@ Module ModShared
 
                 ' Add headers
                 For col As Integer = 0 To grid.Columns.Count - 1
-                    If grid.Columns(col).Visible AndAlso grid.Columns(col).Name <> "ViewFiles" Then
+                    If grid.Columns(col).Visible AndAlso grid.Columns(col).Name <> "ViewFiles" AndAlso grid.Columns(col).Name <> "ViewDocument" Then
                         worksheet.Cells(1, col + 1) = grid.Columns(col).HeaderText
                     End If
                 Next
@@ -95,7 +96,7 @@ Module ModShared
                 For row As Integer = 0 To grid.Rows.Count - 1
                     visibleColIndex = 1
                     For col As Integer = 0 To grid.Columns.Count - 1
-                        If grid.Columns(col).Visible AndAlso grid.Columns(col).Name <> "ViewFiles" Then
+                        If grid.Columns(col).Visible AndAlso grid.Columns(col).Name <> "ViewFiles" AndAlso grid.Columns(col).Name <> "ViewDocument" Then
                             worksheet.Cells(row + 2, visibleColIndex) = grid.Rows(row).Cells(col).Value?.ToString()
                             visibleColIndex += 1
                         End If
@@ -132,55 +133,57 @@ Module ModShared
             ' Silently fail if background image can't be loaded
         End Try
     End Sub
-    ' Add this function to ModShared.vb
-    Public Sub OpenFileWithDefaultApp(filePath As String)
+
+    Public Sub OpenFileWithDefaultProgram(filePath As String)
         Try
             If Not System.IO.File.Exists(filePath) Then
                 MessageBox.Show($"File not found: {filePath}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Return
             End If
 
+            ' Use System.Diagnostics.Process with UseShellExecute = True
             Dim psi As New ProcessStartInfo()
             psi.FileName = filePath
             psi.UseShellExecute = True
             Process.Start(psi)
         Catch ex As Exception
-            MessageBox.Show($"Error opening file: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show($"Error opening file: {ex.Message}{Environment.NewLine}File: {filePath}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
     Public Sub OpenMultipleFiles(files As List(Of String))
         For Each file As String In files
-            OpenFileWithDefaultApp(file)
+            OpenFileWithDefaultProgram(file)
         Next
     End Sub
 
-    'Public Sub SetupForm(form As Form)
-    '    form.SetStyle(ControlStyles.SupportsTransparentBackColor, True)
-    '    form.BackColor = Color.Transparent
-    '    ApplyBackground(form, Application.StartupPath & "F:\DCL-ESG\ESG_SOLUTION\1.jpg")
-    'End Sub
-
-    'test
     Public Sub SetupForm(form As Form)
-        ' Use Reflection to access the Protected SetStyle method
-        Dim method As System.Reflection.MethodInfo = GetType(Control).GetMethod("SetStyle",
-        System.Reflection.BindingFlags.NonPublic Or System.Reflection.BindingFlags.Instance)
+        Try
+            ' Use Reflection to access the Protected SetStyle method
+            Dim method As System.Reflection.MethodInfo = GetType(Control).GetMethod("SetStyle",
+            System.Reflection.BindingFlags.NonPublic Or System.Reflection.BindingFlags.Instance)
 
-        If method IsNot Nothing Then
-            method.Invoke(form, New Object() {ControlStyles.SupportsTransparentBackColor, True})
-        End If
+            If method IsNot Nothing Then
+                method.Invoke(form, New Object() {ControlStyles.SupportsTransparentBackColor, True})
+            End If
 
-        form.BackColor = Color.Transparent
+            form.BackColor = Color.Transparent
 
-        ' FIX: Removed Application.StartupPath because you are using an absolute path (F:\)
-        'ApplyBackground(form, "F:\DCL-ESG\ESG_SOLUTION\1.jpg")
+            ' Optional: Set background image if available
+            ' Dim bgImagePath As String = Path.Combine(Application.StartupPath, "background.jpg")
+            ' If File.Exists(bgImagePath) Then
+            '     ApplyBackground(form, bgImagePath)
+            ' End If
+        Catch ex As Exception
+            ' Silently fail
+        End Try
     End Sub
 
-    'end test
     Public Sub AddKeyPressHandlers(container As Control.ControlCollection)
         For Each ctrl As Control In container
             If TypeOf ctrl Is TextBox Then
+                ' Remove existing handler to avoid duplicates
+                RemoveHandler ctrl.KeyPress, AddressOf TextBox_KeyPress
                 AddHandler ctrl.KeyPress, AddressOf TextBox_KeyPress
             ElseIf ctrl.HasChildren Then
                 AddKeyPressHandlers(ctrl.Controls)
@@ -195,25 +198,37 @@ Module ModShared
         End If
     End Sub
 
-    'new opening function
-    ' Add this function to ModShared.vb
-    Public Sub OpenFileWithDefaultProgram(filePath As String)
+    ' Helper function to validate email format
+    Public Function IsValidEmail(email As String) As Boolean
         Try
-            If Not System.IO.File.Exists(filePath) Then
-                MessageBox.Show($"File not found: {filePath}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                Return
-            End If
-
-            ' Use System.Diagnostics.Process with UseShellExecute = True
-            Dim psi As New ProcessStartInfo()
-            psi.FileName = filePath
-            psi.UseShellExecute = True
-
-            Process.Start(psi)
-        Catch ex As Exception
-            MessageBox.Show($"Error opening file: {ex.Message}{Environment.NewLine}File: {filePath}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Dim addr As New System.Net.Mail.MailAddress(email)
+            Return addr.Address = email
+        Catch
+            Return False
         End Try
-    End Sub
+    End Function
 
-    ' Update the ViewFiles function in each form to use this new method
+    ' Helper function to format phone number
+    Public Function FormatPhoneNumber(phone As String) As String
+        If String.IsNullOrWhiteSpace(phone) Then Return ""
+
+        ' Remove all non-numeric characters
+        Dim cleaned As String = New String(phone.Where(Function(c) Char.IsDigit(c)).ToArray())
+
+        ' Format based on length
+        If cleaned.Length = 10 Then
+            Return String.Format("{0:(###) ###-####}", Double.Parse(cleaned))
+        ElseIf cleaned.Length = 11 AndAlso cleaned.StartsWith("1") Then
+            Return String.Format("{0:# (###) ###-####}", Double.Parse(cleaned))
+        End If
+
+        Return phone ' Return original if doesn't match expected format
+    End Function
+
+    ' Helper function to truncate string
+    Public Function TruncateString(text As String, maxLength As Integer) As String
+        If String.IsNullOrEmpty(text) Then Return ""
+        If text.Length <= maxLength Then Return text
+        Return text.Substring(0, maxLength - 3) & "..."
+    End Function
 End Module

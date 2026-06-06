@@ -15,6 +15,8 @@ Partial Class frmCollectorManagement
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         grpCollectorInfo = New GroupBox()
+        btnClearForm = New Button()
+        btnViewDocument = New Button()
         btnUploadLicense = New Button()
         lblLicenseStatus = New Label()
         txtLicenseNumber = New TextBox()
@@ -29,13 +31,15 @@ Partial Class frmCollectorManagement
         txtCollectorName = New TextBox()
         lblCollectorName = New Label()
         grdCollectors = New DataGridView()
-        ofdLicense = New OpenFileDialog()
         grpCollectorInfo.SuspendLayout()
         CType(grdCollectors, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' grpCollectorInfo
         ' 
+        grpCollectorInfo.BackColor = Color.White
+        grpCollectorInfo.Controls.Add(btnClearForm)
+        grpCollectorInfo.Controls.Add(btnViewDocument)
         grpCollectorInfo.Controls.Add(btnUploadLicense)
         grpCollectorInfo.Controls.Add(lblLicenseStatus)
         grpCollectorInfo.Controls.Add(txtLicenseNumber)
@@ -49,157 +53,166 @@ Partial Class frmCollectorManagement
         grpCollectorInfo.Controls.Add(lblAddress)
         grpCollectorInfo.Controls.Add(txtCollectorName)
         grpCollectorInfo.Controls.Add(lblCollectorName)
-        grpCollectorInfo.Font = New Font("Georgia", 11.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        grpCollectorInfo.Location = New Point(14, 14)
-        grpCollectorInfo.Margin = New Padding(4, 3, 4, 3)
+        grpCollectorInfo.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        grpCollectorInfo.Location = New Point(12, 12)
         grpCollectorInfo.Name = "grpCollectorInfo"
-        grpCollectorInfo.Padding = New Padding(4, 3, 4, 3)
-        grpCollectorInfo.Size = New Size(525, 288)
+        grpCollectorInfo.Size = New Size(600, 330)
         grpCollectorInfo.TabIndex = 0
         grpCollectorInfo.TabStop = False
         grpCollectorInfo.Text = "Collector Information"
         ' 
+        ' btnClearForm
+        ' 
+        btnClearForm.BackColor = Color.FromArgb(CByte(240), CByte(248), CByte(255))
+        btnClearForm.FlatStyle = FlatStyle.Flat
+        btnClearForm.Font = New Font("Segoe UI", 9F)
+        btnClearForm.Location = New Point(306, 269)
+        btnClearForm.Name = "btnClearForm"
+        btnClearForm.Size = New Size(100, 30)
+        btnClearForm.TabIndex = 13
+        btnClearForm.Text = "Clear Form"
+        btnClearForm.UseVisualStyleBackColor = False
+        ' 
+        ' btnViewDocument
+        ' 
+        btnViewDocument.BackColor = Color.FromArgb(CByte(240), CByte(248), CByte(255))
+        btnViewDocument.FlatStyle = FlatStyle.Flat
+        btnViewDocument.Font = New Font("Segoe UI", 9F)
+        btnViewDocument.Location = New Point(494, 195)
+        btnViewDocument.Name = "btnViewDocument"
+        btnViewDocument.Size = New Size(100, 30)
+        btnViewDocument.TabIndex = 12
+        btnViewDocument.Text = "View Document"
+        btnViewDocument.UseVisualStyleBackColor = False
+        ' 
         ' btnUploadLicense
         ' 
-        btnUploadLicense.BackColor = SystemColors.Control
-        btnUploadLicense.Font = New Font("Microsoft Sans Serif", 9.75F)
-        btnUploadLicense.Location = New Point(337, 195)
-        btnUploadLicense.Margin = New Padding(4, 3, 4, 3)
+        btnUploadLicense.BackColor = Color.FromArgb(CByte(240), CByte(248), CByte(255))
+        btnUploadLicense.FlatStyle = FlatStyle.Flat
+        btnUploadLicense.Font = New Font("Segoe UI", 9F)
+        btnUploadLicense.Location = New Point(388, 195)
         btnUploadLicense.Name = "btnUploadLicense"
-        btnUploadLicense.Size = New Size(139, 27)
-        btnUploadLicense.TabIndex = 12
+        btnUploadLicense.Size = New Size(100, 30)
+        btnUploadLicense.TabIndex = 11
         btnUploadLicense.Text = "Upload License"
         btnUploadLicense.UseVisualStyleBackColor = False
         ' 
         ' lblLicenseStatus
         ' 
         lblLicenseStatus.AutoSize = True
-        lblLicenseStatus.Font = New Font("Microsoft Sans Serif", 8F)
-        lblLicenseStatus.ForeColor = Color.FromArgb(CByte(100), CByte(116), CByte(139))
-        lblLicenseStatus.Location = New Point(12, 202)
-        lblLicenseStatus.Margin = New Padding(4, 0, 4, 0)
+        lblLicenseStatus.Font = New Font("Segoe UI", 8.25F, FontStyle.Italic)
+        lblLicenseStatus.ForeColor = Color.Gray
+        lblLicenseStatus.Location = New Point(12, 205)
         lblLicenseStatus.Name = "lblLicenseStatus"
-        lblLicenseStatus.Size = New Size(114, 13)
-        lblLicenseStatus.TabIndex = 11
+        lblLicenseStatus.Size = New Size(111, 13)
+        lblLicenseStatus.TabIndex = 10
         lblLicenseStatus.Text = "No document selected"
         ' 
         ' txtLicenseNumber
         ' 
-        txtLicenseNumber.Font = New Font("Arial", 11.25F)
-        txtLicenseNumber.Location = New Point(140, 138)
-        txtLicenseNumber.Margin = New Padding(4, 3, 4, 3)
+        txtLicenseNumber.Font = New Font("Segoe UI", 9.75F)
+        txtLicenseNumber.Location = New Point(140, 155)
         txtLicenseNumber.Name = "txtLicenseNumber"
-        txtLicenseNumber.Size = New Size(349, 25)
-        txtLicenseNumber.TabIndex = 7
+        txtLicenseNumber.Size = New Size(448, 25)
+        txtLicenseNumber.TabIndex = 9
         ' 
         ' lblLicenseNumber
         ' 
         lblLicenseNumber.AutoSize = True
-        lblLicenseNumber.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        lblLicenseNumber.ForeColor = Color.FromArgb(CByte(100), CByte(116), CByte(139))
-        lblLicenseNumber.Location = New Point(12, 141)
-        lblLicenseNumber.Margin = New Padding(4, 0, 4, 0)
+        lblLicenseNumber.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold)
+        lblLicenseNumber.Location = New Point(12, 158)
         lblLicenseNumber.Name = "lblLicenseNumber"
-        lblLicenseNumber.Size = New Size(100, 15)
-        lblLicenseNumber.TabIndex = 6
+        lblLicenseNumber.Size = New Size(112, 17)
+        lblLicenseNumber.TabIndex = 8
         lblLicenseNumber.Text = "License Number:"
         ' 
         ' btnSaveCollector
         ' 
         btnSaveCollector.BackColor = SystemColors.Control
-        btnSaveCollector.Font = New Font("Microsoft Sans Serif", 9.75F)
-        btnSaveCollector.Location = New Point(39, 244)
-        btnSaveCollector.Margin = New Padding(4, 3, 4, 3)
+        btnSaveCollector.FlatStyle = FlatStyle.Flat
+        btnSaveCollector.Font = New Font("Segoe UI", 9.75F)
+        btnSaveCollector.Location = New Point(419, 269)
         btnSaveCollector.Name = "btnSaveCollector"
-        btnSaveCollector.Size = New Size(100, 27)
-        btnSaveCollector.TabIndex = 10
+        btnSaveCollector.Size = New Size(110, 30)
+        btnSaveCollector.TabIndex = 7
         btnSaveCollector.Text = "Save Collector"
         btnSaveCollector.UseVisualStyleBackColor = False
         ' 
         ' txtPhone
         ' 
-        txtPhone.Font = New Font("Arial", 11.25F)
-        txtPhone.Location = New Point(140, 104)
-        txtPhone.Margin = New Padding(4, 3, 4, 3)
+        txtPhone.Font = New Font("Segoe UI", 9.75F)
+        txtPhone.Location = New Point(140, 117)
         txtPhone.Name = "txtPhone"
-        txtPhone.Size = New Size(349, 25)
-        txtPhone.TabIndex = 5
+        txtPhone.Size = New Size(448, 25)
+        txtPhone.TabIndex = 6
         ' 
         ' btnRefresh
         ' 
-        btnRefresh.BackColor = SystemColors.Control
-        btnRefresh.Font = New Font("Microsoft Sans Serif", 9.75F)
-        btnRefresh.Location = New Point(337, 244)
-        btnRefresh.Margin = New Padding(4, 3, 4, 3)
+        btnRefresh.BackColor = Color.FromArgb(CByte(240), CByte(248), CByte(255))
+        btnRefresh.FlatStyle = FlatStyle.Flat
+        btnRefresh.Font = New Font("Segoe UI", 9F)
+        btnRefresh.Location = New Point(82, 269)
         btnRefresh.Name = "btnRefresh"
-        btnRefresh.Size = New Size(100, 27)
-        btnRefresh.TabIndex = 8
+        btnRefresh.Size = New Size(100, 30)
+        btnRefresh.TabIndex = 5
         btnRefresh.Text = "Refresh"
         btnRefresh.UseVisualStyleBackColor = False
         ' 
         ' btnDeleteCollector
         ' 
         btnDeleteCollector.BackColor = SystemColors.Control
-        btnDeleteCollector.Font = New Font("Microsoft Sans Serif", 9.75F)
-        btnDeleteCollector.Location = New Point(190, 244)
-        btnDeleteCollector.Margin = New Padding(4, 3, 4, 3)
+        btnDeleteCollector.FlatStyle = FlatStyle.Flat
+        btnDeleteCollector.Font = New Font("Segoe UI", 9.75F)
+        btnDeleteCollector.Location = New Point(188, 269)
         btnDeleteCollector.Name = "btnDeleteCollector"
-        btnDeleteCollector.Size = New Size(100, 27)
-        btnDeleteCollector.TabIndex = 9
+        btnDeleteCollector.Size = New Size(100, 30)
+        btnDeleteCollector.TabIndex = 4
         btnDeleteCollector.Text = "Delete"
         btnDeleteCollector.UseVisualStyleBackColor = False
         ' 
         ' lblPhone
         ' 
         lblPhone.AutoSize = True
-        lblPhone.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        lblPhone.ForeColor = Color.FromArgb(CByte(100), CByte(116), CByte(139))
-        lblPhone.Location = New Point(12, 106)
-        lblPhone.Margin = New Padding(4, 0, 4, 0)
+        lblPhone.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold)
+        lblPhone.Location = New Point(12, 120)
         lblPhone.Name = "lblPhone"
-        lblPhone.Size = New Size(68, 15)
-        lblPhone.TabIndex = 4
+        lblPhone.Size = New Size(76, 17)
+        lblPhone.TabIndex = 3
         lblPhone.Text = "Telephone:"
         ' 
         ' txtAddress
         ' 
-        txtAddress.Font = New Font("Arial", 11.25F)
-        txtAddress.Location = New Point(140, 69)
-        txtAddress.Margin = New Padding(4, 3, 4, 3)
+        txtAddress.Font = New Font("Segoe UI", 9.75F)
+        txtAddress.Location = New Point(140, 80)
         txtAddress.Name = "txtAddress"
-        txtAddress.Size = New Size(349, 25)
-        txtAddress.TabIndex = 3
+        txtAddress.Size = New Size(448, 25)
+        txtAddress.TabIndex = 2
         ' 
         ' lblAddress
         ' 
         lblAddress.AutoSize = True
-        lblAddress.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        lblAddress.ForeColor = Color.FromArgb(CByte(100), CByte(116), CByte(139))
-        lblAddress.Location = New Point(12, 72)
-        lblAddress.Margin = New Padding(4, 0, 4, 0)
+        lblAddress.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold)
+        lblAddress.Location = New Point(12, 83)
         lblAddress.Name = "lblAddress"
-        lblAddress.Size = New Size(54, 15)
-        lblAddress.TabIndex = 2
+        lblAddress.Size = New Size(61, 17)
+        lblAddress.TabIndex = 1
         lblAddress.Text = "Address:"
         ' 
         ' txtCollectorName
         ' 
-        txtCollectorName.Font = New Font("Arial", 11.25F)
-        txtCollectorName.Location = New Point(140, 35)
-        txtCollectorName.Margin = New Padding(4, 3, 4, 3)
+        txtCollectorName.Font = New Font("Segoe UI", 9.75F)
+        txtCollectorName.Location = New Point(140, 44)
         txtCollectorName.Name = "txtCollectorName"
-        txtCollectorName.Size = New Size(349, 25)
-        txtCollectorName.TabIndex = 1
+        txtCollectorName.Size = New Size(448, 25)
+        txtCollectorName.TabIndex = 0
         ' 
         ' lblCollectorName
         ' 
         lblCollectorName.AutoSize = True
-        lblCollectorName.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        lblCollectorName.ForeColor = Color.FromArgb(CByte(100), CByte(116), CByte(139))
-        lblCollectorName.Location = New Point(12, 37)
-        lblCollectorName.Margin = New Padding(4, 0, 4, 0)
+        lblCollectorName.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold)
+        lblCollectorName.Location = New Point(12, 47)
         lblCollectorName.Name = "lblCollectorName"
-        lblCollectorName.Size = New Size(96, 15)
+        lblCollectorName.Size = New Size(107, 17)
         lblCollectorName.TabIndex = 0
         lblCollectorName.Text = "Collector Name:"
         ' 
@@ -207,36 +220,33 @@ Partial Class frmCollectorManagement
         ' 
         grdCollectors.AllowUserToAddRows = False
         grdCollectors.AllowUserToDeleteRows = False
+        grdCollectors.BackgroundColor = Color.White
+        grdCollectors.BorderStyle = BorderStyle.Fixed3D
         grdCollectors.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        grdCollectors.Location = New Point(14, 324)
-        grdCollectors.Margin = New Padding(4, 3, 4, 3)
+        grdCollectors.Location = New Point(12, 348)
         grdCollectors.Name = "grdCollectors"
-        grdCollectors.RowHeadersWidth = 51
+        grdCollectors.ReadOnly = True
+        grdCollectors.RowHeadersVisible = False
         grdCollectors.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        grdCollectors.Size = New Size(525, 273)
+        grdCollectors.Size = New Size(600, 172)
         grdCollectors.TabIndex = 1
-        ' 
-        ' ofdLicense
-        ' 
-        ofdLicense.FileName = "OpenFileDialog1"
-        ofdLicense.Filter = "PDF Files|*.pdf|Image Files|*.jpg;*.png;*.bmp|Word Files|*.doc;*.docx|All Files|*.*"
         ' 
         ' frmCollectorManagement
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(553, 613)
+        BackColor = Color.White
+        ClientSize = New Size(624, 525)
         Controls.Add(grdCollectors)
         Controls.Add(grpCollectorInfo)
-        Margin = New Padding(4, 3, 4, 3)
+        Font = New Font("Segoe UI", 9F)
         Name = "frmCollectorManagement"
-        StartPosition = FormStartPosition.CenterParent
+        StartPosition = FormStartPosition.CenterScreen
         Text = "Waste Collector Management"
         grpCollectorInfo.ResumeLayout(False)
         grpCollectorInfo.PerformLayout()
         CType(grdCollectors, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
-
     End Sub
 
     Friend WithEvents grpCollectorInfo As GroupBox
@@ -247,13 +257,14 @@ Partial Class frmCollectorManagement
     Friend WithEvents lblAddress As Label
     Friend WithEvents txtPhone As TextBox
     Friend WithEvents lblPhone As Label
-    Friend WithEvents txtLicenseNumber As TextBox
-    Friend WithEvents lblLicenseNumber As Label
     Friend WithEvents btnSaveCollector As Button
     Friend WithEvents btnDeleteCollector As Button
     Friend WithEvents btnRefresh As Button
-    Friend WithEvents btnUploadLicense As Button
+    Friend WithEvents txtLicenseNumber As TextBox
+    Friend WithEvents lblLicenseNumber As Label
     Friend WithEvents lblLicenseStatus As Label
-    Friend WithEvents ofdLicense As OpenFileDialog
+    Friend WithEvents btnUploadLicense As Button
+    Friend WithEvents btnViewDocument As Button
+    Friend WithEvents btnClearForm As Button
 
 End Class
