@@ -32,6 +32,7 @@ Public Class frmWasteManagement
         LoadCollectors()
         LoadAllTabRecords()
         SetupDateTimePickers()
+        TagNumericControls()
         ModShared.AddKeyPressHandlers(Me.Controls)
         WireUpEvents()
 
@@ -54,7 +55,40 @@ Public Class frmWasteManagement
         dtpRecordDateOtherRecycled.Value = today
         dtpRecordDateChemical.Value = today
     End Sub
+    'fixed by claude
+    Private Sub TagNumericControls()
+        For Each tab As TabPage In tabWasteCategories.TabPages
+            TagNumericInContainer(tab)
+        Next
+    End Sub
 
+    Private Sub TagNumericInContainer(container As Control)
+        For Each ctrl As Control In container.Controls
+            If TypeOf ctrl Is NumericUpDown Then
+                Dim num As NumericUpDown = DirectCast(ctrl, NumericUpDown)
+                ' Find the closest label on the same row within the same parent
+                Dim closest As Label = Nothing
+                Dim closestDist As Integer = Integer.MaxValue
+                For Each sibling As Control In container.Controls
+                    If TypeOf sibling Is Label Then
+                        Dim lbl As Label = DirectCast(sibling, Label)
+                        Dim vertDiff As Integer = Math.Abs(lbl.Top - num.Top)
+                        Dim horizDiff As Integer = num.Left - lbl.Left
+                        If vertDiff < 15 AndAlso horizDiff > 0 AndAlso horizDiff < closestDist Then
+                            closestDist = horizDiff
+                            closest = lbl
+                        End If
+                    End If
+                Next
+                If closest IsNot Nothing Then
+                    Dim t As String = closest.Text.Trim()
+                    num.Tag = If(t.EndsWith(":"), t.TrimEnd(":"c), t)
+                End If
+            ElseIf ctrl.HasChildren Then
+                TagNumericInContainer(ctrl)
+            End If
+        Next
+    End Sub
     Private Sub WireUpEvents()
         ' Wire up button events for Non-Recycled tab
         AddHandler btnSaveNonRecycled.Click, AddressOf btnSave_Click
@@ -520,23 +554,30 @@ Public Class frmWasteManagement
         Next
     End Sub
 
+    'Private Function GetWasteTypeFromControl(numCtrl As NumericUpDown) As String
+    '    ' Look for label in parent container
+    '    Dim parent As Control = numCtrl.Parent
+    '    For Each ctrl As Control In parent.Controls
+    '        If TypeOf ctrl Is Label AndAlso Not String.IsNullOrEmpty(ctrl.Text) Then
+    '            Dim labelText As String = ctrl.Text.Trim()
+    '            If labelText.EndsWith(":") Then
+    '                Return labelText.TrimEnd(":"c)
+    '            Else
+    '                Return labelText
+    '            End If
+    '        End If
+    '    Next
+    '    ' If no label found, use the name
+    '    Return numCtrl.Name.Replace("num", "").Replace("Num", "")
+    'End Function
+
+    'sdded fixed code 
     Private Function GetWasteTypeFromControl(numCtrl As NumericUpDown) As String
-        ' Look for label in parent container
-        Dim parent As Control = numCtrl.Parent
-        For Each ctrl As Control In parent.Controls
-            If TypeOf ctrl Is Label AndAlso Not String.IsNullOrEmpty(ctrl.Text) Then
-                Dim labelText As String = ctrl.Text.Trim()
-                If labelText.EndsWith(":") Then
-                    Return labelText.TrimEnd(":"c)
-                Else
-                    Return labelText
-                End If
-            End If
-        Next
-        ' If no label found, use the name
+        If numCtrl.Tag IsNot Nothing AndAlso Not String.IsNullOrEmpty(numCtrl.Tag.ToString()) Then
+            Return numCtrl.Tag.ToString()
+        End If
         Return numCtrl.Name.Replace("num", "").Replace("Num", "")
     End Function
-
     Private Function GetLabelTextFromPanel(panel As Control) As String
         For Each ctrl As Control In panel.Controls
             If TypeOf ctrl Is Label Then
@@ -972,7 +1013,7 @@ Public Class frmWasteManagement
     Private Sub CreateDynamicWasteControl(category As String, wasteType As String, targetPanel As FlowLayoutPanel)
         Dim panel As New Panel() With {.Size = New Size(280, 35), .BorderStyle = BorderStyle.FixedSingle, .Margin = New Padding(3)}
         Dim lbl As New Label() With {.Text = wasteType & ":", .Location = New Point(5, 8), .Size = New Size(120, 20)}
-        Dim num As New NumericUpDown() With {.Location = New Point(130, 5), .Size = New Size(100, 25), .DecimalPlaces = 2, .Maximum = 999999, .Minimum = 0}
+        Dim num As New NumericUpDown() With {.Location = New Point(130, 5), .Size = New Size(100, 25), .DecimalPlaces = 2, .Maximum = 999999, .Minimum = 0, .Tag = wasteType}
         Dim btnRemove As New Button() With {.Text = "X", .Location = New Point(235, 5), .Size = New Size(35, 25), .BackColor = Color.LightCoral, .FlatStyle = FlatStyle.Flat}
 
         AddHandler num.ValueChanged, AddressOf CalculateDailyTotal

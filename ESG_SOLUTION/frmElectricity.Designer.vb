@@ -94,7 +94,7 @@ Partial Class frmElectricity
         ' lblPeakAmount
         ' 
         lblPeakAmount.AutoSize = True
-        lblPeakAmount.Location = New Point(230, 25)
+        lblPeakAmount.Location = New Point(280, 25)
         lblPeakAmount.Name = "lblPeakAmount"
         lblPeakAmount.Size = New Size(111, 15)
         lblPeakAmount.TabIndex = 11
@@ -102,7 +102,7 @@ Partial Class frmElectricity
         ' 
         ' txtPeakAmount
         ' 
-        txtPeakAmount.Location = New Point(334, 22)
+        txtPeakAmount.Location = New Point(412, 22)
         txtPeakAmount.Name = "txtPeakAmount"
         txtPeakAmount.Size = New Size(118, 23)
         txtPeakAmount.TabIndex = 10
@@ -110,7 +110,7 @@ Partial Class frmElectricity
         ' lblNormalAmount
         ' 
         lblNormalAmount.AutoSize = True
-        lblNormalAmount.Location = New Point(230, 55)
+        lblNormalAmount.Location = New Point(280, 55)
         lblNormalAmount.Name = "lblNormalAmount"
         lblNormalAmount.Size = New Size(111, 15)
         lblNormalAmount.TabIndex = 9
@@ -118,7 +118,7 @@ Partial Class frmElectricity
         ' 
         ' txtNormalAmount
         ' 
-        txtNormalAmount.Location = New Point(334, 52)
+        txtNormalAmount.Location = New Point(412, 52)
         txtNormalAmount.Name = "txtNormalAmount"
         txtNormalAmount.Size = New Size(118, 23)
         txtNormalAmount.TabIndex = 8
@@ -126,7 +126,7 @@ Partial Class frmElectricity
         ' lblOffPeakAmount
         ' 
         lblOffPeakAmount.AutoSize = True
-        lblOffPeakAmount.Location = New Point(230, 85)
+        lblOffPeakAmount.Location = New Point(280, 85)
         lblOffPeakAmount.Name = "lblOffPeakAmount"
         lblOffPeakAmount.Size = New Size(111, 15)
         lblOffPeakAmount.TabIndex = 7
@@ -134,7 +134,7 @@ Partial Class frmElectricity
         ' 
         ' txtOffPeakAmount
         ' 
-        txtOffPeakAmount.Location = New Point(334, 82)
+        txtOffPeakAmount.Location = New Point(412, 82)
         txtOffPeakAmount.Name = "txtOffPeakAmount"
         txtOffPeakAmount.Size = New Size(118, 23)
         txtOffPeakAmount.TabIndex = 6
@@ -150,7 +150,7 @@ Partial Class frmElectricity
         ' 
         ' txtPeakQty
         ' 
-        txtPeakQty.Location = New Point(124, 22)
+        txtPeakQty.Location = New Point(142, 22)
         txtPeakQty.Name = "txtPeakQty"
         txtPeakQty.Size = New Size(100, 23)
         txtPeakQty.TabIndex = 4
@@ -166,7 +166,7 @@ Partial Class frmElectricity
         ' 
         ' txtNormalQty
         ' 
-        txtNormalQty.Location = New Point(124, 52)
+        txtNormalQty.Location = New Point(142, 52)
         txtNormalQty.Name = "txtNormalQty"
         txtNormalQty.Size = New Size(100, 23)
         txtNormalQty.TabIndex = 2
@@ -182,7 +182,7 @@ Partial Class frmElectricity
         ' 
         ' txtOffPeakQty
         ' 
-        txtOffPeakQty.Location = New Point(124, 82)
+        txtOffPeakQty.Location = New Point(142, 82)
         txtOffPeakQty.Name = "txtOffPeakQty"
         txtOffPeakQty.Size = New Size(100, 23)
         txtOffPeakQty.TabIndex = 0
@@ -197,7 +197,7 @@ Partial Class frmElectricity
         grpOutSource.Controls.Add(cmbNonRenewableSource)
         grpOutSource.Controls.Add(lblNonRenewableCap)
         grpOutSource.Controls.Add(txtNonRenewableCap)
-        grpOutSource.Location = New Point(12, 80)
+        grpOutSource.Location = New Point(12, 75)
         grpOutSource.Name = "grpOutSource"
         grpOutSource.Size = New Size(620, 110)
         grpOutSource.TabIndex = 1
@@ -218,7 +218,7 @@ Partial Class frmElectricity
         ' 
         cmbRenewableSource.DropDownStyle = ComboBoxStyle.DropDownList
         cmbRenewableSource.FormattingEnabled = True
-        cmbRenewableSource.Location = New Point(172, 22)
+        cmbRenewableSource.Location = New Point(200, 22)
         cmbRenewableSource.Name = "cmbRenewableSource"
         cmbRenewableSource.Size = New Size(150, 23)
         cmbRenewableSource.TabIndex = 6
@@ -226,7 +226,7 @@ Partial Class frmElectricity
         ' lblRenewableCap
         ' 
         lblRenewableCap.AutoSize = True
-        lblRenewableCap.Location = New Point(328, 25)
+        lblRenewableCap.Location = New Point(356, 25)
         lblRenewableCap.Name = "lblRenewableCap"
         lblRenewableCap.Size = New Size(92, 15)
         lblRenewableCap.TabIndex = 5
@@ -234,7 +234,7 @@ Partial Class frmElectricity
         ' 
         ' txtRenewableCap
         ' 
-        txtRenewableCap.Location = New Point(430, 22)
+        txtRenewableCap.Location = New Point(458, 22)
         txtRenewableCap.Name = "txtRenewableCap"
         txtRenewableCap.Size = New Size(100, 23)
         txtRenewableCap.TabIndex = 4
@@ -252,7 +252,7 @@ Partial Class frmElectricity
         ' 
         cmbNonRenewableSource.DropDownStyle = ComboBoxStyle.DropDownList
         cmbNonRenewableSource.FormattingEnabled = True
-        cmbNonRenewableSource.Location = New Point(172, 52)
+        cmbNonRenewableSource.Location = New Point(200, 52)
         cmbNonRenewableSource.Name = "cmbNonRenewableSource"
         cmbNonRenewableSource.Size = New Size(150, 23)
         cmbNonRenewableSource.TabIndex = 2
@@ -260,7 +260,7 @@ Partial Class frmElectricity
         ' lblNonRenewableCap
         ' 
         lblNonRenewableCap.AutoSize = True
-        lblNonRenewableCap.Location = New Point(328, 55)
+        lblNonRenewableCap.Location = New Point(356, 55)
         lblNonRenewableCap.Name = "lblNonRenewableCap"
         lblNonRenewableCap.Size = New Size(92, 15)
         lblNonRenewableCap.TabIndex = 1
@@ -268,7 +268,7 @@ Partial Class frmElectricity
         ' 
         ' txtNonRenewableCap
         ' 
-        txtNonRenewableCap.Location = New Point(430, 52)
+        txtNonRenewableCap.Location = New Point(458, 52)
         txtNonRenewableCap.Name = "txtNonRenewableCap"
         txtNonRenewableCap.Size = New Size(100, 23)
         txtNonRenewableCap.TabIndex = 0
@@ -330,7 +330,7 @@ Partial Class frmElectricity
         ' 
         cmbPurchaseType.DropDownStyle = ComboBoxStyle.DropDownList
         cmbPurchaseType.FormattingEnabled = True
-        cmbPurchaseType.Items.AddRange(New Object() {"Main Purchase", "Additional Purchase", "Out-Source Purchase"})
+        cmbPurchaseType.Items.AddRange(New Object() {""})
         cmbPurchaseType.Location = New Point(102, 26)
         cmbPurchaseType.Name = "cmbPurchaseType"
         cmbPurchaseType.Size = New Size(150, 23)
