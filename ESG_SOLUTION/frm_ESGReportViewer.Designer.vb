@@ -22,13 +22,13 @@ Partial Class frm_ESGReportViewer
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.SuspendLayout()
-        '
-        'frm_DCLReportViewer
-        '
-        Me.ClientSize = New System.Drawing.Size(622, 289)
-        Me.Name = "frm_DCLReportViewer"
-        Me.ResumeLayout(False)
+        SuspendLayout()
+        ' 
+        ' frm_ESGReportViewer
+        ' 
+        ClientSize = New Size(622, 289)
+        Name = "frm_ESGReportViewer"
+        ResumeLayout(False)
 
     End Sub
     Private WithEvents CRViewer1 As CrystalDecisions.Windows.Forms.CrystalReportViewer

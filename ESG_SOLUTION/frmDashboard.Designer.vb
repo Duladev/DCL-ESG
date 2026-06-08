@@ -73,9 +73,9 @@ Partial Class frmDashboard
         BtnREPORTS.FlatStyle = FlatStyle.Flat
         BtnREPORTS.Font = New Font("Segoe UI Black", 20.25F, FontStyle.Bold Or FontStyle.Italic)
         BtnREPORTS.ForeColor = Color.White
-        BtnREPORTS.Location = New Point(40, 431)
+        BtnREPORTS.Location = New Point(673, 510)
         BtnREPORTS.Name = "BtnREPORTS"
-        BtnREPORTS.Size = New Size(230, 50)
+        BtnREPORTS.Size = New Size(157, 50)
         BtnREPORTS.TabIndex = 11
         BtnREPORTS.Text = "   Reports"
         BtnREPORTS.TextImageRelation = TextImageRelation.TextAboveImage
@@ -90,9 +90,9 @@ Partial Class frmDashboard
         BtnSOCIAL.FlatStyle = FlatStyle.Flat
         BtnSOCIAL.Font = New Font("Segoe UI Black", 20.25F, FontStyle.Bold Or FontStyle.Italic)
         BtnSOCIAL.ForeColor = Color.White
-        BtnSOCIAL.Location = New Point(40, 361)
+        BtnSOCIAL.Location = New Point(684, 365)
         BtnSOCIAL.Name = "BtnSOCIAL"
-        BtnSOCIAL.Size = New Size(230, 50)
+        BtnSOCIAL.Size = New Size(157, 50)
         BtnSOCIAL.TabIndex = 10
         BtnSOCIAL.Text = "   Social"
         BtnSOCIAL.TextImageRelation = TextImageRelation.TextAboveImage
@@ -107,7 +107,7 @@ Partial Class frmDashboard
         BtnWASTE_MANAGEMENT.FlatStyle = FlatStyle.Flat
         BtnWASTE_MANAGEMENT.Font = New Font("Segoe UI Black", 20.25F, FontStyle.Bold Or FontStyle.Italic)
         BtnWASTE_MANAGEMENT.ForeColor = Color.White
-        BtnWASTE_MANAGEMENT.Location = New Point(-2, 305)
+        BtnWASTE_MANAGEMENT.Location = New Point(516, 129)
         BtnWASTE_MANAGEMENT.Name = "BtnWASTE_MANAGEMENT"
         BtnWASTE_MANAGEMENT.Size = New Size(325, 50)
         BtnWASTE_MANAGEMENT.TabIndex = 9
@@ -124,7 +124,7 @@ Partial Class frmDashboard
         BtnINVENTORY.FlatStyle = FlatStyle.Flat
         BtnINVENTORY.Font = New Font("Segoe UI Black", 20.25F, FontStyle.Bold Or FontStyle.Italic)
         BtnINVENTORY.ForeColor = Color.White
-        BtnINVENTORY.Location = New Point(40, 241)
+        BtnINVENTORY.Location = New Point(631, 210)
         BtnINVENTORY.Name = "BtnINVENTORY"
         BtnINVENTORY.Size = New Size(230, 50)
         BtnINVENTORY.TabIndex = 8
@@ -141,7 +141,7 @@ Partial Class frmDashboard
         BtnEMP_Details.FlatStyle = FlatStyle.Flat
         BtnEMP_Details.Font = New Font("Segoe UI Black", 20.25F, FontStyle.Bold Or FontStyle.Italic)
         BtnEMP_Details.ForeColor = Color.White
-        BtnEMP_Details.Location = New Point(40, 185)
+        BtnEMP_Details.Location = New Point(631, 291)
         BtnEMP_Details.Name = "BtnEMP_Details"
         BtnEMP_Details.Size = New Size(230, 50)
         BtnEMP_Details.TabIndex = 7
@@ -158,9 +158,9 @@ Partial Class frmDashboard
         BtnCSR.FlatStyle = FlatStyle.Flat
         BtnCSR.Font = New Font("Segoe UI Black", 20.25F, FontStyle.Bold Or FontStyle.Italic)
         BtnCSR.ForeColor = Color.White
-        BtnCSR.Location = New Point(40, 129)
+        BtnCSR.Location = New Point(708, 440)
         BtnCSR.Name = "BtnCSR"
-        BtnCSR.Size = New Size(230, 50)
+        BtnCSR.Size = New Size(133, 50)
         BtnCSR.TabIndex = 6
         BtnCSR.Text = "   CSR"
         BtnCSR.TextImageRelation = TextImageRelation.TextAboveImage

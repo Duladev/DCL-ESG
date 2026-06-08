@@ -22,15 +22,30 @@ Partial Class frmESGReports
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        RoundedButton1 = New RoundedButton()
         SuspendLayout()
+        ' 
+        ' RoundedButton1
+        ' 
+        RoundedButton1.BackColor = SystemColors.AppWorkspace
+        RoundedButton1.CornerRadius = 8
+        RoundedButton1.Location = New Point(107, 78)
+        RoundedButton1.Name = "RoundedButton1"
+        RoundedButton1.Size = New Size(101, 33)
+        RoundedButton1.TabIndex = 1
+        RoundedButton1.Text = "Daily Waste"
+        RoundedButton1.UseVisualStyleBackColor = False
         ' 
         ' frmESGReports
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
+        Controls.Add(RoundedButton1)
         Name = "frmESGReports"
         Text = "ESGReports"
         ResumeLayout(False)
     End Sub
+
+    Friend WithEvents RoundedButton1 As RoundedButton
 End Class
