@@ -18,6 +18,7 @@ Partial Class frmWater
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         components = New ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmWater))
         grpWaterPurchased = New GroupBox()
         txtAdditionalAmount = New TextBox()
         lblAdditionalAmount = New Label()
@@ -76,6 +77,7 @@ Partial Class frmWater
         cmbRainYearFilter = New ComboBox()
         lblRainMonthFilter = New Label()
         cmbRainMonthFilter = New ComboBox()
+        Button1 = New Button()
         grpWaterPurchased.SuspendLayout()
         grpWaterButtons.SuspendLayout()
         CType(grdWater, ComponentModel.ISupportInitialize).BeginInit()
@@ -689,12 +691,23 @@ Partial Class frmWater
         cmbRainMonthFilter.Size = New Size(85, 23)
         cmbRainMonthFilter.TabIndex = 3
         ' 
+        ' Button1
+        ' 
+        Button1.BackgroundImage = CType(resources.GetObject("Button1.BackgroundImage"), Image)
+        Button1.BackgroundImageLayout = ImageLayout.Stretch
+        Button1.Location = New Point(587, 153)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(45, 38)
+        Button1.TabIndex = 10
+        Button1.UseVisualStyleBackColor = True
+        ' 
         ' frmWater
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         AutoScroll = True
         ClientSize = New Size(930, 665)
+        Controls.Add(Button1)
         Controls.Add(grpRainFilters)
         Controls.Add(grpWaterFilters)
         Controls.Add(grdRainWater)
@@ -782,4 +795,5 @@ Partial Class frmWater
     Friend WithEvents btnRefreshWater As Button
     Friend WithEvents btnClearRain As Button
     Friend WithEvents btnRefreshRain As Button
+    Friend WithEvents Button1 As Button
 End Class

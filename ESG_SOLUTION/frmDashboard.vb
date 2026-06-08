@@ -1,261 +1,220 @@
-Imports System.Drawing
-Imports System.Drawing.Drawing2D
-Imports System.Windows.Forms
+﻿Imports System.Drawing
 
-
-'  No separate .Designer.vb needed; InitializeComponent is here.
 Public Class frmDashboard
-    Inherits System.Windows.Forms.Form
 
-    ' ── Dispose ──────────────────────────────────────────────────────────────
-    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-        Try
-            If disposing Then
-                If _animTimer IsNot Nothing Then
-                    _animTimer.Stop()
-                    _animTimer.Dispose()
-                End If
-                If components IsNot Nothing Then
-                    components.Dispose()
-                End If
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.WindowState = FormWindowState.Normal
+        UpdateDateTime()
+        ApplyButtonStyling()
+
+        ' To add a background image, uncomment and specify your image path:
+        'Me.BackgroundImage = System.Drawing.Image.FromFile("F:\DCL-ESG\ESG_SOLUTION\1.jpg")
+        'Me.BackgroundImageLayout = ImageLayout.Stretch
+    End Sub
+
+    Private Sub TimerDateTime_Tick(sender As Object, e As EventArgs) Handles TimerDateTime.Tick
+        UpdateDateTime()
+    End Sub
+
+    Private Sub UpdateDateTime()
+        'labelDateTime.Text = DateTime.Now.ToString("dddd, MMMM dd, yyyy HH:mm:ss")
+    End Sub
+
+    Private Sub ApplyButtonStyling()
+        AddHandler BtnCSR.MouseEnter, Sub(senderObj As Object, eObj As EventArgs) BtnCSR.BackColor = Color.FromArgb(60, 90, 120)
+        AddHandler BtnCSR.MouseLeave, Sub(senderObj As Object, eObj As EventArgs) BtnCSR.BackColor = Color.FromArgb(40, 70, 100)
+
+        AddHandler BtnEMP_Details.MouseEnter, Sub(senderObj As Object, eObj As EventArgs) BtnEMP_Details.BackColor = Color.FromArgb(60, 90, 120)
+        AddHandler BtnEMP_Details.MouseLeave, Sub(senderObj As Object, eObj As EventArgs) BtnEMP_Details.BackColor = Color.FromArgb(40, 70, 100)
+
+        AddHandler BtnINVENTORY.MouseEnter, Sub(senderObj As Object, eObj As EventArgs) BtnINVENTORY.BackColor = Color.FromArgb(60, 90, 120)
+        AddHandler BtnINVENTORY.MouseLeave, Sub(senderObj As Object, eObj As EventArgs) BtnINVENTORY.BackColor = Color.FromArgb(40, 70, 100)
+
+        AddHandler BtnWASTE_MANAGEMENT.MouseEnter, Sub(senderObj As Object, eObj As EventArgs) BtnWASTE_MANAGEMENT.BackColor = Color.FromArgb(60, 90, 120)
+        AddHandler BtnWASTE_MANAGEMENT.MouseLeave, Sub(senderObj As Object, eObj As EventArgs) BtnWASTE_MANAGEMENT.BackColor = Color.FromArgb(40, 70, 100)
+
+        AddHandler BtnSOCIAL.MouseEnter, Sub(senderObj As Object, eObj As EventArgs) BtnSOCIAL.BackColor = Color.FromArgb(60, 90, 120)
+        AddHandler BtnSOCIAL.MouseLeave, Sub(senderObj As Object, eObj As EventArgs) BtnSOCIAL.BackColor = Color.FromArgb(40, 70, 100)
+
+        AddHandler BtnREPORTS.MouseEnter, Sub(senderObj As Object, eObj As EventArgs) BtnREPORTS.BackColor = Color.FromArgb(60, 90, 120)
+        AddHandler BtnREPORTS.MouseLeave, Sub(senderObj As Object, eObj As EventArgs) BtnREPORTS.BackColor = Color.FromArgb(40, 70, 100)
+    End Sub
+
+    Private Sub BtnCSR_Click(sender As Object, e As EventArgs) Handles BtnCSR.Click
+        'UpdateMainContent("CSR Module")
+        Me.Hide()
+        frmCSR.Show()
+        ShowMessage("CSR Dashboard loaded.")
+    End Sub
+
+    Private Sub BtnEMP_Details_Click(sender As Object, e As EventArgs) Handles BtnEMP_Details.Click
+        'UpdateMainContent("Employee Details")
+        frmEmployee.Show()
+        ShowMessage("Employee Management module loaded.")
+    End Sub
+
+    Private Sub BtnINVENTORY_Click(sender As Object, e As EventArgs) Handles BtnINVENTORY.Click
+        'UpdateMainContent("Inventory Management")
+        frmMain.Show()
+        ShowMessage("Inventory module loaded.")
+    End Sub
+
+    Private Sub BtnWASTE_MANAGEMENT_Click(sender As Object, e As EventArgs) Handles BtnWASTE_MANAGEMENT.Click
+        'UpdateMainContent("Waste Management")
+        frmWasteManagement.Show()
+        ShowMessage("Waste Management module loaded.")
+    End Sub
+
+    Private Sub BtnSOCIAL_Click(sender As Object, e As EventArgs) Handles BtnSOCIAL.Click
+        'UpdateMainContent("Social Impact")
+        frmESGMain.Show()
+        ShowMessage("Social module loaded.")
+    End Sub
+
+    Private Sub BtnREPORTS_Click(sender As Object, e As EventArgs) Handles BtnREPORTS.Click
+        'UpdateMainContent("Reports & Analytics")
+        frmESGReports.Show()
+        ShowMessage("Reports module loaded.")
+    End Sub
+
+    Private Sub UpdateMainContent(moduleName As String)
+        For i As Integer = PanelMainContent.Controls.Count - 1 To 0 Step -1
+            Dim ctrl As Control = PanelMainContent.Controls(i)
+            If ctrl.Name <> "LabelWelcome" AndAlso ctrl.Name <> "LabelDateTime" Then
+                PanelMainContent.Controls.Remove(ctrl)
+                ctrl.Dispose()
             End If
-        Finally
-            MyBase.Dispose(disposing)
-        End Try
+        Next
+
+        'LabelWelcome.Text = "ESG Dashboard - " & moduleName
+
+        Dim contentPanel As New Panel()
+        contentPanel.Location = New Point(20, 100)
+        contentPanel.Size = New Size(PanelMainContent.Width - 40, PanelMainContent.Height - 120)
+        contentPanel.BackColor = Color.White
+        contentPanel.BorderStyle = BorderStyle.FixedSingle
+
+        Dim lblInfo As New Label()
+        lblInfo.Text = GetModuleDescription(moduleName)
+        lblInfo.Location = New Point(20, 20)
+        lblInfo.Size = New Size(contentPanel.Width - 40, 100)
+        lblInfo.Font = New Font("Segoe UI", 11)
+        lblInfo.ForeColor = Color.FromArgb(64, 64, 64)
+
+        Dim picIcon As New Panel()
+        picIcon.Location = New Point(20, 130)
+        picIcon.Size = New Size(100, 100)
+        picIcon.BackColor = GetModuleColor(moduleName)
+
+        Dim lblIconText As New Label()
+        lblIconText.Text = GetModuleShortName(moduleName)
+        lblIconText.Location = New Point(0, 35)
+        lblIconText.Size = New Size(100, 30)
+        lblIconText.Font = New Font("Segoe UI", 14, FontStyle.Bold)
+        lblIconText.ForeColor = Color.White
+        lblIconText.TextAlign = ContentAlignment.MiddleCenter
+        picIcon.Controls.Add(lblIconText)
+
+        Dim lblFeatures As New Label()
+        lblFeatures.Text = GetFeatureList(moduleName)
+        lblFeatures.Location = New Point(140, 130)
+        lblFeatures.Size = New Size(contentPanel.Width - 160, 200)
+        lblFeatures.Font = New Font("Segoe UI", 10)
+        lblFeatures.ForeColor = Color.FromArgb(80, 80, 80)
+
+        contentPanel.Controls.AddRange(New Control() {lblInfo, picIcon, lblFeatures})
+        PanelMainContent.Controls.Add(contentPanel)
+
+        Dim random As New Random()
+        Dim newScore As Integer = random.Next(70, 95)
+        'ProgressBarESG.Value = newScore
+        'LabelScoreValue.Text = newScore.ToString() & "%"
     End Sub
 
-    Private components As System.ComponentModel.IContainer
-
-    ' ── Animation state ──────────────────────────────────────────────────────
-    Private _animTimer As System.Windows.Forms.Timer
-    Private _animStep As Integer = 0
-
-    ' ── Control declarations ─────────────────────────────────────────────────
-    Private titleBar As ESGTitleBar
-    Private pnlNav As Panel
-    Private pnlContent As Panel
-    Private picBanner As PictureBox
-
-    Private WithEvents btnEmp As Button
-    Private WithEvents btnCSR As Button
-    Private WithEvents btnWaste As Button
-    Private WithEvents btnInventory As Button
-    Private WithEvents btnHSE As Button
-
-    Private cardEmissions As ESGCard
-    Private cardWasteCard As ESGCard
-    Private cardEnergy As ESGCard
-    Private cardEmployees As ESGCard
-
-    Private lblSectionNav As Label
-    Private lblSectionMetrics As Label
-    Private lblFooter As Label
-
-    ' ═══════════════════════════════════════════════════════════════
-    '  InitializeComponent
-    ' ═══════════════════════════════════════════════════════════════
-    Private Sub InitializeComponent()
-        Text = "ESG Management System"
-        ClientSize = New Size(920, 580)
-        StartPosition = FormStartPosition.CenterScreen
-        MinimumSize = New Size(800, 520)
-        ' ── Title bar ────────────────────────────────────────────────────────
-        titleBar = New ESGTitleBar()
-        titleBar.Title = "ESG Management System"
-        titleBar.Subtitle = "Environmental · Social · Governance"
-        titleBar.ShowBackButton = False
-        ' ── Animated colour bar ───────────────────────────────────────────────
-        picBanner = New PictureBox()
-        picBanner.Location = New Point(0, 64)
-        picBanner.Size = New Size(920, 5)
-        picBanner.BackColor = ColorPrimary
-        ' ── Left nav panel ───────────────────────────────────────────────────
-        pnlNav = New Panel()
-        pnlNav.Location = New Point(0, 69)
-        pnlNav.Size = New Size(200, 511)
-        pnlNav.BackColor = ColorSurface
-        lblSectionNav = New Label()
-        lblSectionNav.Text = "NAVIGATION"
-        lblSectionNav.Location = New Point(12, 12)
-        lblSectionNav.Size = New Size(176, 20)
-        lblSectionNav.Font = FontBadge
-        lblSectionNav.ForeColor = ColorTextMuted
-        lblSectionNav.BackColor = Color.Transparent
-        btnEmp = MakeNavButton("Employee", 44)
-        btnCSR = MakeNavButton("CSR", 92)
-        btnWaste = MakeNavButton("Waste Mgmt", 140)
-        btnInventory = MakeNavButton("Inventory", 188)
-        btnHSE = MakeNavButton("HSE", 236)
-        pnlNav.Controls.Add(lblSectionNav)
-        pnlNav.Controls.Add(btnEmp)
-        pnlNav.Controls.Add(btnCSR)
-        pnlNav.Controls.Add(btnWaste)
-        pnlNav.Controls.Add(btnInventory)
-        pnlNav.Controls.Add(btnHSE)
-        ' ── Main content panel ───────────────────────────────────────────────
-        pnlContent = New Panel()
-        pnlContent.Location = New Point(200, 69)
-        pnlContent.Size = New Size(720, 511)
-        pnlContent.BackColor = ColorBackground
-        lblSectionMetrics = New Label()
-        lblSectionMetrics.Text = "KEY METRICS"
-        lblSectionMetrics.Location = New Point(16, 12)
-        lblSectionMetrics.Size = New Size(200, 20)
-        lblSectionMetrics.Font = FontBadge
-        lblSectionMetrics.ForeColor = ColorTextMuted
-        lblSectionMetrics.BackColor = Color.Transparent
-        cardEmissions = New ESGCard()
-        cardEmissions.Location = New Point(16, 40)
-        cardEmissions.Size = New Size(158, 90)
-        cardEmissions.MetricLabel = "CO2 Emissions"
-        cardEmissions.MetricValue = "1,240 t"
-        cardEmissions.Badge = "Down 8%"
-        cardEmissions.AccentColor = ColorPrimary
-        cardEmissions.IconChar = "C"
-        cardWasteCard = New ESGCard()
-        cardWasteCard.Location = New Point(186, 40)
-        cardWasteCard.Size = New Size(158, 90)
-        cardWasteCard.MetricLabel = "Waste Recycled"
-        cardWasteCard.MetricValue = "76%"
-        cardWasteCard.Badge = "Up 3%"
-        cardWasteCard.AccentColor = ColorAccent
-        cardWasteCard.IconChar = "W"
-        cardEnergy = New ESGCard()
-        cardEnergy.Location = New Point(356, 40)
-        cardEnergy.Size = New Size(158, 90)
-        cardEnergy.MetricLabel = "Energy (kWh)"
-        cardEnergy.MetricValue = "84,200"
-        cardEnergy.Badge = "Down 5%"
-        cardEnergy.AccentColor = ColorWarning
-        cardEnergy.IconChar = "E"
-        cardEmployees = New ESGCard()
-        cardEmployees.Location = New Point(526, 40)
-        cardEmployees.Size = New Size(158, 90)
-        cardEmployees.MetricLabel = "Employees"
-        cardEmployees.MetricValue = "342"
-        cardEmployees.Badge = "Stable"
-        cardEmployees.AccentColor = Color.FromArgb(167, 139, 250)
-        cardEmployees.IconChar = "P"
-        lblFooter = New Label()
-        'lblFooter.Text = "ESG System  -  " + Date.Now.Year + "  -  All rights reserved"
-        lblFooter.Location = New Point(0, 490)
-        lblFooter.Size = New Size(720, 20)
-        lblFooter.TextAlign = ContentAlignment.MiddleCenter
-        lblFooter.Font = FontSmall
-        lblFooter.ForeColor = ColorTextMuted
-        lblFooter.BackColor = Color.Transparent
-        pnlContent.Controls.Add(lblSectionMetrics)
-        pnlContent.Controls.Add(cardEmissions)
-        pnlContent.Controls.Add(cardWasteCard)
-        pnlContent.Controls.Add(cardEnergy)
-        pnlContent.Controls.Add(cardEmployees)
-        pnlContent.Controls.Add(lblFooter)
-        Controls.Add(titleBar)
-        Controls.Add(picBanner)
-        Controls.Add(pnlNav)
-        Controls.Add(pnlContent)
-    End Sub
-
-    ' ═══════════════════════════════════════════════════════════════
-    '  Form Load
-    ' ═══════════════════════════════════════════════════════════════
-    Private Sub frmDashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        InitializeComponent()
-        AppTheme.Apply(Me)
-
-        _animTimer = New System.Windows.Forms.Timer()
-        _animTimer.Interval = 40
-        AddHandler _animTimer.Tick, AddressOf AnimateBanner
-        _animTimer.Start()
-    End Sub
-
-    ' ═══════════════════════════════════════════════════════════════
-    '  Animated banner bar
-    ' ═══════════════════════════════════════════════════════════════
-    Private Sub AnimateBanner(sender As Object, e As EventArgs)
-        If picBanner Is Nothing OrElse picBanner.IsDisposed Then
-            Return
-        End If
-        _animStep = (_animStep + 1) Mod 360
-        Dim hue As Double = (_animStep Mod 60) / 60.0
-        Dim r As Integer = Math.Min(255, CInt(16 + 83 * hue))
-        Dim g As Integer = Math.Min(255, CInt(185 - 60 * hue))
-        Dim b As Integer = Math.Min(255, CInt(129 + 108 * hue))
-        picBanner.BackColor = Color.FromArgb(r, g, b)
-    End Sub
-
-    ' ═══════════════════════════════════════════════════════════════
-    '  Title bar handlers
-    ' ═══════════════════════════════════════════════════════════════
-    Private Sub TitleBar_CloseClicked()
-        Application.Exit()
-    End Sub
-
-    Private Sub TitleBar_MinimizeClicked()
-        Me.WindowState = FormWindowState.Minimized
-    End Sub
-
-    ' ═══════════════════════════════════════════════════════════════
-    '  Nav panel right-border paint
-    ' ═══════════════════════════════════════════════════════════════
-    Private Sub PnlNav_Paint(sender As Object, e As PaintEventArgs)
-        Using p As New Pen(AppTheme.ColorBorder, 1)
-            e.Graphics.DrawLine(p, pnlNav.Width - 1, 0, pnlNav.Width - 1, pnlNav.Height)
-        End Using
-    End Sub
-
-    ' ═══════════════════════════════════════════════════════════════
-    '  Nav button factory
-    ' ═══════════════════════════════════════════════════════════════
-    Private Function MakeNavButton(displayText As String, y As Integer) As Button
-        Dim btn As New Button()
-        btn.Text = displayText
-        btn.Location = New Point(8, y)
-        btn.Size = New Size(184, 40)
-        btn.TextAlign = ContentAlignment.MiddleLeft
-        btn.Padding = New Padding(12, 0, 0, 0)
-        btn.FlatStyle = FlatStyle.Flat
-        btn.ForeColor = AppTheme.ColorText
-        btn.BackColor = Color.Transparent
-        btn.Font = AppTheme.FontButton
-        btn.Cursor = Cursors.Hand
-        btn.FlatAppearance.BorderSize = 0
-        btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(30, AppTheme.ColorPrimary)
-        btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(60, AppTheme.ColorPrimary)
-        Return btn
+    Private Function GetModuleDescription(moduleName As String) As String
+        Select Case moduleName
+            Case "CSR Module"
+                Return "Corporate Social Responsibility (CSR) initiatives help organizations align business operations with social values and sustainability goals."
+            Case "Employee Details"
+                Return "Employee management focuses on creating a positive work environment, ensuring fair labor practices, and promoting diversity and inclusion."
+            Case "Inventory Management"
+                Return "Sustainable inventory management focuses on reducing environmental impact through efficient resource use and sustainable sourcing."
+            Case "Waste Management"
+                Return "Environmental stewardship through effective waste reduction, recycling programs, and proper disposal methods."
+            Case "Social Impact"
+                Return "Measure and improve social impact through community programs, stakeholder engagement, and social responsibility initiatives."
+            Case Else
+                Return "Generate comprehensive ESG reports, track key performance indicators, and ensure compliance with sustainability standards."
+        End Select
     End Function
 
-    ' ═══════════════════════════════════════════════════════════════
-    '  Navigation clicks
-    ' ═══════════════════════════════════════════════════════════════
-    Private Sub btnWaste_Click(sender As Object, e As EventArgs)
-        Dim form As New frmWasteManagement
-        form.Show()
-        Hide()
+    Private Function GetModuleShortName(moduleName As String) As String
+        Select Case moduleName
+            Case "CSR Module" : Return "CSR"
+            Case "Employee Details" : Return "EMP"
+            Case "Inventory Management" : Return "INV"
+            Case "Waste Management" : Return "WST"
+            Case "Social Impact" : Return "SOC"
+            Case Else : Return "RPT"
+        End Select
+    End Function
+
+    Private Function GetModuleColor(moduleName As String) As Color
+        Select Case moduleName
+            Case "CSR Module" : Return Color.FromArgb(52, 152, 219)
+            Case "Employee Details" : Return Color.FromArgb(46, 204, 113)
+            Case "Inventory Management" : Return Color.FromArgb(241, 196, 15)
+            Case "Waste Management" : Return Color.FromArgb(231, 76, 60)
+            Case "Social Impact" : Return Color.FromArgb(155, 89, 182)
+            Case Else : Return Color.FromArgb(52, 73, 94)
+        End Select
+    End Function
+
+    Private Function GetFeatureList(moduleName As String) As String
+        Select Case moduleName
+            Case "CSR Module"
+                Return "Key Features:" & vbCrLf & "• Community investment tracking" & vbCrLf & "• Volunteer program management" & vbCrLf & "• CSR initiative planning" & vbCrLf & "• Impact measurement tools"
+            Case "Employee Details"
+                Return "Key Features:" & vbCrLf & "• Employee demographic dashboard" & vbCrLf & "• Training & development tracking" & vbCrLf & "• Diversity & inclusion metrics" & vbCrLf & "• Health & safety records"
+            Case "Inventory Management"
+                Return "Key Features:" & vbCrLf & "• Sustainable sourcing tracker" & vbCrLf & "• Material efficiency metrics" & vbCrLf & "• Supply chain carbon footprint" & vbCrLf & "• Real-time stock monitoring"
+            Case "Waste Management"
+                Return "Key Features:" & vbCrLf & "• Waste reduction progress" & vbCrLf & "• Recycling rate monitoring" & vbCrLf & "• Hazardous waste tracking" & vbCrLf & "• Environmental compliance"
+            Case "Social Impact"
+                Return "Key Features:" & vbCrLf & "• Community program metrics" & vbCrLf & "• Social ROI calculator" & vbCrLf & "• Stakeholder feedback system" & vbCrLf & "• Impact assessment reports"
+            Case Else
+                Return "Key Features:" & vbCrLf & "• ESG performance dashboard" & vbCrLf & "• Custom report generator" & vbCrLf & "• Compliance checklist" & vbCrLf & "• Export to PDF/Excel"
+        End Select
+    End Function
+
+    Private Sub ShowMessage(message As String)
+        Dim lblStatus As New Label()
+        lblStatus.Text = message
+        lblStatus.Location = New Point(20, PanelMainContent.Height - 50)
+        lblStatus.Size = New Size(PanelMainContent.Width - 40, 30)
+        lblStatus.BackColor = Color.FromArgb(52, 73, 94)
+        lblStatus.ForeColor = Color.White
+        lblStatus.TextAlign = ContentAlignment.MiddleCenter
+        lblStatus.Font = New Font("Segoe UI", 9, FontStyle.Bold)
+
+        PanelMainContent.Controls.Add(lblStatus)
+        Dim timer As New Timer()
+        timer.Interval = 3000
+        AddHandler timer.Tick, Sub(senderObj As Object, eObj As EventArgs)
+                                   PanelMainContent.Controls.Remove(lblStatus)
+                                   lblStatus.Dispose()
+                                   timer.Stop()
+                                   timer.Dispose()
+                               End Sub
+        timer.Start()
     End Sub
 
-    Private Sub btnInventory_Click(sender As Object, e As EventArgs)
-        Dim form As New frmMain
-        form.Show()
-        Hide()
+    Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
+        For Each ctrl As Control In PanelMainContent.Controls
+            If TypeOf ctrl Is Panel Then
+                Dim contentPanel As Panel = DirectCast(ctrl, Panel)
+                contentPanel.Size = New Size(PanelMainContent.Width - 40, PanelMainContent.Height - 120)
+            End If
+        Next
     End Sub
-
-    Private Sub btnEmp_Click(sender As Object, e As EventArgs)
-        Dim form As New frmEmployee
-        form.Show()
-        Hide()
-    End Sub
-
-    Private Sub btnCSR_Click(sender As Object, e As EventArgs)
-        Dim form As New frmCSRActivity
-        form.Show()
-        Hide()
-    End Sub
-
-    Private Sub btnHSE_Click(sender As Object, e As EventArgs)
-        Dim form As New frmESGMain
-        form.Show()
-        Hide()
-    End Sub
-
 End Class

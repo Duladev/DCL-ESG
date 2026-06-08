@@ -17,438 +17,434 @@ Partial Class frmOwnElectricity
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.grpInput = New System.Windows.Forms.GroupBox()
-        Me.txtComments = New System.Windows.Forms.TextBox()
-        Me.lblComments = New System.Windows.Forms.Label()
-        Me.txtSoldCapacity = New System.Windows.Forms.TextBox()
-        Me.lblSoldCapacity = New System.Windows.Forms.Label()
-        Me.txtTotalConsumed = New System.Windows.Forms.TextBox()
-        Me.lblTotalConsumed = New System.Windows.Forms.Label()
-        Me.txtNonRenewableCap = New System.Windows.Forms.TextBox()
-        Me.lblNonRenewableCap = New System.Windows.Forms.Label()
-        Me.cmbNonRenewableType = New System.Windows.Forms.ComboBox()
-        Me.lblNonRenewableType = New System.Windows.Forms.Label()
-        Me.txtRenewableCap = New System.Windows.Forms.TextBox()
-        Me.lblRenewableCap = New System.Windows.Forms.Label()
-        Me.cmbRenewableType = New System.Windows.Forms.ComboBox()
-        Me.lblRenewableType = New System.Windows.Forms.Label()
-        Me.dtpMonth = New System.Windows.Forms.DateTimePicker()
-        Me.dtpYear = New System.Windows.Forms.DateTimePicker()
-        Me.lblMonth = New System.Windows.Forms.Label()
-        Me.lblYear = New System.Windows.Forms.Label()
-        Me.grpButtons = New System.Windows.Forms.GroupBox()
-        Me.btnHome = New System.Windows.Forms.Button()
-        Me.btnClear = New System.Windows.Forms.Button()
-        Me.btnRefresh = New System.Windows.Forms.Button()
-        Me.btnExportExcel = New System.Windows.Forms.Button()
-        Me.btnDelete = New System.Windows.Forms.Button()
-        Me.btnUpdate = New System.Windows.Forms.Button()
-        Me.btnSave = New System.Windows.Forms.Button()
-        Me.btnUploadBill = New System.Windows.Forms.Button()
-        Me.lblFileCount = New System.Windows.Forms.Label()
-        Me.grdData = New System.Windows.Forms.DataGridView()
-        Me.grpFilters = New System.Windows.Forms.GroupBox()
-        Me.lblYearFilter = New System.Windows.Forms.Label()
-        Me.cmbYearFilter = New System.Windows.Forms.ComboBox()
-        Me.lblMonthFilter = New System.Windows.Forms.Label()
-        Me.cmbMonthFilter = New System.Windows.Forms.ComboBox()
-        Me.grpInput.SuspendLayout()
-        Me.grpButtons.SuspendLayout()
-        CType(Me.grdData, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.grpFilters.SuspendLayout()
-        Me.SuspendLayout()
-        '
-        'grpInput
-        '
-        Me.grpInput.Controls.Add(Me.txtComments)
-        Me.grpInput.Controls.Add(Me.lblComments)
-        Me.grpInput.Controls.Add(Me.txtSoldCapacity)
-        Me.grpInput.Controls.Add(Me.lblSoldCapacity)
-        Me.grpInput.Controls.Add(Me.txtTotalConsumed)
-        Me.grpInput.Controls.Add(Me.lblTotalConsumed)
-        Me.grpInput.Controls.Add(Me.txtNonRenewableCap)
-        Me.grpInput.Controls.Add(Me.lblNonRenewableCap)
-        Me.grpInput.Controls.Add(Me.cmbNonRenewableType)
-        Me.grpInput.Controls.Add(Me.lblNonRenewableType)
-        Me.grpInput.Controls.Add(Me.txtRenewableCap)
-        Me.grpInput.Controls.Add(Me.lblRenewableCap)
-        Me.grpInput.Controls.Add(Me.cmbRenewableType)
-        Me.grpInput.Controls.Add(Me.lblRenewableType)
-        Me.grpInput.Controls.Add(Me.dtpMonth)
-        Me.grpInput.Controls.Add(Me.dtpYear)
-        Me.grpInput.Controls.Add(Me.lblMonth)
-        Me.grpInput.Controls.Add(Me.lblYear)
-        Me.grpInput.Location = New System.Drawing.Point(12, 12)
-        Me.grpInput.Name = "grpInput"
-        Me.grpInput.Size = New System.Drawing.Size(620, 215)
-        Me.grpInput.TabIndex = 0
-        Me.grpInput.TabStop = False
-        Me.grpInput.Text = "Own Generated Electricity"
-        '
-        'txtComments
-        '
-        Me.txtComments.Location = New System.Drawing.Point(140, 178)
-        Me.txtComments.Multiline = True
-        Me.txtComments.Name = "txtComments"
-        Me.txtComments.Size = New System.Drawing.Size(468, 30)
-        Me.txtComments.TabIndex = 17
-        '
-        'lblComments
-        '
-        Me.lblComments.AutoSize = True
-        Me.lblComments.Location = New System.Drawing.Point(16, 180)
-        Me.lblComments.Name = "lblComments"
-        Me.lblComments.Size = New System.Drawing.Size(69, 15)
-        Me.lblComments.TabIndex = 16
-        Me.lblComments.Text = "Comments:"
-        '
-        'txtSoldCapacity
-        '
-        Me.txtSoldCapacity.BackColor = System.Drawing.Color.LightGray
-        Me.txtSoldCapacity.Enabled = False
-        Me.txtSoldCapacity.Location = New System.Drawing.Point(436, 148)
-        Me.txtSoldCapacity.Name = "txtSoldCapacity"
-        Me.txtSoldCapacity.Size = New System.Drawing.Size(118, 23)
-        Me.txtSoldCapacity.TabIndex = 15
-        '
-        'lblSoldCapacity
-        '
-        Me.lblSoldCapacity.AutoSize = True
-        Me.lblSoldCapacity.Location = New System.Drawing.Point(318, 150)
-        Me.lblSoldCapacity.Name = "lblSoldCapacity"
-        Me.lblSoldCapacity.Size = New System.Drawing.Size(118, 15)
-        Me.lblSoldCapacity.TabIndex = 14
-        Me.lblSoldCapacity.Text = "Own Generated Sold:"
-        '
-        'txtTotalConsumed
-        '
-        Me.txtTotalConsumed.Location = New System.Drawing.Point(178, 148)
-        Me.txtTotalConsumed.Name = "txtTotalConsumed"
-        Me.txtTotalConsumed.Size = New System.Drawing.Size(118, 23)
-        Me.txtTotalConsumed.TabIndex = 13
-        '
-        'lblTotalConsumed
-        '
-        Me.lblTotalConsumed.AutoSize = True
-        Me.lblTotalConsumed.Location = New System.Drawing.Point(16, 150)
-        Me.lblTotalConsumed.Name = "lblTotalConsumed"
-        Me.lblTotalConsumed.Size = New System.Drawing.Size(150, 15)
-        Me.lblTotalConsumed.TabIndex = 12
-        Me.lblTotalConsumed.Text = "Total Own Generated Used:"
-        '
-        'txtNonRenewableCap
-        '
-        Me.txtNonRenewableCap.Location = New System.Drawing.Point(436, 108)
-        Me.txtNonRenewableCap.Name = "txtNonRenewableCap"
-        Me.txtNonRenewableCap.Size = New System.Drawing.Size(118, 23)
-        Me.txtNonRenewableCap.TabIndex = 11
-        '
-        'lblNonRenewableCap
-        '
-        Me.lblNonRenewableCap.AutoSize = True
-        Me.lblNonRenewableCap.Location = New System.Drawing.Point(318, 110)
-        Me.lblNonRenewableCap.Name = "lblNonRenewableCap"
-        Me.lblNonRenewableCap.Size = New System.Drawing.Size(112, 15)
-        Me.lblNonRenewableCap.TabIndex = 10
-        Me.lblNonRenewableCap.Text = "Monthly Generated:"
-        '
-        'cmbNonRenewableType
-        '
-        Me.cmbNonRenewableType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbNonRenewableType.FormattingEnabled = True
-        Me.cmbNonRenewableType.Location = New System.Drawing.Point(178, 108)
-        Me.cmbNonRenewableType.Name = "cmbNonRenewableType"
-        Me.cmbNonRenewableType.Size = New System.Drawing.Size(118, 23)
-        Me.cmbNonRenewableType.TabIndex = 9
-        '
-        'lblNonRenewableType
-        '
-        Me.lblNonRenewableType.AutoSize = True
-        Me.lblNonRenewableType.Location = New System.Drawing.Point(16, 110)
-        Me.lblNonRenewableType.Name = "lblNonRenewableType"
-        Me.lblNonRenewableType.Size = New System.Drawing.Size(123, 15)
-        Me.lblNonRenewableType.TabIndex = 8
-        Me.lblNonRenewableType.Text = "Non-Renewable Type:"
-        '
-        'txtRenewableCap
-        '
-        Me.txtRenewableCap.Location = New System.Drawing.Point(436, 78)
-        Me.txtRenewableCap.Name = "txtRenewableCap"
-        Me.txtRenewableCap.Size = New System.Drawing.Size(118, 23)
-        Me.txtRenewableCap.TabIndex = 7
-        '
-        'lblRenewableCap
-        '
-        Me.lblRenewableCap.AutoSize = True
-        Me.lblRenewableCap.Location = New System.Drawing.Point(318, 80)
-        Me.lblRenewableCap.Name = "lblRenewableCap"
-        Me.lblRenewableCap.Size = New System.Drawing.Size(112, 15)
-        Me.lblRenewableCap.TabIndex = 6
-        Me.lblRenewableCap.Text = "Monthly Generated:"
-        '
-        'cmbRenewableType
-        '
-        Me.cmbRenewableType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbRenewableType.FormattingEnabled = True
-        Me.cmbRenewableType.Location = New System.Drawing.Point(178, 78)
-        Me.cmbRenewableType.Name = "cmbRenewableType"
-        Me.cmbRenewableType.Size = New System.Drawing.Size(118, 23)
-        Me.cmbRenewableType.TabIndex = 5
-        '
-        'lblRenewableType
-        '
-        Me.lblRenewableType.AutoSize = True
-        Me.lblRenewableType.Location = New System.Drawing.Point(16, 80)
-        Me.lblRenewableType.Name = "lblRenewableType"
-        Me.lblRenewableType.Size = New System.Drawing.Size(134, 15)
-        Me.lblRenewableType.TabIndex = 4
-        Me.lblRenewableType.Text = "Renewable Source Type:"
-        '
-        'dtpMonth
-        '
-        Me.dtpMonth.CustomFormat = "MMMM"
-        Me.dtpMonth.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpMonth.Location = New System.Drawing.Point(436, 28)
-        Me.dtpMonth.Name = "dtpMonth"
-        Me.dtpMonth.ShowUpDown = True
-        Me.dtpMonth.Size = New System.Drawing.Size(94, 23)
-        Me.dtpMonth.TabIndex = 3
-        '
-        'dtpYear
-        '
-        Me.dtpYear.CustomFormat = "yyyy"
-        Me.dtpYear.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpYear.Location = New System.Drawing.Point(178, 28)
-        Me.dtpYear.Name = "dtpYear"
-        Me.dtpYear.ShowUpDown = True
-        Me.dtpYear.Size = New System.Drawing.Size(78, 23)
-        Me.dtpYear.TabIndex = 2
-        '
-        'lblMonth
-        '
-        Me.lblMonth.AutoSize = True
-        Me.lblMonth.Location = New System.Drawing.Point(384, 30)
-        Me.lblMonth.Name = "lblMonth"
-        Me.lblMonth.Size = New System.Drawing.Size(46, 15)
-        Me.lblMonth.TabIndex = 1
-        Me.lblMonth.Text = "Month:"
-        '
-        'lblYear
-        '
-        Me.lblYear.AutoSize = True
-        Me.lblYear.Location = New System.Drawing.Point(140, 30)
-        Me.lblYear.Name = "lblYear"
-        Me.lblYear.Size = New System.Drawing.Size(32, 15)
-        Me.lblYear.TabIndex = 0
-        Me.lblYear.Text = "Year:"
-        '
-        'grpButtons
-        '
-        Me.grpButtons.Controls.Add(Me.btnHome)
-        Me.grpButtons.Controls.Add(Me.btnClear)
-        Me.grpButtons.Controls.Add(Me.btnRefresh)
-        Me.grpButtons.Controls.Add(Me.btnExportExcel)
-        Me.grpButtons.Controls.Add(Me.btnDelete)
-        Me.grpButtons.Controls.Add(Me.btnUpdate)
-        Me.grpButtons.Controls.Add(Me.btnSave)
-        Me.grpButtons.Controls.Add(Me.btnUploadBill)
-        Me.grpButtons.Controls.Add(Me.lblFileCount)
-        Me.grpButtons.Location = New System.Drawing.Point(638, 12)
-        Me.grpButtons.Name = "grpButtons"
-        Me.grpButtons.Size = New System.Drawing.Size(280, 215)
-        Me.grpButtons.TabIndex = 1
-        Me.grpButtons.TabStop = False
-        Me.grpButtons.Text = "Actions"
-        '
-        'btnHome
-        '
-        Me.btnHome.BackColor = System.Drawing.SystemColors.AppWorkspace
-        Me.btnHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnHome.ForeColor = System.Drawing.Color.White
-        Me.btnHome.Location = New System.Drawing.Point(148, 178)
-        Me.btnHome.Name = "btnHome"
-        Me.btnHome.Size = New System.Drawing.Size(116, 26)
-        Me.btnHome.TabIndex = 8
-        Me.btnHome.Text = "Home"
-        Me.btnHome.UseVisualStyleBackColor = False
-        '
-        'btnClear
-        '
-        Me.btnClear.BackColor = System.Drawing.SystemColors.AppWorkspace
-        Me.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnClear.ForeColor = System.Drawing.Color.White
-        Me.btnClear.Location = New System.Drawing.Point(15, 178)
-        Me.btnClear.Name = "btnClear"
-        Me.btnClear.Size = New System.Drawing.Size(116, 26)
-        Me.btnClear.TabIndex = 7
-        Me.btnClear.Text = "Clear"
-        Me.btnClear.UseVisualStyleBackColor = False
-        '
-        'btnRefresh
-        '
-        Me.btnRefresh.BackColor = System.Drawing.SystemColors.AppWorkspace
-        Me.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnRefresh.ForeColor = System.Drawing.Color.White
-        Me.btnRefresh.Location = New System.Drawing.Point(148, 143)
-        Me.btnRefresh.Name = "btnRefresh"
-        Me.btnRefresh.Size = New System.Drawing.Size(116, 26)
-        Me.btnRefresh.TabIndex = 6
-        Me.btnRefresh.Text = "Refresh"
-        Me.btnRefresh.UseVisualStyleBackColor = False
-        '
-        'btnExportExcel
-        '
-        Me.btnExportExcel.BackColor = System.Drawing.SystemColors.AppWorkspace
-        Me.btnExportExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnExportExcel.ForeColor = System.Drawing.Color.White
-        Me.btnExportExcel.Location = New System.Drawing.Point(15, 143)
-        Me.btnExportExcel.Name = "btnExportExcel"
-        Me.btnExportExcel.Size = New System.Drawing.Size(116, 26)
-        Me.btnExportExcel.TabIndex = 5
-        Me.btnExportExcel.Text = "Export to Excel"
-        Me.btnExportExcel.UseVisualStyleBackColor = False
-        '
-        'btnDelete
-        '
-        Me.btnDelete.BackColor = System.Drawing.SystemColors.AppWorkspace
-        Me.btnDelete.Enabled = False
-        Me.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnDelete.ForeColor = System.Drawing.Color.White
-        Me.btnDelete.Location = New System.Drawing.Point(148, 108)
-        Me.btnDelete.Name = "btnDelete"
-        Me.btnDelete.Size = New System.Drawing.Size(116, 26)
-        Me.btnDelete.TabIndex = 4
-        Me.btnDelete.Text = "Delete"
-        Me.btnDelete.UseVisualStyleBackColor = False
-        '
-        'btnUpdate
-        '
-        Me.btnUpdate.BackColor = System.Drawing.SystemColors.AppWorkspace
-        Me.btnUpdate.Enabled = False
-        Me.btnUpdate.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnUpdate.ForeColor = System.Drawing.Color.White
-        Me.btnUpdate.Location = New System.Drawing.Point(15, 108)
-        Me.btnUpdate.Name = "btnUpdate"
-        Me.btnUpdate.Size = New System.Drawing.Size(116, 26)
-        Me.btnUpdate.TabIndex = 3
-        Me.btnUpdate.Text = "Update"
-        Me.btnUpdate.UseVisualStyleBackColor = False
-        '
-        'btnSave
-        '
-        Me.btnSave.BackColor = System.Drawing.SystemColors.AppWorkspace
-        Me.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnSave.ForeColor = System.Drawing.Color.White
-        Me.btnSave.Location = New System.Drawing.Point(148, 73)
-        Me.btnSave.Name = "btnSave"
-        Me.btnSave.Size = New System.Drawing.Size(116, 26)
-        Me.btnSave.TabIndex = 2
-        Me.btnSave.Text = "Save"
-        Me.btnSave.UseVisualStyleBackColor = False
-        '
-        'btnUploadBill
-        '
-        Me.btnUploadBill.Location = New System.Drawing.Point(15, 22)
-        Me.btnUploadBill.Name = "btnUploadBill"
-        Me.btnUploadBill.Size = New System.Drawing.Size(116, 26)
-        Me.btnUploadBill.TabIndex = 1
-        Me.btnUploadBill.Text = "Upload Bills"
-        Me.btnUploadBill.UseVisualStyleBackColor = True
-        '
-        'lblFileCount
-        '
-        Me.lblFileCount.AutoSize = True
-        Me.lblFileCount.Location = New System.Drawing.Point(148, 30)
-        Me.lblFileCount.Name = "lblFileCount"
-        Me.lblFileCount.Size = New System.Drawing.Size(93, 15)
-        Me.lblFileCount.TabIndex = 0
-        Me.lblFileCount.Text = "No files selected"
-        '
-        'grdData
-        '
-        Me.grdData.AllowUserToAddRows = False
-        Me.grdData.AllowUserToDeleteRows = False
-        Me.grdData.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.grdData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.grdData.Location = New System.Drawing.Point(12, 297)
-        Me.grdData.Name = "grdData"
-        Me.grdData.ReadOnly = True
-        Me.grdData.RowTemplate.Height = 25
-        Me.grdData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.grdData.Size = New System.Drawing.Size(906, 220)
-        Me.grdData.TabIndex = 2
-        '
-        'grpFilters
-        '
-        Me.grpFilters.Controls.Add(Me.lblYearFilter)
-        Me.grpFilters.Controls.Add(Me.cmbYearFilter)
-        Me.grpFilters.Controls.Add(Me.lblMonthFilter)
-        Me.grpFilters.Controls.Add(Me.cmbMonthFilter)
-        Me.grpFilters.Location = New System.Drawing.Point(12, 233)
-        Me.grpFilters.Name = "grpFilters"
-        Me.grpFilters.Size = New System.Drawing.Size(300, 55)
-        Me.grpFilters.TabIndex = 6
-        Me.grpFilters.TabStop = False
-        Me.grpFilters.Text = "Filters"
-        '
-        'lblYearFilter
-        '
-        Me.lblYearFilter.AutoSize = True
-        Me.lblYearFilter.Location = New System.Drawing.Point(16, 25)
-        Me.lblYearFilter.Name = "lblYearFilter"
-        Me.lblYearFilter.Size = New System.Drawing.Size(32, 15)
-        Me.lblYearFilter.TabIndex = 0
-        Me.lblYearFilter.Text = "Year:"
-        '
-        'cmbYearFilter
-        '
-        Me.cmbYearFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbYearFilter.FormattingEnabled = True
-        Me.cmbYearFilter.Location = New System.Drawing.Point(60, 22)
-        Me.cmbYearFilter.Name = "cmbYearFilter"
-        Me.cmbYearFilter.Size = New System.Drawing.Size(85, 23)
-        Me.cmbYearFilter.TabIndex = 1
-        '
-        'lblMonthFilter
-        '
-        Me.lblMonthFilter.AutoSize = True
-        Me.lblMonthFilter.Location = New System.Drawing.Point(160, 25)
-        Me.lblMonthFilter.Name = "lblMonthFilter"
-        Me.lblMonthFilter.Size = New System.Drawing.Size(46, 15)
-        Me.lblMonthFilter.TabIndex = 2
-        Me.lblMonthFilter.Text = "Month:"
-        '
-        'cmbMonthFilter
-        '
-        Me.cmbMonthFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbMonthFilter.FormattingEnabled = True
-        Me.cmbMonthFilter.Location = New System.Drawing.Point(212, 22)
-        Me.cmbMonthFilter.Name = "cmbMonthFilter"
-        Me.cmbMonthFilter.Size = New System.Drawing.Size(85, 23)
-        Me.cmbMonthFilter.TabIndex = 3
-        '
-        'frmOwnElectricity
-        '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0F, 15.0F)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(930, 529)
-        Me.Controls.Add(Me.grpFilters)
-        Me.Controls.Add(Me.grdData)
-        Me.Controls.Add(Me.grpButtons)
-        Me.Controls.Add(Me.grpInput)
-        Me.Name = "frmOwnElectricity"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Own Generated Electricity"
-        Me.grpInput.ResumeLayout(False)
-        Me.grpInput.PerformLayout()
-        Me.grpButtons.ResumeLayout(False)
-        Me.grpButtons.PerformLayout()
-        CType(Me.grdData, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.grpFilters.ResumeLayout(False)
-        Me.grpFilters.PerformLayout()
-        Me.ResumeLayout(False)
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmOwnElectricity))
+        grpInput = New GroupBox()
+        txtComments = New TextBox()
+        lblComments = New Label()
+        txtSoldCapacity = New TextBox()
+        lblSoldCapacity = New Label()
+        txtTotalConsumed = New TextBox()
+        lblTotalConsumed = New Label()
+        txtNonRenewableCap = New TextBox()
+        lblNonRenewableCap = New Label()
+        cmbNonRenewableType = New ComboBox()
+        lblNonRenewableType = New Label()
+        txtRenewableCap = New TextBox()
+        lblRenewableCap = New Label()
+        cmbRenewableType = New ComboBox()
+        lblRenewableType = New Label()
+        dtpMonth = New DateTimePicker()
+        dtpYear = New DateTimePicker()
+        lblMonth = New Label()
+        lblYear = New Label()
+        grpButtons = New GroupBox()
+        btnClear = New Button()
+        btnRefresh = New Button()
+        btnExportExcel = New Button()
+        btnDelete = New Button()
+        btnUpdate = New Button()
+        btnSave = New Button()
+        btnUploadBill = New Button()
+        lblFileCount = New Label()
+        grdData = New DataGridView()
+        grpFilters = New GroupBox()
+        lblYearFilter = New Label()
+        cmbYearFilter = New ComboBox()
+        lblMonthFilter = New Label()
+        cmbMonthFilter = New ComboBox()
+        btnHome = New Button()
+        grpInput.SuspendLayout()
+        grpButtons.SuspendLayout()
+        CType(grdData, ComponentModel.ISupportInitialize).BeginInit()
+        grpFilters.SuspendLayout()
+        SuspendLayout()
+        ' 
+        ' grpInput
+        ' 
+        grpInput.Controls.Add(txtComments)
+        grpInput.Controls.Add(lblComments)
+        grpInput.Controls.Add(txtSoldCapacity)
+        grpInput.Controls.Add(lblSoldCapacity)
+        grpInput.Controls.Add(txtTotalConsumed)
+        grpInput.Controls.Add(lblTotalConsumed)
+        grpInput.Controls.Add(txtNonRenewableCap)
+        grpInput.Controls.Add(lblNonRenewableCap)
+        grpInput.Controls.Add(cmbNonRenewableType)
+        grpInput.Controls.Add(lblNonRenewableType)
+        grpInput.Controls.Add(txtRenewableCap)
+        grpInput.Controls.Add(lblRenewableCap)
+        grpInput.Controls.Add(cmbRenewableType)
+        grpInput.Controls.Add(lblRenewableType)
+        grpInput.Controls.Add(dtpMonth)
+        grpInput.Controls.Add(dtpYear)
+        grpInput.Controls.Add(lblMonth)
+        grpInput.Controls.Add(lblYear)
+        grpInput.Location = New Point(12, 12)
+        grpInput.Name = "grpInput"
+        grpInput.Size = New Size(620, 215)
+        grpInput.TabIndex = 0
+        grpInput.TabStop = False
+        grpInput.Text = "Own Generated Electricity"
+        ' 
+        ' txtComments
+        ' 
+        txtComments.Location = New Point(140, 178)
+        txtComments.Multiline = True
+        txtComments.Name = "txtComments"
+        txtComments.Size = New Size(468, 30)
+        txtComments.TabIndex = 17
+        ' 
+        ' lblComments
+        ' 
+        lblComments.AutoSize = True
+        lblComments.Location = New Point(16, 180)
+        lblComments.Name = "lblComments"
+        lblComments.Size = New Size(69, 15)
+        lblComments.TabIndex = 16
+        lblComments.Text = "Comments:"
+        ' 
+        ' txtSoldCapacity
+        ' 
+        txtSoldCapacity.BackColor = Color.LightGray
+        txtSoldCapacity.Enabled = False
+        txtSoldCapacity.Location = New Point(436, 148)
+        txtSoldCapacity.Name = "txtSoldCapacity"
+        txtSoldCapacity.Size = New Size(118, 23)
+        txtSoldCapacity.TabIndex = 15
+        ' 
+        ' lblSoldCapacity
+        ' 
+        lblSoldCapacity.AutoSize = True
+        lblSoldCapacity.Location = New Point(318, 150)
+        lblSoldCapacity.Name = "lblSoldCapacity"
+        lblSoldCapacity.Size = New Size(118, 15)
+        lblSoldCapacity.TabIndex = 14
+        lblSoldCapacity.Text = "Own Generated Sold:"
+        ' 
+        ' txtTotalConsumed
+        ' 
+        txtTotalConsumed.Location = New Point(178, 148)
+        txtTotalConsumed.Name = "txtTotalConsumed"
+        txtTotalConsumed.Size = New Size(118, 23)
+        txtTotalConsumed.TabIndex = 13
+        ' 
+        ' lblTotalConsumed
+        ' 
+        lblTotalConsumed.AutoSize = True
+        lblTotalConsumed.Location = New Point(16, 150)
+        lblTotalConsumed.Name = "lblTotalConsumed"
+        lblTotalConsumed.Size = New Size(150, 15)
+        lblTotalConsumed.TabIndex = 12
+        lblTotalConsumed.Text = "Total Own Generated Used:"
+        ' 
+        ' txtNonRenewableCap
+        ' 
+        txtNonRenewableCap.Location = New Point(436, 108)
+        txtNonRenewableCap.Name = "txtNonRenewableCap"
+        txtNonRenewableCap.Size = New Size(118, 23)
+        txtNonRenewableCap.TabIndex = 11
+        ' 
+        ' lblNonRenewableCap
+        ' 
+        lblNonRenewableCap.AutoSize = True
+        lblNonRenewableCap.Location = New Point(318, 110)
+        lblNonRenewableCap.Name = "lblNonRenewableCap"
+        lblNonRenewableCap.Size = New Size(112, 15)
+        lblNonRenewableCap.TabIndex = 10
+        lblNonRenewableCap.Text = "Monthly Generated:"
+        ' 
+        ' cmbNonRenewableType
+        ' 
+        cmbNonRenewableType.DropDownStyle = ComboBoxStyle.DropDownList
+        cmbNonRenewableType.FormattingEnabled = True
+        cmbNonRenewableType.Location = New Point(178, 108)
+        cmbNonRenewableType.Name = "cmbNonRenewableType"
+        cmbNonRenewableType.Size = New Size(118, 23)
+        cmbNonRenewableType.TabIndex = 9
+        ' 
+        ' lblNonRenewableType
+        ' 
+        lblNonRenewableType.AutoSize = True
+        lblNonRenewableType.Location = New Point(16, 110)
+        lblNonRenewableType.Name = "lblNonRenewableType"
+        lblNonRenewableType.Size = New Size(123, 15)
+        lblNonRenewableType.TabIndex = 8
+        lblNonRenewableType.Text = "Non-Renewable Type:"
+        ' 
+        ' txtRenewableCap
+        ' 
+        txtRenewableCap.Location = New Point(436, 78)
+        txtRenewableCap.Name = "txtRenewableCap"
+        txtRenewableCap.Size = New Size(118, 23)
+        txtRenewableCap.TabIndex = 7
+        ' 
+        ' lblRenewableCap
+        ' 
+        lblRenewableCap.AutoSize = True
+        lblRenewableCap.Location = New Point(318, 80)
+        lblRenewableCap.Name = "lblRenewableCap"
+        lblRenewableCap.Size = New Size(112, 15)
+        lblRenewableCap.TabIndex = 6
+        lblRenewableCap.Text = "Monthly Generated:"
+        ' 
+        ' cmbRenewableType
+        ' 
+        cmbRenewableType.DropDownStyle = ComboBoxStyle.DropDownList
+        cmbRenewableType.FormattingEnabled = True
+        cmbRenewableType.Location = New Point(178, 78)
+        cmbRenewableType.Name = "cmbRenewableType"
+        cmbRenewableType.Size = New Size(118, 23)
+        cmbRenewableType.TabIndex = 5
+        ' 
+        ' lblRenewableType
+        ' 
+        lblRenewableType.AutoSize = True
+        lblRenewableType.Location = New Point(16, 80)
+        lblRenewableType.Name = "lblRenewableType"
+        lblRenewableType.Size = New Size(134, 15)
+        lblRenewableType.TabIndex = 4
+        lblRenewableType.Text = "Renewable Source Type:"
+        ' 
+        ' dtpMonth
+        ' 
+        dtpMonth.CustomFormat = "MMMM"
+        dtpMonth.Format = DateTimePickerFormat.Custom
+        dtpMonth.Location = New Point(436, 28)
+        dtpMonth.Name = "dtpMonth"
+        dtpMonth.ShowUpDown = True
+        dtpMonth.Size = New Size(94, 23)
+        dtpMonth.TabIndex = 3
+        ' 
+        ' dtpYear
+        ' 
+        dtpYear.CustomFormat = "yyyy"
+        dtpYear.Format = DateTimePickerFormat.Custom
+        dtpYear.Location = New Point(178, 28)
+        dtpYear.Name = "dtpYear"
+        dtpYear.ShowUpDown = True
+        dtpYear.Size = New Size(78, 23)
+        dtpYear.TabIndex = 2
+        ' 
+        ' lblMonth
+        ' 
+        lblMonth.AutoSize = True
+        lblMonth.Location = New Point(384, 30)
+        lblMonth.Name = "lblMonth"
+        lblMonth.Size = New Size(46, 15)
+        lblMonth.TabIndex = 1
+        lblMonth.Text = "Month:"
+        ' 
+        ' lblYear
+        ' 
+        lblYear.AutoSize = True
+        lblYear.Location = New Point(140, 30)
+        lblYear.Name = "lblYear"
+        lblYear.Size = New Size(32, 15)
+        lblYear.TabIndex = 0
+        lblYear.Text = "Year:"
+        ' 
+        ' grpButtons
+        ' 
+        grpButtons.Controls.Add(btnHome)
+        grpButtons.Controls.Add(btnClear)
+        grpButtons.Controls.Add(btnRefresh)
+        grpButtons.Controls.Add(btnExportExcel)
+        grpButtons.Controls.Add(btnDelete)
+        grpButtons.Controls.Add(btnUpdate)
+        grpButtons.Controls.Add(btnSave)
+        grpButtons.Controls.Add(btnUploadBill)
+        grpButtons.Controls.Add(lblFileCount)
+        grpButtons.Location = New Point(638, 12)
+        grpButtons.Name = "grpButtons"
+        grpButtons.Size = New Size(280, 224)
+        grpButtons.TabIndex = 1
+        grpButtons.TabStop = False
+        grpButtons.Text = "Actions"
+        ' 
+        ' btnClear
+        ' 
+        btnClear.BackColor = SystemColors.AppWorkspace
+        btnClear.FlatStyle = FlatStyle.Flat
+        btnClear.ForeColor = Color.White
+        btnClear.Location = New Point(15, 178)
+        btnClear.Name = "btnClear"
+        btnClear.Size = New Size(116, 26)
+        btnClear.TabIndex = 7
+        btnClear.Text = "Clear"
+        btnClear.UseVisualStyleBackColor = False
+        ' 
+        ' btnRefresh
+        ' 
+        btnRefresh.BackColor = SystemColors.AppWorkspace
+        btnRefresh.FlatStyle = FlatStyle.Flat
+        btnRefresh.ForeColor = Color.White
+        btnRefresh.Location = New Point(148, 143)
+        btnRefresh.Name = "btnRefresh"
+        btnRefresh.Size = New Size(116, 26)
+        btnRefresh.TabIndex = 6
+        btnRefresh.Text = "Refresh"
+        btnRefresh.UseVisualStyleBackColor = False
+        ' 
+        ' btnExportExcel
+        ' 
+        btnExportExcel.BackColor = SystemColors.AppWorkspace
+        btnExportExcel.FlatStyle = FlatStyle.Flat
+        btnExportExcel.ForeColor = Color.White
+        btnExportExcel.Location = New Point(15, 143)
+        btnExportExcel.Name = "btnExportExcel"
+        btnExportExcel.Size = New Size(116, 26)
+        btnExportExcel.TabIndex = 5
+        btnExportExcel.Text = "Export to Excel"
+        btnExportExcel.UseVisualStyleBackColor = False
+        ' 
+        ' btnDelete
+        ' 
+        btnDelete.BackColor = SystemColors.AppWorkspace
+        btnDelete.Enabled = False
+        btnDelete.FlatStyle = FlatStyle.Flat
+        btnDelete.ForeColor = Color.White
+        btnDelete.Location = New Point(148, 108)
+        btnDelete.Name = "btnDelete"
+        btnDelete.Size = New Size(116, 26)
+        btnDelete.TabIndex = 4
+        btnDelete.Text = "Delete"
+        btnDelete.UseVisualStyleBackColor = False
+        ' 
+        ' btnUpdate
+        ' 
+        btnUpdate.BackColor = SystemColors.AppWorkspace
+        btnUpdate.Enabled = False
+        btnUpdate.FlatStyle = FlatStyle.Flat
+        btnUpdate.ForeColor = Color.White
+        btnUpdate.Location = New Point(15, 108)
+        btnUpdate.Name = "btnUpdate"
+        btnUpdate.Size = New Size(116, 26)
+        btnUpdate.TabIndex = 3
+        btnUpdate.Text = "Update"
+        btnUpdate.UseVisualStyleBackColor = False
+        ' 
+        ' btnSave
+        ' 
+        btnSave.BackColor = SystemColors.AppWorkspace
+        btnSave.FlatStyle = FlatStyle.Flat
+        btnSave.ForeColor = Color.White
+        btnSave.Location = New Point(148, 73)
+        btnSave.Name = "btnSave"
+        btnSave.Size = New Size(116, 26)
+        btnSave.TabIndex = 2
+        btnSave.Text = "Save"
+        btnSave.UseVisualStyleBackColor = False
+        ' 
+        ' btnUploadBill
+        ' 
+        btnUploadBill.Location = New Point(15, 22)
+        btnUploadBill.Name = "btnUploadBill"
+        btnUploadBill.Size = New Size(116, 26)
+        btnUploadBill.TabIndex = 1
+        btnUploadBill.Text = "Upload Bills"
+        btnUploadBill.UseVisualStyleBackColor = True
+        ' 
+        ' lblFileCount
+        ' 
+        lblFileCount.AutoSize = True
+        lblFileCount.Location = New Point(148, 30)
+        lblFileCount.Name = "lblFileCount"
+        lblFileCount.Size = New Size(93, 15)
+        lblFileCount.TabIndex = 0
+        lblFileCount.Text = "No files selected"
+        ' 
+        ' grdData
+        ' 
+        grdData.AllowUserToAddRows = False
+        grdData.AllowUserToDeleteRows = False
+        grdData.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        grdData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        grdData.Location = New Point(12, 297)
+        grdData.Name = "grdData"
+        grdData.ReadOnly = True
+        grdData.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        grdData.Size = New Size(906, 220)
+        grdData.TabIndex = 2
+        ' 
+        ' grpFilters
+        ' 
+        grpFilters.Controls.Add(lblYearFilter)
+        grpFilters.Controls.Add(cmbYearFilter)
+        grpFilters.Controls.Add(lblMonthFilter)
+        grpFilters.Controls.Add(cmbMonthFilter)
+        grpFilters.Location = New Point(12, 233)
+        grpFilters.Name = "grpFilters"
+        grpFilters.Size = New Size(300, 55)
+        grpFilters.TabIndex = 6
+        grpFilters.TabStop = False
+        grpFilters.Text = "Filters"
+        ' 
+        ' lblYearFilter
+        ' 
+        lblYearFilter.AutoSize = True
+        lblYearFilter.Location = New Point(16, 25)
+        lblYearFilter.Name = "lblYearFilter"
+        lblYearFilter.Size = New Size(32, 15)
+        lblYearFilter.TabIndex = 0
+        lblYearFilter.Text = "Year:"
+        ' 
+        ' cmbYearFilter
+        ' 
+        cmbYearFilter.DropDownStyle = ComboBoxStyle.DropDownList
+        cmbYearFilter.FormattingEnabled = True
+        cmbYearFilter.Location = New Point(60, 22)
+        cmbYearFilter.Name = "cmbYearFilter"
+        cmbYearFilter.Size = New Size(85, 23)
+        cmbYearFilter.TabIndex = 1
+        ' 
+        ' lblMonthFilter
+        ' 
+        lblMonthFilter.AutoSize = True
+        lblMonthFilter.Location = New Point(160, 25)
+        lblMonthFilter.Name = "lblMonthFilter"
+        lblMonthFilter.Size = New Size(46, 15)
+        lblMonthFilter.TabIndex = 2
+        lblMonthFilter.Text = "Month:"
+        ' 
+        ' cmbMonthFilter
+        ' 
+        cmbMonthFilter.DropDownStyle = ComboBoxStyle.DropDownList
+        cmbMonthFilter.FormattingEnabled = True
+        cmbMonthFilter.Location = New Point(212, 22)
+        cmbMonthFilter.Name = "cmbMonthFilter"
+        cmbMonthFilter.Size = New Size(85, 23)
+        cmbMonthFilter.TabIndex = 3
+        ' 
+        ' btnHome
+        ' 
+        btnHome.BackgroundImage = CType(resources.GetObject("btnHome.BackgroundImage"), Image)
+        btnHome.BackgroundImageLayout = ImageLayout.Stretch
+        btnHome.Location = New Point(185, 175)
+        btnHome.Name = "btnHome"
+        btnHome.Size = New Size(45, 38)
+        btnHome.TabIndex = 10
+        btnHome.UseVisualStyleBackColor = True
+        ' 
+        ' frmOwnElectricity
+        ' 
+        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleMode = AutoScaleMode.Font
+        ClientSize = New Size(930, 529)
+        Controls.Add(grpFilters)
+        Controls.Add(grdData)
+        Controls.Add(grpButtons)
+        Controls.Add(grpInput)
+        Name = "frmOwnElectricity"
+        StartPosition = FormStartPosition.CenterScreen
+        Text = "Own Generated Electricity"
+        grpInput.ResumeLayout(False)
+        grpInput.PerformLayout()
+        grpButtons.ResumeLayout(False)
+        grpButtons.PerformLayout()
+        CType(grdData, ComponentModel.ISupportInitialize).EndInit()
+        grpFilters.ResumeLayout(False)
+        grpFilters.PerformLayout()
+        ResumeLayout(False)
 
     End Sub
 

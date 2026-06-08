@@ -4,8 +4,14 @@
     <Compile Update="ESGCard.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="frmESGReports.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="ESGTitleBar.vb">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="frmDashboard.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Update="frmCollectorManagement.vb">
       <SubType>Form</SubType>
@@ -14,9 +20,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="frmCSRActivity.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="frmDashboard.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="frmElectricity.vb">
@@ -53,6 +56,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="frmWater.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="frm_ESGReportViewer.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="LoginForm.vb">

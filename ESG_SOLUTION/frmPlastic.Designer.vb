@@ -17,6 +17,7 @@ Partial Class frmPlastic
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmPlastic))
         grpInput = New GroupBox()
         txtComments = New TextBox()
         lblComments = New Label()
@@ -41,7 +42,6 @@ Partial Class frmPlastic
         lblMonth = New Label()
         lblYear = New Label()
         grpButtons = New GroupBox()
-        btnHome = New Button()
         btnClear = New Button()
         btnRefresh = New Button()
         btnExportExcel = New Button()
@@ -61,6 +61,7 @@ Partial Class frmPlastic
         lblMonthFilter = New Label()
         cmbMonthFilter = New ComboBox()
         grdData = New DataGridView()
+        btnHome = New Button()
         grpInput.SuspendLayout()
         grpButtons.SuspendLayout()
         grpFilter.SuspendLayout()
@@ -306,22 +307,10 @@ Partial Class frmPlastic
         grpButtons.Controls.Add(lblFileCount)
         grpButtons.Location = New Point(638, 12)
         grpButtons.Name = "grpButtons"
-        grpButtons.Size = New Size(280, 210)
+        grpButtons.Size = New Size(280, 227)
         grpButtons.TabIndex = 1
         grpButtons.TabStop = False
         grpButtons.Text = "Actions"
-        ' 
-        ' btnHome
-        ' 
-        btnHome.BackColor = SystemColors.AppWorkspace
-        btnHome.FlatStyle = FlatStyle.Flat
-        btnHome.ForeColor = Color.White
-        btnHome.Location = New Point(15, 172)
-        btnHome.Name = "btnHome"
-        btnHome.Size = New Size(250, 26)
-        btnHome.TabIndex = 8
-        btnHome.Text = "Home"
-        btnHome.UseVisualStyleBackColor = False
         ' 
         ' btnClear
         ' 
@@ -525,6 +514,16 @@ Partial Class frmPlastic
         grdData.SelectionMode = DataGridViewSelectionMode.FullRowSelect
         grdData.Size = New Size(906, 185)
         grdData.TabIndex = 4
+        ' 
+        ' btnHome
+        ' 
+        btnHome.BackgroundImage = CType(resources.GetObject("btnHome.BackgroundImage"), Image)
+        btnHome.BackgroundImageLayout = ImageLayout.Stretch
+        btnHome.Location = New Point(123, 180)
+        btnHome.Name = "btnHome"
+        btnHome.Size = New Size(45, 38)
+        btnHome.TabIndex = 10
+        btnHome.UseVisualStyleBackColor = True
         ' 
         ' frmPlastic
         ' 

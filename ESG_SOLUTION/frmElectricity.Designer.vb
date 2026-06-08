@@ -17,6 +17,7 @@ Partial Class frmElectricity
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmElectricity))
         grpMainAdditional = New GroupBox()
         lblPeakAmount = New Label()
         txtPeakAmount = New TextBox()
@@ -47,7 +48,6 @@ Partial Class frmElectricity
         cmbPurchaseType = New ComboBox()
         lblPurchaseType = New Label()
         grpButtons = New GroupBox()
-        btnHome = New Button()
         btnClear = New Button()
         btnRefresh = New Button()
         btnExportExcel = New Button()
@@ -62,6 +62,7 @@ Partial Class frmElectricity
         cmbYearFilter = New ComboBox()
         lblMonthFilter = New Label()
         cmbMonthFilter = New ComboBox()
+        btnHome = New Button()
         grpMainAdditional.SuspendLayout()
         grpOutSource.SuspendLayout()
         grpControls.SuspendLayout()
@@ -358,22 +359,10 @@ Partial Class frmElectricity
         grpButtons.Controls.Add(lblFileCount)
         grpButtons.Location = New Point(638, 12)
         grpButtons.Name = "grpButtons"
-        grpButtons.Size = New Size(280, 178)
+        grpButtons.Size = New Size(280, 229)
         grpButtons.TabIndex = 3
         grpButtons.TabStop = False
         grpButtons.Text = "Actions"
-        ' 
-        ' btnHome
-        ' 
-        btnHome.BackColor = SystemColors.AppWorkspace
-        btnHome.FlatStyle = FlatStyle.Flat
-        btnHome.ForeColor = Color.White
-        btnHome.Location = New Point(148, 140)
-        btnHome.Name = "btnHome"
-        btnHome.Size = New Size(116, 26)
-        btnHome.TabIndex = 8
-        btnHome.Text = "Home"
-        btnHome.UseVisualStyleBackColor = False
         ' 
         ' btnClear
         ' 
@@ -528,6 +517,16 @@ Partial Class frmElectricity
         cmbMonthFilter.Name = "cmbMonthFilter"
         cmbMonthFilter.Size = New Size(85, 23)
         cmbMonthFilter.TabIndex = 3
+        ' 
+        ' btnHome
+        ' 
+        btnHome.BackgroundImage = CType(resources.GetObject("btnHome.BackgroundImage"), Image)
+        btnHome.BackgroundImageLayout = ImageLayout.Stretch
+        btnHome.Location = New Point(199, 141)
+        btnHome.Name = "btnHome"
+        btnHome.Size = New Size(45, 38)
+        btnHome.TabIndex = 9
+        btnHome.UseVisualStyleBackColor = True
         ' 
         ' frmElectricity
         ' 

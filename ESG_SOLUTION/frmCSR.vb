@@ -7,8 +7,6 @@ Imports OfficeOpenXml.Style
 Public Class frmCSR
     Private currentRecordID As Integer = -1
     Private tempPhotoNames As New List(Of String) ' Store only photo names temporarily
-    Private connectionString As String = "Server=DCL-ICT-007\DEVELOPER;Database=ESG;Integrated Security=True;"
-    Private photoStoragePath As String = "C:\ESG_CSR_Photos" ' Default server path
     Private currentPreviewImage As Image = Nothing ' Track the current preview image
 
     Private Sub frmCSR_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -16,14 +14,20 @@ Public Class frmCSR
         SetupDataGridView()
         SetupListView()
         ClearForm()
+        ApplyModernStyle(Me)
 
-        ' Create photos directory if not exists
+        ' Create photos directory if not exists using baseFolderPath from ModShared
+        Dim photoStoragePath As String = Path.Combine(baseFolderPath, "CSR_Photos")
         If Not Directory.Exists(photoStoragePath) Then
             Directory.CreateDirectory(photoStoragePath)
         End If
 
         txtPhotoFolderPath.Text = photoStoragePath
     End Sub
+
+    Private Function GetPhotoStoragePath() As String
+        Return Path.Combine(baseFolderPath, "CSR_Photos")
+    End Function
 
     Private Sub SetupDataGridView()
         dgvData.AutoGenerateColumns = True
@@ -38,21 +42,25 @@ Public Class frmCSR
     End Sub
 
     Private Sub btnBrowseFolder_Click(sender As Object, e As EventArgs) Handles btnBrowseFolder.Click
+        Dim currentPath As String = GetPhotoStoragePath()
         Using dialog As New FolderBrowserDialog()
             dialog.Description = "Select Photo Storage Folder"
             dialog.ShowNewFolderButton = True
-            dialog.SelectedPath = photoStoragePath
+            dialog.SelectedPath = currentPath
 
             If dialog.ShowDialog() = DialogResult.OK Then
-                photoStoragePath = dialog.SelectedPath
-                txtPhotoFolderPath.Text = photoStoragePath
+                Dim newPath As String = dialog.SelectedPath
+                ' Update baseFolderPath in ModShared (optional - if you want to persist)
+                ' This would require saving to app config or registry
+
+                txtPhotoFolderPath.Text = newPath
 
                 ' Create directory if not exists
-                If Not Directory.Exists(photoStoragePath) Then
-                    Directory.CreateDirectory(photoStoragePath)
+                If Not Directory.Exists(newPath) Then
+                    Directory.CreateDirectory(newPath)
                 End If
 
-                MessageBox.Show($"Photo storage path updated to: {photoStoragePath}", "Path Updated",
+                MessageBox.Show($"Photo storage path updated to: {newPath}", "Path Updated",
                                MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
         End Using
@@ -60,7 +68,7 @@ Public Class frmCSR
 
     Private Sub LoadData(Optional startDate As DateTime? = Nothing, Optional endDate As DateTime? = Nothing)
         Try
-            Using conn As New SqlConnection(connectionString)
+            Using conn As SqlConnection = GetConnection()
                 conn.Open()
                 Dim query As String = "SELECT RecordID, ActivityDate, Action, Description, Frequency, Location, 
                                       TimeOfEngagement, EmployeesEnvolved, HoursInvested, PeopleImpacted, 
@@ -96,7 +104,7 @@ Public Class frmCSR
         lvwPhotos.Items.Clear()
 
         Try
-            Using conn As New SqlConnection(connectionString)
+            Using conn As SqlConnection = GetConnection()
                 conn.Open()
                 Dim query As String = "SELECT PhotoID, PhotoName, OriginalFileName, IsPrimary, UploadedDate 
                                       FROM tbl_ESG_CSR_Photos WHERE RecordID = @RecordID ORDER BY IsPrimary DESC, UploadedDate DESC"
@@ -138,8 +146,10 @@ Public Class frmCSR
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         If Not ValidateInputs() Then Return
 
+        Dim photoStoragePath As String = GetPhotoStoragePath()
+
         Try
-            Using conn As New SqlConnection(connectionString)
+            Using conn As SqlConnection = GetConnection()
                 conn.Open()
                 Dim transaction = conn.BeginTransaction()
 
@@ -209,8 +219,10 @@ Public Class frmCSR
             Return
         End If
 
+        Dim photoStoragePath As String = GetPhotoStoragePath()
+
         Try
-            Using conn As New SqlConnection(connectionString)
+            Using conn As SqlConnection = GetConnection()
                 conn.Open()
                 Dim transaction = conn.BeginTransaction()
 
@@ -275,11 +287,13 @@ Public Class frmCSR
         If MessageBox.Show("Are you sure you want to delete this record and all associated photos?", "Confirm Delete",
                            MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
+            Dim photoStoragePath As String = GetPhotoStoragePath()
+
             Try
                 ' First, clear any preview images to release file locks
                 ClearPreviewImage()
 
-                Using conn As New SqlConnection(connectionString)
+                Using conn As SqlConnection = GetConnection()
                     conn.Open()
                     Dim transaction = conn.BeginTransaction()
 
@@ -395,6 +409,8 @@ Public Class frmCSR
     End Sub
 
     Private Sub btnUploadPhotos_Click(sender As Object, e As EventArgs) Handles btnUploadPhotos.Click
+        Dim photoStoragePath As String = GetPhotoStoragePath()
+
         If currentRecordID = -1 Then
             ' For new record, upload photos to temp list
             OpenFileDialog1.Multiselect = True
@@ -438,7 +454,7 @@ Public Class frmCSR
                     IO.File.Copy(file, destPath)
 
                     ' Save photo info to database
-                    Using conn As New SqlConnection(connectionString)
+                    Using conn As SqlConnection = GetConnection()
                         conn.Open()
                         Dim insertQuery As String = "INSERT INTO tbl_ESG_CSR_Photos (RecordID, PhotoName, OriginalFileName, FileSize, IsPrimary) 
                                                     VALUES (@RecordID, @PhotoName, @OriginalFileName, @FileSize, @IsPrimary)"
@@ -486,6 +502,7 @@ Public Class frmCSR
 
         Dim selectedItem = lvwPhotos.SelectedItems(0)
         Dim photoInfo = DirectCast(selectedItem.Tag, PhotoInfo)
+        Dim photoStoragePath As String = GetPhotoStoragePath()
 
         If MessageBox.Show("Are you sure you want to delete this photo?", "Confirm Delete",
                           MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
@@ -512,7 +529,7 @@ Public Class frmCSR
             Else
                 ' Delete from database
                 Try
-                    Using conn As New SqlConnection(connectionString)
+                    Using conn As SqlConnection = GetConnection()
                         conn.Open()
                         Dim deleteQuery As String = "DELETE FROM tbl_ESG_CSR_Photos WHERE PhotoID = @PhotoID"
                         Using cmd As New SqlCommand(deleteQuery, conn)
@@ -553,6 +570,7 @@ Public Class frmCSR
 
         Dim selectedItem = lvwPhotos.SelectedItems(0)
         Dim photoInfo = DirectCast(selectedItem.Tag, PhotoInfo)
+        Dim photoStoragePath As String = GetPhotoStoragePath()
         Dim fullPath = Path.Combine(photoStoragePath, photoInfo.PhotoName)
 
         If File.Exists(fullPath) Then
@@ -586,7 +604,7 @@ Public Class frmCSR
         Dim photoInfo = DirectCast(selectedItem.Tag, PhotoInfo)
 
         Try
-            Using conn As New SqlConnection(connectionString)
+            Using conn As SqlConnection = GetConnection()
                 conn.Open()
                 Dim transaction = conn.BeginTransaction()
 
@@ -625,65 +643,8 @@ Public Class frmCSR
             Return
         End If
 
-        Using saveDialog As New SaveFileDialog()
-            saveDialog.Filter = "Excel Files|*.xlsx"
-            saveDialog.Title = "Export Data to Excel"
-            saveDialog.FileName = $"ESG_CSR_Data_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx"
-
-            If saveDialog.ShowDialog() = DialogResult.OK Then
-                Try
-                    ExportToExcel(saveDialog.FileName)
-                    MessageBox.Show($"Data exported successfully to {saveDialog.FileName}", "Success",
-                                   MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Catch ex As Exception
-                    MessageBox.Show("Error exporting to Excel: " & ex.Message, "Error",
-                                   MessageBoxButtons.OK, MessageBoxIcon.Error)
-                End Try
-            End If
-        End Using
-    End Sub
-
-    Private Sub ExportToExcel(filePath As String)
-        OfficeOpenXml.ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial
-        Using package As New ExcelPackage()
-            Dim worksheet = package.Workbook.Worksheets.Add("ESG_CSR_Data")
-
-            ' Load data from DataGridView
-            Dim dt As DataTable = TryCast(dgvData.DataSource, DataTable)
-            If dt Is Nothing Then
-                dt = New DataTable()
-                For Each col As DataGridViewColumn In dgvData.Columns
-                    dt.Columns.Add(col.HeaderText)
-                Next
-
-                For Each row As DataGridViewRow In dgvData.Rows
-                    If Not row.IsNewRow Then
-                        Dim newRow = dt.NewRow()
-                        For i = 0 To dgvData.Columns.Count - 1
-                            newRow(i) = row.Cells(i).Value?.ToString()
-                        Next
-                        dt.Rows.Add(newRow)
-                    End If
-                Next
-            End If
-
-            worksheet.Cells("A1").LoadFromDataTable(dt, True)
-            worksheet.Cells(worksheet.Dimension.Address).AutoFitColumns()
-
-            ' Add styling
-            Using range = worksheet.Cells("A1:" & worksheet.Dimension.Address)
-                range.Style.Font.Size = 10
-                range.Style.Font.Name = "Calibri"
-            End Using
-
-            Using headerRange = worksheet.Cells("1:1")
-                headerRange.Style.Font.Bold = True
-                headerRange.Style.Fill.PatternType = ExcelFillStyle.Solid
-                headerRange.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray)
-            End Using
-
-            package.SaveAs(New FileInfo(filePath))
-        End Using
+        ' Use the ExportToExcel function from ModShared
+        ExportToExcel(dgvData, "ESG_CSR_Data")
     End Sub
 
     Private Sub btnClearForm_Click(sender As Object, e As EventArgs) Handles btnClearForm.Click
@@ -694,7 +655,6 @@ Public Class frmCSR
         cmd.Parameters.AddWithValue("@ActivityDate", dtpActivityDate.Value.Date)
         cmd.Parameters.AddWithValue("@Action", txtAction.Text)
         cmd.Parameters.AddWithValue("@Description", txtDescription.Text)
-        'cmd.Parameters.AddWithValue("@Frequency", txtFrequency.Text)
         cmd.Parameters.AddWithValue("@Frequency", If(cboFrequency.SelectedItem Is Nothing, DBNull.Value, CObj(cboFrequency.SelectedItem.ToString())))
         cmd.Parameters.AddWithValue("@Location", txtLocation.Text)
         cmd.Parameters.AddWithValue("@TimeOfEngagement", txtTimeEngagement.Text)
@@ -727,7 +687,6 @@ Public Class frmCSR
         dtpActivityDate.Value = DateTime.Now
         txtAction.Clear()
         txtDescription.Clear()
-        'txtFrequency.Clear()
         cboFrequency.SelectedIndex = -1
         txtLocation.Clear()
         txtTimeEngagement.Clear()
@@ -755,5 +714,13 @@ Public Class frmCSR
         ' Clean up resources when form closes
         ClearPreviewImage()
         MyBase.OnFormClosing(e)
+    End Sub
+
+    Private Sub btnHome_Click(sender As Object, e As EventArgs) Handles btnHome.Click
+        frmDashboard.Show()
+    End Sub
+
+    Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles Panel1.Paint
+
     End Sub
 End Class

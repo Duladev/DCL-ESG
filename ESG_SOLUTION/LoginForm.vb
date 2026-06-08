@@ -19,15 +19,12 @@ Namespace ESG_SOLUTION
         Private ReadOnly TextPrimary As Color = Color.FromArgb(240, 245, 248)
         Private ReadOnly ErrorColor As Color = Color.FromArgb(239, 68, 68)
 
-        ' ── DB connection — update before deployment ──────────────────────────
-        Private Const ConnStr As String =
-            "Server=DCL-ICT-007\DEVELOPER;Database=ESG;Integrated Security=True;"
-
-
         Public Sub New()
             InitializeComponent()
             WireEvents()
             SetRoundedCorners(14)
+            ' Add keypress handlers for Enter key navigation
+            AddKeyPressHandlers(Me.Controls)
         End Sub
 
         ' 
@@ -43,8 +40,6 @@ Namespace ESG_SOLUTION
             AddHandler chkShow.CheckedChanged, Sub(s, e)
                                                    txtPassword.PasswordChar = If(chkShow.Checked, ChrW(0), "●"c)
                                                End Sub
-
-
 
             ' Dragging (no title bar)
             AddHandler pnlLeft.MouseDown, AddressOf FormDrag_MouseDown
@@ -128,7 +123,7 @@ Namespace ESG_SOLUTION
         End Sub
 
         ' ═════════════════════════════════════════════════════════════════════
-        '  Login logic
+        '  Login logic using ModShared
         ' ═════════════════════════════════════════════════════════════════════
 
         Private Function AuthenticateUser(username As String, password As String) As Boolean
@@ -136,7 +131,7 @@ Namespace ESG_SOLUTION
             Const sql As String =
                 "SELECT COUNT(1) FROM vw_tblUserLogin WHERE Username = @user AND UserPws = @pass"
 
-            Using conn As New SqlConnection(ConnStr)
+            Using conn As SqlConnection = GetConnection()
                 conn.Open()
                 Using cmd As New SqlCommand(sql, conn)
                     cmd.Parameters.Add("@user", SqlDbType.NVarChar, 100).Value = username
@@ -178,8 +173,7 @@ Namespace ESG_SOLUTION
             End If
             MyBase.OnMouseMove(e)
         End Sub
-
-        Private Sub btnLogin1_Click(sender As Object, e As EventArgs) Handles btnLogin1.Click
+        Private Sub PerformLogin()
             lblError.Text = ""
             Dim user = txtUsername.Text.Trim
             Dim pass = txtPassword.Text
@@ -189,51 +183,17 @@ Namespace ESG_SOLUTION
                 Return
             End If
 
-            btnLogin1.Enabled = True
-            btnLogin1.Text = "Signing in..."
-
-            Try
-                If AuthenticateUser(user, pass) Then
-                    ' TODO: open main dashboard
-                    Dim main As New frmMain
-                    main.Show()
-                Else
-                    ShowError("Invalid username or password.")
-                    txtPassword.Clear()
-                    txtUsername.Focus()
-                End If
-            Catch sqlEx As SqlException
-                ShowError("Database error: " & sqlEx.Message)
-            Catch ex As Exception
-                ShowError("Connection error: " & ex.Message)
-            Finally
-                btnLogin1.Enabled = True
-                btnLogin1.Text = "SIGN  IN"
-            End Try
-        End Sub
-
-        Private Sub RoundedButton1_Click(sender As Object, e As EventArgs) Handles btnexitbtn.Click
-            Me.Close()
-        End Sub
-
-        Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnLogin2.Click
-            lblError.Text = ""
-            Dim user = txtUsername.Text.Trim
-            Dim pass = txtPassword.Text
-
-            If String.IsNullOrEmpty(user) OrElse String.IsNullOrEmpty(pass) Then
-                ShowError("Please enter both username and password.")
-                Return
-            End If
-
-            btnLogin2.Enabled = True
+            ' CHANGE THESE LINES - Remove btnLogin1 references
+            btnLogin2.Enabled = False
+            ' Remove: btnLogin1.Enabled = False
             btnLogin2.Text = "Signing in..."
+            ' Remove: btnLogin1.Text = "Signing in..."
 
             Try
                 If AuthenticateUser(user, pass) Then
-                    ' TODO: open main dashboard
-                    Dim main As New frmDashboard
-                    main.Show()
+                    Dim dashboard As New frmDashboard()
+                    dashboard.Show()
+                    Me.Hide()
                 Else
                     ShowError("Invalid username or password.")
                     txtPassword.Clear()
@@ -245,12 +205,48 @@ Namespace ESG_SOLUTION
                 ShowError("Connection error: " & ex.Message)
             Finally
                 btnLogin2.Enabled = True
+                ' Remove: btnLogin1.Enabled = True
                 btnLogin2.Text = "SIGN  IN"
+                ' Remove: btnLogin1.Text = "SIGN  IN"
             End Try
         End Sub
 
+        Private Sub btnexitbtn_Click(sender As Object, e As EventArgs) Handles btnexitbtn.Click
+            Application.Exit()
+        End Sub
+
         Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-            Me.Close()
+            Application.Exit()
+        End Sub
+
+        ' Helper method to add keypress handlers from ModShared
+        Private Sub AddKeyPressHandlers(controls As Control.ControlCollection)
+            For Each ctrl As Control In controls
+                If TypeOf ctrl Is TextBox Then
+                    RemoveHandler ctrl.KeyPress, AddressOf TextBox_KeyPress
+                    AddHandler ctrl.KeyPress, AddressOf TextBox_KeyPress
+                ElseIf ctrl.HasChildren Then
+                    AddKeyPressHandlers(ctrl.Controls)
+                End If
+            Next
+        End Sub
+
+        Private Sub TextBox_KeyPress(sender As Object, e As KeyPressEventArgs)
+            If e.KeyChar = Convert.ToChar(13) Then ' Enter key
+                SendKeys.Send("{TAB}")
+                e.Handled = True
+            End If
+        End Sub
+
+        Protected Overrides Sub OnFormClosing(e As FormClosingEventArgs)
+            If e.CloseReason = CloseReason.UserClosing Then
+                Application.Exit()
+            End If
+            MyBase.OnFormClosing(e)
+        End Sub
+
+        Private Sub btnLogin2_Click(sender As Object, e As EventArgs) Handles btnLogin2.Click
+            PerformLogin()
         End Sub
     End Class
 

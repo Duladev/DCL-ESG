@@ -422,4 +422,8 @@ Public Class frmPaper
             cmbProductCategory.SelectedIndex = 0
         End If
     End Sub
+
+    Private Sub btnHome_Click_1(sender As Object, e As EventArgs) Handles btnHome.Click
+        frmDashboard.Show()
+    End Sub
 End Class

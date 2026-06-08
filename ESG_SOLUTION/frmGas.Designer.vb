@@ -17,6 +17,7 @@ Partial Class frmGas
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmGas))
         grpInput = New GroupBox()
         btnAddGasType = New Button()
         txtAmount = New TextBox()
@@ -30,7 +31,6 @@ Partial Class frmGas
         lblMonth = New Label()
         lblYear = New Label()
         grpButtons = New GroupBox()
-        btnHome = New Button()
         btnClear = New Button()
         btnRefresh = New Button()
         btnExportExcel = New Button()
@@ -48,6 +48,7 @@ Partial Class frmGas
         cmbYearFilter = New ComboBox()
         lblMonthFilter = New Label()
         cmbMonthFilter = New ComboBox()
+        btnHome = New Button()
         grpInput.SuspendLayout()
         grpButtons.SuspendLayout()
         grpFilter.SuspendLayout()
@@ -185,22 +186,10 @@ Partial Class frmGas
         grpButtons.Controls.Add(lblFileCount)
         grpButtons.Location = New Point(638, 12)
         grpButtons.Name = "grpButtons"
-        grpButtons.Size = New Size(280, 178)
+        grpButtons.Size = New Size(280, 194)
         grpButtons.TabIndex = 1
         grpButtons.TabStop = False
         grpButtons.Text = "Actions"
-        ' 
-        ' btnHome
-        ' 
-        btnHome.BackColor = SystemColors.AppWorkspace
-        btnHome.FlatStyle = FlatStyle.Flat
-        btnHome.ForeColor = Color.White
-        btnHome.Location = New Point(148, 140)
-        btnHome.Name = "btnHome"
-        btnHome.Size = New Size(116, 26)
-        btnHome.TabIndex = 8
-        btnHome.Text = "Home"
-        btnHome.UseVisualStyleBackColor = False
         ' 
         ' btnClear
         ' 
@@ -385,9 +374,19 @@ Partial Class frmGas
         cmbMonthFilter.Size = New Size(85, 23)
         cmbMonthFilter.TabIndex = 3
         ' 
+        ' btnHome
+        ' 
+        btnHome.BackgroundImage = CType(resources.GetObject("btnHome.BackgroundImage"), Image)
+        btnHome.BackgroundImageLayout = ImageLayout.Stretch
+        btnHome.Location = New Point(186, 137)
+        btnHome.Name = "btnHome"
+        btnHome.Size = New Size(45, 38)
+        btnHome.TabIndex = 10
+        btnHome.UseVisualStyleBackColor = True
+        ' 
         ' frmGas
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(930, 524)
         Controls.Add(grpFilters)

@@ -3,25 +3,20 @@ Imports System.Data
 Imports System.IO
 Imports Excel = Microsoft.Office.Interop.Excel
 
-
 Public Class frmEmployee
-    Private connString As String = "Server=DCL-ICT-007\DEVELOPER;Database=ESG;Integrated Security=True"
     Private dtEmployees As New DataTable()
 
     Private Sub frmEmployee_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'AppTheme.Apply(Me)
         LoadEmployeeData()
         SetupFilters()
-        'AppTheme.StyleGroupBox(GroupBoxSearch)
         SetupDetailsGroupBox()
-
-        'Dim formImage = My.Resources.
-        'AppTheme.SetFormImage(Me, formImage, enableBlur:=False)
+        ' Add keypress handlers for Enter key navigation
+        AddKeyPressHandlers(Me.Controls)
     End Sub
 
     Private Sub LoadEmployeeData()
         Try
-            Using conn As New SqlConnection(connString)
+            Using conn As SqlConnection = GetConnection()
                 Dim query As String = "SELECT FullEmpNo, EMP_NO, EPF_NO, SURNAME, INITIALS, NAME, NIC, DATE_JOINED, " &
                                      "DEPT_CODE, DepartmentName, GRP_CODE, GRP_DESC, SECT_CODE, SECTION_DESC, DESIGNATION, " &
                                      "SEX, GRADE, PROCESS_TYPE, WanCode, Pay, PreFix, CATEGORY, ProductName, ADD1, ADD2, ADD3, " &
@@ -119,13 +114,6 @@ Public Class frmEmployee
         colTenure.DataPropertyName = "Tenure"
         colTenure.Width = 90
 
-        ' Manager Distance
-        'Dim colDistance As New DataGridViewTextBoxColumn()
-        'colDistance.Name = "Manager_Distance"
-        'colDistance.HeaderText = "Manager Dist."
-        'colDistance.DataPropertyName = "Distance"
-        'colDistance.Width = 100
-
         ' Nationalities
         Dim colNationality As New DataGridViewTextBoxColumn()
         colNationality.Name = "Nationalities"
@@ -149,7 +137,6 @@ Public Class frmEmployee
         displayTable.Columns.Add("BDATE", GetType(DateTime))
         displayTable.Columns.Add("Age", GetType(Integer))
         displayTable.Columns.Add("Tenure", GetType(Double))
-        'displayTable.Columns.Add("Distance", GetType(String))
         displayTable.Columns.Add("Nationality", GetType(String))
 
         ' Populate display table with calculated values
@@ -192,7 +179,6 @@ Public Class frmEmployee
                 displayRow("Tenure") = 0
             End If
 
-            'displayRow("Distance") = If(row("Distance") Is DBNull.Value, "", row("Distance").ToString())
             displayRow("Nationality") = row("Nationality").ToString()
 
             displayTable.Rows.Add(displayRow)
@@ -204,23 +190,33 @@ Public Class frmEmployee
 
     Private Sub SetupFilters()
         ' Populate filter comboboxes with unique values from dtEmployees
-        cmbGender.Items.Insert(0, "All")
+        cmbGender.Items.Clear()
+        cmbGender.Items.Add("All")
         cmbGender.SelectedIndex = 0
 
         ' Category filter
         Dim categories = dtEmployees.AsEnumerable().Select(Function(r) r("CATEGORY").ToString()).Where(Function(c) Not String.IsNullOrEmpty(c)).Distinct().OrderBy(Function(c) c).ToList()
         categories.Insert(0, "All")
+        cmbCategory.DataSource = Nothing
         cmbCategory.DataSource = categories.ToList()
 
         ' Department filter
         Dim departments = dtEmployees.AsEnumerable().Select(Function(r) r("DepartmentName").ToString()).Where(Function(d) Not String.IsNullOrEmpty(d)).Distinct().OrderBy(Function(d) d).ToList()
         departments.Insert(0, "All")
+        cmbDepartment.DataSource = Nothing
         cmbDepartment.DataSource = departments.ToList()
 
         ' Nationality filter
         Dim nationalities = dtEmployees.AsEnumerable().Select(Function(r) r("Nationality").ToString()).Where(Function(n) Not String.IsNullOrEmpty(n)).Distinct().OrderBy(Function(n) n).ToList()
         nationalities.Insert(0, "All")
+        cmbNationality.DataSource = Nothing
         cmbNationality.DataSource = nationalities.ToList()
+
+        ' Remove existing handlers to avoid duplicates, then add
+        RemoveHandler cmbGender.SelectedIndexChanged, AddressOf ApplyFilters
+        RemoveHandler cmbCategory.SelectedIndexChanged, AddressOf ApplyFilters
+        RemoveHandler cmbDepartment.SelectedIndexChanged, AddressOf ApplyFilters
+        RemoveHandler cmbNationality.SelectedIndexChanged, AddressOf ApplyFilters
 
         AddHandler cmbGender.SelectedIndexChanged, AddressOf ApplyFilters
         AddHandler cmbCategory.SelectedIndexChanged, AddressOf ApplyFilters
@@ -242,23 +238,23 @@ Public Class frmEmployee
             Dim filters As New List(Of String)()
 
             ' Gender filter (0=Female,1=Male)
-            If cmbGender.SelectedItem.ToString() <> "All" Then
+            If cmbGender.SelectedItem IsNot Nothing AndAlso cmbGender.SelectedItem.ToString() <> "All" Then
                 Dim genderValue As Integer = If(cmbGender.SelectedItem.ToString() = "Male", 1, 0)
                 filters.Add($"SEX = {genderValue}")
             End If
 
             ' Category filter
-            If cmbCategory.SelectedItem.ToString() <> "All" Then
+            If cmbCategory.SelectedItem IsNot Nothing AndAlso cmbCategory.SelectedItem.ToString() <> "All" Then
                 filters.Add($"CATEGORY = '{cmbCategory.SelectedItem.ToString().Replace("'", "''")}'")
             End If
 
             ' Department filter
-            If cmbDepartment.SelectedItem.ToString() <> "All" Then
+            If cmbDepartment.SelectedItem IsNot Nothing AndAlso cmbDepartment.SelectedItem.ToString() <> "All" Then
                 filters.Add($"DepartmentName = '{cmbDepartment.SelectedItem.ToString().Replace("'", "''")}'")
             End If
 
             ' Nationality filter
-            If cmbNationality.SelectedItem.ToString() <> "All" Then
+            If cmbNationality.SelectedItem IsNot Nothing AndAlso cmbNationality.SelectedItem.ToString() <> "All" Then
                 filters.Add($"Nationality = '{cmbNationality.SelectedItem.ToString().Replace("'", "''")}'")
             End If
 
@@ -269,14 +265,13 @@ Public Class frmEmployee
             PopulateGridViewWithFilteredData(filteredTable)
 
         Catch ex As Exception
-            MessageBox.Show("Error applying filters: " & ex.Message)
+            MessageBox.Show("Error applying filters: " & ex.Message, "Filter Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
     Private Sub PopulateGridViewWithFilteredData(filteredTable As DataTable)
         ' Similar to PopulateGridView but with filtered data
         Dim displayTable As New DataTable()
-        ' Same structure as before...
         displayTable.Columns.Add("FullEmpNo", GetType(String))
         displayTable.Columns.Add("EmpName", GetType(String))
         displayTable.Columns.Add("GenderText", GetType(String))
@@ -287,7 +282,6 @@ Public Class frmEmployee
         displayTable.Columns.Add("BDATE", GetType(DateTime))
         displayTable.Columns.Add("Age", GetType(Integer))
         displayTable.Columns.Add("Tenure", GetType(Double))
-        'displayTable.Columns.Add("Distance", GetType(String))
         displayTable.Columns.Add("Nationality", GetType(String))
 
         For Each row As DataRow In filteredTable.Rows
@@ -321,7 +315,6 @@ Public Class frmEmployee
                 displayRow("Tenure") = 0
             End If
 
-            'displayRow("Distance") = If(row("Distance") Is DBNull.Value, "", row("Distance").ToString())
             displayRow("Nationality") = row("Nationality").ToString()
             displayTable.Rows.Add(displayRow)
         Next
@@ -331,10 +324,10 @@ Public Class frmEmployee
     End Sub
 
     Private Sub btnClearFilters_Click(sender As Object, e As EventArgs) Handles btnClearFilters.Click
-        cmbGender.SelectedIndex = 0
-        cmbCategory.SelectedIndex = 0
-        cmbDepartment.SelectedIndex = 0
-        cmbNationality.SelectedIndex = 0
+        If cmbGender.Items.Count > 0 Then cmbGender.SelectedIndex = 0
+        If cmbCategory.Items.Count > 0 Then cmbCategory.SelectedIndex = 0
+        If cmbDepartment.Items.Count > 0 Then cmbDepartment.SelectedIndex = 0
+        If cmbNationality.Items.Count > 0 Then cmbNationality.SelectedIndex = 0
         txtEmpID.Clear()
         LoadEmployeeData()
     End Sub
@@ -356,6 +349,8 @@ Public Class frmEmployee
     End Sub
 
     Private Sub SetupDetailsGroupBox()
+        ' This method can be used for any additional setup of the details group box
+        ' Remove any hardcoded styling here
     End Sub
 
     Private Sub DataGridViewEmployees_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridViewEmployees.CellClick
@@ -371,7 +366,6 @@ Public Class frmEmployee
             txtDOB.Text = If(selectedRow.Cells("Date_of_Birth").Value Is DBNull.Value, "", Convert.ToDateTime(selectedRow.Cells("Date_of_Birth").Value).ToString("dd/MM/yyyy"))
             txtAge.Text = selectedRow.Cells("Age").Value.ToString()
             txtTenure.Text = selectedRow.Cells("Tenure").Value.ToString()
-            'txtDistance.Text = selectedRow.Cells("Manager_Distance").Value.ToString()
             txtNationality.Text = selectedRow.Cells("Nationalities").Value.ToString()
         End If
     End Sub
@@ -379,32 +373,13 @@ Public Class frmEmployee
     Private Sub btnExportExcel_Click(sender As Object, e As EventArgs) Handles btnExportExcel.Click
         Try
             Dim saveDialog As New SaveFileDialog()
-            saveDialog.Filter = "Excel Files|*.xlsx"
+            saveDialog.Filter = "Excel Files|*.xlsx|CSV Files|*.csv"
             saveDialog.Title = "Export Employee Data"
-            saveDialog.FileName = $"Employee_Export_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx"
+            saveDialog.FileName = $"Employee_Export_{DateTime.Now:yyyyMMdd_HHmmss}"
 
             If saveDialog.ShowDialog() = DialogResult.OK Then
-                Dim excelApp As New Excel.Application()
-                Dim workbook As Excel.Workbook = excelApp.Workbooks.Add()
-                Dim worksheet As Excel.Worksheet = workbook.Sheets(1)
-
-                ' Add headers
-                For col As Integer = 0 To DataGridViewEmployees.Columns.Count - 1
-                    worksheet.Cells(1, col + 1) = DataGridViewEmployees.Columns(col).HeaderText
-                Next
-
-                ' Add data
-                For row As Integer = 0 To DataGridViewEmployees.Rows.Count - 1
-                    For col As Integer = 0 To DataGridViewEmployees.Columns.Count - 1
-                        worksheet.Cells(row + 2, col + 1) = DataGridViewEmployees.Rows(row).Cells(col).Value.ToString()
-                    Next
-                Next
-
-                worksheet.Columns.AutoFit()
-                workbook.SaveAs(saveDialog.FileName)
-                workbook.Close()
-                excelApp.Quit()
-
+                ' Use the ExportToExcel helper from ModShared
+                ExportToExcel(DataGridViewEmployees, "Employee_Data")
                 MessageBox.Show("Data exported successfully!", "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
         Catch ex As Exception
@@ -413,5 +388,38 @@ Public Class frmEmployee
     End Sub
 
     Private Sub txtEmpID_TextChanged(sender As Object, e As EventArgs) Handles txtEmpID.TextChanged
+        ' Auto-search as user types (optional)
+        If txtEmpID.Text.Length >= 3 Then
+            btnSearch.PerformClick()
+        End If
+    End Sub
+
+    ' Helper method to add keypress handlers for Enter key navigation (from ModShared pattern)
+    Private Sub AddKeyPressHandlers(controls As Control.ControlCollection)
+        For Each ctrl As Control In controls
+            If TypeOf ctrl Is TextBox Then
+                RemoveHandler ctrl.KeyPress, AddressOf TextBox_KeyPress
+                AddHandler ctrl.KeyPress, AddressOf TextBox_KeyPress
+            ElseIf ctrl.HasChildren Then
+                AddKeyPressHandlers(ctrl.Controls)
+            End If
+        Next
+    End Sub
+
+    Private Sub TextBox_KeyPress(sender As Object, e As KeyPressEventArgs)
+        If e.KeyChar = Convert.ToChar(13) Then ' Enter key
+            SendKeys.Send("{TAB}")
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub btnLoad_Click(sender As Object, e As EventArgs) Handles btnLoad.Click
+        'LoadEmployeeData()
+        'SetupFilters()
+        'SetupDetailsGroupBox()
+    End Sub
+
+    Private Sub btnHome_Click(sender As Object, e As EventArgs) Handles btnHome.Click
+        frmDashboard.Show()
     End Sub
 End Class

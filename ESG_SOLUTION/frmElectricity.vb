@@ -356,14 +356,14 @@ Public Class frmElectricity
         ClearForm()
     End Sub
 
-    Private Sub btnHome_Click(sender As Object, e As EventArgs) Handles btnHome.Click
+    Private Sub btnHome_Click(sender As Object, e As EventArgs)
         For Each f As Form In Application.OpenForms
             If f.Name = "frmMain" Then
-                f.Close()
+                f.Close
             End If
         Next
-        Dim dashboard As New frmDashboard()
-        dashboard.Show()
+        Dim dashboard As New frmDashboard
+        dashboard.Show
         'Me.Close()
     End Sub
 
@@ -391,5 +391,9 @@ Public Class frmElectricity
 
     Private Sub ApplyFilters(sender As Object, e As EventArgs) Handles cmbYearFilter.SelectedIndexChanged, cmbMonthFilter.SelectedIndexChanged
         LoadDataGridView()
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnHome.Click
+        frmDashboard.Show()
     End Sub
 End Class

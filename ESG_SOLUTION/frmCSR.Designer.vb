@@ -24,6 +24,7 @@ Partial Class frmCSR
     Private Sub InitializeComponent()
         Dim DataGridViewCellStyle1 As DataGridViewCellStyle = New DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmCSR))
         Label1 = New Label()
         Label2 = New Label()
         Label3 = New Label()
@@ -73,6 +74,7 @@ Partial Class frmCSR
         btnLoadSelected = New Button()
         Panel1 = New Panel()
         GroupBox4 = New GroupBox()
+        btnHome = New Button()
         pbPhotoPreview = New PictureBox()
         lblPhotoCount = New Label()
         btnSetPrimary = New Button()
@@ -349,6 +351,7 @@ Partial Class frmCSR
         btnUpdate.TabIndex = 26
         btnUpdate.Text = "Update"
         btnUpdate.UseVisualStyleBackColor = False
+        btnUpdate.Visible = False
         ' 
         ' btnDelete
         ' 
@@ -405,12 +408,12 @@ Partial Class frmCSR
         DataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText
         DataGridViewCellStyle2.WrapMode = DataGridViewTriState.False
         dgvData.DefaultCellStyle = DataGridViewCellStyle2
-        dgvData.Location = New Point(11, 127)
+        dgvData.Location = New Point(7, 122)
         dgvData.Margin = New Padding(4, 3, 4, 3)
         dgvData.Name = "dgvData"
         dgvData.ReadOnly = True
         dgvData.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        dgvData.Size = New Size(570, 299)
+        dgvData.Size = New Size(570, 296)
         dgvData.TabIndex = 30
         ' 
         ' dtpStartDate
@@ -547,7 +550,7 @@ Partial Class frmCSR
         GroupBox3.Margin = New Padding(4, 3, 4, 3)
         GroupBox3.Name = "GroupBox3"
         GroupBox3.Padding = New Padding(4, 3, 4, 3)
-        GroupBox3.Size = New Size(388, 480)
+        GroupBox3.Size = New Size(388, 474)
         GroupBox3.TabIndex = 40
         GroupBox3.TabStop = False
         GroupBox3.Text = "Data Entry Form"
@@ -624,7 +627,7 @@ Partial Class frmCSR
         Panel1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         Panel1.Controls.Add(dgvData)
         Panel1.Controls.Add(GroupBox2)
-        Panel1.Location = New Point(409, 12)
+        Panel1.Location = New Point(409, 152)
         Panel1.Margin = New Padding(4, 3, 4, 3)
         Panel1.Name = "Panel1"
         Panel1.Size = New Size(585, 434)
@@ -632,28 +635,39 @@ Partial Class frmCSR
         ' 
         ' GroupBox4
         ' 
+        GroupBox4.Controls.Add(btnHome)
         GroupBox4.Controls.Add(pbPhotoPreview)
         GroupBox4.Controls.Add(lblPhotoCount)
         GroupBox4.Controls.Add(btnSetPrimary)
         GroupBox4.Controls.Add(btnViewPhoto)
         GroupBox4.Controls.Add(btnDeletePhoto)
         GroupBox4.Controls.Add(lvwPhotos)
-        GroupBox4.Location = New Point(13, 498)
+        GroupBox4.Location = New Point(408, 12)
         GroupBox4.Margin = New Padding(4, 3, 4, 3)
         GroupBox4.Name = "GroupBox4"
         GroupBox4.Padding = New Padding(4, 3, 4, 3)
-        GroupBox4.Size = New Size(981, 136)
+        GroupBox4.Size = New Size(586, 136)
         GroupBox4.TabIndex = 42
         GroupBox4.TabStop = False
         GroupBox4.Text = "Photo Management"
         ' 
+        ' btnHome
+        ' 
+        btnHome.BackgroundImage = CType(resources.GetObject("btnHome.BackgroundImage"), Image)
+        btnHome.BackgroundImageLayout = ImageLayout.Stretch
+        btnHome.Location = New Point(534, 14)
+        btnHome.Name = "btnHome"
+        btnHome.Size = New Size(45, 38)
+        btnHome.TabIndex = 6
+        btnHome.UseVisualStyleBackColor = True
+        ' 
         ' pbPhotoPreview
         ' 
         pbPhotoPreview.BorderStyle = BorderStyle.FixedSingle
-        pbPhotoPreview.Location = New Point(482, 22)
+        pbPhotoPreview.Location = New Point(392, 20)
         pbPhotoPreview.Margin = New Padding(4, 3, 4, 3)
         pbPhotoPreview.Name = "pbPhotoPreview"
-        pbPhotoPreview.Size = New Size(137, 108)
+        pbPhotoPreview.Size = New Size(110, 108)
         pbPhotoPreview.SizeMode = PictureBoxSizeMode.Zoom
         pbPhotoPreview.TabIndex = 5
         pbPhotoPreview.TabStop = False
@@ -661,7 +675,7 @@ Partial Class frmCSR
         ' lblPhotoCount
         ' 
         lblPhotoCount.AutoSize = True
-        lblPhotoCount.Location = New Point(162, 9)
+        lblPhotoCount.Location = New Point(170, 9)
         lblPhotoCount.Margin = New Padding(4, 0, 4, 0)
         lblPhotoCount.Name = "lblPhotoCount"
         lblPhotoCount.Size = New Size(82, 15)
@@ -671,7 +685,7 @@ Partial Class frmCSR
         ' btnSetPrimary
         ' 
         btnSetPrimary.BackColor = SystemColors.Control
-        btnSetPrimary.Location = New Point(378, 22)
+        btnSetPrimary.Location = New Point(288, 20)
         btnSetPrimary.Margin = New Padding(4, 3, 4, 3)
         btnSetPrimary.Name = "btnSetPrimary"
         btnSetPrimary.Size = New Size(86, 28)
@@ -683,7 +697,7 @@ Partial Class frmCSR
         ' btnViewPhoto
         ' 
         btnViewPhoto.BackColor = SystemColors.Control
-        btnViewPhoto.Location = New Point(378, 97)
+        btnViewPhoto.Location = New Point(288, 95)
         btnViewPhoto.Margin = New Padding(4, 3, 4, 3)
         btnViewPhoto.Name = "btnViewPhoto"
         btnViewPhoto.Size = New Size(86, 33)
@@ -694,7 +708,7 @@ Partial Class frmCSR
         ' btnDeletePhoto
         ' 
         btnDeletePhoto.BackColor = SystemColors.Control
-        btnDeletePhoto.Location = New Point(378, 56)
+        btnDeletePhoto.Location = New Point(288, 54)
         btnDeletePhoto.Margin = New Padding(4, 3, 4, 3)
         btnDeletePhoto.Name = "btnDeletePhoto"
         btnDeletePhoto.Size = New Size(86, 35)
@@ -707,10 +721,10 @@ Partial Class frmCSR
         lvwPhotos.Columns.AddRange(New ColumnHeader() {ColumnHeader1, ColumnHeader2, ColumnHeader3, ColumnHeader4})
         lvwPhotos.FullRowSelect = True
         lvwPhotos.GridLines = True
-        lvwPhotos.Location = New Point(0, 27)
+        lvwPhotos.Location = New Point(8, 25)
         lvwPhotos.Margin = New Padding(4, 3, 4, 3)
         lvwPhotos.Name = "lvwPhotos"
-        lvwPhotos.Size = New Size(356, 103)
+        lvwPhotos.Size = New Size(269, 103)
         lvwPhotos.TabIndex = 0
         lvwPhotos.UseCompatibleStateImageBehavior = False
         lvwPhotos.View = View.Details
@@ -744,6 +758,7 @@ Partial Class frmCSR
         Controls.Add(GroupBox3)
         Margin = New Padding(4, 3, 4, 3)
         Name = "frmCSR"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "ESG/CSR Data Management System"
         CType(txtEmployeesEnvolved, ComponentModel.ISupportInitialize).EndInit()
         CType(txtHoursInvested, ComponentModel.ISupportInitialize).EndInit()
@@ -823,4 +838,5 @@ Partial Class frmCSR
     Friend WithEvents Label15 As Label
     Friend WithEvents txtPhotoFolderPath As TextBox
     Friend WithEvents cboFrequency As ComboBox
+    Friend WithEvents btnHome As Button
 End Class

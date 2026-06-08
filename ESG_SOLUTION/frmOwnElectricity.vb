@@ -329,4 +329,8 @@ Public Class frmOwnElectricity
         btnSave.Enabled = True
         grdData.ClearSelection()
     End Sub
+
+    Private Sub btnHome_Click_1(sender As Object, e As EventArgs) Handles btnHome.Click
+        frmDashboard.Show()
+    End Sub
 End Class

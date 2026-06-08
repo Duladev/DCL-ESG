@@ -358,7 +358,7 @@ Public Class frmGas
         grdData.ClearSelection()
     End Sub
 
-    Private Sub lblFileCount_Click(sender As Object, e As EventArgs) Handles lblFileCount.Click
-
+    Private Sub btnHome_Click_1(sender As Object, e As EventArgs) Handles btnHome.Click
+        frmDashboard.Show()
     End Sub
 End Class

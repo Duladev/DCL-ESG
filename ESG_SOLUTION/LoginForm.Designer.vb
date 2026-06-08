@@ -58,7 +58,7 @@
             lblBrand.BackColor = Color.Transparent
             lblBrand.Font = New Font("Georgia", 36F, FontStyle.Bold)
             lblBrand.ForeColor = Color.White
-            lblBrand.Location = New Point(87, 194)
+            lblBrand.Location = New Point(3, 20)
             lblBrand.Name = "lblBrand"
             lblBrand.Size = New Size(280, 58)
             lblBrand.TabIndex = 1
@@ -70,7 +70,7 @@
             lblTagline.BackColor = Color.Transparent
             lblTagline.Font = New Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
             lblTagline.ForeColor = Color.White
-            lblTagline.Location = New Point(97, 258)
+            lblTagline.Location = New Point(13, 84)
             lblTagline.Name = "lblTagline"
             lblTagline.Size = New Size(280, 18)
             lblTagline.TabIndex = 2
@@ -81,7 +81,7 @@
             lblCompany.BackColor = Color.Transparent
             lblCompany.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
             lblCompany.ForeColor = Color.White
-            lblCompany.Location = New Point(97, 280)
+            lblCompany.Location = New Point(13, 106)
             lblCompany.Name = "lblCompany"
             lblCompany.Size = New Size(280, 20)
             lblCompany.TabIndex = 3
@@ -90,7 +90,7 @@
             ' pnlStatLine
             ' 
             pnlStatLine.BackColor = Color.FromArgb(CByte(35), CByte(255), CByte(255), CByte(255))
-            pnlStatLine.Location = New Point(97, 332)
+            pnlStatLine.Location = New Point(13, 125)
             pnlStatLine.Name = "pnlStatLine"
             pnlStatLine.Size = New Size(270, 1)
             pnlStatLine.TabIndex = 4
@@ -318,7 +318,6 @@
         Private lblError As System.Windows.Forms.Label
         Private lblVersion As System.Windows.Forms.Label
         Private btnExit As RoundedButton
-        Friend WithEvents btnLogin1 As RoundedButton
         Friend WithEvents btnexitbtn As RoundedButton
         Friend WithEvents Button2 As Button
         Friend WithEvents btnLogin2 As Button

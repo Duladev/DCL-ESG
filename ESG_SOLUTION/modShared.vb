@@ -1,10 +1,17 @@
 ﻿Imports System.Data.SqlClient
 Imports System.IO
 Imports System.Text
+Imports System.Drawing.Drawing2D
 
 Module ModShared
     Public connString As String = "Data Source=DCL-ICT-007\DEVELOPER;Initial Catalog=ESG;Integrated Security=True"
     Public baseFolderPath As String = "D:\Environment project\Upload"
+
+    ' Style configuration
+    Public Property TopBarColor As Color = Color.FromArgb(43, 108, 43)
+    Public Property BottomBarColor As Color = Color.FromArgb(43, 108, 43)
+    Public Property BarHeight As Integer = 40
+    Public Property SmokeIntensity As Integer = 150 ' 0-255, higher = more smoke effect
 
     Public Function GetConnection() As SqlConnection
         Return New SqlConnection(connString)
@@ -137,6 +144,214 @@ Module ModShared
         Catch ex As Exception
             ' Silently fail if background image can't be loaded
         End Try
+    End Sub
+
+    ' Custom Panel with smoke gradient effect
+    Public Class SmokeGradientPanel
+        Inherits Panel
+        Public Property GradientStartColor As Color = Color.FromArgb(52, 73, 94)
+        Public Property GradientEndColor As Color = Color.FromArgb(52, 73, 94)
+        Public Property IsTopBar As Boolean = True
+        Public Property SmokeOpacity As Integer = 150
+
+        Protected Overrides Sub OnPaint(e As PaintEventArgs)
+            MyBase.OnPaint(e)
+
+            Dim gradientRect As New Rectangle(0, 0, Me.Width, Me.Height)
+            Dim gradientBrush As LinearGradientBrush
+
+            If IsTopBar Then
+                ' Top bar: Solid color at top, fading to transparent/smoke at bottom
+                Dim startColor = GradientStartColor
+                Dim endColor = Color.FromArgb(SmokeOpacity, GradientEndColor)
+                gradientBrush = New LinearGradientBrush(gradientRect, startColor, endColor, LinearGradientMode.Vertical)
+            Else
+                ' Bottom bar: Transparent/smoke at top, solid color at bottom
+                Dim startColor = Color.FromArgb(SmokeOpacity, GradientStartColor)
+                Dim endColor = GradientEndColor
+                gradientBrush = New LinearGradientBrush(gradientRect, startColor, endColor, LinearGradientMode.Vertical)
+            End If
+
+            e.Graphics.FillRectangle(gradientBrush, gradientRect)
+            gradientBrush.Dispose()
+        End Sub
+
+        Protected Overrides Sub OnResize(e As EventArgs)
+            MyBase.OnResize(e)
+            Me.Invalidate() ' Redraw on resize
+        End Sub
+    End Class
+
+    ' Apply the modern style with top and bottom bars as base layer
+    Public Sub ApplyModernStyle(form As Form)
+        Try
+            ' Remove existing style panels if any
+            RemoveStylePanels(form)
+
+            ' Create a container panel that will hold the content (components)
+            Dim contentContainer As Panel
+            Dim existingContainer As Control = Nothing
+
+            ' Check if form already has a content container
+            For Each ctrl As Control In form.Controls
+                If ctrl.Name = "StyleContentContainer" Then
+                    contentContainer = TryCast(ctrl, Panel)
+                    If contentContainer IsNot Nothing Then
+                        existingContainer = contentContainer
+                        Exit For
+                    End If
+                End If
+            Next
+
+            If existingContainer Is Nothing Then
+                ' Create new content container
+                contentContainer = New Panel()
+                contentContainer.Name = "StyleContentContainer"
+                contentContainer.Dock = DockStyle.Fill
+                contentContainer.BackColor = Color.Transparent
+
+                ' Move all existing controls to the content container
+                Dim existingControls As New List(Of Control)
+                For Each ctrl As Control In form.Controls
+                    existingControls.Add(ctrl)
+                Next
+
+                form.Controls.Clear()
+                form.Controls.Add(contentContainer)
+
+                For Each ctrl As Control In existingControls
+                    contentContainer.Controls.Add(ctrl)
+                Next
+            Else
+                contentContainer = TryCast(existingContainer, Panel)
+            End If
+
+            ' Create top bar panel with smoke gradient
+            Dim topPanel As New SmokeGradientPanel()
+            topPanel.Name = "StyleTopPanel"
+            topPanel.Height = BarHeight
+            topPanel.Dock = DockStyle.Top
+            topPanel.GradientStartColor = TopBarColor
+            topPanel.GradientEndColor = TopBarColor
+            topPanel.IsTopBar = True
+            topPanel.SmokeOpacity = SmokeIntensity
+            topPanel.BackColor = Color.Transparent
+
+            ' Create bottom bar panel with smoke gradient
+            Dim bottomPanel As New SmokeGradientPanel()
+            bottomPanel.Name = "StyleBottomPanel"
+            bottomPanel.Height = BarHeight
+            bottomPanel.Dock = DockStyle.Bottom
+            bottomPanel.GradientStartColor = BottomBarColor
+            bottomPanel.GradientEndColor = BottomBarColor
+            bottomPanel.IsTopBar = False
+            bottomPanel.SmokeOpacity = SmokeIntensity
+            bottomPanel.BackColor = Color.Transparent
+
+            ' Add bars to form (these will be at the bottom layer)
+            form.Controls.Add(topPanel)
+            form.Controls.Add(bottomPanel)
+
+            ' Ensure content container is on top of bars
+            contentContainer.BringToFront()
+
+            ' Make bars stay at bottom layer
+            topPanel.SendToBack()
+            bottomPanel.SendToBack()
+
+            ' Add padding to content container to prevent content overlap
+            contentContainer.Padding = New Padding(15, BarHeight + 15, 15, BarHeight + 15)
+
+            ' Set form background to white
+            form.BackColor = Color.White
+
+            ' Handle form resize to redraw gradients
+            AddHandler form.Resize, Sub(sender As Object, e As EventArgs)
+                                        topPanel.Invalidate()
+                                        bottomPanel.Invalidate()
+                                    End Sub
+
+        Catch ex As Exception
+            MessageBox.Show($"Error applying style: {ex.Message}", "Style Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End Try
+    End Sub
+
+    ' Apply style with custom colors
+    Public Sub ApplyModernStyle(form As Form, topColor As Color, bottomColor As Color, Optional barHeight As Integer = 40, Optional smokeIntensity As Integer = 150)
+        TopBarColor = topColor
+        BottomBarColor = bottomColor
+        barHeight = barHeight
+        smokeIntensity = smokeIntensity
+        ApplyModernStyle(form)
+    End Sub
+
+    ' Remove existing style panels
+    Private Sub RemoveStylePanels(form As Form)
+        Dim toRemove As New List(Of Control)
+        For Each ctrl As Control In form.Controls
+            If ctrl.Name = "StyleTopPanel" OrElse ctrl.Name = "StyleBottomPanel" OrElse ctrl.Name = "StyleContentContainer" Then
+                toRemove.Add(ctrl)
+            End If
+        Next
+
+        For Each ctrl As Control In toRemove
+            If ctrl IsNot Nothing Then
+                ' Move child controls back to form if it's the content container
+                If ctrl.Name = "StyleContentContainer" AndAlso TypeOf ctrl Is Panel Then
+                    Dim container As Panel = TryCast(ctrl, Panel)
+                    If container IsNot Nothing Then
+                        Dim childControls As New List(Of Control)
+                        For Each child As Control In container.Controls
+                            childControls.Add(child)
+                        Next
+                        For Each child As Control In childControls
+                            form.Controls.Add(child)
+                        Next
+                    End If
+                End If
+
+                form.Controls.Remove(ctrl)
+                ctrl.Dispose()
+            End If
+        Next
+    End Sub
+
+    ' Update smoke effect intensity dynamically
+    Public Sub UpdateSmokeIntensity(form As Form, intensity As Integer)
+        SmokeIntensity = Math.Max(0, Math.Min(255, intensity))
+
+        ' Update the smoke panels
+        For Each ctrl As Control In form.Controls
+            If ctrl.Name = "StyleTopPanel" AndAlso TypeOf ctrl Is SmokeGradientPanel Then
+                DirectCast(ctrl, SmokeGradientPanel).SmokeOpacity = SmokeIntensity
+                ctrl.Invalidate()
+            ElseIf ctrl.Name = "StyleBottomPanel" AndAlso TypeOf ctrl Is SmokeGradientPanel Then
+                DirectCast(ctrl, SmokeGradientPanel).SmokeOpacity = SmokeIntensity
+                ctrl.Invalidate()
+            End If
+        Next
+
+        form.Refresh()
+    End Sub
+
+    ' Update bar colors dynamically
+    Public Sub UpdateBarColors(form As Form, topColor As Color, bottomColor As Color)
+        TopBarColor = topColor
+        BottomBarColor = bottomColor
+
+        For Each ctrl As Control In form.Controls
+            If ctrl.Name = "StyleTopPanel" AndAlso TypeOf ctrl Is SmokeGradientPanel Then
+                DirectCast(ctrl, SmokeGradientPanel).GradientStartColor = topColor
+                DirectCast(ctrl, SmokeGradientPanel).GradientEndColor = topColor
+                ctrl.Invalidate()
+            ElseIf ctrl.Name = "StyleBottomPanel" AndAlso TypeOf ctrl Is SmokeGradientPanel Then
+                DirectCast(ctrl, SmokeGradientPanel).GradientStartColor = bottomColor
+                DirectCast(ctrl, SmokeGradientPanel).GradientEndColor = bottomColor
+                ctrl.Invalidate()
+            End If
+        Next
+
+        form.Refresh()
     End Sub
 
     Public Sub OpenFileWithDefaultProgram(filePath As String)

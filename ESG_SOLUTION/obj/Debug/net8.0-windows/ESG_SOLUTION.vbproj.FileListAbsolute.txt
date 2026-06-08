@@ -62,3 +62,7 @@ F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\refint\ESG_SOLUTION.dll
 F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.pdb
 F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.genruntimeconfig.cache
 F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ref\ESG_SOLUTION.dll
+F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.frmESGReports.resources
+F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.frm_ESGReportViewer.resources
+F:\DCL-ESG\ESG_SOLUTION\bin\Debug\net8.0-windows\CrystalDecisions.CrystalReports.Engine.dll
+F:\DCL-ESG\ESG_SOLUTION\bin\Debug\net8.0-windows\CrystalDecisions.Windows.Forms.dll
