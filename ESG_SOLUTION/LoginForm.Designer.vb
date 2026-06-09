@@ -50,7 +50,7 @@
             pnlLeft.Dock = DockStyle.Left
             pnlLeft.Location = New Point(0, 0)
             pnlLeft.Name = "pnlLeft"
-            pnlLeft.Size = New Size(422, 560)
+            pnlLeft.Size = New Size(450, 560)
             pnlLeft.TabIndex = 0
             ' 
             ' lblBrand
@@ -68,7 +68,7 @@
             ' lblTagline
             ' 
             lblTagline.BackColor = Color.Transparent
-            lblTagline.Font = New Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+            lblTagline.Font = New Font("Segoe UI", 8.25F, FontStyle.Bold Or FontStyle.Italic, GraphicsUnit.Point, CByte(0))
             lblTagline.ForeColor = Color.White
             lblTagline.Location = New Point(13, 84)
             lblTagline.Name = "lblTagline"
@@ -114,9 +114,9 @@
             pnlRight.Controls.Add(lblError)
             pnlRight.Controls.Add(lblVersion)
             pnlRight.Dock = DockStyle.Fill
-            pnlRight.Location = New Point(422, 0)
+            pnlRight.Location = New Point(450, 0)
             pnlRight.Name = "pnlRight"
-            pnlRight.Size = New Size(458, 560)
+            pnlRight.Size = New Size(430, 560)
             pnlRight.TabIndex = 1
             ' 
             ' Button2

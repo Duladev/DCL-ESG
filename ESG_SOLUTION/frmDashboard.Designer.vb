@@ -43,11 +43,11 @@ Partial Class frmDashboard
         LabelTitle.AutoSize = True
         LabelTitle.BackColor = Color.Transparent
         LabelTitle.FlatStyle = FlatStyle.Flat
-        LabelTitle.Font = New Font("Segoe UI", 24F, FontStyle.Bold Or FontStyle.Italic, GraphicsUnit.Point, CByte(0))
+        LabelTitle.Font = New Font("Segoe UI Black", 24F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         LabelTitle.ForeColor = Color.Transparent
         LabelTitle.Location = New Point(229, 17)
         LabelTitle.Name = "LabelTitle"
-        LabelTitle.Size = New Size(457, 45)
+        LabelTitle.Size = New Size(476, 45)
         LabelTitle.TabIndex = 2
         LabelTitle.Text = "ESG Management Dashboard"
         ' 
@@ -68,8 +68,6 @@ Partial Class frmDashboard
         ' 
         BtnREPORTS.BackColor = Color.Transparent
         BtnREPORTS.FlatAppearance.BorderSize = 0
-        BtnREPORTS.FlatAppearance.MouseDownBackColor = Color.FromArgb(CByte(60), CByte(90), CByte(120))
-        BtnREPORTS.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(50), CByte(80), CByte(110))
         BtnREPORTS.FlatStyle = FlatStyle.Flat
         BtnREPORTS.Font = New Font("Segoe UI Black", 20.25F, FontStyle.Bold Or FontStyle.Italic)
         BtnREPORTS.ForeColor = Color.White
@@ -77,16 +75,17 @@ Partial Class frmDashboard
         BtnREPORTS.Name = "BtnREPORTS"
         BtnREPORTS.Size = New Size(157, 50)
         BtnREPORTS.TabIndex = 11
-        BtnREPORTS.Text = "   Reports"
+        BtnREPORTS.Text = "Reports"
         BtnREPORTS.TextImageRelation = TextImageRelation.TextAboveImage
         BtnREPORTS.UseVisualStyleBackColor = False
+        BtnREPORTS.Visible = False
         ' 
         ' BtnSOCIAL
         ' 
         BtnSOCIAL.BackColor = Color.Transparent
         BtnSOCIAL.FlatAppearance.BorderSize = 0
-        BtnSOCIAL.FlatAppearance.MouseDownBackColor = Color.FromArgb(CByte(60), CByte(90), CByte(120))
-        BtnSOCIAL.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(50), CByte(80), CByte(110))
+        BtnSOCIAL.FlatAppearance.MouseDownBackColor = Color.Transparent
+        BtnSOCIAL.FlatAppearance.MouseOverBackColor = Color.Transparent
         BtnSOCIAL.FlatStyle = FlatStyle.Flat
         BtnSOCIAL.Font = New Font("Segoe UI Black", 20.25F, FontStyle.Bold Or FontStyle.Italic)
         BtnSOCIAL.ForeColor = Color.White
@@ -94,16 +93,17 @@ Partial Class frmDashboard
         BtnSOCIAL.Name = "BtnSOCIAL"
         BtnSOCIAL.Size = New Size(157, 50)
         BtnSOCIAL.TabIndex = 10
-        BtnSOCIAL.Text = "   Social"
+        BtnSOCIAL.Text = "Social"
         BtnSOCIAL.TextImageRelation = TextImageRelation.TextAboveImage
         BtnSOCIAL.UseVisualStyleBackColor = False
         ' 
         ' BtnWASTE_MANAGEMENT
         ' 
+        BtnWASTE_MANAGEMENT.AutoSize = True
         BtnWASTE_MANAGEMENT.BackColor = Color.Transparent
         BtnWASTE_MANAGEMENT.FlatAppearance.BorderSize = 0
-        BtnWASTE_MANAGEMENT.FlatAppearance.MouseDownBackColor = Color.FromArgb(CByte(60), CByte(90), CByte(120))
-        BtnWASTE_MANAGEMENT.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(50), CByte(80), CByte(110))
+        BtnWASTE_MANAGEMENT.FlatAppearance.MouseDownBackColor = Color.Transparent
+        BtnWASTE_MANAGEMENT.FlatAppearance.MouseOverBackColor = Color.Transparent
         BtnWASTE_MANAGEMENT.FlatStyle = FlatStyle.Flat
         BtnWASTE_MANAGEMENT.Font = New Font("Segoe UI Black", 20.25F, FontStyle.Bold Or FontStyle.Italic)
         BtnWASTE_MANAGEMENT.ForeColor = Color.White
@@ -111,7 +111,7 @@ Partial Class frmDashboard
         BtnWASTE_MANAGEMENT.Name = "BtnWASTE_MANAGEMENT"
         BtnWASTE_MANAGEMENT.Size = New Size(325, 50)
         BtnWASTE_MANAGEMENT.TabIndex = 9
-        BtnWASTE_MANAGEMENT.Text = "   Waste Management"
+        BtnWASTE_MANAGEMENT.Text = "Waste Management"
         BtnWASTE_MANAGEMENT.TextImageRelation = TextImageRelation.TextAboveImage
         BtnWASTE_MANAGEMENT.UseVisualStyleBackColor = False
         ' 
@@ -119,8 +119,8 @@ Partial Class frmDashboard
         ' 
         BtnINVENTORY.BackColor = Color.Transparent
         BtnINVENTORY.FlatAppearance.BorderSize = 0
-        BtnINVENTORY.FlatAppearance.MouseDownBackColor = Color.FromArgb(CByte(60), CByte(90), CByte(120))
-        BtnINVENTORY.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(50), CByte(80), CByte(110))
+        BtnINVENTORY.FlatAppearance.MouseDownBackColor = Color.Transparent
+        BtnINVENTORY.FlatAppearance.MouseOverBackColor = Color.Transparent
         BtnINVENTORY.FlatStyle = FlatStyle.Flat
         BtnINVENTORY.Font = New Font("Segoe UI Black", 20.25F, FontStyle.Bold Or FontStyle.Italic)
         BtnINVENTORY.ForeColor = Color.White
@@ -128,7 +128,7 @@ Partial Class frmDashboard
         BtnINVENTORY.Name = "BtnINVENTORY"
         BtnINVENTORY.Size = New Size(230, 50)
         BtnINVENTORY.TabIndex = 8
-        BtnINVENTORY.Text = "   Inventory"
+        BtnINVENTORY.Text = "Inventory"
         BtnINVENTORY.TextImageRelation = TextImageRelation.TextAboveImage
         BtnINVENTORY.UseVisualStyleBackColor = False
         ' 
@@ -136,8 +136,8 @@ Partial Class frmDashboard
         ' 
         BtnEMP_Details.BackColor = Color.Transparent
         BtnEMP_Details.FlatAppearance.BorderSize = 0
-        BtnEMP_Details.FlatAppearance.MouseDownBackColor = Color.FromArgb(CByte(60), CByte(90), CByte(120))
-        BtnEMP_Details.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(50), CByte(80), CByte(110))
+        BtnEMP_Details.FlatAppearance.MouseDownBackColor = Color.Transparent
+        BtnEMP_Details.FlatAppearance.MouseOverBackColor = Color.Transparent
         BtnEMP_Details.FlatStyle = FlatStyle.Flat
         BtnEMP_Details.Font = New Font("Segoe UI Black", 20.25F, FontStyle.Bold Or FontStyle.Italic)
         BtnEMP_Details.ForeColor = Color.White
@@ -145,7 +145,7 @@ Partial Class frmDashboard
         BtnEMP_Details.Name = "BtnEMP_Details"
         BtnEMP_Details.Size = New Size(230, 50)
         BtnEMP_Details.TabIndex = 7
-        BtnEMP_Details.Text = "   Employee Details"
+        BtnEMP_Details.Text = "Employee Details"
         BtnEMP_Details.TextImageRelation = TextImageRelation.TextAboveImage
         BtnEMP_Details.UseVisualStyleBackColor = False
         ' 
@@ -153,8 +153,8 @@ Partial Class frmDashboard
         ' 
         BtnCSR.BackColor = Color.Transparent
         BtnCSR.FlatAppearance.BorderSize = 0
-        BtnCSR.FlatAppearance.MouseDownBackColor = Color.FromArgb(CByte(60), CByte(90), CByte(120))
-        BtnCSR.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(50), CByte(80), CByte(110))
+        BtnCSR.FlatAppearance.MouseDownBackColor = Color.Transparent
+        BtnCSR.FlatAppearance.MouseOverBackColor = Color.Transparent
         BtnCSR.FlatStyle = FlatStyle.Flat
         BtnCSR.Font = New Font("Segoe UI Black", 20.25F, FontStyle.Bold Or FontStyle.Italic)
         BtnCSR.ForeColor = Color.White
@@ -162,7 +162,7 @@ Partial Class frmDashboard
         BtnCSR.Name = "BtnCSR"
         BtnCSR.Size = New Size(133, 50)
         BtnCSR.TabIndex = 6
-        BtnCSR.Text = "   CSR"
+        BtnCSR.Text = "CSR"
         BtnCSR.TextImageRelation = TextImageRelation.TextAboveImage
         BtnCSR.UseVisualStyleBackColor = False
         ' 
@@ -199,6 +199,7 @@ Partial Class frmDashboard
         Controls.Add(PanelMainContent)
         Font = New Font("Segoe UI", 9F)
         Name = "frmDashboard"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "ESG Management System"
         CType(PictureBoxLogo, ComponentModel.ISupportInitialize).EndInit()
         PanelMainContent.ResumeLayout(False)

@@ -17,6 +17,7 @@ Partial Class frmProductManagement
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmProductManagement))
         grpInput = New GroupBox()
         cmbCategory = New ComboBox()
         lblCategory = New Label()
@@ -35,6 +36,7 @@ Partial Class frmProductManagement
         btnUpdate = New Button()
         btnSave = New Button()
         grdData = New DataGridView()
+        btnHome = New Button()
         grpInput.SuspendLayout()
         grpButtons.SuspendLayout()
         CType(grdData, ComponentModel.ISupportInitialize).BeginInit()
@@ -156,6 +158,7 @@ Partial Class frmProductManagement
         ' 
         ' grpButtons
         ' 
+        grpButtons.Controls.Add(btnHome)
         grpButtons.Controls.Add(btnExportExcel)
         grpButtons.Controls.Add(btnClear)
         grpButtons.Controls.Add(btnDelete)
@@ -175,7 +178,7 @@ Partial Class frmProductManagement
         btnExportExcel.BackColor = SystemColors.Control
         btnExportExcel.FlatStyle = FlatStyle.Flat
         btnExportExcel.ForeColor = Color.Black
-        btnExportExcel.Location = New Point(44, 180)
+        btnExportExcel.Location = New Point(6, 180)
         btnExportExcel.Margin = New Padding(3, 2, 3, 2)
         btnExportExcel.Name = "btnExportExcel"
         btnExportExcel.Size = New Size(131, 26)
@@ -188,7 +191,7 @@ Partial Class frmProductManagement
         btnClear.BackColor = SystemColors.Control
         btnClear.FlatStyle = FlatStyle.Flat
         btnClear.ForeColor = Color.Black
-        btnClear.Location = New Point(44, 142)
+        btnClear.Location = New Point(6, 142)
         btnClear.Margin = New Padding(3, 2, 3, 2)
         btnClear.Name = "btnClear"
         btnClear.Size = New Size(131, 26)
@@ -202,7 +205,7 @@ Partial Class frmProductManagement
         btnDelete.Enabled = False
         btnDelete.FlatStyle = FlatStyle.Flat
         btnDelete.ForeColor = Color.Black
-        btnDelete.Location = New Point(44, 105)
+        btnDelete.Location = New Point(6, 105)
         btnDelete.Margin = New Padding(3, 2, 3, 2)
         btnDelete.Name = "btnDelete"
         btnDelete.Size = New Size(131, 26)
@@ -216,7 +219,7 @@ Partial Class frmProductManagement
         btnUpdate.Enabled = False
         btnUpdate.FlatStyle = FlatStyle.Flat
         btnUpdate.ForeColor = Color.Black
-        btnUpdate.Location = New Point(44, 68)
+        btnUpdate.Location = New Point(6, 68)
         btnUpdate.Margin = New Padding(3, 2, 3, 2)
         btnUpdate.Name = "btnUpdate"
         btnUpdate.Size = New Size(131, 26)
@@ -229,7 +232,7 @@ Partial Class frmProductManagement
         btnSave.BackColor = SystemColors.Control
         btnSave.FlatStyle = FlatStyle.Flat
         btnSave.ForeColor = Color.Black
-        btnSave.Location = New Point(44, 30)
+        btnSave.Location = New Point(6, 30)
         btnSave.Margin = New Padding(3, 2, 3, 2)
         btnSave.Name = "btnSave"
         btnSave.Size = New Size(131, 26)
@@ -250,6 +253,16 @@ Partial Class frmProductManagement
         grdData.SelectionMode = DataGridViewSelectionMode.FullRowSelect
         grdData.Size = New Size(662, 201)
         grdData.TabIndex = 2
+        ' 
+        ' btnHome
+        ' 
+        btnHome.BackgroundImage = CType(resources.GetObject("btnHome.BackgroundImage"), Image)
+        btnHome.BackgroundImageLayout = ImageLayout.Stretch
+        btnHome.Location = New Point(157, 21)
+        btnHome.Name = "btnHome"
+        btnHome.Size = New Size(45, 38)
+        btnHome.TabIndex = 13
+        btnHome.UseVisualStyleBackColor = True
         ' 
         ' frmProductManagement
         ' 
@@ -290,5 +303,6 @@ Partial Class frmProductManagement
     Friend WithEvents lblCategory As Label
     Friend WithEvents btnClear As Button
     Friend WithEvents btnExportExcel As Button
+    Friend WithEvents btnHome As Button
 
 End Class

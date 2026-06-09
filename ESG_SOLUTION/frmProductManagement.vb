@@ -12,7 +12,11 @@ Public Class frmProductManagement
         ' Load data
         LoadProductTypes()
         LoadProducts()
-        SetupCategoryComboBox()
+
+        ' Load categories for the first product type if available
+        If cmbProductType.Items.Count > 0 Then
+            cmbProductType.SelectedIndex = 0
+        End If
 
         ' Add Enter key handling
         ModShared.AddKeyPressHandlers(Me.Controls)
@@ -35,30 +39,39 @@ Public Class frmProductManagement
                 Dim reader As SqlDataReader = cmd.ExecuteReader()
 
                 cmbProductType.Items.Clear()
+
+                ' Always add Plastic and Paper first
+                cmbProductType.Items.Add("Plastic")
+                cmbProductType.Items.Add("Paper")
+
+                ' Then add any additional types from database
                 While reader.Read()
-                    cmbProductType.Items.Add(reader("ProductType").ToString())
+                    Dim productType As String = reader("ProductType").ToString()
+                    ' Avoid duplicates
+                    If productType <> "Plastic" AndAlso productType <> "Paper" Then
+                        cmbProductType.Items.Add(productType)
+                    End If
                 End While
                 reader.Close()
-
-                ' Add default if no items found
-                If cmbProductType.Items.Count = 0 Then
-                    cmbProductType.Items.AddRange(New Object() {"Plastic", "Paper"})
-                End If
             End Using
         Catch ex As Exception
-            ' Fallback to default items
+            ' Fallback to default items if database connection fails
             cmbProductType.Items.Clear()
             cmbProductType.Items.AddRange(New Object() {"Plastic", "Paper"})
         End Try
     End Sub
 
-    Private Sub LoadCategories()
+    Private Sub LoadCategoriesByProductType(productType As String)
+        If String.IsNullOrEmpty(productType) Then Return
+
         Try
             Using conn As SqlConnection = ModShared.GetConnection()
                 conn.Open()
-                Dim query As String = "SELECT DISTINCT ProductCategory FROM tbl_ESG_ProductMaster WHERE IsActive=1 ORDER BY ProductCategory"
+                Dim query As String = "SELECT DISTINCT ProductCategory FROM tbl_ESG_ProductMaster WHERE ProductType = @ProductType AND IsActive=1 ORDER BY ProductCategory"
 
                 Dim cmd As New SqlCommand(query, conn)
+                cmd.Parameters.AddWithValue("@ProductType", productType)
+
                 Dim reader As SqlDataReader = cmd.ExecuteReader()
 
                 cmbCategory.Items.Clear()
@@ -69,10 +82,29 @@ Public Class frmProductManagement
 
                 ' Add option to create new category
                 cmbCategory.Items.Add("-- Add New Category --")
+
+                If cmbCategory.Items.Count > 1 Then
+                    cmbCategory.SelectedIndex = 0
+                Else
+                    cmbCategory.Text = ""
+                End If
+
+                ' Ensure dropdown style is correct for adding new categories
+                cmbCategory.DropDownStyle = ComboBoxStyle.DropDown
             End Using
         Catch ex As Exception
             MessageBox.Show($"Error loading categories: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            cmbCategory.Items.Clear()
+            cmbCategory.Items.Add("-- Add New Category --")
         End Try
+    End Sub
+
+    Private Sub cmbProductType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbProductType.SelectedIndexChanged
+        If cmbProductType.SelectedItem IsNot Nothing AndAlso Not isAddingNewCategory Then
+            ' Store current selection to avoid recursive calls
+            Dim selectedType As String = cmbProductType.SelectedItem.ToString()
+            LoadCategoriesByProductType(selectedType)
+        End If
     End Sub
 
     Private Sub cmbCategory_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbCategory.SelectedIndexChanged
@@ -93,10 +125,10 @@ Public Class frmProductManagement
             Dim newCategory As String = cmbCategory.Text.Trim()
 
             If Not String.IsNullOrEmpty(newCategory) Then
-                ' Check if category already exists
+                ' Check if category already exists (excluding the "-- Add New Category --" item)
                 Dim categoryExists As Boolean = False
-                For Each item As Object In cmbCategory.Items
-                    If item.ToString() = newCategory Then
+                For i As Integer = 0 To cmbCategory.Items.Count - 2 ' Skip last item
+                    If cmbCategory.Items(i).ToString() = newCategory Then
                         categoryExists = True
                         Exit For
                     End If
@@ -116,7 +148,7 @@ Public Class frmProductManagement
             End If
 
             isAddingNewCategory = False
-            cmbCategory.DropDownStyle = ComboBoxStyle.DropDownList
+            cmbCategory.DropDownStyle = ComboBoxStyle.DropDown
         End If
     End Sub
 
@@ -162,41 +194,6 @@ Public Class frmProductManagement
         End Try
     End Sub
 
-    Private Sub cmbProductType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbProductType.SelectedIndexChanged
-        If cmbProductType.SelectedItem IsNot Nothing Then
-            LoadCategoriesByProductType(cmbProductType.SelectedItem.ToString())
-        End If
-    End Sub
-
-    Private Sub LoadCategoriesByProductType(productType As String)
-        Try
-            Using conn As SqlConnection = ModShared.GetConnection()
-                conn.Open()
-                Dim query As String = "SELECT DISTINCT ProductCategory FROM tbl_ESG_ProductMaster WHERE ProductType = @ProductType AND IsActive=1 ORDER BY ProductCategory"
-
-                Dim cmd As New SqlCommand(query, conn)
-                cmd.Parameters.AddWithValue("@ProductType", productType)
-
-                Dim reader As SqlDataReader = cmd.ExecuteReader()
-
-                cmbCategory.Items.Clear()
-                While reader.Read()
-                    cmbCategory.Items.Add(reader("ProductCategory").ToString())
-                End While
-                reader.Close()
-
-                ' Add option to create new category
-                cmbCategory.Items.Add("-- Add New Category --")
-
-                If cmbCategory.Items.Count > 1 Then
-                    cmbCategory.SelectedIndex = 0
-                End If
-            End Using
-        Catch ex As Exception
-            MessageBox.Show($"Error loading categories: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         If ValidateForm() Then
             Try
@@ -232,7 +229,18 @@ Public Class frmProductManagement
                     MessageBox.Show("Product saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     ClearForm()
                     LoadProducts()
-                    LoadCategoriesByProductType(cmbProductType.Text)
+
+                    ' Refresh product types to include any new ones, but keep Plastic and Paper
+                    LoadProductTypes()
+                    If cmbProductType.Items.Count > 0 Then
+                        ' Try to select the newly added product type
+                        Dim index As Integer = cmbProductType.FindStringExact(cmbProductType.Text)
+                        If index >= 0 Then
+                            cmbProductType.SelectedIndex = index
+                        Else
+                            cmbProductType.SelectedIndex = 0
+                        End If
+                    End If
                 End Using
             Catch ex As Exception
                 MessageBox.Show($"Error saving product: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -257,8 +265,9 @@ Public Class frmProductManagement
             btnDelete.Enabled = True
             btnSave.Enabled = False
 
-            ' Disable category combo when editing
-            cmbCategory.Enabled = False
+            ' Enable category combo when editing (fixed)
+            cmbCategory.Enabled = True
+            cmbCategory.DropDownStyle = ComboBoxStyle.DropDown
         End If
     End Sub
 
@@ -304,7 +313,12 @@ Public Class frmProductManagement
                     MessageBox.Show("Product updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     ClearForm()
                     LoadProducts()
-                    LoadCategoriesByProductType(cmbProductType.Text)
+
+                    ' Refresh product types to include any new ones, but keep Plastic and Paper
+                    LoadProductTypes()
+                    If cmbProductType.Items.Count > 0 Then
+                        cmbProductType.SelectedIndex = 0
+                    End If
                 End Using
             Catch ex As Exception
                 MessageBox.Show($"Error updating product: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -333,8 +347,9 @@ Public Class frmProductManagement
                     MessageBox.Show("Product deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     ClearForm()
                     LoadProducts()
+                    LoadProductTypes()
                     If cmbProductType.Items.Count > 0 Then
-                        LoadCategoriesByProductType(cmbProductType.Text)
+                        cmbProductType.SelectedIndex = 0
                     End If
                 End Using
             Catch ex As Exception
@@ -379,8 +394,13 @@ Public Class frmProductManagement
         btnDelete.Enabled = False
         btnSave.Enabled = True
         cmbCategory.Enabled = True
+        cmbCategory.DropDownStyle = ComboBoxStyle.DropDown
         isAddingNewCategory = False
-        LoadCategories() ' Reload all categories
+
+        ' Reload categories for current product type if available
+        If cmbProductType.SelectedItem IsNot Nothing Then
+            LoadCategoriesByProductType(cmbProductType.SelectedItem.ToString())
+        End If
     End Sub
 
     Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
@@ -393,5 +413,9 @@ Public Class frmProductManagement
         Else
             MessageBox.Show("No data to export!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
+    End Sub
+
+    Private Sub btnHome_Click(sender As Object, e As EventArgs) Handles btnHome.Click
+        frmDashboard.Show()
     End Sub
 End Class

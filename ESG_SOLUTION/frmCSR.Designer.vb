@@ -721,7 +721,7 @@ Partial Class frmCSR
         lvwPhotos.Columns.AddRange(New ColumnHeader() {ColumnHeader1, ColumnHeader2, ColumnHeader3, ColumnHeader4})
         lvwPhotos.FullRowSelect = True
         lvwPhotos.GridLines = True
-        lvwPhotos.Location = New Point(8, 25)
+        lvwPhotos.Location = New Point(5, 27)
         lvwPhotos.Margin = New Padding(4, 3, 4, 3)
         lvwPhotos.Name = "lvwPhotos"
         lvwPhotos.Size = New Size(269, 103)

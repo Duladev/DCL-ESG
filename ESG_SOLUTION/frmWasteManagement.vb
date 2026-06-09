@@ -16,6 +16,7 @@ Public Class frmWasteManagement
     End Class
 
     Private Sub frmWasteManagement_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ApplyModernStyle(Me)
         ' Initialize upload documents dictionary
         uploadedDocuments.Clear()
         uploadedDocuments.Add("Non-Recycled", New List(Of String))
@@ -1049,5 +1050,13 @@ Public Class frmWasteManagement
 
     Private Sub btnDeleteNonRecycled_Click(sender As Object, e As EventArgs) Handles btnDeleteNonRecycled.Click
 
+    End Sub
+
+    Private Sub btnHome_Click(sender As Object, e As EventArgs) Handles btnHome.Click
+        frmDashboard.Show()
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        frmCollectorManagement.Show()
     End Sub
 End Class

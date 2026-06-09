@@ -11,6 +11,7 @@ Public Class frmCollectorManagement
     End Sub
 
     Private Sub frmCollectorManagement_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ApplyModernStyle(Me)
         LoadCollectors()
         SetupForm(Me)
     End Sub
@@ -315,5 +316,10 @@ Public Class frmCollectorManagement
         lblLicenseStatus.ForeColor = Color.Gray
         currentCollectorID = -1
         txtCollectorName.Focus()
+    End Sub
+
+    Private Sub btnHome_Click(sender As Object, e As EventArgs) Handles btnHome.Click
+        frmDashboard.Show()
+        Me.Close()
     End Sub
 End Class

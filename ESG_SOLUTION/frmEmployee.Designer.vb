@@ -615,6 +615,7 @@ Partial Class frmEmployee
         Controls.Add(GroupBoxFilters)
         Controls.Add(GroupBoxGrid)
         Name = "frmEmployee"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "Employee Management System - Details Viewer"
         CType(DataGridViewEmployees, ComponentModel.ISupportInitialize).EndInit()
         GroupBoxGrid.ResumeLayout(False)

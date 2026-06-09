@@ -22,9 +22,12 @@ Partial Class frmESGMain
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmESGMain))
         tcMain = New TabControl()
         tpHSE = New TabPage()
         grpHSEFilter = New GroupBox()
+        btnDeleteHSE = New Button()
         btnClearHSEFilter = New Button()
         btnExportHSE = New Button()
         btnApplyHSEFilter = New Button()
@@ -34,6 +37,7 @@ Partial Class frmESGMain
         Label89 = New Label()
         dgvHSE = New DataGridView()
         GroupBoxHSE = New GroupBox()
+        btnHome = New Button()
         txtOtherWorkshopName = New TextBox()
         Label6 = New Label()
         btnLoadHSE = New Button()
@@ -50,6 +54,7 @@ Partial Class frmESGMain
         Label1 = New Label()
         tpSafety = New TabPage()
         grpSafetyFilter = New GroupBox()
+        btnDeleteSafety = New Button()
         btnClearSafetyFilter = New Button()
         btnExportSafety = New Button()
         btnApplySafetyFilter = New Button()
@@ -60,6 +65,7 @@ Partial Class frmESGMain
         Label91 = New Label()
         dgvSafety = New DataGridView()
         GroupBoxSafety = New GroupBox()
+        Button1 = New Button()
         nudDeaths = New NumericUpDown()
         Label14 = New Label()
         nudIllness = New NumericUpDown()
@@ -79,6 +85,7 @@ Partial Class frmESGMain
         Label7 = New Label()
         tpGrievances = New TabPage()
         grpGrievancesFilter = New GroupBox()
+        btnDeleteGrievances = New Button()
         btnClearGrievancesFilter = New Button()
         btnExportGrievances = New Button()
         btnApplyGrievancesFilter = New Button()
@@ -89,6 +96,7 @@ Partial Class frmESGMain
         Label93 = New Label()
         dgvGrievances = New DataGridView()
         GroupBoxGrievances = New GroupBox()
+        Button2 = New Button()
         nudUnresolvedGrievances = New NumericUpDown()
         Label16 = New Label()
         nudTotalGrievances = New NumericUpDown()
@@ -109,6 +117,7 @@ Partial Class frmESGMain
         Label96 = New Label()
         Label95 = New Label()
         GroupBoxBasic = New GroupBox()
+        Button3 = New Button()
         btnDeleteAgeCategory = New Button()
         lstAgeCategories = New ListBox()
         btnAddAge = New Button()
@@ -376,6 +385,19 @@ Partial Class frmESGMain
         dtpLanguages = New DateTimePicker()
         Label88 = New Label()
         btnExportSocial = New Button()
+        cmsHSE = New ContextMenuStrip(components)
+        cmsSafety = New ContextMenuStrip(components)
+        cmsGrievances = New ContextMenuStrip(components)
+        cmsSocialBasic = New ContextMenuStrip(components)
+        cmsSocialSkills = New ContextMenuStrip(components)
+        cmsSocialPromotions = New ContextMenuStrip(components)
+        cmsSocialManagement = New ContextMenuStrip(components)
+        cmsSocialDisabilities = New ContextMenuStrip(components)
+        cmsSocialBehavior = New ContextMenuStrip(components)
+        cmsSocialIdentification = New ContextMenuStrip(components)
+        cmsSocialNations = New ContextMenuStrip(components)
+        cmsSocialReligions = New ContextMenuStrip(components)
+        cmsSocialLanguages = New ContextMenuStrip(components)
         tcMain.SuspendLayout()
         tpHSE.SuspendLayout()
         grpHSEFilter.SuspendLayout()
@@ -516,10 +538,10 @@ Partial Class frmESGMain
         tcMain.Controls.Add(tpSocial)
         tcMain.Dock = DockStyle.Fill
         tcMain.Location = New Point(0, 0)
-        tcMain.Margin = New Padding(3, 2, 3, 2)
         tcMain.Name = "tcMain"
+        tcMain.Padding = New Point(0, 0)
         tcMain.SelectedIndex = 0
-        tcMain.Size = New Size(815, 525)
+        tcMain.Size = New Size(815, 587)
         tcMain.TabIndex = 0
         ' 
         ' tpHSE
@@ -528,16 +550,16 @@ Partial Class frmESGMain
         tpHSE.Controls.Add(dgvHSE)
         tpHSE.Controls.Add(GroupBoxHSE)
         tpHSE.Location = New Point(4, 24)
-        tpHSE.Margin = New Padding(3, 2, 3, 2)
         tpHSE.Name = "tpHSE"
-        tpHSE.Padding = New Padding(3, 2, 3, 2)
-        tpHSE.Size = New Size(807, 497)
+        tpHSE.Padding = New Padding(3)
+        tpHSE.Size = New Size(807, 559)
         tpHSE.TabIndex = 0
         tpHSE.Text = "HSE Training"
         tpHSE.UseVisualStyleBackColor = True
         ' 
         ' grpHSEFilter
         ' 
+        grpHSEFilter.Controls.Add(btnDeleteHSE)
         grpHSEFilter.Controls.Add(btnClearHSEFilter)
         grpHSEFilter.Controls.Add(btnExportHSE)
         grpHSEFilter.Controls.Add(btnApplyHSEFilter)
@@ -546,18 +568,25 @@ Partial Class frmESGMain
         grpHSEFilter.Controls.Add(Label90)
         grpHSEFilter.Controls.Add(Label89)
         grpHSEFilter.Location = New Point(7, 210)
-        grpHSEFilter.Margin = New Padding(3, 2, 3, 2)
         grpHSEFilter.Name = "grpHSEFilter"
-        grpHSEFilter.Padding = New Padding(3, 2, 3, 2)
         grpHSEFilter.Size = New Size(779, 60)
         grpHSEFilter.TabIndex = 6
         grpHSEFilter.TabStop = False
         grpHSEFilter.Text = "Filter Data"
         ' 
+        ' btnDeleteHSE
+        ' 
+        btnDeleteHSE.BackColor = Color.LightCoral
+        btnDeleteHSE.Location = New Point(677, 20)
+        btnDeleteHSE.Name = "btnDeleteHSE"
+        btnDeleteHSE.Size = New Size(88, 28)
+        btnDeleteHSE.TabIndex = 6
+        btnDeleteHSE.Text = "Delete"
+        btnDeleteHSE.UseVisualStyleBackColor = False
+        ' 
         ' btnClearHSEFilter
         ' 
         btnClearHSEFilter.Location = New Point(484, 20)
-        btnClearHSEFilter.Margin = New Padding(3, 2, 3, 2)
         btnClearHSEFilter.Name = "btnClearHSEFilter"
         btnClearHSEFilter.Size = New Size(88, 28)
         btnClearHSEFilter.TabIndex = 5
@@ -568,7 +597,6 @@ Partial Class frmESGMain
         ' 
         btnExportHSE.BackColor = Color.LightBlue
         btnExportHSE.Location = New Point(581, 20)
-        btnExportHSE.Margin = New Padding(3, 2, 3, 2)
         btnExportHSE.Name = "btnExportHSE"
         btnExportHSE.Size = New Size(88, 28)
         btnExportHSE.TabIndex = 5
@@ -579,7 +607,6 @@ Partial Class frmESGMain
         ' 
         btnApplyHSEFilter.BackColor = Color.LightBlue
         btnApplyHSEFilter.Location = New Point(388, 20)
-        btnApplyHSEFilter.Margin = New Padding(3, 2, 3, 2)
         btnApplyHSEFilter.Name = "btnApplyHSEFilter"
         btnApplyHSEFilter.Size = New Size(88, 28)
         btnApplyHSEFilter.TabIndex = 4
@@ -591,7 +618,6 @@ Partial Class frmESGMain
         dtpHSEFilterMonth.CustomFormat = "MMMM"
         dtpHSEFilterMonth.Format = DateTimePickerFormat.Custom
         dtpHSEFilterMonth.Location = New Point(262, 15)
-        dtpHSEFilterMonth.Margin = New Padding(3, 2, 3, 2)
         dtpHSEFilterMonth.Name = "dtpHSEFilterMonth"
         dtpHSEFilterMonth.Size = New Size(114, 23)
         dtpHSEFilterMonth.TabIndex = 3
@@ -601,7 +627,6 @@ Partial Class frmESGMain
         dtpHSEFilterYear.CustomFormat = "yyyy"
         dtpHSEFilterYear.Format = DateTimePickerFormat.Custom
         dtpHSEFilterYear.Location = New Point(114, 15)
-        dtpHSEFilterYear.Margin = New Padding(3, 2, 3, 2)
         dtpHSEFilterYear.Name = "dtpHSEFilterYear"
         dtpHSEFilterYear.ShowUpDown = True
         dtpHSEFilterYear.Size = New Size(75, 23)
@@ -629,7 +654,6 @@ Partial Class frmESGMain
         ' 
         dgvHSE.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         dgvHSE.Location = New Point(7, 278)
-        dgvHSE.Margin = New Padding(3, 2, 3, 2)
         dgvHSE.Name = "dgvHSE"
         dgvHSE.RowHeadersWidth = 51
         dgvHSE.Size = New Size(779, 188)
@@ -637,6 +661,7 @@ Partial Class frmESGMain
         ' 
         ' GroupBoxHSE
         ' 
+        GroupBoxHSE.Controls.Add(btnHome)
         GroupBoxHSE.Controls.Add(txtOtherWorkshopName)
         GroupBoxHSE.Controls.Add(Label6)
         GroupBoxHSE.Controls.Add(btnLoadHSE)
@@ -652,18 +677,25 @@ Partial Class frmESGMain
         GroupBoxHSE.Controls.Add(dtpHSE)
         GroupBoxHSE.Controls.Add(Label1)
         GroupBoxHSE.Location = New Point(7, 8)
-        GroupBoxHSE.Margin = New Padding(3, 2, 3, 2)
         GroupBoxHSE.Name = "GroupBoxHSE"
-        GroupBoxHSE.Padding = New Padding(3, 2, 3, 2)
         GroupBoxHSE.Size = New Size(779, 188)
         GroupBoxHSE.TabIndex = 1
         GroupBoxHSE.TabStop = False
         GroupBoxHSE.Text = "HSE Training Data Entry"
         ' 
+        ' btnHome
+        ' 
+        btnHome.BackgroundImage = CType(resources.GetObject("btnHome.BackgroundImage"), Image)
+        btnHome.BackgroundImageLayout = ImageLayout.Stretch
+        btnHome.Location = New Point(720, 19)
+        btnHome.Name = "btnHome"
+        btnHome.Size = New Size(45, 38)
+        btnHome.TabIndex = 12
+        btnHome.UseVisualStyleBackColor = True
+        ' 
         ' txtOtherWorkshopName
         ' 
         txtOtherWorkshopName.Location = New Point(420, 79)
-        txtOtherWorkshopName.Margin = New Padding(3, 2, 3, 2)
         txtOtherWorkshopName.Name = "txtOtherWorkshopName"
         txtOtherWorkshopName.Size = New Size(114, 23)
         txtOtherWorkshopName.TabIndex = 11
@@ -680,7 +712,6 @@ Partial Class frmESGMain
         ' btnLoadHSE
         ' 
         btnLoadHSE.Location = New Point(464, 141)
-        btnLoadHSE.Margin = New Padding(3, 2, 3, 2)
         btnLoadHSE.Name = "btnLoadHSE"
         btnLoadHSE.Size = New Size(88, 27)
         btnLoadHSE.TabIndex = 4
@@ -691,7 +722,6 @@ Partial Class frmESGMain
         ' nudOtherWorkshop
         ' 
         nudOtherWorkshop.Location = New Point(420, 53)
-        nudOtherWorkshop.Margin = New Padding(3, 2, 3, 2)
         nudOtherWorkshop.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudOtherWorkshop.Name = "nudOtherWorkshop"
         nudOtherWorkshop.Size = New Size(114, 23)
@@ -701,7 +731,6 @@ Partial Class frmESGMain
         ' 
         btnSaveHSE.BackColor = Color.LightGreen
         btnSaveHSE.Location = New Point(370, 141)
-        btnSaveHSE.Margin = New Padding(3, 2, 3, 2)
         btnSaveHSE.Name = "btnSaveHSE"
         btnSaveHSE.Size = New Size(88, 27)
         btnSaveHSE.TabIndex = 3
@@ -720,7 +749,6 @@ Partial Class frmESGMain
         ' nudFireFighting
         ' 
         nudFireFighting.Location = New Point(420, 26)
-        nudFireFighting.Margin = New Padding(3, 2, 3, 2)
         nudFireFighting.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudFireFighting.Name = "nudFireFighting"
         nudFireFighting.Size = New Size(114, 23)
@@ -738,7 +766,6 @@ Partial Class frmESGMain
         ' nudFirstAid
         ' 
         nudFirstAid.Location = New Point(105, 79)
-        nudFirstAid.Margin = New Padding(3, 2, 3, 2)
         nudFirstAid.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudFirstAid.Name = "nudFirstAid"
         nudFirstAid.Size = New Size(114, 23)
@@ -756,7 +783,6 @@ Partial Class frmESGMain
         ' nudHSECount
         ' 
         nudHSECount.Location = New Point(105, 52)
-        nudHSECount.Margin = New Padding(3, 2, 3, 2)
         nudHSECount.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudHSECount.Name = "nudHSECount"
         nudHSECount.Size = New Size(114, 23)
@@ -776,7 +802,6 @@ Partial Class frmESGMain
         dtpHSE.CustomFormat = "MMMM yyyy"
         dtpHSE.Format = DateTimePickerFormat.Custom
         dtpHSE.Location = New Point(105, 25)
-        dtpHSE.Margin = New Padding(3, 2, 3, 2)
         dtpHSE.Name = "dtpHSE"
         dtpHSE.Size = New Size(114, 23)
         dtpHSE.TabIndex = 1
@@ -796,16 +821,16 @@ Partial Class frmESGMain
         tpSafety.Controls.Add(dgvSafety)
         tpSafety.Controls.Add(GroupBoxSafety)
         tpSafety.Location = New Point(4, 24)
-        tpSafety.Margin = New Padding(3, 2, 3, 2)
         tpSafety.Name = "tpSafety"
-        tpSafety.Padding = New Padding(3, 2, 3, 2)
-        tpSafety.Size = New Size(807, 497)
+        tpSafety.Padding = New Padding(3)
+        tpSafety.Size = New Size(807, 559)
         tpSafety.TabIndex = 1
         tpSafety.Text = "Safety Incidents"
         tpSafety.UseVisualStyleBackColor = True
         ' 
         ' grpSafetyFilter
         ' 
+        grpSafetyFilter.Controls.Add(btnDeleteSafety)
         grpSafetyFilter.Controls.Add(btnClearSafetyFilter)
         grpSafetyFilter.Controls.Add(btnExportSafety)
         grpSafetyFilter.Controls.Add(btnApplySafetyFilter)
@@ -815,18 +840,25 @@ Partial Class frmESGMain
         grpSafetyFilter.Controls.Add(Label92)
         grpSafetyFilter.Controls.Add(Label91)
         grpSafetyFilter.Location = New Point(8, 177)
-        grpSafetyFilter.Margin = New Padding(3, 2, 3, 2)
         grpSafetyFilter.Name = "grpSafetyFilter"
-        grpSafetyFilter.Padding = New Padding(3, 2, 3, 2)
         grpSafetyFilter.Size = New Size(776, 59)
         grpSafetyFilter.TabIndex = 6
         grpSafetyFilter.TabStop = False
         grpSafetyFilter.Text = "Filter Data"
         ' 
+        ' btnDeleteSafety
+        ' 
+        btnDeleteSafety.BackColor = Color.LightCoral
+        btnDeleteSafety.Location = New Point(682, 14)
+        btnDeleteSafety.Name = "btnDeleteSafety"
+        btnDeleteSafety.Size = New Size(88, 25)
+        btnDeleteSafety.TabIndex = 6
+        btnDeleteSafety.Text = "Delete"
+        btnDeleteSafety.UseVisualStyleBackColor = False
+        ' 
         ' btnClearSafetyFilter
         ' 
-        btnClearSafetyFilter.Location = New Point(556, 16)
-        btnClearSafetyFilter.Margin = New Padding(3, 2, 3, 2)
+        btnClearSafetyFilter.Location = New Point(495, 14)
         btnClearSafetyFilter.Name = "btnClearSafetyFilter"
         btnClearSafetyFilter.Size = New Size(88, 25)
         btnClearSafetyFilter.TabIndex = 5
@@ -836,8 +868,7 @@ Partial Class frmESGMain
         ' btnExportSafety
         ' 
         btnExportSafety.BackColor = Color.LightBlue
-        btnExportSafety.Location = New Point(653, 16)
-        btnExportSafety.Margin = New Padding(3, 2, 3, 2)
+        btnExportSafety.Location = New Point(588, 14)
         btnExportSafety.Name = "btnExportSafety"
         btnExportSafety.Size = New Size(88, 25)
         btnExportSafety.TabIndex = 5
@@ -847,8 +878,7 @@ Partial Class frmESGMain
         ' btnApplySafetyFilter
         ' 
         btnApplySafetyFilter.BackColor = Color.LightBlue
-        btnApplySafetyFilter.Location = New Point(460, 16)
-        btnApplySafetyFilter.Margin = New Padding(3, 2, 3, 2)
+        btnApplySafetyFilter.Location = New Point(401, 14)
         btnApplySafetyFilter.Name = "btnApplySafetyFilter"
         btnApplySafetyFilter.Size = New Size(88, 25)
         btnApplySafetyFilter.TabIndex = 4
@@ -858,7 +888,6 @@ Partial Class frmESGMain
         ' btnLoadSafety
         ' 
         btnLoadSafety.Location = New Point(805, 16)
-        btnLoadSafety.Margin = New Padding(3, 2, 3, 2)
         btnLoadSafety.Name = "btnLoadSafety"
         btnLoadSafety.Size = New Size(88, 19)
         btnLoadSafety.TabIndex = 4
@@ -870,8 +899,7 @@ Partial Class frmESGMain
         ' 
         dtpSafetyFilterMonth.CustomFormat = "MMMM"
         dtpSafetyFilterMonth.Format = DateTimePickerFormat.Custom
-        dtpSafetyFilterMonth.Location = New Point(324, 14)
-        dtpSafetyFilterMonth.Margin = New Padding(3, 2, 3, 2)
+        dtpSafetyFilterMonth.Location = New Point(281, 13)
         dtpSafetyFilterMonth.Name = "dtpSafetyFilterMonth"
         dtpSafetyFilterMonth.Size = New Size(114, 23)
         dtpSafetyFilterMonth.TabIndex = 3
@@ -880,8 +908,7 @@ Partial Class frmESGMain
         ' 
         dtpSafetyFilterYear.CustomFormat = "yyyy"
         dtpSafetyFilterYear.Format = DateTimePickerFormat.Custom
-        dtpSafetyFilterYear.Location = New Point(149, 14)
-        dtpSafetyFilterYear.Margin = New Padding(3, 2, 3, 2)
+        dtpSafetyFilterYear.Location = New Point(117, 13)
         dtpSafetyFilterYear.Name = "dtpSafetyFilterYear"
         dtpSafetyFilterYear.ShowUpDown = True
         dtpSafetyFilterYear.Size = New Size(75, 23)
@@ -890,7 +917,7 @@ Partial Class frmESGMain
         ' Label92
         ' 
         Label92.AutoSize = True
-        Label92.Location = New Point(262, 16)
+        Label92.Location = New Point(229, 16)
         Label92.Name = "Label92"
         Label92.Size = New Size(46, 15)
         Label92.TabIndex = 1
@@ -909,7 +936,6 @@ Partial Class frmESGMain
         ' 
         dgvSafety.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         dgvSafety.Location = New Point(7, 247)
-        dgvSafety.Margin = New Padding(3, 2, 3, 2)
         dgvSafety.Name = "dgvSafety"
         dgvSafety.RowHeadersWidth = 51
         dgvSafety.Size = New Size(777, 203)
@@ -917,6 +943,7 @@ Partial Class frmESGMain
         ' 
         ' GroupBoxSafety
         ' 
+        GroupBoxSafety.Controls.Add(Button1)
         GroupBoxSafety.Controls.Add(nudDeaths)
         GroupBoxSafety.Controls.Add(Label14)
         GroupBoxSafety.Controls.Add(nudIllness)
@@ -935,18 +962,25 @@ Partial Class frmESGMain
         GroupBoxSafety.Controls.Add(dtpSafety)
         GroupBoxSafety.Controls.Add(Label7)
         GroupBoxSafety.Location = New Point(8, 4)
-        GroupBoxSafety.Margin = New Padding(3, 2, 3, 2)
         GroupBoxSafety.Name = "GroupBoxSafety"
-        GroupBoxSafety.Padding = New Padding(3, 2, 3, 2)
         GroupBoxSafety.Size = New Size(776, 165)
         GroupBoxSafety.TabIndex = 1
         GroupBoxSafety.TabStop = False
         GroupBoxSafety.Text = "Safety Incidents Data Entry"
         ' 
+        ' Button1
+        ' 
+        Button1.BackgroundImage = CType(resources.GetObject("Button1.BackgroundImage"), Image)
+        Button1.BackgroundImageLayout = ImageLayout.Stretch
+        Button1.Location = New Point(725, 16)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(45, 38)
+        Button1.TabIndex = 16
+        Button1.UseVisualStyleBackColor = True
+        ' 
         ' nudDeaths
         ' 
         nudDeaths.Location = New Point(521, 116)
-        nudDeaths.Margin = New Padding(3, 2, 3, 2)
         nudDeaths.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudDeaths.Name = "nudDeaths"
         nudDeaths.Size = New Size(114, 23)
@@ -964,7 +998,6 @@ Partial Class frmESGMain
         ' nudIllness
         ' 
         nudIllness.Location = New Point(521, 86)
-        nudIllness.Margin = New Padding(3, 2, 3, 2)
         nudIllness.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudIllness.Name = "nudIllness"
         nudIllness.Size = New Size(114, 23)
@@ -974,7 +1007,6 @@ Partial Class frmESGMain
         ' 
         btnSaveSafety.BackColor = Color.LightGreen
         btnSaveSafety.Location = New Point(664, 114)
-        btnSaveSafety.Margin = New Padding(3, 2, 3, 2)
         btnSaveSafety.Name = "btnSaveSafety"
         btnSaveSafety.Size = New Size(88, 23)
         btnSaveSafety.TabIndex = 3
@@ -993,7 +1025,6 @@ Partial Class frmESGMain
         ' nudInjuries
         ' 
         nudInjuries.Location = New Point(521, 56)
-        nudInjuries.Margin = New Padding(3, 2, 3, 2)
         nudInjuries.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudInjuries.Name = "nudInjuries"
         nudInjuries.Size = New Size(114, 23)
@@ -1011,7 +1042,6 @@ Partial Class frmESGMain
         ' nudTotalAccidents
         ' 
         nudTotalAccidents.Location = New Point(521, 26)
-        nudTotalAccidents.Margin = New Padding(3, 2, 3, 2)
         nudTotalAccidents.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudTotalAccidents.Name = "nudTotalAccidents"
         nudTotalAccidents.Size = New Size(114, 23)
@@ -1029,7 +1059,6 @@ Partial Class frmESGMain
         ' nudNearMisses
         ' 
         nudNearMisses.Location = New Point(219, 120)
-        nudNearMisses.Margin = New Padding(3, 2, 3, 2)
         nudNearMisses.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudNearMisses.Name = "nudNearMisses"
         nudNearMisses.Size = New Size(114, 23)
@@ -1047,7 +1076,6 @@ Partial Class frmESGMain
         ' nudEnvironmental
         ' 
         nudEnvironmental.Location = New Point(219, 90)
-        nudEnvironmental.Margin = New Padding(3, 2, 3, 2)
         nudEnvironmental.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudEnvironmental.Name = "nudEnvironmental"
         nudEnvironmental.Size = New Size(114, 23)
@@ -1065,7 +1093,6 @@ Partial Class frmESGMain
         ' nudPropertyDamage
         ' 
         nudPropertyDamage.Location = New Point(219, 60)
-        nudPropertyDamage.Margin = New Padding(3, 2, 3, 2)
         nudPropertyDamage.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudPropertyDamage.Name = "nudPropertyDamage"
         nudPropertyDamage.Size = New Size(114, 23)
@@ -1085,7 +1112,6 @@ Partial Class frmESGMain
         dtpSafety.CustomFormat = "MMMM yyyy"
         dtpSafety.Format = DateTimePickerFormat.Custom
         dtpSafety.Location = New Point(105, 22)
-        dtpSafety.Margin = New Padding(3, 2, 3, 2)
         dtpSafety.Name = "dtpSafety"
         dtpSafety.Size = New Size(158, 23)
         dtpSafety.TabIndex = 1
@@ -1105,15 +1131,15 @@ Partial Class frmESGMain
         tpGrievances.Controls.Add(dgvGrievances)
         tpGrievances.Controls.Add(GroupBoxGrievances)
         tpGrievances.Location = New Point(4, 24)
-        tpGrievances.Margin = New Padding(3, 2, 3, 2)
         tpGrievances.Name = "tpGrievances"
-        tpGrievances.Size = New Size(807, 497)
+        tpGrievances.Size = New Size(807, 559)
         tpGrievances.TabIndex = 2
         tpGrievances.Text = "Grievances"
         tpGrievances.UseVisualStyleBackColor = True
         ' 
         ' grpGrievancesFilter
         ' 
+        grpGrievancesFilter.Controls.Add(btnDeleteGrievances)
         grpGrievancesFilter.Controls.Add(btnClearGrievancesFilter)
         grpGrievancesFilter.Controls.Add(btnExportGrievances)
         grpGrievancesFilter.Controls.Add(btnApplyGrievancesFilter)
@@ -1123,18 +1149,25 @@ Partial Class frmESGMain
         grpGrievancesFilter.Controls.Add(Label94)
         grpGrievancesFilter.Controls.Add(Label93)
         grpGrievancesFilter.Location = New Point(7, 150)
-        grpGrievancesFilter.Margin = New Padding(3, 2, 3, 2)
         grpGrievancesFilter.Name = "grpGrievancesFilter"
-        grpGrievancesFilter.Padding = New Padding(3, 2, 3, 2)
         grpGrievancesFilter.Size = New Size(788, 56)
         grpGrievancesFilter.TabIndex = 6
         grpGrievancesFilter.TabStop = False
         grpGrievancesFilter.Text = "Filter Data"
         ' 
+        ' btnDeleteGrievances
+        ' 
+        btnDeleteGrievances.BackColor = Color.LightCoral
+        btnDeleteGrievances.Location = New Point(688, 20)
+        btnDeleteGrievances.Name = "btnDeleteGrievances"
+        btnDeleteGrievances.Size = New Size(88, 23)
+        btnDeleteGrievances.TabIndex = 6
+        btnDeleteGrievances.Text = "Delete"
+        btnDeleteGrievances.UseVisualStyleBackColor = False
+        ' 
         ' btnClearGrievancesFilter
         ' 
         btnClearGrievancesFilter.Location = New Point(496, 20)
-        btnClearGrievancesFilter.Margin = New Padding(3, 2, 3, 2)
         btnClearGrievancesFilter.Name = "btnClearGrievancesFilter"
         btnClearGrievancesFilter.Size = New Size(88, 23)
         btnClearGrievancesFilter.TabIndex = 5
@@ -1145,7 +1178,6 @@ Partial Class frmESGMain
         ' 
         btnExportGrievances.BackColor = Color.LightBlue
         btnExportGrievances.Location = New Point(593, 20)
-        btnExportGrievances.Margin = New Padding(3, 2, 3, 2)
         btnExportGrievances.Name = "btnExportGrievances"
         btnExportGrievances.Size = New Size(88, 23)
         btnExportGrievances.TabIndex = 5
@@ -1156,7 +1188,6 @@ Partial Class frmESGMain
         ' 
         btnApplyGrievancesFilter.BackColor = Color.LightBlue
         btnApplyGrievancesFilter.Location = New Point(400, 20)
-        btnApplyGrievancesFilter.Margin = New Padding(3, 2, 3, 2)
         btnApplyGrievancesFilter.Name = "btnApplyGrievancesFilter"
         btnApplyGrievancesFilter.Size = New Size(88, 23)
         btnApplyGrievancesFilter.TabIndex = 4
@@ -1166,7 +1197,6 @@ Partial Class frmESGMain
         ' btnLoadGrievances
         ' 
         btnLoadGrievances.Location = New Point(689, 20)
-        btnLoadGrievances.Margin = New Padding(3, 2, 3, 2)
         btnLoadGrievances.Name = "btnLoadGrievances"
         btnLoadGrievances.Size = New Size(88, 23)
         btnLoadGrievances.TabIndex = 4
@@ -1179,7 +1209,6 @@ Partial Class frmESGMain
         dtpGrievancesFilterMonth.CustomFormat = "MMMM"
         dtpGrievancesFilterMonth.Format = DateTimePickerFormat.Custom
         dtpGrievancesFilterMonth.Location = New Point(241, 14)
-        dtpGrievancesFilterMonth.Margin = New Padding(3, 2, 3, 2)
         dtpGrievancesFilterMonth.Name = "dtpGrievancesFilterMonth"
         dtpGrievancesFilterMonth.Size = New Size(114, 23)
         dtpGrievancesFilterMonth.TabIndex = 3
@@ -1189,7 +1218,6 @@ Partial Class frmESGMain
         dtpGrievancesFilterYear.CustomFormat = "yyyy"
         dtpGrievancesFilterYear.Format = DateTimePickerFormat.Custom
         dtpGrievancesFilterYear.Location = New Point(111, 14)
-        dtpGrievancesFilterYear.Margin = New Padding(3, 2, 3, 2)
         dtpGrievancesFilterYear.Name = "dtpGrievancesFilterYear"
         dtpGrievancesFilterYear.ShowUpDown = True
         dtpGrievancesFilterYear.Size = New Size(75, 23)
@@ -1217,7 +1245,6 @@ Partial Class frmESGMain
         ' 
         dgvGrievances.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         dgvGrievances.Location = New Point(7, 218)
-        dgvGrievances.Margin = New Padding(3, 2, 3, 2)
         dgvGrievances.Name = "dgvGrievances"
         dgvGrievances.RowHeadersWidth = 51
         dgvGrievances.Size = New Size(788, 248)
@@ -1225,6 +1252,7 @@ Partial Class frmESGMain
         ' 
         ' GroupBoxGrievances
         ' 
+        GroupBoxGrievances.Controls.Add(Button2)
         GroupBoxGrievances.Controls.Add(nudUnresolvedGrievances)
         GroupBoxGrievances.Controls.Add(Label16)
         GroupBoxGrievances.Controls.Add(nudTotalGrievances)
@@ -1233,18 +1261,25 @@ Partial Class frmESGMain
         GroupBoxGrievances.Controls.Add(dtpGrievances)
         GroupBoxGrievances.Controls.Add(Label17)
         GroupBoxGrievances.Location = New Point(7, 8)
-        GroupBoxGrievances.Margin = New Padding(3, 2, 3, 2)
         GroupBoxGrievances.Name = "GroupBoxGrievances"
-        GroupBoxGrievances.Padding = New Padding(3, 2, 3, 2)
         GroupBoxGrievances.Size = New Size(788, 138)
         GroupBoxGrievances.TabIndex = 1
         GroupBoxGrievances.TabStop = False
         GroupBoxGrievances.Text = "Grievances Data Entry"
         ' 
+        ' Button2
+        ' 
+        Button2.BackgroundImage = CType(resources.GetObject("Button2.BackgroundImage"), Image)
+        Button2.BackgroundImageLayout = ImageLayout.Stretch
+        Button2.Location = New Point(737, 14)
+        Button2.Name = "Button2"
+        Button2.Size = New Size(45, 38)
+        Button2.TabIndex = 13
+        Button2.UseVisualStyleBackColor = True
+        ' 
         ' nudUnresolvedGrievances
         ' 
         nudUnresolvedGrievances.Location = New Point(225, 82)
-        nudUnresolvedGrievances.Margin = New Padding(3, 2, 3, 2)
         nudUnresolvedGrievances.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudUnresolvedGrievances.Name = "nudUnresolvedGrievances"
         nudUnresolvedGrievances.Size = New Size(158, 23)
@@ -1262,7 +1297,6 @@ Partial Class frmESGMain
         ' nudTotalGrievances
         ' 
         nudTotalGrievances.Location = New Point(225, 52)
-        nudTotalGrievances.Margin = New Padding(3, 2, 3, 2)
         nudTotalGrievances.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudTotalGrievances.Name = "nudTotalGrievances"
         nudTotalGrievances.Size = New Size(158, 23)
@@ -1272,7 +1306,6 @@ Partial Class frmESGMain
         ' 
         btnSaveGrievances.BackColor = Color.LightGreen
         btnSaveGrievances.Location = New Point(430, 82)
-        btnSaveGrievances.Margin = New Padding(3, 2, 3, 2)
         btnSaveGrievances.Name = "btnSaveGrievances"
         btnSaveGrievances.Size = New Size(88, 23)
         btnSaveGrievances.TabIndex = 3
@@ -1293,7 +1326,6 @@ Partial Class frmESGMain
         dtpGrievances.CustomFormat = "MMMM yyyy"
         dtpGrievances.Format = DateTimePickerFormat.Custom
         dtpGrievances.Location = New Point(105, 22)
-        dtpGrievances.Margin = New Padding(3, 2, 3, 2)
         dtpGrievances.Name = "dtpGrievances"
         dtpGrievances.Size = New Size(158, 23)
         dtpGrievances.TabIndex = 1
@@ -1312,9 +1344,8 @@ Partial Class frmESGMain
         tpSocial.Controls.Add(tcSocialCategories)
         tpSocial.Controls.Add(btnExportSocial)
         tpSocial.Location = New Point(4, 24)
-        tpSocial.Margin = New Padding(3, 2, 3, 2)
         tpSocial.Name = "tpSocial"
-        tpSocial.Size = New Size(807, 497)
+        tpSocial.Size = New Size(807, 559)
         tpSocial.TabIndex = 3
         tpSocial.Text = "Social Data"
         tpSocial.UseVisualStyleBackColor = True
@@ -1333,20 +1364,18 @@ Partial Class frmESGMain
         tcSocialCategories.Controls.Add(tabLanguages)
         tcSocialCategories.Dock = DockStyle.Fill
         tcSocialCategories.Location = New Point(0, 0)
-        tcSocialCategories.Margin = New Padding(3, 2, 3, 2)
         tcSocialCategories.Name = "tcSocialCategories"
         tcSocialCategories.SelectedIndex = 0
-        tcSocialCategories.Size = New Size(807, 497)
+        tcSocialCategories.Size = New Size(807, 559)
         tcSocialCategories.TabIndex = 10
         ' 
         ' tabBasicInfo
         ' 
         tabBasicInfo.Controls.Add(pnlBasic)
         tabBasicInfo.Location = New Point(4, 24)
-        tabBasicInfo.Margin = New Padding(3, 2, 3, 2)
         tabBasicInfo.Name = "tabBasicInfo"
-        tabBasicInfo.Padding = New Padding(3, 2, 3, 2)
-        tabBasicInfo.Size = New Size(799, 469)
+        tabBasicInfo.Padding = New Padding(3)
+        tabBasicInfo.Size = New Size(799, 531)
         tabBasicInfo.TabIndex = 0
         tabBasicInfo.Text = "Basic Info & Age"
         tabBasicInfo.UseVisualStyleBackColor = True
@@ -1357,17 +1386,15 @@ Partial Class frmESGMain
         pnlBasic.Controls.Add(grpSocialFilter)
         pnlBasic.Controls.Add(GroupBoxBasic)
         pnlBasic.Dock = DockStyle.Fill
-        pnlBasic.Location = New Point(3, 2)
-        pnlBasic.Margin = New Padding(3, 2, 3, 2)
+        pnlBasic.Location = New Point(3, 3)
         pnlBasic.Name = "pnlBasic"
-        pnlBasic.Size = New Size(793, 465)
+        pnlBasic.Size = New Size(793, 525)
         pnlBasic.TabIndex = 0
         ' 
         ' dgvSocialBasic
         ' 
         dgvSocialBasic.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         dgvSocialBasic.Location = New Point(11, 316)
-        dgvSocialBasic.Margin = New Padding(3, 2, 3, 2)
         dgvSocialBasic.Name = "dgvSocialBasic"
         dgvSocialBasic.RowHeadersWidth = 51
         dgvSocialBasic.Size = New Size(764, 140)
@@ -1382,9 +1409,7 @@ Partial Class frmESGMain
         grpSocialFilter.Controls.Add(Label96)
         grpSocialFilter.Controls.Add(Label95)
         grpSocialFilter.Location = New Point(11, 265)
-        grpSocialFilter.Margin = New Padding(3, 2, 3, 2)
         grpSocialFilter.Name = "grpSocialFilter"
-        grpSocialFilter.Padding = New Padding(3, 2, 3, 2)
         grpSocialFilter.Size = New Size(764, 47)
         grpSocialFilter.TabIndex = 10
         grpSocialFilter.TabStop = False
@@ -1392,8 +1417,7 @@ Partial Class frmESGMain
         ' 
         ' btnClearSocialFilter
         ' 
-        btnClearSocialFilter.Location = New Point(350, 14)
-        btnClearSocialFilter.Margin = New Padding(3, 2, 3, 2)
+        btnClearSocialFilter.Location = New Point(410, 14)
         btnClearSocialFilter.Name = "btnClearSocialFilter"
         btnClearSocialFilter.Size = New Size(75, 23)
         btnClearSocialFilter.TabIndex = 5
@@ -1403,8 +1427,7 @@ Partial Class frmESGMain
         ' btnApplySocialFilter
         ' 
         btnApplySocialFilter.BackColor = SystemColors.Control
-        btnApplySocialFilter.Location = New Point(271, 14)
-        btnApplySocialFilter.Margin = New Padding(3, 2, 3, 2)
+        btnApplySocialFilter.Location = New Point(331, 14)
         btnApplySocialFilter.Name = "btnApplySocialFilter"
         btnApplySocialFilter.Size = New Size(75, 23)
         btnApplySocialFilter.TabIndex = 4
@@ -1415,8 +1438,7 @@ Partial Class frmESGMain
         ' 
         dtpSocialFilterMonth.CustomFormat = "MMMM"
         dtpSocialFilterMonth.Format = DateTimePickerFormat.Custom
-        dtpSocialFilterMonth.Location = New Point(175, 12)
-        dtpSocialFilterMonth.Margin = New Padding(3, 2, 3, 2)
+        dtpSocialFilterMonth.Location = New Point(208, 15)
         dtpSocialFilterMonth.Name = "dtpSocialFilterMonth"
         dtpSocialFilterMonth.Size = New Size(79, 23)
         dtpSocialFilterMonth.TabIndex = 3
@@ -1425,8 +1447,7 @@ Partial Class frmESGMain
         ' 
         dtpSocialFilterYear.CustomFormat = "yyyy"
         dtpSocialFilterYear.Format = DateTimePickerFormat.Custom
-        dtpSocialFilterYear.Location = New Point(78, 12)
-        dtpSocialFilterYear.Margin = New Padding(3, 2, 3, 2)
+        dtpSocialFilterYear.Location = New Point(79, 15)
         dtpSocialFilterYear.Name = "dtpSocialFilterYear"
         dtpSocialFilterYear.ShowUpDown = True
         dtpSocialFilterYear.Size = New Size(62, 23)
@@ -1435,23 +1456,24 @@ Partial Class frmESGMain
         ' Label96
         ' 
         Label96.AutoSize = True
-        Label96.Location = New Point(158, 15)
+        Label96.Location = New Point(156, 19)
         Label96.Name = "Label96"
-        Label96.Size = New Size(21, 15)
+        Label96.Size = New Size(46, 15)
         Label96.TabIndex = 1
-        Label96.Text = "M:"
+        Label96.Text = "Month:"
         ' 
         ' Label95
         ' 
         Label95.AutoSize = True
-        Label95.Location = New Point(65, 15)
+        Label95.Location = New Point(35, 18)
         Label95.Name = "Label95"
-        Label95.Size = New Size(17, 15)
+        Label95.Size = New Size(32, 15)
         Label95.TabIndex = 0
-        Label95.Text = "Y:"
+        Label95.Text = "Year:"
         ' 
         ' GroupBoxBasic
         ' 
+        GroupBoxBasic.Controls.Add(Button3)
         GroupBoxBasic.Controls.Add(btnDeleteAgeCategory)
         GroupBoxBasic.Controls.Add(lstAgeCategories)
         GroupBoxBasic.Controls.Add(btnAddAge)
@@ -1469,19 +1491,26 @@ Partial Class frmESGMain
         GroupBoxBasic.Controls.Add(dtpSocial)
         GroupBoxBasic.Controls.Add(Label19)
         GroupBoxBasic.Location = New Point(18, 15)
-        GroupBoxBasic.Margin = New Padding(3, 2, 3, 2)
         GroupBoxBasic.Name = "GroupBoxBasic"
-        GroupBoxBasic.Padding = New Padding(3, 2, 3, 2)
         GroupBoxBasic.Size = New Size(757, 246)
         GroupBoxBasic.TabIndex = 9
         GroupBoxBasic.TabStop = False
         GroupBoxBasic.Text = "Basic Information"
         ' 
+        ' Button3
+        ' 
+        Button3.BackgroundImage = CType(resources.GetObject("Button3.BackgroundImage"), Image)
+        Button3.BackgroundImageLayout = ImageLayout.Stretch
+        Button3.Location = New Point(706, 13)
+        Button3.Name = "Button3"
+        Button3.Size = New Size(45, 38)
+        Button3.TabIndex = 17
+        Button3.UseVisualStyleBackColor = True
+        ' 
         ' btnDeleteAgeCategory
         ' 
         btnDeleteAgeCategory.BackColor = SystemColors.Control
         btnDeleteAgeCategory.Location = New Point(298, 163)
-        btnDeleteAgeCategory.Margin = New Padding(3, 2, 3, 2)
         btnDeleteAgeCategory.Name = "btnDeleteAgeCategory"
         btnDeleteAgeCategory.Size = New Size(105, 26)
         btnDeleteAgeCategory.TabIndex = 16
@@ -1493,7 +1522,6 @@ Partial Class frmESGMain
         lstAgeCategories.FormattingEnabled = True
         lstAgeCategories.ItemHeight = 15
         lstAgeCategories.Location = New Point(105, 140)
-        lstAgeCategories.Margin = New Padding(3, 2, 3, 2)
         lstAgeCategories.Name = "lstAgeCategories"
         lstAgeCategories.Size = New Size(187, 79)
         lstAgeCategories.TabIndex = 15
@@ -1501,7 +1529,6 @@ Partial Class frmESGMain
         ' btnAddAge
         ' 
         btnAddAge.Location = New Point(420, 111)
-        btnAddAge.Margin = New Padding(3, 2, 3, 2)
         btnAddAge.Name = "btnAddAge"
         btnAddAge.Size = New Size(79, 23)
         btnAddAge.TabIndex = 14
@@ -1512,7 +1539,6 @@ Partial Class frmESGMain
         ' 
         btnSaveBasic.BackColor = SystemColors.Control
         btnSaveBasic.Location = New Point(423, 209)
-        btnSaveBasic.Margin = New Padding(3, 2, 3, 2)
         btnSaveBasic.Name = "btnSaveBasic"
         btnSaveBasic.Size = New Size(88, 33)
         btnSaveBasic.TabIndex = 12
@@ -1522,7 +1548,6 @@ Partial Class frmESGMain
         ' nudAgeCount
         ' 
         nudAgeCount.Location = New Point(298, 111)
-        nudAgeCount.Margin = New Padding(3, 2, 3, 2)
         nudAgeCount.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudAgeCount.Name = "nudAgeCount"
         nudAgeCount.Size = New Size(59, 23)
@@ -1532,7 +1557,6 @@ Partial Class frmESGMain
         ' 
         btnUpdateBasic.BackColor = SystemColors.Control
         btnUpdateBasic.Location = New Point(519, 209)
-        btnUpdateBasic.Margin = New Padding(3, 2, 3, 2)
         btnUpdateBasic.Name = "btnUpdateBasic"
         btnUpdateBasic.Size = New Size(88, 33)
         btnUpdateBasic.TabIndex = 13
@@ -1546,7 +1570,6 @@ Partial Class frmESGMain
         cboAgeCategory.FormattingEnabled = True
         cboAgeCategory.Items.AddRange(New Object() {"17 years old or less", "Between 18 and 30 years old", "Between 31 and 50 years old", "50 years old or above"})
         cboAgeCategory.Location = New Point(105, 111)
-        cboAgeCategory.Margin = New Padding(3, 2, 3, 2)
         cboAgeCategory.Name = "cboAgeCategory"
         cboAgeCategory.Size = New Size(187, 23)
         cboAgeCategory.TabIndex = 12
@@ -1555,7 +1578,6 @@ Partial Class frmESGMain
         ' 
         btnCancelBasic.BackColor = SystemColors.Control
         btnCancelBasic.Location = New Point(615, 209)
-        btnCancelBasic.Margin = New Padding(3, 2, 3, 2)
         btnCancelBasic.Name = "btnCancelBasic"
         btnCancelBasic.Size = New Size(88, 33)
         btnCancelBasic.TabIndex = 14
@@ -1584,7 +1606,6 @@ Partial Class frmESGMain
         ' nudFemale
         ' 
         nudFemale.Location = New Point(105, 83)
-        nudFemale.Margin = New Padding(3, 2, 3, 2)
         nudFemale.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudFemale.Name = "nudFemale"
         nudFemale.Size = New Size(122, 23)
@@ -1602,7 +1623,6 @@ Partial Class frmESGMain
         ' nudMale
         ' 
         nudMale.Location = New Point(105, 58)
-        nudMale.Margin = New Padding(3, 2, 3, 2)
         nudMale.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudMale.Name = "nudMale"
         nudMale.Size = New Size(122, 23)
@@ -1622,7 +1642,6 @@ Partial Class frmESGMain
         dtpSocial.CustomFormat = "MMMM yyyy"
         dtpSocial.Format = DateTimePickerFormat.Custom
         dtpSocial.Location = New Point(105, 19)
-        dtpSocial.Margin = New Padding(3, 2, 3, 2)
         dtpSocial.Name = "dtpSocial"
         dtpSocial.Size = New Size(158, 23)
         dtpSocial.TabIndex = 4
@@ -1640,10 +1659,9 @@ Partial Class frmESGMain
         ' 
         tabSkills.Controls.Add(pnlSkills)
         tabSkills.Location = New Point(4, 24)
-        tabSkills.Margin = New Padding(3, 2, 3, 2)
         tabSkills.Name = "tabSkills"
-        tabSkills.Padding = New Padding(3, 2, 3, 2)
-        tabSkills.Size = New Size(799, 469)
+        tabSkills.Padding = New Padding(3)
+        tabSkills.Size = New Size(799, 531)
         tabSkills.TabIndex = 1
         tabSkills.Text = "Skills"
         tabSkills.UseVisualStyleBackColor = True
@@ -1654,17 +1672,15 @@ Partial Class frmESGMain
         pnlSkills.Controls.Add(grpSkillsFilter)
         pnlSkills.Controls.Add(GroupBoxSkills)
         pnlSkills.Dock = DockStyle.Fill
-        pnlSkills.Location = New Point(3, 2)
-        pnlSkills.Margin = New Padding(3, 2, 3, 2)
+        pnlSkills.Location = New Point(3, 3)
         pnlSkills.Name = "pnlSkills"
-        pnlSkills.Size = New Size(793, 465)
+        pnlSkills.Size = New Size(793, 525)
         pnlSkills.TabIndex = 1
         ' 
         ' dgvSocialSkills
         ' 
         dgvSocialSkills.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         dgvSocialSkills.Location = New Point(18, 310)
-        dgvSocialSkills.Margin = New Padding(3, 2, 3, 2)
         dgvSocialSkills.Name = "dgvSocialSkills"
         dgvSocialSkills.RowHeadersWidth = 51
         dgvSocialSkills.Size = New Size(757, 153)
@@ -1679,9 +1695,7 @@ Partial Class frmESGMain
         grpSkillsFilter.Controls.Add(Label97)
         grpSkillsFilter.Controls.Add(Label98)
         grpSkillsFilter.Location = New Point(18, 257)
-        grpSkillsFilter.Margin = New Padding(3, 2, 3, 2)
         grpSkillsFilter.Name = "grpSkillsFilter"
-        grpSkillsFilter.Padding = New Padding(3, 2, 3, 2)
         grpSkillsFilter.Size = New Size(757, 49)
         grpSkillsFilter.TabIndex = 18
         grpSkillsFilter.TabStop = False
@@ -1690,7 +1704,6 @@ Partial Class frmESGMain
         ' btnClearSkillsFilter
         ' 
         btnClearSkillsFilter.Location = New Point(350, 14)
-        btnClearSkillsFilter.Margin = New Padding(3, 2, 3, 2)
         btnClearSkillsFilter.Name = "btnClearSkillsFilter"
         btnClearSkillsFilter.Size = New Size(76, 23)
         btnClearSkillsFilter.TabIndex = 5
@@ -1701,7 +1714,6 @@ Partial Class frmESGMain
         ' 
         btnApplySkillsFilter.BackColor = SystemColors.Control
         btnApplySkillsFilter.Location = New Point(271, 14)
-        btnApplySkillsFilter.Margin = New Padding(3, 2, 3, 2)
         btnApplySkillsFilter.Name = "btnApplySkillsFilter"
         btnApplySkillsFilter.Size = New Size(76, 23)
         btnApplySkillsFilter.TabIndex = 4
@@ -1713,7 +1725,6 @@ Partial Class frmESGMain
         dtpSkillsFilterMonth.CustomFormat = "MMMM"
         dtpSkillsFilterMonth.Format = DateTimePickerFormat.Custom
         dtpSkillsFilterMonth.Location = New Point(175, 14)
-        dtpSkillsFilterMonth.Margin = New Padding(3, 2, 3, 2)
         dtpSkillsFilterMonth.Name = "dtpSkillsFilterMonth"
         dtpSkillsFilterMonth.Size = New Size(79, 23)
         dtpSkillsFilterMonth.TabIndex = 3
@@ -1723,7 +1734,6 @@ Partial Class frmESGMain
         dtpSkillsFilterYear.CustomFormat = "yyyy"
         dtpSkillsFilterYear.Format = DateTimePickerFormat.Custom
         dtpSkillsFilterYear.Location = New Point(88, 14)
-        dtpSkillsFilterYear.Margin = New Padding(3, 2, 3, 2)
         dtpSkillsFilterYear.Name = "dtpSkillsFilterYear"
         dtpSkillsFilterYear.ShowUpDown = True
         dtpSkillsFilterYear.Size = New Size(62, 23)
@@ -1761,9 +1771,7 @@ Partial Class frmESGMain
         GroupBoxSkills.Controls.Add(dtpSkills)
         GroupBoxSkills.Controls.Add(Label80)
         GroupBoxSkills.Location = New Point(18, 15)
-        GroupBoxSkills.Margin = New Padding(3, 2, 3, 2)
         GroupBoxSkills.Name = "GroupBoxSkills"
-        GroupBoxSkills.Padding = New Padding(3, 2, 3, 2)
         GroupBoxSkills.Size = New Size(757, 228)
         GroupBoxSkills.TabIndex = 17
         GroupBoxSkills.TabStop = False
@@ -1772,7 +1780,6 @@ Partial Class frmESGMain
         ' nudNewToIndustry
         ' 
         nudNewToIndustry.Location = New Point(349, 139)
-        nudNewToIndustry.Margin = New Padding(3, 2, 3, 2)
         nudNewToIndustry.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudNewToIndustry.Name = "nudNewToIndustry"
         nudNewToIndustry.Size = New Size(158, 23)
@@ -1790,7 +1797,6 @@ Partial Class frmESGMain
         ' nudHiredQualified
         ' 
         nudHiredQualified.Location = New Point(349, 109)
-        nudHiredQualified.Margin = New Padding(3, 2, 3, 2)
         nudHiredQualified.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudHiredQualified.Name = "nudHiredQualified"
         nudHiredQualified.Size = New Size(158, 23)
@@ -1800,7 +1806,6 @@ Partial Class frmESGMain
         ' 
         btnSaveSkills.BackColor = SystemColors.Control
         btnSaveSkills.Location = New Point(349, 196)
-        btnSaveSkills.Margin = New Padding(3, 2, 3, 2)
         btnSaveSkills.Name = "btnSaveSkills"
         btnSaveSkills.Size = New Size(88, 28)
         btnSaveSkills.TabIndex = 15
@@ -1820,7 +1825,6 @@ Partial Class frmESGMain
         ' 
         btnUpdateSkills.BackColor = SystemColors.Control
         btnUpdateSkills.Location = New Point(445, 196)
-        btnUpdateSkills.Margin = New Padding(3, 2, 3, 2)
         btnUpdateSkills.Name = "btnUpdateSkills"
         btnUpdateSkills.Size = New Size(88, 28)
         btnUpdateSkills.TabIndex = 16
@@ -1831,7 +1835,6 @@ Partial Class frmESGMain
         ' nudLearntAtNIRU
         ' 
         nudLearntAtNIRU.Location = New Point(349, 79)
-        nudLearntAtNIRU.Margin = New Padding(3, 2, 3, 2)
         nudLearntAtNIRU.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudLearntAtNIRU.Name = "nudLearntAtNIRU"
         nudLearntAtNIRU.Size = New Size(158, 23)
@@ -1841,7 +1844,6 @@ Partial Class frmESGMain
         ' 
         btnCancelSkills.BackColor = SystemColors.Control
         btnCancelSkills.Location = New Point(541, 196)
-        btnCancelSkills.Margin = New Padding(3, 2, 3, 2)
         btnCancelSkills.Name = "btnCancelSkills"
         btnCancelSkills.Size = New Size(88, 28)
         btnCancelSkills.TabIndex = 17
@@ -1863,7 +1865,6 @@ Partial Class frmESGMain
         dtpSkills.CustomFormat = "MMMM yyyy"
         dtpSkills.Format = DateTimePickerFormat.Custom
         dtpSkills.Location = New Point(123, 33)
-        dtpSkills.Margin = New Padding(3, 2, 3, 2)
         dtpSkills.Name = "dtpSkills"
         dtpSkills.Size = New Size(112, 23)
         dtpSkills.TabIndex = 11
@@ -1881,9 +1882,8 @@ Partial Class frmESGMain
         ' 
         tabPromotions.Controls.Add(pnlPromotions)
         tabPromotions.Location = New Point(4, 24)
-        tabPromotions.Margin = New Padding(3, 2, 3, 2)
         tabPromotions.Name = "tabPromotions"
-        tabPromotions.Size = New Size(799, 469)
+        tabPromotions.Size = New Size(799, 531)
         tabPromotions.TabIndex = 2
         tabPromotions.Text = "Promotions & Mobility"
         tabPromotions.UseVisualStyleBackColor = True
@@ -1895,16 +1895,14 @@ Partial Class frmESGMain
         pnlPromotions.Controls.Add(GroupBoxPromotions)
         pnlPromotions.Dock = DockStyle.Fill
         pnlPromotions.Location = New Point(0, 0)
-        pnlPromotions.Margin = New Padding(3, 2, 3, 2)
         pnlPromotions.Name = "pnlPromotions"
-        pnlPromotions.Size = New Size(799, 469)
+        pnlPromotions.Size = New Size(799, 531)
         pnlPromotions.TabIndex = 2
         ' 
         ' dgvSocialPromotions
         ' 
         dgvSocialPromotions.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         dgvSocialPromotions.Location = New Point(18, 288)
-        dgvSocialPromotions.Margin = New Padding(3, 2, 3, 2)
         dgvSocialPromotions.Name = "dgvSocialPromotions"
         dgvSocialPromotions.RowHeadersWidth = 51
         dgvSocialPromotions.Size = New Size(763, 140)
@@ -1919,9 +1917,7 @@ Partial Class frmESGMain
         grpPromotionsFilter.Controls.Add(Label99)
         grpPromotionsFilter.Controls.Add(Label100)
         grpPromotionsFilter.Location = New Point(18, 235)
-        grpPromotionsFilter.Margin = New Padding(3, 2, 3, 2)
         grpPromotionsFilter.Name = "grpPromotionsFilter"
-        grpPromotionsFilter.Padding = New Padding(3, 2, 3, 2)
         grpPromotionsFilter.Size = New Size(763, 49)
         grpPromotionsFilter.TabIndex = 18
         grpPromotionsFilter.TabStop = False
@@ -1930,7 +1926,6 @@ Partial Class frmESGMain
         ' btnClearPromotionsFilter
         ' 
         btnClearPromotionsFilter.Location = New Point(350, 14)
-        btnClearPromotionsFilter.Margin = New Padding(3, 2, 3, 2)
         btnClearPromotionsFilter.Name = "btnClearPromotionsFilter"
         btnClearPromotionsFilter.Size = New Size(78, 23)
         btnClearPromotionsFilter.TabIndex = 5
@@ -1941,7 +1936,6 @@ Partial Class frmESGMain
         ' 
         btnApplyPromotionsFilter.BackColor = SystemColors.Control
         btnApplyPromotionsFilter.Location = New Point(271, 14)
-        btnApplyPromotionsFilter.Margin = New Padding(3, 2, 3, 2)
         btnApplyPromotionsFilter.Name = "btnApplyPromotionsFilter"
         btnApplyPromotionsFilter.Size = New Size(78, 23)
         btnApplyPromotionsFilter.TabIndex = 4
@@ -1953,7 +1947,6 @@ Partial Class frmESGMain
         dtpPromotionsFilterMonth.CustomFormat = "MMMM"
         dtpPromotionsFilterMonth.Format = DateTimePickerFormat.Custom
         dtpPromotionsFilterMonth.Location = New Point(175, 14)
-        dtpPromotionsFilterMonth.Margin = New Padding(3, 2, 3, 2)
         dtpPromotionsFilterMonth.Name = "dtpPromotionsFilterMonth"
         dtpPromotionsFilterMonth.Size = New Size(79, 23)
         dtpPromotionsFilterMonth.TabIndex = 3
@@ -1963,7 +1956,6 @@ Partial Class frmESGMain
         dtpPromotionsFilterYear.CustomFormat = "yyyy"
         dtpPromotionsFilterYear.Format = DateTimePickerFormat.Custom
         dtpPromotionsFilterYear.Location = New Point(88, 14)
-        dtpPromotionsFilterYear.Margin = New Padding(3, 2, 3, 2)
         dtpPromotionsFilterYear.Name = "dtpPromotionsFilterYear"
         dtpPromotionsFilterYear.ShowUpDown = True
         dtpPromotionsFilterYear.Size = New Size(62, 23)
@@ -2001,9 +1993,7 @@ Partial Class frmESGMain
         GroupBoxPromotions.Controls.Add(dtpPromotions)
         GroupBoxPromotions.Controls.Add(Label81)
         GroupBoxPromotions.Location = New Point(18, 15)
-        GroupBoxPromotions.Margin = New Padding(3, 2, 3, 2)
         GroupBoxPromotions.Name = "GroupBoxPromotions"
-        GroupBoxPromotions.Padding = New Padding(3, 2, 3, 2)
         GroupBoxPromotions.Size = New Size(763, 216)
         GroupBoxPromotions.TabIndex = 17
         GroupBoxPromotions.TabStop = False
@@ -2012,7 +2002,6 @@ Partial Class frmESGMain
         ' nudSameFamily
         ' 
         nudSameFamily.Location = New Point(350, 112)
-        nudSameFamily.Margin = New Padding(3, 2, 3, 2)
         nudSameFamily.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudSameFamily.Name = "nudSameFamily"
         nudSameFamily.Size = New Size(158, 23)
@@ -2030,7 +2019,6 @@ Partial Class frmESGMain
         ' nudInternalMobility
         ' 
         nudInternalMobility.Location = New Point(350, 82)
-        nudInternalMobility.Margin = New Padding(3, 2, 3, 2)
         nudInternalMobility.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudInternalMobility.Name = "nudInternalMobility"
         nudInternalMobility.Size = New Size(158, 23)
@@ -2040,7 +2028,6 @@ Partial Class frmESGMain
         ' 
         btnSavePromotions.BackColor = SystemColors.Control
         btnSavePromotions.Location = New Point(387, 165)
-        btnSavePromotions.Margin = New Padding(3, 2, 3, 2)
         btnSavePromotions.Name = "btnSavePromotions"
         btnSavePromotions.Size = New Size(88, 31)
         btnSavePromotions.TabIndex = 15
@@ -2060,7 +2047,6 @@ Partial Class frmESGMain
         ' 
         btnUpdatePromotions.BackColor = SystemColors.Control
         btnUpdatePromotions.Location = New Point(483, 165)
-        btnUpdatePromotions.Margin = New Padding(3, 2, 3, 2)
         btnUpdatePromotions.Name = "btnUpdatePromotions"
         btnUpdatePromotions.Size = New Size(88, 31)
         btnUpdatePromotions.TabIndex = 16
@@ -2071,7 +2057,6 @@ Partial Class frmESGMain
         ' nudPromotions
         ' 
         nudPromotions.Location = New Point(350, 52)
-        nudPromotions.Margin = New Padding(3, 2, 3, 2)
         nudPromotions.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudPromotions.Name = "nudPromotions"
         nudPromotions.Size = New Size(158, 23)
@@ -2081,7 +2066,6 @@ Partial Class frmESGMain
         ' 
         btnCancelPromotions.BackColor = SystemColors.Control
         btnCancelPromotions.Location = New Point(579, 165)
-        btnCancelPromotions.Margin = New Padding(3, 2, 3, 2)
         btnCancelPromotions.Name = "btnCancelPromotions"
         btnCancelPromotions.Size = New Size(88, 31)
         btnCancelPromotions.TabIndex = 17
@@ -2103,7 +2087,6 @@ Partial Class frmESGMain
         dtpPromotions.CustomFormat = "MMMM yyyy"
         dtpPromotions.Format = DateTimePickerFormat.Custom
         dtpPromotions.Location = New Point(116, 20)
-        dtpPromotions.Margin = New Padding(3, 2, 3, 2)
         dtpPromotions.Name = "dtpPromotions"
         dtpPromotions.Size = New Size(119, 23)
         dtpPromotions.TabIndex = 11
@@ -2121,9 +2104,8 @@ Partial Class frmESGMain
         ' 
         tabManagement.Controls.Add(pnlManagement)
         tabManagement.Location = New Point(4, 24)
-        tabManagement.Margin = New Padding(3, 2, 3, 2)
         tabManagement.Name = "tabManagement"
-        tabManagement.Size = New Size(799, 469)
+        tabManagement.Size = New Size(799, 531)
         tabManagement.TabIndex = 3
         tabManagement.Text = "Management"
         tabManagement.UseVisualStyleBackColor = True
@@ -2135,16 +2117,14 @@ Partial Class frmESGMain
         pnlManagement.Controls.Add(GroupBoxManagement)
         pnlManagement.Dock = DockStyle.Fill
         pnlManagement.Location = New Point(0, 0)
-        pnlManagement.Margin = New Padding(3, 2, 3, 2)
         pnlManagement.Name = "pnlManagement"
-        pnlManagement.Size = New Size(799, 469)
+        pnlManagement.Size = New Size(799, 531)
         pnlManagement.TabIndex = 2
         ' 
         ' dgvSocialManagement
         ' 
         dgvSocialManagement.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         dgvSocialManagement.Location = New Point(18, 353)
-        dgvSocialManagement.Margin = New Padding(3, 2, 3, 2)
         dgvSocialManagement.Name = "dgvSocialManagement"
         dgvSocialManagement.RowHeadersWidth = 51
         dgvSocialManagement.Size = New Size(762, 113)
@@ -2159,9 +2139,7 @@ Partial Class frmESGMain
         grpManagementFilter.Controls.Add(Label101)
         grpManagementFilter.Controls.Add(Label102)
         grpManagementFilter.Location = New Point(18, 297)
-        grpManagementFilter.Margin = New Padding(3, 2, 3, 2)
         grpManagementFilter.Name = "grpManagementFilter"
-        grpManagementFilter.Padding = New Padding(3, 2, 3, 2)
         grpManagementFilter.Size = New Size(762, 52)
         grpManagementFilter.TabIndex = 18
         grpManagementFilter.TabStop = False
@@ -2170,7 +2148,6 @@ Partial Class frmESGMain
         ' btnClearManagementFilter
         ' 
         btnClearManagementFilter.Location = New Point(369, 14)
-        btnClearManagementFilter.Margin = New Padding(3, 2, 3, 2)
         btnClearManagementFilter.Name = "btnClearManagementFilter"
         btnClearManagementFilter.Size = New Size(81, 23)
         btnClearManagementFilter.TabIndex = 5
@@ -2181,7 +2158,6 @@ Partial Class frmESGMain
         ' 
         btnApplyManagementFilter.BackColor = SystemColors.Control
         btnApplyManagementFilter.Location = New Point(271, 14)
-        btnApplyManagementFilter.Margin = New Padding(3, 2, 3, 2)
         btnApplyManagementFilter.Name = "btnApplyManagementFilter"
         btnApplyManagementFilter.Size = New Size(81, 23)
         btnApplyManagementFilter.TabIndex = 4
@@ -2193,7 +2169,6 @@ Partial Class frmESGMain
         dtpManagementFilterMonth.CustomFormat = "MMMM"
         dtpManagementFilterMonth.Format = DateTimePickerFormat.Custom
         dtpManagementFilterMonth.Location = New Point(175, 14)
-        dtpManagementFilterMonth.Margin = New Padding(3, 2, 3, 2)
         dtpManagementFilterMonth.Name = "dtpManagementFilterMonth"
         dtpManagementFilterMonth.Size = New Size(79, 23)
         dtpManagementFilterMonth.TabIndex = 3
@@ -2203,7 +2178,6 @@ Partial Class frmESGMain
         dtpManagementFilterYear.CustomFormat = "yyyy"
         dtpManagementFilterYear.Format = DateTimePickerFormat.Custom
         dtpManagementFilterYear.Location = New Point(88, 14)
-        dtpManagementFilterYear.Margin = New Padding(3, 2, 3, 2)
         dtpManagementFilterYear.Name = "dtpManagementFilterYear"
         dtpManagementFilterYear.ShowUpDown = True
         dtpManagementFilterYear.Size = New Size(62, 23)
@@ -2255,9 +2229,7 @@ Partial Class frmESGMain
         GroupBoxManagement.Controls.Add(dtpManagement)
         GroupBoxManagement.Controls.Add(Label82)
         GroupBoxManagement.Location = New Point(14, 2)
-        GroupBoxManagement.Margin = New Padding(3, 2, 3, 2)
         GroupBoxManagement.Name = "GroupBoxManagement"
-        GroupBoxManagement.Padding = New Padding(3, 2, 3, 2)
         GroupBoxManagement.Size = New Size(766, 291)
         GroupBoxManagement.TabIndex = 17
         GroupBoxManagement.TabStop = False
@@ -2266,7 +2238,6 @@ Partial Class frmESGMain
         ' nudMenLeadership
         ' 
         nudMenLeadership.Location = New Point(618, 197)
-        nudMenLeadership.Margin = New Padding(3, 2, 3, 2)
         nudMenLeadership.Maximum = New Decimal(New Integer() {12, 0, 0, 0})
         nudMenLeadership.Name = "nudMenLeadership"
         nudMenLeadership.Size = New Size(114, 23)
@@ -2284,7 +2255,6 @@ Partial Class frmESGMain
         ' nudWomenLeadership
         ' 
         nudWomenLeadership.Location = New Point(618, 170)
-        nudWomenLeadership.Margin = New Padding(3, 2, 3, 2)
         nudWomenLeadership.Maximum = New Decimal(New Integer() {12, 0, 0, 0})
         nudWomenLeadership.Name = "nudWomenLeadership"
         nudWomenLeadership.Size = New Size(114, 23)
@@ -2294,7 +2264,6 @@ Partial Class frmESGMain
         ' 
         btnSaveManagement.BackColor = SystemColors.Control
         btnSaveManagement.Location = New Point(369, 243)
-        btnSaveManagement.Margin = New Padding(3, 2, 3, 2)
         btnSaveManagement.Name = "btnSaveManagement"
         btnSaveManagement.Size = New Size(88, 31)
         btnSaveManagement.TabIndex = 15
@@ -2314,7 +2283,6 @@ Partial Class frmESGMain
         ' 
         btnUpdateManagement.BackColor = SystemColors.Control
         btnUpdateManagement.Location = New Point(465, 243)
-        btnUpdateManagement.Margin = New Padding(3, 2, 3, 2)
         btnUpdateManagement.Name = "btnUpdateManagement"
         btnUpdateManagement.Size = New Size(88, 31)
         btnUpdateManagement.TabIndex = 16
@@ -2336,7 +2304,6 @@ Partial Class frmESGMain
         ' 
         btnCancelManagement.BackColor = SystemColors.Control
         btnCancelManagement.Location = New Point(561, 243)
-        btnCancelManagement.Margin = New Padding(3, 2, 3, 2)
         btnCancelManagement.Name = "btnCancelManagement"
         btnCancelManagement.Size = New Size(88, 31)
         btnCancelManagement.TabIndex = 17
@@ -2347,7 +2314,6 @@ Partial Class frmESGMain
         ' nudMenUpper
         ' 
         nudMenUpper.Location = New Point(618, 108)
-        nudMenUpper.Margin = New Padding(3, 2, 3, 2)
         nudMenUpper.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudMenUpper.Name = "nudMenUpper"
         nudMenUpper.Size = New Size(114, 23)
@@ -2365,7 +2331,6 @@ Partial Class frmESGMain
         ' nudWomenUpper
         ' 
         nudWomenUpper.Location = New Point(618, 81)
-        nudWomenUpper.Margin = New Padding(3, 2, 3, 2)
         nudWomenUpper.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudWomenUpper.Name = "nudWomenUpper"
         nudWomenUpper.Size = New Size(114, 23)
@@ -2393,7 +2358,6 @@ Partial Class frmESGMain
         ' nudMenMiddle
         ' 
         nudMenMiddle.Location = New Point(284, 192)
-        nudMenMiddle.Margin = New Padding(3, 2, 3, 2)
         nudMenMiddle.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudMenMiddle.Name = "nudMenMiddle"
         nudMenMiddle.Size = New Size(114, 23)
@@ -2411,7 +2375,6 @@ Partial Class frmESGMain
         ' nudWomenMiddle
         ' 
         nudWomenMiddle.Location = New Point(284, 165)
-        nudWomenMiddle.Margin = New Padding(3, 2, 3, 2)
         nudWomenMiddle.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudWomenMiddle.Name = "nudWomenMiddle"
         nudWomenMiddle.Size = New Size(114, 23)
@@ -2439,7 +2402,6 @@ Partial Class frmESGMain
         ' nudMenFirstLine
         ' 
         nudMenFirstLine.Location = New Point(284, 108)
-        nudMenFirstLine.Margin = New Padding(3, 2, 3, 2)
         nudMenFirstLine.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudMenFirstLine.Name = "nudMenFirstLine"
         nudMenFirstLine.Size = New Size(114, 23)
@@ -2458,7 +2420,6 @@ Partial Class frmESGMain
         ' nudWomenFirstLine
         ' 
         nudWomenFirstLine.Location = New Point(284, 75)
-        nudWomenFirstLine.Margin = New Padding(3, 2, 3, 2)
         nudWomenFirstLine.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudWomenFirstLine.Name = "nudWomenFirstLine"
         nudWomenFirstLine.Size = New Size(114, 23)
@@ -2487,7 +2448,6 @@ Partial Class frmESGMain
         dtpManagement.CustomFormat = "MMMM yyyy"
         dtpManagement.Format = DateTimePickerFormat.Custom
         dtpManagement.Location = New Point(113, 22)
-        dtpManagement.Margin = New Padding(3, 2, 3, 2)
         dtpManagement.Name = "dtpManagement"
         dtpManagement.Size = New Size(122, 23)
         dtpManagement.TabIndex = 12
@@ -2505,9 +2465,8 @@ Partial Class frmESGMain
         ' 
         tabDisabilities.Controls.Add(pnlDisabilities)
         tabDisabilities.Location = New Point(4, 24)
-        tabDisabilities.Margin = New Padding(3, 2, 3, 2)
         tabDisabilities.Name = "tabDisabilities"
-        tabDisabilities.Size = New Size(799, 469)
+        tabDisabilities.Size = New Size(799, 531)
         tabDisabilities.TabIndex = 4
         tabDisabilities.Text = "Disabilities"
         tabDisabilities.UseVisualStyleBackColor = True
@@ -2519,16 +2478,14 @@ Partial Class frmESGMain
         pnlDisabilities.Controls.Add(GroupBoxDisabilities)
         pnlDisabilities.Dock = DockStyle.Fill
         pnlDisabilities.Location = New Point(0, 0)
-        pnlDisabilities.Margin = New Padding(3, 2, 3, 2)
         pnlDisabilities.Name = "pnlDisabilities"
-        pnlDisabilities.Size = New Size(799, 469)
+        pnlDisabilities.Size = New Size(799, 531)
         pnlDisabilities.TabIndex = 2
         ' 
         ' dgvSocialDisabilities
         ' 
         dgvSocialDisabilities.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         dgvSocialDisabilities.Location = New Point(18, 312)
-        dgvSocialDisabilities.Margin = New Padding(3, 2, 3, 2)
         dgvSocialDisabilities.Name = "dgvSocialDisabilities"
         dgvSocialDisabilities.RowHeadersWidth = 51
         dgvSocialDisabilities.Size = New Size(762, 146)
@@ -2543,9 +2500,7 @@ Partial Class frmESGMain
         grpDisabilitiesFilter.Controls.Add(Label103)
         grpDisabilitiesFilter.Controls.Add(Label104)
         grpDisabilitiesFilter.Location = New Point(18, 259)
-        grpDisabilitiesFilter.Margin = New Padding(3, 2, 3, 2)
         grpDisabilitiesFilter.Name = "grpDisabilitiesFilter"
-        grpDisabilitiesFilter.Padding = New Padding(3, 2, 3, 2)
         grpDisabilitiesFilter.Size = New Size(762, 49)
         grpDisabilitiesFilter.TabIndex = 18
         grpDisabilitiesFilter.TabStop = False
@@ -2554,7 +2509,6 @@ Partial Class frmESGMain
         ' btnClearDisabilitiesFilter
         ' 
         btnClearDisabilitiesFilter.Location = New Point(350, 14)
-        btnClearDisabilitiesFilter.Margin = New Padding(3, 2, 3, 2)
         btnClearDisabilitiesFilter.Name = "btnClearDisabilitiesFilter"
         btnClearDisabilitiesFilter.Size = New Size(74, 23)
         btnClearDisabilitiesFilter.TabIndex = 5
@@ -2565,7 +2519,6 @@ Partial Class frmESGMain
         ' 
         btnApplyDisabilitiesFilter.BackColor = SystemColors.Control
         btnApplyDisabilitiesFilter.Location = New Point(271, 14)
-        btnApplyDisabilitiesFilter.Margin = New Padding(3, 2, 3, 2)
         btnApplyDisabilitiesFilter.Name = "btnApplyDisabilitiesFilter"
         btnApplyDisabilitiesFilter.Size = New Size(74, 23)
         btnApplyDisabilitiesFilter.TabIndex = 4
@@ -2577,7 +2530,6 @@ Partial Class frmESGMain
         dtpDisabilitiesFilterMonth.CustomFormat = "MMMM"
         dtpDisabilitiesFilterMonth.Format = DateTimePickerFormat.Custom
         dtpDisabilitiesFilterMonth.Location = New Point(175, 14)
-        dtpDisabilitiesFilterMonth.Margin = New Padding(3, 2, 3, 2)
         dtpDisabilitiesFilterMonth.Name = "dtpDisabilitiesFilterMonth"
         dtpDisabilitiesFilterMonth.Size = New Size(79, 23)
         dtpDisabilitiesFilterMonth.TabIndex = 3
@@ -2587,7 +2539,6 @@ Partial Class frmESGMain
         dtpDisabilitiesFilterYear.CustomFormat = "yyyy"
         dtpDisabilitiesFilterYear.Format = DateTimePickerFormat.Custom
         dtpDisabilitiesFilterYear.Location = New Point(88, 14)
-        dtpDisabilitiesFilterYear.Margin = New Padding(3, 2, 3, 2)
         dtpDisabilitiesFilterYear.Name = "dtpDisabilitiesFilterYear"
         dtpDisabilitiesFilterYear.ShowUpDown = True
         dtpDisabilitiesFilterYear.Size = New Size(62, 23)
@@ -2629,9 +2580,7 @@ Partial Class frmESGMain
         GroupBoxDisabilities.Controls.Add(dtpDisabilities)
         GroupBoxDisabilities.Controls.Add(Label83)
         GroupBoxDisabilities.Location = New Point(18, 15)
-        GroupBoxDisabilities.Margin = New Padding(3, 2, 3, 2)
         GroupBoxDisabilities.Name = "GroupBoxDisabilities"
-        GroupBoxDisabilities.Padding = New Padding(3, 2, 3, 2)
         GroupBoxDisabilities.Size = New Size(762, 240)
         GroupBoxDisabilities.TabIndex = 17
         GroupBoxDisabilities.TabStop = False
@@ -2640,7 +2589,6 @@ Partial Class frmESGMain
         ' nudChronic
         ' 
         nudChronic.Location = New Point(506, 116)
-        nudChronic.Margin = New Padding(3, 2, 3, 2)
         nudChronic.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudChronic.Name = "nudChronic"
         nudChronic.Size = New Size(114, 23)
@@ -2658,7 +2606,6 @@ Partial Class frmESGMain
         ' nudIntellectual
         ' 
         nudIntellectual.Location = New Point(506, 87)
-        nudIntellectual.Margin = New Padding(3, 2, 3, 2)
         nudIntellectual.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudIntellectual.Name = "nudIntellectual"
         nudIntellectual.Size = New Size(114, 23)
@@ -2668,7 +2615,6 @@ Partial Class frmESGMain
         ' 
         btnSaveDisabilities.BackColor = SystemColors.Control
         btnSaveDisabilities.Location = New Point(340, 186)
-        btnSaveDisabilities.Margin = New Padding(3, 2, 3, 2)
         btnSaveDisabilities.Name = "btnSaveDisabilities"
         btnSaveDisabilities.Size = New Size(88, 31)
         btnSaveDisabilities.TabIndex = 15
@@ -2688,7 +2634,6 @@ Partial Class frmESGMain
         ' 
         btnUpdateDisabilities.BackColor = SystemColors.Control
         btnUpdateDisabilities.Location = New Point(436, 186)
-        btnUpdateDisabilities.Margin = New Padding(3, 2, 3, 2)
         btnUpdateDisabilities.Name = "btnUpdateDisabilities"
         btnUpdateDisabilities.Size = New Size(88, 31)
         btnUpdateDisabilities.TabIndex = 16
@@ -2699,7 +2644,6 @@ Partial Class frmESGMain
         ' nudMentalHealth
         ' 
         nudMentalHealth.Location = New Point(506, 57)
-        nudMentalHealth.Margin = New Padding(3, 2, 3, 2)
         nudMentalHealth.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudMentalHealth.Name = "nudMentalHealth"
         nudMentalHealth.Size = New Size(114, 23)
@@ -2709,7 +2653,6 @@ Partial Class frmESGMain
         ' 
         btnCancelDisabilities.BackColor = SystemColors.Control
         btnCancelDisabilities.Location = New Point(532, 186)
-        btnCancelDisabilities.Margin = New Padding(3, 2, 3, 2)
         btnCancelDisabilities.Name = "btnCancelDisabilities"
         btnCancelDisabilities.Size = New Size(88, 31)
         btnCancelDisabilities.TabIndex = 17
@@ -2729,7 +2672,6 @@ Partial Class frmESGMain
         ' nudSensory
         ' 
         nudSensory.Location = New Point(140, 87)
-        nudSensory.Margin = New Padding(3, 2, 3, 2)
         nudSensory.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudSensory.Name = "nudSensory"
         nudSensory.Size = New Size(114, 23)
@@ -2747,7 +2689,6 @@ Partial Class frmESGMain
         ' nudPhysical
         ' 
         nudPhysical.Location = New Point(140, 57)
-        nudPhysical.Margin = New Padding(3, 2, 3, 2)
         nudPhysical.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudPhysical.Name = "nudPhysical"
         nudPhysical.Size = New Size(114, 23)
@@ -2767,7 +2708,6 @@ Partial Class frmESGMain
         dtpDisabilities.CustomFormat = "MMMM yyyy"
         dtpDisabilities.Format = DateTimePickerFormat.Custom
         dtpDisabilities.Location = New Point(140, 22)
-        dtpDisabilities.Margin = New Padding(3, 2, 3, 2)
         dtpDisabilities.Name = "dtpDisabilities"
         dtpDisabilities.Size = New Size(114, 23)
         dtpDisabilities.TabIndex = 13
@@ -2785,9 +2725,8 @@ Partial Class frmESGMain
         ' 
         tabBehavior.Controls.Add(pnlBehavior)
         tabBehavior.Location = New Point(4, 24)
-        tabBehavior.Margin = New Padding(3, 2, 3, 2)
         tabBehavior.Name = "tabBehavior"
-        tabBehavior.Size = New Size(799, 469)
+        tabBehavior.Size = New Size(799, 531)
         tabBehavior.TabIndex = 5
         tabBehavior.Text = "Behavior"
         tabBehavior.UseVisualStyleBackColor = True
@@ -2799,16 +2738,14 @@ Partial Class frmESGMain
         pnlBehavior.Controls.Add(GroupBoxBehavior)
         pnlBehavior.Dock = DockStyle.Fill
         pnlBehavior.Location = New Point(0, 0)
-        pnlBehavior.Margin = New Padding(3, 2, 3, 2)
         pnlBehavior.Name = "pnlBehavior"
-        pnlBehavior.Size = New Size(799, 469)
+        pnlBehavior.Size = New Size(799, 531)
         pnlBehavior.TabIndex = 2
         ' 
         ' dgvSocialBehavior
         ' 
         dgvSocialBehavior.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         dgvSocialBehavior.Location = New Point(18, 274)
-        dgvSocialBehavior.Margin = New Padding(3, 2, 3, 2)
         dgvSocialBehavior.Name = "dgvSocialBehavior"
         dgvSocialBehavior.RowHeadersWidth = 51
         dgvSocialBehavior.Size = New Size(762, 184)
@@ -2823,9 +2760,7 @@ Partial Class frmESGMain
         grpBehaviorFilter.Controls.Add(Label105)
         grpBehaviorFilter.Controls.Add(Label106)
         grpBehaviorFilter.Location = New Point(18, 221)
-        grpBehaviorFilter.Margin = New Padding(3, 2, 3, 2)
         grpBehaviorFilter.Name = "grpBehaviorFilter"
-        grpBehaviorFilter.Padding = New Padding(3, 2, 3, 2)
         grpBehaviorFilter.Size = New Size(762, 49)
         grpBehaviorFilter.TabIndex = 18
         grpBehaviorFilter.TabStop = False
@@ -2834,7 +2769,6 @@ Partial Class frmESGMain
         ' btnClearBehaviorFilter
         ' 
         btnClearBehaviorFilter.Location = New Point(350, 14)
-        btnClearBehaviorFilter.Margin = New Padding(3, 2, 3, 2)
         btnClearBehaviorFilter.Name = "btnClearBehaviorFilter"
         btnClearBehaviorFilter.Size = New Size(71, 23)
         btnClearBehaviorFilter.TabIndex = 5
@@ -2845,7 +2779,6 @@ Partial Class frmESGMain
         ' 
         btnApplyBehaviorFilter.BackColor = SystemColors.Control
         btnApplyBehaviorFilter.Location = New Point(271, 14)
-        btnApplyBehaviorFilter.Margin = New Padding(3, 2, 3, 2)
         btnApplyBehaviorFilter.Name = "btnApplyBehaviorFilter"
         btnApplyBehaviorFilter.Size = New Size(71, 23)
         btnApplyBehaviorFilter.TabIndex = 4
@@ -2857,7 +2790,6 @@ Partial Class frmESGMain
         dtpBehaviorFilterMonth.CustomFormat = "MMMM"
         dtpBehaviorFilterMonth.Format = DateTimePickerFormat.Custom
         dtpBehaviorFilterMonth.Location = New Point(175, 15)
-        dtpBehaviorFilterMonth.Margin = New Padding(3, 2, 3, 2)
         dtpBehaviorFilterMonth.Name = "dtpBehaviorFilterMonth"
         dtpBehaviorFilterMonth.Size = New Size(79, 23)
         dtpBehaviorFilterMonth.TabIndex = 3
@@ -2867,7 +2799,6 @@ Partial Class frmESGMain
         dtpBehaviorFilterYear.CustomFormat = "yyyy"
         dtpBehaviorFilterYear.Format = DateTimePickerFormat.Custom
         dtpBehaviorFilterYear.Location = New Point(88, 14)
-        dtpBehaviorFilterYear.Margin = New Padding(3, 2, 3, 2)
         dtpBehaviorFilterYear.Name = "dtpBehaviorFilterYear"
         dtpBehaviorFilterYear.ShowUpDown = True
         dtpBehaviorFilterYear.Size = New Size(62, 23)
@@ -2909,9 +2840,7 @@ Partial Class frmESGMain
         GroupBoxBehavior.Controls.Add(dtpBehavior)
         GroupBoxBehavior.Controls.Add(Label84)
         GroupBoxBehavior.Location = New Point(18, 15)
-        GroupBoxBehavior.Margin = New Padding(3, 2, 3, 2)
         GroupBoxBehavior.Name = "GroupBoxBehavior"
-        GroupBoxBehavior.Padding = New Padding(3, 2, 3, 2)
         GroupBoxBehavior.Size = New Size(762, 202)
         GroupBoxBehavior.TabIndex = 17
         GroupBoxBehavior.TabStop = False
@@ -2920,7 +2849,6 @@ Partial Class frmESGMain
         ' nudPansexual
         ' 
         nudPansexual.Location = New Point(140, 119)
-        nudPansexual.Margin = New Padding(3, 2, 3, 2)
         nudPansexual.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudPansexual.Name = "nudPansexual"
         nudPansexual.Size = New Size(114, 23)
@@ -2938,7 +2866,6 @@ Partial Class frmESGMain
         ' nudAsexual
         ' 
         nudAsexual.Location = New Point(407, 84)
-        nudAsexual.Margin = New Padding(3, 2, 3, 2)
         nudAsexual.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudAsexual.Name = "nudAsexual"
         nudAsexual.Size = New Size(114, 23)
@@ -2948,7 +2875,6 @@ Partial Class frmESGMain
         ' 
         btnSaveBehavior.BackColor = SystemColors.Control
         btnSaveBehavior.Location = New Point(337, 140)
-        btnSaveBehavior.Margin = New Padding(3, 2, 3, 2)
         btnSaveBehavior.Name = "btnSaveBehavior"
         btnSaveBehavior.Size = New Size(88, 28)
         btnSaveBehavior.TabIndex = 15
@@ -2968,7 +2894,6 @@ Partial Class frmESGMain
         ' 
         btnUpdateBehavior.BackColor = SystemColors.Control
         btnUpdateBehavior.Location = New Point(433, 140)
-        btnUpdateBehavior.Margin = New Padding(3, 2, 3, 2)
         btnUpdateBehavior.Name = "btnUpdateBehavior"
         btnUpdateBehavior.Size = New Size(88, 28)
         btnUpdateBehavior.TabIndex = 16
@@ -2979,7 +2904,6 @@ Partial Class frmESGMain
         ' nudBisexual
         ' 
         nudBisexual.Location = New Point(407, 54)
-        nudBisexual.Margin = New Padding(3, 2, 3, 2)
         nudBisexual.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudBisexual.Name = "nudBisexual"
         nudBisexual.Size = New Size(114, 23)
@@ -2989,7 +2913,6 @@ Partial Class frmESGMain
         ' 
         btnCancelBehavior.BackColor = SystemColors.Control
         btnCancelBehavior.Location = New Point(529, 140)
-        btnCancelBehavior.Margin = New Padding(3, 2, 3, 2)
         btnCancelBehavior.Name = "btnCancelBehavior"
         btnCancelBehavior.Size = New Size(88, 28)
         btnCancelBehavior.TabIndex = 17
@@ -3009,7 +2932,6 @@ Partial Class frmESGMain
         ' nudGay
         ' 
         nudGay.Location = New Point(140, 84)
-        nudGay.Margin = New Padding(3, 2, 3, 2)
         nudGay.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudGay.Name = "nudGay"
         nudGay.Size = New Size(114, 23)
@@ -3027,7 +2949,6 @@ Partial Class frmESGMain
         ' nudLesbian
         ' 
         nudLesbian.Location = New Point(140, 54)
-        nudLesbian.Margin = New Padding(3, 2, 3, 2)
         nudLesbian.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudLesbian.Name = "nudLesbian"
         nudLesbian.Size = New Size(114, 23)
@@ -3047,7 +2968,6 @@ Partial Class frmESGMain
         dtpBehavior.CustomFormat = "MMMM yyyy"
         dtpBehavior.Format = DateTimePickerFormat.Custom
         dtpBehavior.Location = New Point(105, 19)
-        dtpBehavior.Margin = New Padding(3, 2, 3, 2)
         dtpBehavior.Name = "dtpBehavior"
         dtpBehavior.Size = New Size(158, 23)
         dtpBehavior.TabIndex = 13
@@ -3065,9 +2985,8 @@ Partial Class frmESGMain
         ' 
         tabIdentification.Controls.Add(pnlIdentification)
         tabIdentification.Location = New Point(4, 24)
-        tabIdentification.Margin = New Padding(3, 2, 3, 2)
         tabIdentification.Name = "tabIdentification"
-        tabIdentification.Size = New Size(799, 469)
+        tabIdentification.Size = New Size(799, 531)
         tabIdentification.TabIndex = 6
         tabIdentification.Text = "Gender Identification"
         tabIdentification.UseVisualStyleBackColor = True
@@ -3079,16 +2998,14 @@ Partial Class frmESGMain
         pnlIdentification.Controls.Add(GroupBoxIdentification)
         pnlIdentification.Dock = DockStyle.Fill
         pnlIdentification.Location = New Point(0, 0)
-        pnlIdentification.Margin = New Padding(3, 2, 3, 2)
         pnlIdentification.Name = "pnlIdentification"
-        pnlIdentification.Size = New Size(799, 469)
+        pnlIdentification.Size = New Size(799, 531)
         pnlIdentification.TabIndex = 2
         ' 
         ' dgvSocialIdentification
         ' 
         dgvSocialIdentification.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         dgvSocialIdentification.Location = New Point(18, 290)
-        dgvSocialIdentification.Margin = New Padding(3, 2, 3, 2)
         dgvSocialIdentification.Name = "dgvSocialIdentification"
         dgvSocialIdentification.RowHeadersWidth = 51
         dgvSocialIdentification.Size = New Size(762, 168)
@@ -3103,9 +3020,7 @@ Partial Class frmESGMain
         grpIdentificationFilter.Controls.Add(Label107)
         grpIdentificationFilter.Controls.Add(Label108)
         grpIdentificationFilter.Location = New Point(18, 237)
-        grpIdentificationFilter.Margin = New Padding(3, 2, 3, 2)
         grpIdentificationFilter.Name = "grpIdentificationFilter"
-        grpIdentificationFilter.Padding = New Padding(3, 2, 3, 2)
         grpIdentificationFilter.Size = New Size(762, 49)
         grpIdentificationFilter.TabIndex = 18
         grpIdentificationFilter.TabStop = False
@@ -3114,7 +3029,6 @@ Partial Class frmESGMain
         ' btnClearIdentificationFilter
         ' 
         btnClearIdentificationFilter.Location = New Point(350, 14)
-        btnClearIdentificationFilter.Margin = New Padding(3, 2, 3, 2)
         btnClearIdentificationFilter.Name = "btnClearIdentificationFilter"
         btnClearIdentificationFilter.Size = New Size(78, 23)
         btnClearIdentificationFilter.TabIndex = 5
@@ -3125,7 +3039,6 @@ Partial Class frmESGMain
         ' 
         btnApplyIdentificationFilter.BackColor = SystemColors.Control
         btnApplyIdentificationFilter.Location = New Point(271, 14)
-        btnApplyIdentificationFilter.Margin = New Padding(3, 2, 3, 2)
         btnApplyIdentificationFilter.Name = "btnApplyIdentificationFilter"
         btnApplyIdentificationFilter.Size = New Size(78, 23)
         btnApplyIdentificationFilter.TabIndex = 4
@@ -3137,7 +3050,6 @@ Partial Class frmESGMain
         dtpIdentificationFilterMonth.CustomFormat = "MMMM"
         dtpIdentificationFilterMonth.Format = DateTimePickerFormat.Custom
         dtpIdentificationFilterMonth.Location = New Point(175, 14)
-        dtpIdentificationFilterMonth.Margin = New Padding(3, 2, 3, 2)
         dtpIdentificationFilterMonth.Name = "dtpIdentificationFilterMonth"
         dtpIdentificationFilterMonth.Size = New Size(79, 23)
         dtpIdentificationFilterMonth.TabIndex = 3
@@ -3147,7 +3059,6 @@ Partial Class frmESGMain
         dtpIdentificationFilterYear.CustomFormat = "yyyy"
         dtpIdentificationFilterYear.Format = DateTimePickerFormat.Custom
         dtpIdentificationFilterYear.Location = New Point(88, 14)
-        dtpIdentificationFilterYear.Margin = New Padding(3, 2, 3, 2)
         dtpIdentificationFilterYear.Name = "dtpIdentificationFilterYear"
         dtpIdentificationFilterYear.ShowUpDown = True
         dtpIdentificationFilterYear.Size = New Size(62, 23)
@@ -3189,9 +3100,7 @@ Partial Class frmESGMain
         GroupBoxIdentification.Controls.Add(dtpIdentification)
         GroupBoxIdentification.Controls.Add(Label85)
         GroupBoxIdentification.Location = New Point(18, 15)
-        GroupBoxIdentification.Margin = New Padding(3, 2, 3, 2)
         GroupBoxIdentification.Name = "GroupBoxIdentification"
-        GroupBoxIdentification.Padding = New Padding(3, 2, 3, 2)
         GroupBoxIdentification.Size = New Size(762, 202)
         GroupBoxIdentification.TabIndex = 17
         GroupBoxIdentification.TabStop = False
@@ -3200,7 +3109,6 @@ Partial Class frmESGMain
         ' nudAgender
         ' 
         nudAgender.Location = New Point(405, 112)
-        nudAgender.Margin = New Padding(3, 2, 3, 2)
         nudAgender.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudAgender.Name = "nudAgender"
         nudAgender.Size = New Size(114, 23)
@@ -3218,7 +3126,6 @@ Partial Class frmESGMain
         ' nudNonBinary
         ' 
         nudNonBinary.Location = New Point(405, 82)
-        nudNonBinary.Margin = New Padding(3, 2, 3, 2)
         nudNonBinary.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudNonBinary.Name = "nudNonBinary"
         nudNonBinary.Size = New Size(114, 23)
@@ -3228,7 +3135,6 @@ Partial Class frmESGMain
         ' 
         btnSaveIdentification.BackColor = SystemColors.Control
         btnSaveIdentification.Location = New Point(350, 160)
-        btnSaveIdentification.Margin = New Padding(3, 2, 3, 2)
         btnSaveIdentification.Name = "btnSaveIdentification"
         btnSaveIdentification.Size = New Size(88, 26)
         btnSaveIdentification.TabIndex = 15
@@ -3248,7 +3154,6 @@ Partial Class frmESGMain
         ' 
         btnUpdateIdentification.BackColor = SystemColors.Control
         btnUpdateIdentification.Location = New Point(446, 160)
-        btnUpdateIdentification.Margin = New Padding(3, 2, 3, 2)
         btnUpdateIdentification.Name = "btnUpdateIdentification"
         btnUpdateIdentification.Size = New Size(88, 26)
         btnUpdateIdentification.TabIndex = 16
@@ -3259,7 +3164,6 @@ Partial Class frmESGMain
         ' nudQuestioning
         ' 
         nudQuestioning.Location = New Point(405, 52)
-        nudQuestioning.Margin = New Padding(3, 2, 3, 2)
         nudQuestioning.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudQuestioning.Name = "nudQuestioning"
         nudQuestioning.Size = New Size(114, 23)
@@ -3269,7 +3173,6 @@ Partial Class frmESGMain
         ' 
         btnCancelIdentification.BackColor = SystemColors.Control
         btnCancelIdentification.Location = New Point(542, 160)
-        btnCancelIdentification.Margin = New Padding(3, 2, 3, 2)
         btnCancelIdentification.Name = "btnCancelIdentification"
         btnCancelIdentification.Size = New Size(88, 26)
         btnCancelIdentification.TabIndex = 17
@@ -3289,7 +3192,6 @@ Partial Class frmESGMain
         ' nudQueer
         ' 
         nudQueer.Location = New Point(120, 82)
-        nudQueer.Margin = New Padding(3, 2, 3, 2)
         nudQueer.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudQueer.Name = "nudQueer"
         nudQueer.Size = New Size(114, 23)
@@ -3307,7 +3209,6 @@ Partial Class frmESGMain
         ' nudTransgender
         ' 
         nudTransgender.Location = New Point(120, 52)
-        nudTransgender.Margin = New Padding(3, 2, 3, 2)
         nudTransgender.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudTransgender.Name = "nudTransgender"
         nudTransgender.Size = New Size(114, 23)
@@ -3327,7 +3228,6 @@ Partial Class frmESGMain
         dtpIdentification.CustomFormat = "MMMM yyyy"
         dtpIdentification.Format = DateTimePickerFormat.Custom
         dtpIdentification.Location = New Point(120, 20)
-        dtpIdentification.Margin = New Padding(3, 2, 3, 2)
         dtpIdentification.Name = "dtpIdentification"
         dtpIdentification.Size = New Size(114, 23)
         dtpIdentification.TabIndex = 13
@@ -3345,9 +3245,8 @@ Partial Class frmESGMain
         ' 
         tabNations.Controls.Add(pnlNations)
         tabNations.Location = New Point(4, 24)
-        tabNations.Margin = New Padding(3, 2, 3, 2)
         tabNations.Name = "tabNations"
-        tabNations.Size = New Size(799, 469)
+        tabNations.Size = New Size(799, 531)
         tabNations.TabIndex = 7
         tabNations.Text = "Nations"
         tabNations.UseVisualStyleBackColor = True
@@ -3359,16 +3258,14 @@ Partial Class frmESGMain
         pnlNations.Controls.Add(GroupBoxNations)
         pnlNations.Dock = DockStyle.Fill
         pnlNations.Location = New Point(0, 0)
-        pnlNations.Margin = New Padding(3, 2, 3, 2)
         pnlNations.Name = "pnlNations"
-        pnlNations.Size = New Size(799, 469)
+        pnlNations.Size = New Size(799, 531)
         pnlNations.TabIndex = 2
         ' 
         ' dgvSocialNations
         ' 
         dgvSocialNations.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         dgvSocialNations.Location = New Point(23, 289)
-        dgvSocialNations.Margin = New Padding(3, 2, 3, 2)
         dgvSocialNations.Name = "dgvSocialNations"
         dgvSocialNations.RowHeadersWidth = 51
         dgvSocialNations.Size = New Size(748, 177)
@@ -3383,9 +3280,7 @@ Partial Class frmESGMain
         grpNationsFilter.Controls.Add(Label109)
         grpNationsFilter.Controls.Add(Label110)
         grpNationsFilter.Location = New Point(18, 234)
-        grpNationsFilter.Margin = New Padding(3, 2, 3, 2)
         grpNationsFilter.Name = "grpNationsFilter"
-        grpNationsFilter.Padding = New Padding(3, 2, 3, 2)
         grpNationsFilter.Size = New Size(753, 51)
         grpNationsFilter.TabIndex = 18
         grpNationsFilter.TabStop = False
@@ -3394,7 +3289,6 @@ Partial Class frmESGMain
         ' btnClearNationsFilter
         ' 
         btnClearNationsFilter.Location = New Point(350, 14)
-        btnClearNationsFilter.Margin = New Padding(3, 2, 3, 2)
         btnClearNationsFilter.Name = "btnClearNationsFilter"
         btnClearNationsFilter.Size = New Size(70, 23)
         btnClearNationsFilter.TabIndex = 5
@@ -3405,7 +3299,6 @@ Partial Class frmESGMain
         ' 
         btnApplyNationsFilter.BackColor = SystemColors.Control
         btnApplyNationsFilter.Location = New Point(271, 14)
-        btnApplyNationsFilter.Margin = New Padding(3, 2, 3, 2)
         btnApplyNationsFilter.Name = "btnApplyNationsFilter"
         btnApplyNationsFilter.Size = New Size(70, 23)
         btnApplyNationsFilter.TabIndex = 4
@@ -3417,7 +3310,6 @@ Partial Class frmESGMain
         dtpNationsFilterMonth.CustomFormat = "MMMM"
         dtpNationsFilterMonth.Format = DateTimePickerFormat.Custom
         dtpNationsFilterMonth.Location = New Point(174, 12)
-        dtpNationsFilterMonth.Margin = New Padding(3, 2, 3, 2)
         dtpNationsFilterMonth.Name = "dtpNationsFilterMonth"
         dtpNationsFilterMonth.Size = New Size(79, 23)
         dtpNationsFilterMonth.TabIndex = 3
@@ -3427,7 +3319,6 @@ Partial Class frmESGMain
         dtpNationsFilterYear.CustomFormat = "yyyy"
         dtpNationsFilterYear.Format = DateTimePickerFormat.Custom
         dtpNationsFilterYear.Location = New Point(88, 14)
-        dtpNationsFilterYear.Margin = New Padding(3, 2, 3, 2)
         dtpNationsFilterYear.Name = "dtpNationsFilterYear"
         dtpNationsFilterYear.ShowUpDown = True
         dtpNationsFilterYear.Size = New Size(62, 23)
@@ -3477,9 +3368,7 @@ Partial Class frmESGMain
         GroupBoxNations.Controls.Add(dtpNations)
         GroupBoxNations.Controls.Add(Label86)
         GroupBoxNations.Location = New Point(18, 15)
-        GroupBoxNations.Margin = New Padding(3, 2, 3, 2)
         GroupBoxNations.Name = "GroupBoxNations"
-        GroupBoxNations.Padding = New Padding(3, 2, 3, 2)
         GroupBoxNations.Size = New Size(753, 215)
         GroupBoxNations.TabIndex = 17
         GroupBoxNations.TabStop = False
@@ -3488,7 +3377,6 @@ Partial Class frmESGMain
         ' txtOtherEthnicitySpecify
         ' 
         txtOtherEthnicitySpecify.Location = New Point(505, 141)
-        txtOtherEthnicitySpecify.Margin = New Padding(3, 2, 3, 2)
         txtOtherEthnicitySpecify.Name = "txtOtherEthnicitySpecify"
         txtOtherEthnicitySpecify.Size = New Size(114, 23)
         txtOtherEthnicitySpecify.TabIndex = 31
@@ -3505,7 +3393,6 @@ Partial Class frmESGMain
         ' nudOtherEthnicity
         ' 
         nudOtherEthnicity.Location = New Point(505, 111)
-        nudOtherEthnicity.Margin = New Padding(3, 2, 3, 2)
         nudOtherEthnicity.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudOtherEthnicity.Name = "nudOtherEthnicity"
         nudOtherEthnicity.Size = New Size(114, 23)
@@ -3515,7 +3402,6 @@ Partial Class frmESGMain
         ' 
         btnSaveNations.BackColor = SystemColors.Control
         btnSaveNations.Location = New Point(464, 174)
-        btnSaveNations.Margin = New Padding(3, 2, 3, 2)
         btnSaveNations.Name = "btnSaveNations"
         btnSaveNations.Size = New Size(88, 31)
         btnSaveNations.TabIndex = 15
@@ -3535,7 +3421,6 @@ Partial Class frmESGMain
         ' 
         btnUpdateNations.BackColor = SystemColors.Control
         btnUpdateNations.Location = New Point(558, 174)
-        btnUpdateNations.Margin = New Padding(3, 2, 3, 2)
         btnUpdateNations.Name = "btnUpdateNations"
         btnUpdateNations.Size = New Size(88, 31)
         btnUpdateNations.TabIndex = 16
@@ -3546,7 +3431,6 @@ Partial Class frmESGMain
         ' nudEuropean
         ' 
         nudEuropean.Location = New Point(505, 81)
-        nudEuropean.Margin = New Padding(3, 2, 3, 2)
         nudEuropean.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudEuropean.Name = "nudEuropean"
         nudEuropean.Size = New Size(114, 23)
@@ -3556,7 +3440,6 @@ Partial Class frmESGMain
         ' 
         btnCancelNations.BackColor = SystemColors.Control
         btnCancelNations.Location = New Point(654, 174)
-        btnCancelNations.Margin = New Padding(3, 2, 3, 2)
         btnCancelNations.Name = "btnCancelNations"
         btnCancelNations.Size = New Size(88, 31)
         btnCancelNations.TabIndex = 17
@@ -3576,7 +3459,6 @@ Partial Class frmESGMain
         ' nudPacificIslander
         ' 
         nudPacificIslander.Location = New Point(505, 51)
-        nudPacificIslander.Margin = New Padding(3, 2, 3, 2)
         nudPacificIslander.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudPacificIslander.Name = "nudPacificIslander"
         nudPacificIslander.Size = New Size(114, 23)
@@ -3594,7 +3476,6 @@ Partial Class frmESGMain
         ' nudMiddleEastern
         ' 
         nudMiddleEastern.Location = New Point(227, 165)
-        nudMiddleEastern.Margin = New Padding(3, 2, 3, 2)
         nudMiddleEastern.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudMiddleEastern.Name = "nudMiddleEastern"
         nudMiddleEastern.Size = New Size(114, 23)
@@ -3612,7 +3493,6 @@ Partial Class frmESGMain
         ' nudIndigenous
         ' 
         nudIndigenous.Location = New Point(227, 135)
-        nudIndigenous.Margin = New Padding(3, 2, 3, 2)
         nudIndigenous.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudIndigenous.Name = "nudIndigenous"
         nudIndigenous.Size = New Size(114, 23)
@@ -3630,7 +3510,6 @@ Partial Class frmESGMain
         ' nudHispanic
         ' 
         nudHispanic.Location = New Point(227, 105)
-        nudHispanic.Margin = New Padding(3, 2, 3, 2)
         nudHispanic.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudHispanic.Name = "nudHispanic"
         nudHispanic.Size = New Size(114, 23)
@@ -3648,7 +3527,6 @@ Partial Class frmESGMain
         ' nudAsian
         ' 
         nudAsian.Location = New Point(227, 75)
-        nudAsian.Margin = New Padding(3, 2, 3, 2)
         nudAsian.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudAsian.Name = "nudAsian"
         nudAsian.Size = New Size(114, 23)
@@ -3666,7 +3544,6 @@ Partial Class frmESGMain
         ' nudAfrican
         ' 
         nudAfrican.Location = New Point(227, 48)
-        nudAfrican.Margin = New Padding(3, 2, 3, 2)
         nudAfrican.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudAfrican.Name = "nudAfrican"
         nudAfrican.Size = New Size(114, 23)
@@ -3686,7 +3563,6 @@ Partial Class frmESGMain
         dtpNations.CustomFormat = "MMMM yyyy"
         dtpNations.Format = DateTimePickerFormat.Custom
         dtpNations.Location = New Point(113, 20)
-        dtpNations.Margin = New Padding(3, 2, 3, 2)
         dtpNations.Name = "dtpNations"
         dtpNations.Size = New Size(119, 23)
         dtpNations.TabIndex = 13
@@ -3704,9 +3580,8 @@ Partial Class frmESGMain
         ' 
         tabReligions.Controls.Add(pnlReligions)
         tabReligions.Location = New Point(4, 24)
-        tabReligions.Margin = New Padding(3, 2, 3, 2)
         tabReligions.Name = "tabReligions"
-        tabReligions.Size = New Size(799, 469)
+        tabReligions.Size = New Size(799, 531)
         tabReligions.TabIndex = 8
         tabReligions.Text = "Religions"
         tabReligions.UseVisualStyleBackColor = True
@@ -3718,16 +3593,14 @@ Partial Class frmESGMain
         pnlReligions.Controls.Add(GroupBoxReligions)
         pnlReligions.Dock = DockStyle.Fill
         pnlReligions.Location = New Point(0, 0)
-        pnlReligions.Margin = New Padding(3, 2, 3, 2)
         pnlReligions.Name = "pnlReligions"
-        pnlReligions.Size = New Size(799, 469)
+        pnlReligions.Size = New Size(799, 531)
         pnlReligions.TabIndex = 2
         ' 
         ' dgvSocialReligions
         ' 
         dgvSocialReligions.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         dgvSocialReligions.Location = New Point(18, 313)
-        dgvSocialReligions.Margin = New Padding(3, 2, 3, 2)
         dgvSocialReligions.Name = "dgvSocialReligions"
         dgvSocialReligions.RowHeadersWidth = 51
         dgvSocialReligions.Size = New Size(763, 153)
@@ -3742,9 +3615,7 @@ Partial Class frmESGMain
         grpReligionsFilter.Controls.Add(Label111)
         grpReligionsFilter.Controls.Add(Label112)
         grpReligionsFilter.Location = New Point(18, 259)
-        grpReligionsFilter.Margin = New Padding(3, 2, 3, 2)
         grpReligionsFilter.Name = "grpReligionsFilter"
-        grpReligionsFilter.Padding = New Padding(3, 2, 3, 2)
         grpReligionsFilter.Size = New Size(766, 50)
         grpReligionsFilter.TabIndex = 18
         grpReligionsFilter.TabStop = False
@@ -3753,7 +3624,6 @@ Partial Class frmESGMain
         ' btnClearReligionsFilter
         ' 
         btnClearReligionsFilter.Location = New Point(415, 11)
-        btnClearReligionsFilter.Margin = New Padding(3, 2, 3, 2)
         btnClearReligionsFilter.Name = "btnClearReligionsFilter"
         btnClearReligionsFilter.Size = New Size(70, 23)
         btnClearReligionsFilter.TabIndex = 5
@@ -3764,7 +3634,6 @@ Partial Class frmESGMain
         ' 
         btnApplyReligionsFilter.BackColor = SystemColors.Control
         btnApplyReligionsFilter.Location = New Point(336, 11)
-        btnApplyReligionsFilter.Margin = New Padding(3, 2, 3, 2)
         btnApplyReligionsFilter.Name = "btnApplyReligionsFilter"
         btnApplyReligionsFilter.Size = New Size(70, 23)
         btnApplyReligionsFilter.TabIndex = 4
@@ -3776,7 +3645,6 @@ Partial Class frmESGMain
         dtpReligionsFilterMonth.CustomFormat = "MMMM"
         dtpReligionsFilterMonth.Format = DateTimePickerFormat.Custom
         dtpReligionsFilterMonth.Location = New Point(175, 14)
-        dtpReligionsFilterMonth.Margin = New Padding(3, 2, 3, 2)
         dtpReligionsFilterMonth.Name = "dtpReligionsFilterMonth"
         dtpReligionsFilterMonth.Size = New Size(79, 23)
         dtpReligionsFilterMonth.TabIndex = 3
@@ -3786,7 +3654,6 @@ Partial Class frmESGMain
         dtpReligionsFilterYear.CustomFormat = "yyyy"
         dtpReligionsFilterYear.Format = DateTimePickerFormat.Custom
         dtpReligionsFilterYear.Location = New Point(88, 14)
-        dtpReligionsFilterYear.Margin = New Padding(3, 2, 3, 2)
         dtpReligionsFilterYear.Name = "dtpReligionsFilterYear"
         dtpReligionsFilterYear.ShowUpDown = True
         dtpReligionsFilterYear.Size = New Size(62, 23)
@@ -3836,9 +3703,7 @@ Partial Class frmESGMain
         GroupBoxReligions.Controls.Add(dtpReligions)
         GroupBoxReligions.Controls.Add(Label87)
         GroupBoxReligions.Location = New Point(18, 15)
-        GroupBoxReligions.Margin = New Padding(3, 2, 3, 2)
         GroupBoxReligions.Name = "GroupBoxReligions"
-        GroupBoxReligions.Padding = New Padding(3, 2, 3, 2)
         GroupBoxReligions.Size = New Size(766, 240)
         GroupBoxReligions.TabIndex = 17
         GroupBoxReligions.TabStop = False
@@ -3847,7 +3712,6 @@ Partial Class frmESGMain
         ' nudNoReligion
         ' 
         nudNoReligion.Location = New Point(405, 142)
-        nudNoReligion.Margin = New Padding(3, 2, 3, 2)
         nudNoReligion.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudNoReligion.Name = "nudNoReligion"
         nudNoReligion.Size = New Size(114, 23)
@@ -3865,7 +3729,6 @@ Partial Class frmESGMain
         ' txtOtherReligionSpecify
         ' 
         txtOtherReligionSpecify.Location = New Point(405, 112)
-        txtOtherReligionSpecify.Margin = New Padding(3, 2, 3, 2)
         txtOtherReligionSpecify.Name = "txtOtherReligionSpecify"
         txtOtherReligionSpecify.Size = New Size(114, 23)
         txtOtherReligionSpecify.TabIndex = 31
@@ -3874,7 +3737,6 @@ Partial Class frmESGMain
         ' 
         btnSaveReligions.BackColor = SystemColors.Control
         btnSaveReligions.Location = New Point(360, 202)
-        btnSaveReligions.Margin = New Padding(3, 2, 3, 2)
         btnSaveReligions.Name = "btnSaveReligions"
         btnSaveReligions.Size = New Size(88, 27)
         btnSaveReligions.TabIndex = 15
@@ -3894,7 +3756,6 @@ Partial Class frmESGMain
         ' 
         btnUpdateReligions.BackColor = SystemColors.Control
         btnUpdateReligions.Location = New Point(456, 202)
-        btnUpdateReligions.Margin = New Padding(3, 2, 3, 2)
         btnUpdateReligions.Name = "btnUpdateReligions"
         btnUpdateReligions.Size = New Size(88, 27)
         btnUpdateReligions.TabIndex = 16
@@ -3905,7 +3766,6 @@ Partial Class frmESGMain
         ' nudOtherReligion
         ' 
         nudOtherReligion.Location = New Point(405, 82)
-        nudOtherReligion.Margin = New Padding(3, 2, 3, 2)
         nudOtherReligion.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudOtherReligion.Name = "nudOtherReligion"
         nudOtherReligion.Size = New Size(114, 23)
@@ -3915,7 +3775,6 @@ Partial Class frmESGMain
         ' 
         btnCancelReligions.BackColor = SystemColors.Control
         btnCancelReligions.Location = New Point(552, 202)
-        btnCancelReligions.Margin = New Padding(3, 2, 3, 2)
         btnCancelReligions.Name = "btnCancelReligions"
         btnCancelReligions.Size = New Size(88, 27)
         btnCancelReligions.TabIndex = 17
@@ -3935,7 +3794,6 @@ Partial Class frmESGMain
         ' nudSikhism
         ' 
         nudSikhism.Location = New Point(405, 52)
-        nudSikhism.Margin = New Padding(3, 2, 3, 2)
         nudSikhism.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudSikhism.Name = "nudSikhism"
         nudSikhism.Size = New Size(114, 23)
@@ -3953,7 +3811,6 @@ Partial Class frmESGMain
         ' nudJudaism
         ' 
         nudJudaism.Location = New Point(139, 142)
-        nudJudaism.Margin = New Padding(3, 2, 3, 2)
         nudJudaism.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudJudaism.Name = "nudJudaism"
         nudJudaism.Size = New Size(114, 23)
@@ -3971,7 +3828,6 @@ Partial Class frmESGMain
         ' nudBuddhism
         ' 
         nudBuddhism.Location = New Point(139, 112)
-        nudBuddhism.Margin = New Padding(3, 2, 3, 2)
         nudBuddhism.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudBuddhism.Name = "nudBuddhism"
         nudBuddhism.Size = New Size(114, 23)
@@ -3989,7 +3845,6 @@ Partial Class frmESGMain
         ' nudHinduism
         ' 
         nudHinduism.Location = New Point(139, 82)
-        nudHinduism.Margin = New Padding(3, 2, 3, 2)
         nudHinduism.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudHinduism.Name = "nudHinduism"
         nudHinduism.Size = New Size(114, 23)
@@ -4007,7 +3862,6 @@ Partial Class frmESGMain
         ' nudIslam
         ' 
         nudIslam.Location = New Point(139, 52)
-        nudIslam.Margin = New Padding(3, 2, 3, 2)
         nudIslam.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudIslam.Name = "nudIslam"
         nudIslam.Size = New Size(114, 23)
@@ -4025,7 +3879,6 @@ Partial Class frmESGMain
         ' nudChristianity
         ' 
         nudChristianity.Location = New Point(139, 169)
-        nudChristianity.Margin = New Padding(3, 2, 3, 2)
         nudChristianity.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudChristianity.Name = "nudChristianity"
         nudChristianity.Size = New Size(114, 23)
@@ -4045,7 +3898,6 @@ Partial Class frmESGMain
         dtpReligions.CustomFormat = "MMMM yyyy"
         dtpReligions.Format = DateTimePickerFormat.Custom
         dtpReligions.Location = New Point(113, 19)
-        dtpReligions.Margin = New Padding(3, 2, 3, 2)
         dtpReligions.Name = "dtpReligions"
         dtpReligions.Size = New Size(115, 23)
         dtpReligions.TabIndex = 13
@@ -4063,9 +3915,8 @@ Partial Class frmESGMain
         ' 
         tabLanguages.Controls.Add(pnlLanguages)
         tabLanguages.Location = New Point(4, 24)
-        tabLanguages.Margin = New Padding(3, 2, 3, 2)
         tabLanguages.Name = "tabLanguages"
-        tabLanguages.Size = New Size(799, 469)
+        tabLanguages.Size = New Size(799, 531)
         tabLanguages.TabIndex = 9
         tabLanguages.Text = "Languages"
         tabLanguages.UseVisualStyleBackColor = True
@@ -4077,16 +3928,14 @@ Partial Class frmESGMain
         pnlLanguages.Controls.Add(GroupBoxLanguages)
         pnlLanguages.Dock = DockStyle.Fill
         pnlLanguages.Location = New Point(0, 0)
-        pnlLanguages.Margin = New Padding(3, 2, 3, 2)
         pnlLanguages.Name = "pnlLanguages"
-        pnlLanguages.Size = New Size(799, 469)
+        pnlLanguages.Size = New Size(799, 531)
         pnlLanguages.TabIndex = 2
         ' 
         ' dgvSocialLanguages
         ' 
         dgvSocialLanguages.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         dgvSocialLanguages.Location = New Point(18, 288)
-        dgvSocialLanguages.Margin = New Padding(3, 2, 3, 2)
         dgvSocialLanguages.Name = "dgvSocialLanguages"
         dgvSocialLanguages.RowHeadersWidth = 51
         dgvSocialLanguages.Size = New Size(765, 178)
@@ -4101,9 +3950,7 @@ Partial Class frmESGMain
         grpLanguagesFilter.Controls.Add(Label113)
         grpLanguagesFilter.Controls.Add(Label114)
         grpLanguagesFilter.Location = New Point(18, 220)
-        grpLanguagesFilter.Margin = New Padding(3, 2, 3, 2)
         grpLanguagesFilter.Name = "grpLanguagesFilter"
-        grpLanguagesFilter.Padding = New Padding(3, 2, 3, 2)
         grpLanguagesFilter.Size = New Size(765, 64)
         grpLanguagesFilter.TabIndex = 18
         grpLanguagesFilter.TabStop = False
@@ -4112,7 +3959,6 @@ Partial Class frmESGMain
         ' btnClearLanguagesFilter
         ' 
         btnClearLanguagesFilter.Location = New Point(350, 14)
-        btnClearLanguagesFilter.Margin = New Padding(3, 2, 3, 2)
         btnClearLanguagesFilter.Name = "btnClearLanguagesFilter"
         btnClearLanguagesFilter.Size = New Size(70, 23)
         btnClearLanguagesFilter.TabIndex = 5
@@ -4123,7 +3969,6 @@ Partial Class frmESGMain
         ' 
         btnApplyLanguagesFilter.BackColor = SystemColors.Control
         btnApplyLanguagesFilter.Location = New Point(271, 14)
-        btnApplyLanguagesFilter.Margin = New Padding(3, 2, 3, 2)
         btnApplyLanguagesFilter.Name = "btnApplyLanguagesFilter"
         btnApplyLanguagesFilter.Size = New Size(70, 23)
         btnApplyLanguagesFilter.TabIndex = 4
@@ -4135,7 +3980,6 @@ Partial Class frmESGMain
         dtpLanguagesFilterMonth.CustomFormat = "MMMM"
         dtpLanguagesFilterMonth.Format = DateTimePickerFormat.Custom
         dtpLanguagesFilterMonth.Location = New Point(175, 14)
-        dtpLanguagesFilterMonth.Margin = New Padding(3, 2, 3, 2)
         dtpLanguagesFilterMonth.Name = "dtpLanguagesFilterMonth"
         dtpLanguagesFilterMonth.Size = New Size(79, 23)
         dtpLanguagesFilterMonth.TabIndex = 3
@@ -4145,7 +3989,6 @@ Partial Class frmESGMain
         dtpLanguagesFilterYear.CustomFormat = "yyyy"
         dtpLanguagesFilterYear.Format = DateTimePickerFormat.Custom
         dtpLanguagesFilterYear.Location = New Point(88, 14)
-        dtpLanguagesFilterYear.Margin = New Padding(3, 2, 3, 2)
         dtpLanguagesFilterYear.Name = "dtpLanguagesFilterYear"
         dtpLanguagesFilterYear.ShowUpDown = True
         dtpLanguagesFilterYear.Size = New Size(62, 23)
@@ -4185,9 +4028,7 @@ Partial Class frmESGMain
         GroupBoxLanguages.Controls.Add(dtpLanguages)
         GroupBoxLanguages.Controls.Add(Label88)
         GroupBoxLanguages.Location = New Point(18, 15)
-        GroupBoxLanguages.Margin = New Padding(3, 2, 3, 2)
         GroupBoxLanguages.Name = "GroupBoxLanguages"
-        GroupBoxLanguages.Padding = New Padding(3, 2, 3, 2)
         GroupBoxLanguages.Size = New Size(765, 201)
         GroupBoxLanguages.TabIndex = 17
         GroupBoxLanguages.TabStop = False
@@ -4196,7 +4037,6 @@ Partial Class frmESGMain
         ' nudHindi
         ' 
         nudHindi.Location = New Point(350, 112)
-        nudHindi.Margin = New Padding(3, 2, 3, 2)
         nudHindi.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudHindi.Name = "nudHindi"
         nudHindi.Size = New Size(114, 23)
@@ -4214,7 +4054,6 @@ Partial Class frmESGMain
         ' nudFrench
         ' 
         nudFrench.Location = New Point(350, 82)
-        nudFrench.Margin = New Padding(3, 2, 3, 2)
         nudFrench.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudFrench.Name = "nudFrench"
         nudFrench.Size = New Size(114, 23)
@@ -4224,7 +4063,6 @@ Partial Class frmESGMain
         ' 
         btnSaveLanguages.BackColor = SystemColors.Control
         btnSaveLanguages.Location = New Point(447, 154)
-        btnSaveLanguages.Margin = New Padding(3, 2, 3, 2)
         btnSaveLanguages.Name = "btnSaveLanguages"
         btnSaveLanguages.Size = New Size(88, 31)
         btnSaveLanguages.TabIndex = 15
@@ -4244,7 +4082,6 @@ Partial Class frmESGMain
         ' 
         btnUpdateLanguages.BackColor = SystemColors.Control
         btnUpdateLanguages.Location = New Point(543, 154)
-        btnUpdateLanguages.Margin = New Padding(3, 2, 3, 2)
         btnUpdateLanguages.Name = "btnUpdateLanguages"
         btnUpdateLanguages.Size = New Size(88, 31)
         btnUpdateLanguages.TabIndex = 16
@@ -4255,7 +4092,6 @@ Partial Class frmESGMain
         ' nudHebrew
         ' 
         nudHebrew.Location = New Point(350, 52)
-        nudHebrew.Margin = New Padding(3, 2, 3, 2)
         nudHebrew.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudHebrew.Name = "nudHebrew"
         nudHebrew.Size = New Size(114, 23)
@@ -4265,7 +4101,6 @@ Partial Class frmESGMain
         ' 
         btnCancelLanguages.BackColor = SystemColors.Control
         btnCancelLanguages.Location = New Point(639, 154)
-        btnCancelLanguages.Margin = New Padding(3, 2, 3, 2)
         btnCancelLanguages.Name = "btnCancelLanguages"
         btnCancelLanguages.Size = New Size(88, 31)
         btnCancelLanguages.TabIndex = 17
@@ -4285,7 +4120,6 @@ Partial Class frmESGMain
         ' nudSinhala
         ' 
         nudSinhala.Location = New Point(350, 22)
-        nudSinhala.Margin = New Padding(3, 2, 3, 2)
         nudSinhala.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         nudSinhala.Name = "nudSinhala"
         nudSinhala.Size = New Size(114, 23)
@@ -4305,7 +4139,6 @@ Partial Class frmESGMain
         dtpLanguages.CustomFormat = "MMMM yyyy"
         dtpLanguages.Format = DateTimePickerFormat.Custom
         dtpLanguages.Location = New Point(105, 19)
-        dtpLanguages.Margin = New Padding(3, 2, 3, 2)
         dtpLanguages.Name = "dtpLanguages"
         dtpLanguages.Size = New Size(158, 23)
         dtpLanguages.TabIndex = 13
@@ -4323,20 +4156,83 @@ Partial Class frmESGMain
         ' 
         btnExportSocial.BackColor = Color.LightBlue
         btnExportSocial.Location = New Point(18, 486)
-        btnExportSocial.Margin = New Padding(3, 2, 3, 2)
         btnExportSocial.Name = "btnExportSocial"
         btnExportSocial.Size = New Size(105, 22)
         btnExportSocial.TabIndex = 9
         btnExportSocial.Text = "Export to Excel"
         btnExportSocial.UseVisualStyleBackColor = False
         ' 
+        ' cmsHSE
+        ' 
+        cmsHSE.Name = "cmsHSE"
+        cmsHSE.Size = New Size(61, 4)
+        ' 
+        ' cmsSafety
+        ' 
+        cmsSafety.Name = "cmsSafety"
+        cmsSafety.Size = New Size(61, 4)
+        ' 
+        ' cmsGrievances
+        ' 
+        cmsGrievances.Name = "cmsGrievances"
+        cmsGrievances.Size = New Size(61, 4)
+        ' 
+        ' cmsSocialBasic
+        ' 
+        cmsSocialBasic.Name = "cmsSocialBasic"
+        cmsSocialBasic.Size = New Size(61, 4)
+        ' 
+        ' cmsSocialSkills
+        ' 
+        cmsSocialSkills.Name = "cmsSocialSkills"
+        cmsSocialSkills.Size = New Size(61, 4)
+        ' 
+        ' cmsSocialPromotions
+        ' 
+        cmsSocialPromotions.Name = "cmsSocialPromotions"
+        cmsSocialPromotions.Size = New Size(61, 4)
+        ' 
+        ' cmsSocialManagement
+        ' 
+        cmsSocialManagement.Name = "cmsSocialManagement"
+        cmsSocialManagement.Size = New Size(61, 4)
+        ' 
+        ' cmsSocialDisabilities
+        ' 
+        cmsSocialDisabilities.Name = "cmsSocialDisabilities"
+        cmsSocialDisabilities.Size = New Size(61, 4)
+        ' 
+        ' cmsSocialBehavior
+        ' 
+        cmsSocialBehavior.Name = "cmsSocialBehavior"
+        cmsSocialBehavior.Size = New Size(61, 4)
+        ' 
+        ' cmsSocialIdentification
+        ' 
+        cmsSocialIdentification.Name = "cmsSocialIdentification"
+        cmsSocialIdentification.Size = New Size(61, 4)
+        ' 
+        ' cmsSocialNations
+        ' 
+        cmsSocialNations.Name = "cmsSocialNations"
+        cmsSocialNations.Size = New Size(61, 4)
+        ' 
+        ' cmsSocialReligions
+        ' 
+        cmsSocialReligions.Name = "cmsSocialReligions"
+        cmsSocialReligions.Size = New Size(61, 4)
+        ' 
+        ' cmsSocialLanguages
+        ' 
+        cmsSocialLanguages.Name = "cmsSocialLanguages"
+        cmsSocialLanguages.Size = New Size(61, 4)
+        ' 
         ' frmESGMain
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(815, 525)
+        ClientSize = New Size(815, 587)
         Controls.Add(tcMain)
-        Margin = New Padding(3, 2, 3, 2)
         Name = "frmESGMain"
         StartPosition = FormStartPosition.CenterScreen
         Text = "ESG Data Management System"
@@ -4497,6 +4393,7 @@ Partial Class frmESGMain
         CType(nudHebrew, ComponentModel.ISupportInitialize).EndInit()
         CType(nudSinhala, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
+
     End Sub
 
     ' Main Controls
@@ -4531,6 +4428,7 @@ Partial Class frmESGMain
     Friend WithEvents dtpHSEFilterYear As DateTimePicker
     Friend WithEvents Label90 As Label
     Friend WithEvents Label89 As Label
+    Friend WithEvents btnDeleteHSE As Button
 
     ' Safety Tab Controls
     Friend WithEvents btnExportSafety As Button
@@ -4561,6 +4459,7 @@ Partial Class frmESGMain
     Friend WithEvents dtpSafetyFilterYear As DateTimePicker
     Friend WithEvents Label92 As Label
     Friend WithEvents Label91 As Label
+    Friend WithEvents btnDeleteSafety As Button
 
     ' Grievances Tab Controls
     Friend WithEvents btnExportGrievances As Button
@@ -4581,6 +4480,7 @@ Partial Class frmESGMain
     Friend WithEvents dtpGrievancesFilterYear As DateTimePicker
     Friend WithEvents Label94 As Label
     Friend WithEvents Label93 As Label
+    Friend WithEvents btnDeleteGrievances As Button
 
     ' Social Tab Controls
     Friend WithEvents tcSocialCategories As TabControl
@@ -4862,4 +4762,23 @@ Partial Class frmESGMain
     Friend WithEvents btnUpdateLanguages As Button
     Friend WithEvents btnCancelLanguages As Button
     Friend WithEvents btnExportSocial As Button
+
+    ' Context Menus
+    Friend WithEvents cmsHSE As ContextMenuStrip
+    Friend WithEvents cmsSafety As ContextMenuStrip
+    Friend WithEvents cmsGrievances As ContextMenuStrip
+    Friend WithEvents cmsSocialBasic As ContextMenuStrip
+    Friend WithEvents cmsSocialSkills As ContextMenuStrip
+    Friend WithEvents cmsSocialPromotions As ContextMenuStrip
+    Friend WithEvents cmsSocialManagement As ContextMenuStrip
+    Friend WithEvents cmsSocialDisabilities As ContextMenuStrip
+    Friend WithEvents cmsSocialBehavior As ContextMenuStrip
+    Friend WithEvents cmsSocialIdentification As ContextMenuStrip
+    Friend WithEvents cmsSocialNations As ContextMenuStrip
+    Friend WithEvents cmsSocialReligions As ContextMenuStrip
+    Friend WithEvents cmsSocialLanguages As ContextMenuStrip
+    Friend WithEvents btnHome As Button
+    Friend WithEvents Button1 As Button
+    Friend WithEvents Button2 As Button
+    Friend WithEvents Button3 As Button
 End Class

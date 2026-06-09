@@ -7,6 +7,8 @@
     <MyType>WindowsForms</MyType>
     <ImportedNamespaces>ESG_SOLUTION.ESG_SOLUTION=False,Microsoft Excel=False,System.Data=False,System.Drawing=False,System.Windows.Forms=False,Microsoft.VisualBasic=True,System=True,System.Collections=True,System.Collections.Generic=True,System.Diagnostics=True,System.Linq=True,System.Xml.Linq=True,System.Threading.Tasks=True,ESG_SOLUTION=True</ImportedNamespaces>
     <StartupObject>ESG_SOLUTION.My.MyApplication</StartupObject>
+    <Title>ESG- SOLUTION</Title>
+    <ApplicationIcon>ESG_ICON.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -40,6 +42,7 @@
 
   <ItemGroup>
     <Content Include="1.jpg" />
+    <Content Include="ESG_ICON.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -53,6 +56,7 @@
     <PackageReference Include="bootstrap" Version="5.3.8" />
     <PackageReference Include="CrystalDecisions.CrystalReports.Engine" Version="1.0.0" />
     <PackageReference Include="CrystalDecisions.Windows.Forms" Version="1.0.0" />
+    <PackageReference Include="CrystalReports.Engine" Version="13.0.4003" />
     <PackageReference Include="EPPlus" Version="8.6.0" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.9.1" />

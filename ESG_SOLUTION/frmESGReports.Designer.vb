@@ -22,7 +22,9 @@ Partial Class frmESGReports
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmESGReports))
         RoundedButton1 = New RoundedButton()
+        btnHome = New Button()
         SuspendLayout()
         ' 
         ' RoundedButton1
@@ -36,11 +38,22 @@ Partial Class frmESGReports
         RoundedButton1.Text = "Daily Waste"
         RoundedButton1.UseVisualStyleBackColor = False
         ' 
+        ' btnHome
+        ' 
+        btnHome.BackgroundImage = CType(resources.GetObject("btnHome.BackgroundImage"), Image)
+        btnHome.BackgroundImageLayout = ImageLayout.Stretch
+        btnHome.Location = New Point(598, 21)
+        btnHome.Name = "btnHome"
+        btnHome.Size = New Size(45, 38)
+        btnHome.TabIndex = 13
+        btnHome.UseVisualStyleBackColor = True
+        ' 
         ' frmESGReports
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
+        Controls.Add(btnHome)
         Controls.Add(RoundedButton1)
         Name = "frmESGReports"
         Text = "ESGReports"
@@ -48,4 +61,5 @@ Partial Class frmESGReports
     End Sub
 
     Friend WithEvents RoundedButton1 As RoundedButton
+    Friend WithEvents btnHome As Button
 End Class

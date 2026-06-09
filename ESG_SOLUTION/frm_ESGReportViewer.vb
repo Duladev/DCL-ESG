@@ -4,7 +4,7 @@ Public Class frm_ESGReportViewer
     Private Sub frm_DCLReportViewer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         On Error GoTo ErrorHandler
         Dim objReportDocument As New CrystalDecisions.CrystalReports.Engine.ReportDocument()
-        'objReportDocument.Load(strReportPath)
+        objReportDocument.Load(strReportPath)
         'strRecordSelectionFormula = mRecordSelectionFormula
         'objReportDocument.RecordSelectionFormula = strRecordSelectionFormula
         CRViewer1.ReportSource = objReportDocument

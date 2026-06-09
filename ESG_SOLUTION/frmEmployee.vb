@@ -7,6 +7,7 @@ Public Class frmEmployee
     Private dtEmployees As New DataTable()
 
     Private Sub frmEmployee_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ApplyModernStyle(Me)
         LoadEmployeeData()
         SetupFilters()
         SetupDetailsGroupBox()
@@ -189,25 +190,53 @@ Public Class frmEmployee
     End Sub
 
     Private Sub SetupFilters()
-        ' Populate filter comboboxes with unique values from dtEmployees
+        ' Populate Gender combobox with actual values
         cmbGender.Items.Clear()
         cmbGender.Items.Add("All")
+
+        ' Get unique gender values from the data
+        Dim genderValues = dtEmployees.AsEnumerable() _
+            .Select(Function(r) If(r("SEX") Is DBNull.Value, "N/A", If(Convert.ToInt32(r("SEX")) = 1, "Male", "Female"))) _
+            .Where(Function(g) g <> "N/A") _
+            .Distinct() _
+            .OrderBy(Function(g) g) _
+            .ToList()
+
+        For Each gender In genderValues
+            cmbGender.Items.Add(gender)
+        Next
+
         cmbGender.SelectedIndex = 0
 
         ' Category filter
-        Dim categories = dtEmployees.AsEnumerable().Select(Function(r) r("CATEGORY").ToString()).Where(Function(c) Not String.IsNullOrEmpty(c)).Distinct().OrderBy(Function(c) c).ToList()
+        Dim categories = dtEmployees.AsEnumerable() _
+            .Select(Function(r) r("CATEGORY").ToString()) _
+            .Where(Function(c) Not String.IsNullOrEmpty(c)) _
+            .Distinct() _
+            .OrderBy(Function(c) c) _
+            .ToList()
         categories.Insert(0, "All")
         cmbCategory.DataSource = Nothing
         cmbCategory.DataSource = categories.ToList()
 
         ' Department filter
-        Dim departments = dtEmployees.AsEnumerable().Select(Function(r) r("DepartmentName").ToString()).Where(Function(d) Not String.IsNullOrEmpty(d)).Distinct().OrderBy(Function(d) d).ToList()
+        Dim departments = dtEmployees.AsEnumerable() _
+            .Select(Function(r) r("DepartmentName").ToString()) _
+            .Where(Function(d) Not String.IsNullOrEmpty(d)) _
+            .Distinct() _
+            .OrderBy(Function(d) d) _
+            .ToList()
         departments.Insert(0, "All")
         cmbDepartment.DataSource = Nothing
         cmbDepartment.DataSource = departments.ToList()
 
         ' Nationality filter
-        Dim nationalities = dtEmployees.AsEnumerable().Select(Function(r) r("Nationality").ToString()).Where(Function(n) Not String.IsNullOrEmpty(n)).Distinct().OrderBy(Function(n) n).ToList()
+        Dim nationalities = dtEmployees.AsEnumerable() _
+            .Select(Function(r) r("Nationality").ToString()) _
+            .Where(Function(n) Not String.IsNullOrEmpty(n)) _
+            .Distinct() _
+            .OrderBy(Function(n) n) _
+            .ToList()
         nationalities.Insert(0, "All")
         cmbNationality.DataSource = Nothing
         cmbNationality.DataSource = nationalities.ToList()
@@ -226,10 +255,31 @@ Public Class frmEmployee
 
     Private Sub UpdateFilterCounters()
         ' Count for each filter category
-        lblGenderCount.Text = "(" & dtEmployees.AsEnumerable().Select(Function(r) If(r("SEX") Is DBNull.Value, "N/A", If(Convert.ToInt32(r("SEX")) = 1, "Male", "Female"))).Distinct().Count() & ")"
-        lblCategoryCount.Text = "(" & dtEmployees.AsEnumerable().Select(Function(r) r("CATEGORY").ToString()).Where(Function(c) Not String.IsNullOrEmpty(c)).Distinct().Count() & ")"
-        lblDeptCount.Text = "(" & dtEmployees.AsEnumerable().Select(Function(r) r("DepartmentName").ToString()).Where(Function(d) Not String.IsNullOrEmpty(d)).Distinct().Count() & ")"
-        lblNationalityCount.Text = "(" & dtEmployees.AsEnumerable().Select(Function(r) r("Nationality").ToString()).Where(Function(n) Not String.IsNullOrEmpty(n)).Distinct().Count() & ")"
+        ' Count distinct gender values (excluding N/A)
+        Dim genderCount = dtEmployees.AsEnumerable() _
+            .Select(Function(r) If(r("SEX") Is DBNull.Value, Nothing, If(Convert.ToInt32(r("SEX")) = 1, "Male", "Female"))) _
+            .Where(Function(g) g IsNot Nothing) _
+            .Distinct() _
+            .Count()
+        lblGenderCount.Text = "(" & genderCount & ")"
+
+        lblCategoryCount.Text = "(" & dtEmployees.AsEnumerable() _
+            .Select(Function(r) r("CATEGORY").ToString()) _
+            .Where(Function(c) Not String.IsNullOrEmpty(c)) _
+            .Distinct() _
+            .Count() & ")"
+
+        lblDeptCount.Text = "(" & dtEmployees.AsEnumerable() _
+            .Select(Function(r) r("DepartmentName").ToString()) _
+            .Where(Function(d) Not String.IsNullOrEmpty(d)) _
+            .Distinct() _
+            .Count() & ")"
+
+        lblNationalityCount.Text = "(" & dtEmployees.AsEnumerable() _
+            .Select(Function(r) r("Nationality").ToString()) _
+            .Where(Function(n) Not String.IsNullOrEmpty(n)) _
+            .Distinct() _
+            .Count() & ")"
     End Sub
 
     Private Sub ApplyFilters(sender As Object, e As EventArgs)
@@ -237,24 +287,28 @@ Public Class frmEmployee
             Dim dv As New DataView(dtEmployees)
             Dim filters As New List(Of String)()
 
-            ' Gender filter (0=Female,1=Male)
-            If cmbGender.SelectedItem IsNot Nothing AndAlso cmbGender.SelectedItem.ToString() <> "All" Then
-                Dim genderValue As Integer = If(cmbGender.SelectedItem.ToString() = "Male", 1, 0)
-                filters.Add($"SEX = {genderValue}")
+            ' Gender filter - check if there are items and if "All" is selected
+            If cmbGender.Items.Count > 0 AndAlso cmbGender.SelectedIndex > 0 Then
+                Dim selectedGender = cmbGender.SelectedItem.ToString()
+                If selectedGender = "Male" Then
+                    filters.Add("SEX = 1")
+                ElseIf selectedGender = "Female" Then
+                    filters.Add("SEX = 0")
+                End If
             End If
 
             ' Category filter
-            If cmbCategory.SelectedItem IsNot Nothing AndAlso cmbCategory.SelectedItem.ToString() <> "All" Then
+            If cmbCategory.SelectedIndex > 0 Then
                 filters.Add($"CATEGORY = '{cmbCategory.SelectedItem.ToString().Replace("'", "''")}'")
             End If
 
             ' Department filter
-            If cmbDepartment.SelectedItem IsNot Nothing AndAlso cmbDepartment.SelectedItem.ToString() <> "All" Then
+            If cmbDepartment.SelectedIndex > 0 Then
                 filters.Add($"DepartmentName = '{cmbDepartment.SelectedItem.ToString().Replace("'", "''")}'")
             End If
 
             ' Nationality filter
-            If cmbNationality.SelectedItem IsNot Nothing AndAlso cmbNationality.SelectedItem.ToString() <> "All" Then
+            If cmbNationality.SelectedIndex > 0 Then
                 filters.Add($"Nationality = '{cmbNationality.SelectedItem.ToString().Replace("'", "''")}'")
             End If
 
@@ -421,5 +475,6 @@ Public Class frmEmployee
 
     Private Sub btnHome_Click(sender As Object, e As EventArgs) Handles btnHome.Click
         frmDashboard.Show()
+        Me.Close()
     End Sub
 End Class

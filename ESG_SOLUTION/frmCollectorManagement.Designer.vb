@@ -14,6 +14,7 @@ Partial Class frmCollectorManagement
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmCollectorManagement))
         grpCollectorInfo = New GroupBox()
         btnClearForm = New Button()
         btnViewDocument = New Button()
@@ -31,6 +32,7 @@ Partial Class frmCollectorManagement
         txtCollectorName = New TextBox()
         lblCollectorName = New Label()
         grdCollectors = New DataGridView()
+        btnHome = New Button()
         grpCollectorInfo.SuspendLayout()
         CType(grdCollectors, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
@@ -38,6 +40,7 @@ Partial Class frmCollectorManagement
         ' grpCollectorInfo
         ' 
         grpCollectorInfo.BackColor = Color.White
+        grpCollectorInfo.Controls.Add(btnHome)
         grpCollectorInfo.Controls.Add(btnClearForm)
         grpCollectorInfo.Controls.Add(btnViewDocument)
         grpCollectorInfo.Controls.Add(btnUploadLicense)
@@ -66,7 +69,7 @@ Partial Class frmCollectorManagement
         btnClearForm.BackColor = Color.FromArgb(CByte(240), CByte(248), CByte(255))
         btnClearForm.FlatStyle = FlatStyle.Flat
         btnClearForm.Font = New Font("Segoe UI", 9F)
-        btnClearForm.Location = New Point(306, 269)
+        btnClearForm.Location = New Point(275, 267)
         btnClearForm.Name = "btnClearForm"
         btnClearForm.Size = New Size(100, 30)
         btnClearForm.TabIndex = 13
@@ -131,7 +134,7 @@ Partial Class frmCollectorManagement
         btnSaveCollector.BackColor = SystemColors.Control
         btnSaveCollector.FlatStyle = FlatStyle.Flat
         btnSaveCollector.Font = New Font("Segoe UI", 9.75F)
-        btnSaveCollector.Location = New Point(419, 269)
+        btnSaveCollector.Location = New Point(388, 267)
         btnSaveCollector.Name = "btnSaveCollector"
         btnSaveCollector.Size = New Size(110, 30)
         btnSaveCollector.TabIndex = 7
@@ -151,7 +154,7 @@ Partial Class frmCollectorManagement
         btnRefresh.BackColor = Color.FromArgb(CByte(240), CByte(248), CByte(255))
         btnRefresh.FlatStyle = FlatStyle.Flat
         btnRefresh.Font = New Font("Segoe UI", 9F)
-        btnRefresh.Location = New Point(82, 269)
+        btnRefresh.Location = New Point(51, 267)
         btnRefresh.Name = "btnRefresh"
         btnRefresh.Size = New Size(100, 30)
         btnRefresh.TabIndex = 5
@@ -163,7 +166,7 @@ Partial Class frmCollectorManagement
         btnDeleteCollector.BackColor = SystemColors.Control
         btnDeleteCollector.FlatStyle = FlatStyle.Flat
         btnDeleteCollector.Font = New Font("Segoe UI", 9.75F)
-        btnDeleteCollector.Location = New Point(188, 269)
+        btnDeleteCollector.Location = New Point(157, 267)
         btnDeleteCollector.Name = "btnDeleteCollector"
         btnDeleteCollector.Size = New Size(100, 30)
         btnDeleteCollector.TabIndex = 4
@@ -231,6 +234,16 @@ Partial Class frmCollectorManagement
         grdCollectors.Size = New Size(600, 172)
         grdCollectors.TabIndex = 1
         ' 
+        ' btnHome
+        ' 
+        btnHome.BackgroundImage = CType(resources.GetObject("btnHome.BackgroundImage"), Image)
+        btnHome.BackgroundImageLayout = ImageLayout.Stretch
+        btnHome.Location = New Point(543, 262)
+        btnHome.Name = "btnHome"
+        btnHome.Size = New Size(45, 38)
+        btnHome.TabIndex = 14
+        btnHome.UseVisualStyleBackColor = True
+        ' 
         ' frmCollectorManagement
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -266,5 +279,6 @@ Partial Class frmCollectorManagement
     Friend WithEvents btnUploadLicense As Button
     Friend WithEvents btnViewDocument As Button
     Friend WithEvents btnClearForm As Button
+    Friend WithEvents btnHome As Button
 
 End Class

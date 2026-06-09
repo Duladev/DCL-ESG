@@ -33,12 +33,30 @@ Public Class frmCSR
         dgvData.AutoGenerateColumns = True
         dgvData.SelectionMode = DataGridViewSelectionMode.FullRowSelect
         dgvData.MultiSelect = False
+
+        ' Enable horizontal scrolling
+        dgvData.ScrollBars = ScrollBars.Both ' This enables both horizontal and vertical scrollbars
+        dgvData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None ' Don't auto-size columns to fit
+
+        ' Optional: Set minimum column width for better scrolling experience
+        dgvData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+
+        ' Ensure all columns are visible by setting their width appropriately
+        ' This allows horizontal scrolling when columns exceed the visible area
+        dgvData.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None
     End Sub
 
     Private Sub SetupListView()
         lvwPhotos.View = View.Details
         lvwPhotos.FullRowSelect = True
         lvwPhotos.GridLines = True
+
+        ' Configure ListView columns
+        lvwPhotos.Columns.Clear()
+        lvwPhotos.Columns.Add("Photo Name", 150)
+        lvwPhotos.Columns.Add("Primary", 60)
+        lvwPhotos.Columns.Add("Uploaded Date", 120)
+        lvwPhotos.Columns.Add("Original File", 150)
     End Sub
 
     Private Sub btnBrowseFolder_Click(sender As Object, e As EventArgs) Handles btnBrowseFolder.Click
@@ -90,11 +108,57 @@ Public Class frmCSR
                     Dim dt As New DataTable()
                     da.Fill(dt)
                     dgvData.DataSource = dt
+
+                    ' After loading data, adjust column widths for better scrolling
+                    AdjustDataGridViewColumns()
                 End Using
             End Using
         Catch ex As Exception
             MessageBox.Show("Error loading data: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
+
+    Private Sub AdjustDataGridViewColumns()
+        ' Set specific column widths to ensure horizontal scrolling works
+        ' You can adjust these values based on your preference
+        If dgvData.Columns.Count > 0 Then
+            For Each column As DataGridViewColumn In dgvData.Columns
+                ' Set a reasonable minimum width for columns
+                column.MinimumWidth = 80
+
+                ' Set specific widths for certain columns
+                Select Case column.Name
+                    Case "RecordID"
+                        column.Width = 80
+                    Case "ActivityDate"
+                        column.Width = 120
+                    Case "Action"
+                        column.Width = 200
+                    Case "Description"
+                        column.Width = 250
+                    Case "Frequency"
+                        column.Width = 100
+                    Case "Location"
+                        column.Width = 150
+                    Case "TimeOfEngagement"
+                        column.Width = 120
+                    Case "EmployeesEnvolved"
+                        column.Width = 120
+                    Case "HoursInvested"
+                        column.Width = 100
+                    Case "PeopleImpacted"
+                        column.Width = 100
+                    Case "Quantity"
+                        column.Width = 80
+                    Case "CostUSD"
+                        column.Width = 100
+                    Case "Type"
+                        column.Width = 120
+                    Case Else
+                        column.Width = 100
+                End Select
+            Next
+        End If
     End Sub
 
     Private Sub LoadPhotos(recordID As Integer)
@@ -278,11 +342,9 @@ Public Class frmCSR
             Return
         End If
 
-        If currentRecordID = -1 Then
-            MessageBox.Show("Please load the record first using 'Load Selected' button", "Warning",
-                          MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Return
-        End If
+        ' Get the RecordID directly from the selected row instead of relying on currentRecordID
+        Dim selectedRow = dgvData.SelectedRows(0)
+        Dim recordIDToDelete As Integer = Convert.ToInt32(selectedRow.Cells("RecordID").Value)
 
         If MessageBox.Show("Are you sure you want to delete this record and all associated photos?", "Confirm Delete",
                            MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
@@ -303,7 +365,7 @@ Public Class frmCSR
                         Dim photoNamesToDelete As New List(Of String)
 
                         Using getCmd As New SqlCommand(getPhotosQuery, conn, transaction)
-                            getCmd.Parameters.AddWithValue("@RecordID", currentRecordID)
+                            getCmd.Parameters.AddWithValue("@RecordID", recordIDToDelete)
                             Dim reader = getCmd.ExecuteReader()
 
                             While reader.Read()
@@ -340,15 +402,21 @@ Public Class frmCSR
                         ' Delete record (photos will be deleted automatically due to CASCADE)
                         Dim deleteQuery As String = "DELETE FROM tbl_ESG_CSR WHERE RecordID = @RecordID"
                         Using delCmd As New SqlCommand(deleteQuery, conn, transaction)
-                            delCmd.Parameters.AddWithValue("@RecordID", currentRecordID)
+                            delCmd.Parameters.AddWithValue("@RecordID", recordIDToDelete)
                             delCmd.ExecuteNonQuery()
                         End Using
 
                         transaction.Commit()
 
                         MessageBox.Show("Record deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                        ' Clear form and refresh data
                         ClearForm()
                         LoadData()
+
+                        ' Clear selection in DataGridView
+                        dgvData.ClearSelection()
+
                     Catch ex As Exception
                         transaction.Rollback()
                         Throw ex
@@ -390,6 +458,7 @@ Public Class frmCSR
         ' Populate textboxes with selected data
         dtpActivityDate.Value = Convert.ToDateTime(selectedRow.Cells("ActivityDate").Value)
         txtAction.Text = selectedRow.Cells("Action").Value?.ToString()
+        txtDescription.Text = selectedRow.Cells("Description").Value?.ToString()
         cboFrequency.Text = selectedRow.Cells("Frequency").Value?.ToString()
         txtLocation.Text = selectedRow.Cells("Location").Value?.ToString()
         txtTimeEngagement.Text = selectedRow.Cells("TimeOfEngagement").Value?.ToString()
@@ -718,9 +787,6 @@ Public Class frmCSR
 
     Private Sub btnHome_Click(sender As Object, e As EventArgs) Handles btnHome.Click
         frmDashboard.Show()
-    End Sub
-
-    Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles Panel1.Paint
-
+        Me.Hide()
     End Sub
 End Class

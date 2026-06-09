@@ -40,12 +40,15 @@ Public Class frmESGMain
     Private languagesFilterMonth As Integer? = Nothing
 
     Private Sub frmESGMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ApplyModernStyle(Me)
         ClearAllGrids()
         SetupAgeComboBox()
         SetupDataGridViews()
         LoadAllData()
         SetupFilters()
         LoadAgeCategoriesList()
+        SetupContextMenus()
+        SetupDeleteButtons()
     End Sub
 
     Private Sub SetupDataGridViews()
@@ -55,7 +58,7 @@ Public Class frmESGMain
                                        dgvSocialNations, dgvSocialReligions, dgvSocialLanguages}
         For Each grid As DataGridView In grids
             If grid IsNot Nothing Then
-                grid.RowTemplate.Height = 25
+                grid.RowTemplate.Height = 20
                 grid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None
                 grid.AllowUserToResizeRows = False
                 grid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing
@@ -133,6 +136,400 @@ Public Class frmESGMain
         Next
     End Sub
 
+    ' ==================== DELETE METHODS ====================
+
+    Private Sub SetupContextMenus()
+        ' HSE Grid
+        cmsHSE = New ContextMenuStrip()
+        Dim deleteHSEMenuItem As New ToolStripMenuItem("Delete Record")
+        AddHandler deleteHSEMenuItem.Click, AddressOf DeleteHSERecord
+        cmsHSE.Items.Add(deleteHSEMenuItem)
+        dgvHSE.ContextMenuStrip = cmsHSE
+
+        ' Safety Grid
+        cmsSafety = New ContextMenuStrip()
+        Dim deleteSafetyMenuItem As New ToolStripMenuItem("Delete Record")
+        AddHandler deleteSafetyMenuItem.Click, AddressOf DeleteSafetyRecord
+        cmsSafety.Items.Add(deleteSafetyMenuItem)
+        dgvSafety.ContextMenuStrip = cmsSafety
+
+        ' Grievances Grid
+        cmsGrievances = New ContextMenuStrip()
+        Dim deleteGrievancesMenuItem As New ToolStripMenuItem("Delete Record")
+        AddHandler deleteGrievancesMenuItem.Click, AddressOf DeleteGrievancesRecord
+        cmsGrievances.Items.Add(deleteGrievancesMenuItem)
+        dgvGrievances.ContextMenuStrip = cmsGrievances
+
+        ' Social Basic Grid
+        cmsSocialBasic = New ContextMenuStrip()
+        Dim deleteSocialBasicMenuItem As New ToolStripMenuItem("Delete Record")
+        AddHandler deleteSocialBasicMenuItem.Click, AddressOf DeleteSocialBasicRecord
+        cmsSocialBasic.Items.Add(deleteSocialBasicMenuItem)
+        dgvSocialBasic.ContextMenuStrip = cmsSocialBasic
+
+        ' Social Skills Grid
+        cmsSocialSkills = New ContextMenuStrip()
+        Dim deleteSocialSkillsMenuItem As New ToolStripMenuItem("Clear Skills Data")
+        AddHandler deleteSocialSkillsMenuItem.Click, AddressOf DeleteSocialSkillsRecord
+        cmsSocialSkills.Items.Add(deleteSocialSkillsMenuItem)
+        dgvSocialSkills.ContextMenuStrip = cmsSocialSkills
+
+        ' Social Promotions Grid
+        cmsSocialPromotions = New ContextMenuStrip()
+        Dim deleteSocialPromotionsMenuItem As New ToolStripMenuItem("Clear Promotions Data")
+        AddHandler deleteSocialPromotionsMenuItem.Click, AddressOf DeleteSocialPromotionsRecord
+        cmsSocialPromotions.Items.Add(deleteSocialPromotionsMenuItem)
+        dgvSocialPromotions.ContextMenuStrip = cmsSocialPromotions
+
+        ' Social Management Grid
+        cmsSocialManagement = New ContextMenuStrip()
+        Dim deleteSocialManagementMenuItem As New ToolStripMenuItem("Clear Management Data")
+        AddHandler deleteSocialManagementMenuItem.Click, AddressOf DeleteSocialManagementRecord
+        cmsSocialManagement.Items.Add(deleteSocialManagementMenuItem)
+        dgvSocialManagement.ContextMenuStrip = cmsSocialManagement
+
+        ' Social Disabilities Grid
+        cmsSocialDisabilities = New ContextMenuStrip()
+        Dim deleteSocialDisabilitiesMenuItem As New ToolStripMenuItem("Delete Record")
+        AddHandler deleteSocialDisabilitiesMenuItem.Click, AddressOf DeleteSocialDisabilitiesRecord
+        cmsSocialDisabilities.Items.Add(deleteSocialDisabilitiesMenuItem)
+        dgvSocialDisabilities.ContextMenuStrip = cmsSocialDisabilities
+
+        ' Social Behavior Grid
+        cmsSocialBehavior = New ContextMenuStrip()
+        Dim deleteSocialBehaviorMenuItem As New ToolStripMenuItem("Delete Record")
+        AddHandler deleteSocialBehaviorMenuItem.Click, AddressOf DeleteSocialBehaviorRecord
+        cmsSocialBehavior.Items.Add(deleteSocialBehaviorMenuItem)
+        dgvSocialBehavior.ContextMenuStrip = cmsSocialBehavior
+
+        ' Social Identification Grid
+        cmsSocialIdentification = New ContextMenuStrip()
+        Dim deleteSocialIdentificationMenuItem As New ToolStripMenuItem("Delete Record")
+        AddHandler deleteSocialIdentificationMenuItem.Click, AddressOf DeleteSocialIdentificationRecord
+        cmsSocialIdentification.Items.Add(deleteSocialIdentificationMenuItem)
+        dgvSocialIdentification.ContextMenuStrip = cmsSocialIdentification
+
+        ' Social Nations Grid
+        cmsSocialNations = New ContextMenuStrip()
+        Dim deleteSocialNationsMenuItem As New ToolStripMenuItem("Delete Record")
+        AddHandler deleteSocialNationsMenuItem.Click, AddressOf DeleteSocialNationsRecord
+        cmsSocialNations.Items.Add(deleteSocialNationsMenuItem)
+        dgvSocialNations.ContextMenuStrip = cmsSocialNations
+
+        ' Social Religions Grid
+        cmsSocialReligions = New ContextMenuStrip()
+        Dim deleteSocialReligionsMenuItem As New ToolStripMenuItem("Delete Record")
+        AddHandler deleteSocialReligionsMenuItem.Click, AddressOf DeleteSocialReligionsRecord
+        cmsSocialReligions.Items.Add(deleteSocialReligionsMenuItem)
+        dgvSocialReligions.ContextMenuStrip = cmsSocialReligions
+
+        ' Social Languages Grid
+        cmsSocialLanguages = New ContextMenuStrip()
+        Dim deleteSocialLanguagesMenuItem As New ToolStripMenuItem("Delete Record")
+        AddHandler deleteSocialLanguagesMenuItem.Click, AddressOf DeleteSocialLanguagesRecord
+        cmsSocialLanguages.Items.Add(deleteSocialLanguagesMenuItem)
+        dgvSocialLanguages.ContextMenuStrip = cmsSocialLanguages
+    End Sub
+
+    Private Sub SetupDeleteButtons()
+        ' Hook up delete button events
+        AddHandler btnDeleteHSE.Click, AddressOf btnDeleteHSE_Click
+        AddHandler btnDeleteSafety.Click, AddressOf btnDeleteSafety_Click
+        AddHandler btnDeleteGrievances.Click, AddressOf btnDeleteGrievances_Click
+    End Sub
+
+    Private Sub DeleteRecord(ByVal tableName As String, ByVal idFieldName As String, ByVal idValue As Integer)
+        Try
+            ' Confirm deletion
+            Dim result As DialogResult = MessageBox.Show("Are you sure you want to delete this record?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+
+            If result = DialogResult.No Then
+                Return
+            End If
+
+            Using conn As SqlConnection = ModShared.GetConnection()
+                Dim query As String = $"DELETE FROM {tableName} WHERE {idFieldName} = @ID"
+
+                Using cmd As New SqlCommand(query, conn)
+                    cmd.Parameters.AddWithValue("@ID", idValue)
+                    conn.Open()
+                    Dim rowsAffected As Integer = cmd.ExecuteNonQuery()
+
+                    If rowsAffected > 0 Then
+                        MessageBox.Show("Record deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                        ' Refresh the appropriate grid based on table name
+                        Select Case tableName
+                            Case "tbl_ESG_HSE_Training"
+                                LoadHSEData()
+                            Case "tbl_ESG_Safety_Incidents"
+                                LoadSafetyData()
+                            Case "tbl_ESG_Grievances"
+                                LoadGrievancesData()
+                            Case "tbl_ESG_Social_Data"
+                                LoadAllSocialData()
+                            Case "tbl_ESG_Disabilities"
+                                LoadSocialDisabilitiesData()
+                            Case "tbl_ESG_Behavior"
+                                LoadSocialBehaviorData()
+                            Case "tbl_ESG_Identification"
+                                LoadSocialIdentificationData()
+                            Case "tbl_ESG_Nations"
+                                LoadSocialNationsData()
+                            Case "tbl_ESG_Religions"
+                                LoadSocialReligionsData()
+                            Case "tbl_ESG_Languages"
+                                LoadSocialLanguagesData()
+                        End Select
+                    Else
+                        MessageBox.Show("No record found to delete.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End If
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error deleting record: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    ' HSE Delete Handlers
+    Private Sub DeleteHSERecord(sender As Object, e As EventArgs)
+        If dgvHSE.CurrentRow IsNot Nothing Then
+            Dim id As Integer = Convert.ToInt32(dgvHSE.CurrentRow.Cells("TrainingID").Value)
+            DeleteRecord("tbl_ESG_HSE_Training", "TrainingID", id)
+        Else
+            MessageBox.Show("Please select a record to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+    End Sub
+
+    Private Sub btnDeleteHSE_Click(sender As Object, e As EventArgs)
+        DeleteHSERecord(sender, e)
+    End Sub
+
+    ' Safety Delete Handlers
+    Private Sub DeleteSafetyRecord(sender As Object, e As EventArgs)
+        If dgvSafety.CurrentRow IsNot Nothing Then
+            Dim id As Integer = Convert.ToInt32(dgvSafety.CurrentRow.Cells("IncidentID").Value)
+            DeleteRecord("tbl_ESG_Safety_Incidents", "IncidentID", id)
+        Else
+            MessageBox.Show("Please select a record to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+    End Sub
+
+    Private Sub btnDeleteSafety_Click(sender As Object, e As EventArgs)
+        DeleteSafetyRecord(sender, e)
+    End Sub
+
+    ' Grievances Delete Handlers
+    Private Sub DeleteGrievancesRecord(sender As Object, e As EventArgs)
+        If dgvGrievances.CurrentRow IsNot Nothing Then
+            Dim id As Integer = Convert.ToInt32(dgvGrievances.CurrentRow.Cells("GrievanceID").Value)
+            DeleteRecord("tbl_ESG_Grievances", "GrievanceID", id)
+        Else
+            MessageBox.Show("Please select a record to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+    End Sub
+
+    Private Sub btnDeleteGrievances_Click(sender As Object, e As EventArgs)
+        DeleteGrievancesRecord(sender, e)
+    End Sub
+
+    ' Social Basic Delete Handler
+    Private Sub DeleteSocialBasicRecord(sender As Object, e As EventArgs)
+        If dgvSocialBasic.CurrentRow IsNot Nothing Then
+            Dim id As Integer = Convert.ToInt32(dgvSocialBasic.CurrentRow.Cells("SocialID").Value)
+
+            ' First delete related records from child tables
+            Dim result As DialogResult = MessageBox.Show("This will also delete all related records (Skills, Promotions, Management, Disabilities, Behavior, Identification, Nations, Religions, Languages). Continue?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+
+            If result = DialogResult.Yes Then
+                Try
+                    Using conn As SqlConnection = ModShared.GetConnection()
+                        conn.Open()
+                        Dim transaction = conn.BeginTransaction()
+
+                        Try
+                            ' Delete from child tables
+                            Dim childTables As String() = {"tbl_ESG_Disabilities", "tbl_ESG_Behavior", "tbl_ESG_Identification",
+                                                           "tbl_ESG_Nations", "tbl_ESG_Religions", "tbl_ESG_Languages"}
+
+                            For Each table In childTables
+                                Dim cmd As New SqlCommand($"DELETE FROM {table} WHERE SocialID = @ID", conn, transaction)
+                                cmd.Parameters.AddWithValue("@ID", id)
+                                cmd.ExecuteNonQuery()
+                            Next
+
+                            ' Delete from main table
+                            Dim mainCmd As New SqlCommand("DELETE FROM tbl_ESG_Social_Data WHERE SocialID = @ID", conn, transaction)
+                            mainCmd.Parameters.AddWithValue("@ID", id)
+                            mainCmd.ExecuteNonQuery()
+
+                            transaction.Commit()
+                            MessageBox.Show("Record and all related data deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                            LoadAllSocialData()
+                        Catch
+                            transaction.Rollback()
+                            Throw
+                        End Try
+                    End Using
+                Catch ex As Exception
+                    MessageBox.Show("Error deleting record: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
+            End If
+        Else
+            MessageBox.Show("Please select a record to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+    End Sub
+
+    ' Social Skills Delete Handler (clears data, doesn't delete)
+    Private Sub DeleteSocialSkillsRecord(sender As Object, e As EventArgs)
+        If dgvSocialSkills.CurrentRow IsNot Nothing Then
+            Dim id As Integer = Convert.ToInt32(dgvSocialSkills.CurrentRow.Cells("SocialID").Value)
+
+            Dim result As DialogResult = MessageBox.Show("Are you sure you want to clear the skills data for this record?", "Confirm Clear", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+
+            If result = DialogResult.Yes Then
+                Try
+                    Using conn As SqlConnection = ModShared.GetConnection()
+                        Dim query As String = "UPDATE tbl_ESG_Social_Data SET LearntSkillsAtNIRU = 0, HiredQualified = 0, NewToIndustry = 0, ModifiedDate = GETDATE() WHERE SocialID = @ID"
+
+                        Using cmd As New SqlCommand(query, conn)
+                            cmd.Parameters.AddWithValue("@ID", id)
+                            conn.Open()
+                            cmd.ExecuteNonQuery()
+                        End Using
+                    End Using
+
+                    MessageBox.Show("Skills data cleared successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    LoadSocialSkillsData()
+                Catch ex As Exception
+                    MessageBox.Show("Error clearing skills data: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
+            End If
+        Else
+            MessageBox.Show("Please select a record to clear.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+    End Sub
+
+    ' Social Promotions Delete Handler (clears data, doesn't delete)
+    Private Sub DeleteSocialPromotionsRecord(sender As Object, e As EventArgs)
+        If dgvSocialPromotions.CurrentRow IsNot Nothing Then
+            Dim id As Integer = Convert.ToInt32(dgvSocialPromotions.CurrentRow.Cells("SocialID").Value)
+
+            Dim result As DialogResult = MessageBox.Show("Are you sure you want to clear the promotions data for this record?", "Confirm Clear", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+
+            If result = DialogResult.Yes Then
+                Try
+                    Using conn As SqlConnection = ModShared.GetConnection()
+                        Dim query As String = "UPDATE tbl_ESG_Social_Data SET Promotions = 0, InternalMobility = 0, SameFamilyCount = 0, ModifiedDate = GETDATE() WHERE SocialID = @ID"
+
+                        Using cmd As New SqlCommand(query, conn)
+                            cmd.Parameters.AddWithValue("@ID", id)
+                            conn.Open()
+                            cmd.ExecuteNonQuery()
+                        End Using
+                    End Using
+
+                    MessageBox.Show("Promotions data cleared successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    LoadSocialPromotionsData()
+                Catch ex As Exception
+                    MessageBox.Show("Error clearing promotions data: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
+            End If
+        Else
+            MessageBox.Show("Please select a record to clear.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+    End Sub
+
+    ' Social Management Delete Handler (clears data, doesn't delete)
+    Private Sub DeleteSocialManagementRecord(sender As Object, e As EventArgs)
+        If dgvSocialManagement.CurrentRow IsNot Nothing Then
+            Dim id As Integer = Convert.ToInt32(dgvSocialManagement.CurrentRow.Cells("SocialID").Value)
+
+            Dim result As DialogResult = MessageBox.Show("Are you sure you want to clear the management data for this record?", "Confirm Clear", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+
+            If result = DialogResult.Yes Then
+                Try
+                    Using conn As SqlConnection = ModShared.GetConnection()
+                        Dim query As String = "UPDATE tbl_ESG_Social_Data SET WomenFirstLineMgmt = 0, MenFirstLineMgmt = 0, WomenMiddleMgmt = 0, MenMiddleMgmt = 0, WomenUpperMgmt = 0, MenUpperMgmt = 0, WomenLeadershipTeam = 0, MenLeadershipTeam = 0, ModifiedDate = GETDATE() WHERE SocialID = @ID"
+
+                        Using cmd As New SqlCommand(query, conn)
+                            cmd.Parameters.AddWithValue("@ID", id)
+                            conn.Open()
+                            cmd.ExecuteNonQuery()
+                        End Using
+                    End Using
+
+                    MessageBox.Show("Management data cleared successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    LoadSocialManagementData()
+                Catch ex As Exception
+                    MessageBox.Show("Error clearing management data: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
+            End If
+        Else
+            MessageBox.Show("Please select a record to clear.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+    End Sub
+
+    ' Social Disabilities Delete Handler
+    Private Sub DeleteSocialDisabilitiesRecord(sender As Object, e As EventArgs)
+        If dgvSocialDisabilities.CurrentRow IsNot Nothing Then
+            Dim id As Integer = Convert.ToInt32(dgvSocialDisabilities.CurrentRow.Cells("DisabilityID").Value)
+            DeleteRecord("tbl_ESG_Disabilities", "DisabilityID", id)
+        Else
+            MessageBox.Show("Please select a record to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+    End Sub
+
+    ' Social Behavior Delete Handler
+    Private Sub DeleteSocialBehaviorRecord(sender As Object, e As EventArgs)
+        If dgvSocialBehavior.CurrentRow IsNot Nothing Then
+            Dim id As Integer = Convert.ToInt32(dgvSocialBehavior.CurrentRow.Cells("BehaviorID").Value)
+            DeleteRecord("tbl_ESG_Behavior", "BehaviorID", id)
+        Else
+            MessageBox.Show("Please select a record to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+    End Sub
+
+    ' Social Identification Delete Handler
+    Private Sub DeleteSocialIdentificationRecord(sender As Object, e As EventArgs)
+        If dgvSocialIdentification.CurrentRow IsNot Nothing Then
+            Dim id As Integer = Convert.ToInt32(dgvSocialIdentification.CurrentRow.Cells("IdentificationID").Value)
+            DeleteRecord("tbl_ESG_Identification", "IdentificationID", id)
+        Else
+            MessageBox.Show("Please select a record to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+    End Sub
+
+    ' Social Nations Delete Handler
+    Private Sub DeleteSocialNationsRecord(sender As Object, e As EventArgs)
+        If dgvSocialNations.CurrentRow IsNot Nothing Then
+            Dim id As Integer = Convert.ToInt32(dgvSocialNations.CurrentRow.Cells("NationID").Value)
+            DeleteRecord("tbl_ESG_Nations", "NationID", id)
+        Else
+            MessageBox.Show("Please select a record to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+    End Sub
+
+    ' Social Religions Delete Handler
+    Private Sub DeleteSocialReligionsRecord(sender As Object, e As EventArgs)
+        If dgvSocialReligions.CurrentRow IsNot Nothing Then
+            Dim id As Integer = Convert.ToInt32(dgvSocialReligions.CurrentRow.Cells("ReligionID").Value)
+            DeleteRecord("tbl_ESG_Religions", "ReligionID", id)
+        Else
+            MessageBox.Show("Please select a record to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+    End Sub
+
+    ' Social Languages Delete Handler
+    Private Sub DeleteSocialLanguagesRecord(sender As Object, e As EventArgs)
+        If dgvSocialLanguages.CurrentRow IsNot Nothing Then
+            Dim id As Integer = Convert.ToInt32(dgvSocialLanguages.CurrentRow.Cells("LanguageID").Value)
+            DeleteRecord("tbl_ESG_Languages", "LanguageID", id)
+        Else
+            MessageBox.Show("Please select a record to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+    End Sub
+
     ' ==================== HSE TRAINING TAB ====================
 
     Private Sub btnSaveHSE_Click(sender As Object, e As EventArgs) Handles btnSaveHSE.Click
@@ -142,7 +539,7 @@ Public Class frmESGMain
                 Return
             End If
 
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "INSERT INTO tbl_ESG_HSE_Training (ReportMonth, ReportYear, AttendedHealthSafety, AttendedFirstAid, AttendedFireFighting, AttendedOtherWorkshop, OtherWorkshopName, CreatedDate) VALUES (@Month, @Year, @HSE, @FirstAid, @Fire, @Other, @OtherName, @CreatedDate)"
 
                 Using cmd As New SqlCommand(query, conn)
@@ -221,7 +618,7 @@ Public Class frmESGMain
             MessageBox.Show("No data to export", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
-        modShared.ExportToExcel(dgvHSE, "HSE_Training_Report")
+        ModShared.ExportToExcel(dgvHSE, "HSE_Training_Report")
     End Sub
 
     ' ==================== SAFETY INCIDENTS TAB ====================
@@ -230,7 +627,7 @@ Public Class frmESGMain
         Try
             Dim totalIncidents As Integer = CInt(nudPropertyDamage.Value + nudEnvironmental.Value + nudNearMisses.Value + nudTotalAccidents.Value)
 
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "INSERT INTO tbl_ESG_Safety_Incidents (ReportMonth, ReportYear, PropertyDamageIncidents, EnvironmentalIncidents, NearMisses, TotalAccidents, AccidentsWithInjuries, AccidentsWithIllness, AccidentsWithDeath, TotalIncidentCounter, CreatedDate) VALUES (@Month, @Year, @Property, @Environment, @NearMiss, @TotalAcc, @Injuries, @Illness, @Deaths, @TotalIncidents, @CreatedDate)"
 
                 Using cmd As New SqlCommand(query, conn)
@@ -314,14 +711,14 @@ Public Class frmESGMain
             MessageBox.Show("No data to export", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
-        modShared.ExportToExcel(dgvSafety, "Safety_Incidents_Report")
+        ModShared.ExportToExcel(dgvSafety, "Safety_Incidents_Report")
     End Sub
 
     ' ==================== GRIEVANCES TAB ====================
 
     Private Sub btnSaveGrievances_Click(sender As Object, e As EventArgs) Handles btnSaveGrievances.Click
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "INSERT INTO tbl_ESG_Grievances (ReportMonth, ReportYear, TotalEmployeeGrievances, UnresolvedEmployeeGrievances, CreatedDate) VALUES (@Month, @Year, @Total, @Unresolved, @CreatedDate)"
 
                 Using cmd As New SqlCommand(query, conn)
@@ -394,7 +791,7 @@ Public Class frmESGMain
             MessageBox.Show("No data to export", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
-        modShared.ExportToExcel(dgvGrievances, "Grievances_Report")
+        ModShared.ExportToExcel(dgvGrievances, "Grievances_Report")
     End Sub
 
     ' ==================== SOCIAL DATA TAB ====================
@@ -682,7 +1079,7 @@ Public Class frmESGMain
 
     Private Sub LoadBasicDataForEditing(socialID As Integer)
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "SELECT * FROM tbl_ESG_Social_Data WHERE SocialID = @SocialID"
                 Dim cmd As New SqlCommand(query, conn)
                 cmd.Parameters.AddWithValue("@SocialID", socialID)
@@ -739,7 +1136,7 @@ Public Class frmESGMain
 
     Private Sub SaveBasicData()
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "INSERT INTO tbl_ESG_Social_Data (ReportMonth, ReportYear, MaleCount, FemaleCount, AgeUnder18, Age18To30, Age31To50, AgeOver50, CreatedDate) VALUES (@Month, @Year, @Male, @Female, @AgeUnder18, @Age18To30, @Age31To50, @AgeOver50, GETDATE()); SELECT SCOPE_IDENTITY();"
 
                 Using cmd As New SqlCommand(query, conn)
@@ -778,7 +1175,7 @@ Public Class frmESGMain
         End If
 
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "UPDATE tbl_ESG_Social_Data SET ReportMonth = @Month, ReportYear = @Year, MaleCount = @Male, FemaleCount = @Female, AgeUnder18 = @AgeUnder18, Age18To30 = @Age18To30, Age31To50 = @Age31To50, AgeOver50 = @AgeOver50, ModifiedDate = GETDATE() WHERE SocialID = @SocialID"
 
                 Using cmd As New SqlCommand(query, conn)
@@ -852,7 +1249,7 @@ Public Class frmESGMain
 
     Private Sub LoadSkillsDataForEditing(socialID As Integer)
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "SELECT * FROM tbl_ESG_Social_Data WHERE SocialID = @SocialID"
                 Dim cmd As New SqlCommand(query, conn)
                 cmd.Parameters.AddWithValue("@SocialID", socialID)
@@ -894,7 +1291,7 @@ Public Class frmESGMain
         End If
 
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "UPDATE tbl_ESG_Social_Data SET ReportMonth = @Month, ReportYear = @Year, LearntSkillsAtNIRU = @Learnt, HiredQualified = @Qualified, NewToIndustry = @NewIndustry, ModifiedDate = GETDATE() WHERE SocialID = @SocialID"
 
                 Using cmd As New SqlCommand(query, conn)
@@ -925,7 +1322,7 @@ Public Class frmESGMain
         End If
 
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "UPDATE tbl_ESG_Social_Data SET ReportMonth = @Month, ReportYear = @Year, LearntSkillsAtNIRU = @Learnt, HiredQualified = @Qualified, NewToIndustry = @NewIndustry, ModifiedDate = GETDATE() WHERE SocialID = @SocialID"
 
                 Using cmd As New SqlCommand(query, conn)
@@ -989,7 +1386,7 @@ Public Class frmESGMain
 
     Private Sub LoadPromotionsDataForEditing(socialID As Integer)
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "SELECT * FROM tbl_ESG_Social_Data WHERE SocialID = @SocialID"
                 Dim cmd As New SqlCommand(query, conn)
                 cmd.Parameters.AddWithValue("@SocialID", socialID)
@@ -1031,7 +1428,7 @@ Public Class frmESGMain
         End If
 
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "UPDATE tbl_ESG_Social_Data SET ReportMonth = @Month, ReportYear = @Year, Promotions = @Promotions, InternalMobility = @Mobility, SameFamilyCount = @Family, ModifiedDate = GETDATE() WHERE SocialID = @SocialID"
 
                 Using cmd As New SqlCommand(query, conn)
@@ -1062,7 +1459,7 @@ Public Class frmESGMain
         End If
 
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "UPDATE tbl_ESG_Social_Data SET ReportMonth = @Month, ReportYear = @Year, Promotions = @Promotions, InternalMobility = @Mobility, SameFamilyCount = @Family, ModifiedDate = GETDATE() WHERE SocialID = @SocialID"
 
                 Using cmd As New SqlCommand(query, conn)
@@ -1126,7 +1523,7 @@ Public Class frmESGMain
 
     Private Sub LoadManagementDataForEditing(socialID As Integer)
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "SELECT * FROM tbl_ESG_Social_Data WHERE SocialID = @SocialID"
                 Dim cmd As New SqlCommand(query, conn)
                 cmd.Parameters.AddWithValue("@SocialID", socialID)
@@ -1173,7 +1570,7 @@ Public Class frmESGMain
         End If
 
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "UPDATE tbl_ESG_Social_Data SET ReportMonth = @Month, ReportYear = @Year, WomenFirstLineMgmt = @WFirst, MenFirstLineMgmt = @MFirst, WomenMiddleMgmt = @WMiddle, MenMiddleMgmt = @MMiddle, WomenUpperMgmt = @WUpper, MenUpperMgmt = @MUpper, WomenLeadershipTeam = @WLeadership, MenLeadershipTeam = @MLeadership, ModifiedDate = GETDATE() WHERE SocialID = @SocialID"
 
                 Using cmd As New SqlCommand(query, conn)
@@ -1209,7 +1606,7 @@ Public Class frmESGMain
         End If
 
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "UPDATE tbl_ESG_Social_Data SET ReportMonth = @Month, ReportYear = @Year, WomenFirstLineMgmt = @WFirst, MenFirstLineMgmt = @MFirst, WomenMiddleMgmt = @WMiddle, MenMiddleMgmt = @MMiddle, WomenUpperMgmt = @WUpper, MenUpperMgmt = @MUpper, WomenLeadershipTeam = @WLeadership, MenLeadershipTeam = @MLeadership, ModifiedDate = GETDATE() WHERE SocialID = @SocialID"
 
                 Using cmd As New SqlCommand(query, conn)
@@ -1283,7 +1680,7 @@ Public Class frmESGMain
 
     Private Sub LoadDisabilitiesDataForEditing(recordID As Integer)
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "SELECT * FROM tbl_ESG_Disabilities WHERE DisabilityID = @RecordID"
                 Dim cmd As New SqlCommand(query, conn)
                 cmd.Parameters.AddWithValue("@RecordID", recordID)
@@ -1327,7 +1724,7 @@ Public Class frmESGMain
         End If
 
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "INSERT INTO tbl_ESG_Disabilities (SocialID, ReportMonth, ReportYear, PhysicalDisabilities, SensoryDisabilities, MentalHealthConditions, IntellectualDisabilities, ChronicHealthConditions, CreatedDate) VALUES (@SocialID, @Month, @Year, @Physical, @Sensory, @Mental, @Intellectual, @Chronic, GETDATE())"
 
                 Using cmd As New SqlCommand(query, conn)
@@ -1360,7 +1757,7 @@ Public Class frmESGMain
         End If
 
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "UPDATE tbl_ESG_Disabilities SET ReportMonth = @Month, ReportYear = @Year, PhysicalDisabilities = @Physical, SensoryDisabilities = @Sensory, MentalHealthConditions = @Mental, IntellectualDisabilities = @Intellectual, ChronicHealthConditions = @Chronic, ModifiedDate = GETDATE() WHERE DisabilityID = @RecordID"
 
                 Using cmd As New SqlCommand(query, conn)
@@ -1428,7 +1825,7 @@ Public Class frmESGMain
 
     Private Sub LoadBehaviorDataForEditing(recordID As Integer)
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "SELECT * FROM tbl_ESG_Behavior WHERE BehaviorID = @RecordID"
                 Dim cmd As New SqlCommand(query, conn)
                 cmd.Parameters.AddWithValue("@RecordID", recordID)
@@ -1472,7 +1869,7 @@ Public Class frmESGMain
         End If
 
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "INSERT INTO tbl_ESG_Behavior (SocialID, ReportMonth, ReportYear, Lesbian, Gay, Bisexual, Asexual, Pansexual, CreatedDate) VALUES (@SocialID, @Month, @Year, @Lesbian, @Gay, @Bisexual, @Asexual, @Pansexual, GETDATE())"
 
                 Using cmd As New SqlCommand(query, conn)
@@ -1505,7 +1902,7 @@ Public Class frmESGMain
         End If
 
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "UPDATE tbl_ESG_Behavior SET ReportMonth = @Month, ReportYear = @Year, Lesbian = @Lesbian, Gay = @Gay, Bisexual = @Bisexual, Asexual = @Asexual, Pansexual = @Pansexual, ModifiedDate = GETDATE() WHERE BehaviorID = @RecordID"
 
                 Using cmd As New SqlCommand(query, conn)
@@ -1573,7 +1970,7 @@ Public Class frmESGMain
 
     Private Sub LoadIdentificationDataForEditing(recordID As Integer)
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "SELECT * FROM tbl_ESG_Identification WHERE IdentificationID = @RecordID"
                 Dim cmd As New SqlCommand(query, conn)
                 cmd.Parameters.AddWithValue("@RecordID", recordID)
@@ -1617,7 +2014,7 @@ Public Class frmESGMain
         End If
 
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "INSERT INTO tbl_ESG_Identification (SocialID, ReportMonth, ReportYear, Transgender, Queer, Questioning, NonBinary, Agender, CreatedDate) VALUES (@SocialID, @Month, @Year, @Transgender, @Queer, @Questioning, @NonBinary, @Agender, GETDATE())"
 
                 Using cmd As New SqlCommand(query, conn)
@@ -1650,7 +2047,7 @@ Public Class frmESGMain
         End If
 
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "UPDATE tbl_ESG_Identification SET ReportMonth = @Month, ReportYear = @Year, Transgender = @Transgender, Queer = @Queer, Questioning = @Questioning, NonBinary = @NonBinary, Agender = @Agender, ModifiedDate = GETDATE() WHERE IdentificationID = @RecordID"
 
                 Using cmd As New SqlCommand(query, conn)
@@ -1718,7 +2115,7 @@ Public Class frmESGMain
 
     Private Sub LoadNationsDataForEditing(recordID As Integer)
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "SELECT * FROM tbl_ESG_Nations WHERE NationID = @RecordID"
                 Dim cmd As New SqlCommand(query, conn)
                 cmd.Parameters.AddWithValue("@RecordID", recordID)
@@ -1766,7 +2163,7 @@ Public Class frmESGMain
         End If
 
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "INSERT INTO tbl_ESG_Nations (SocialID, ReportMonth, ReportYear, African, Asian, HispanicLatino, Indigenous, MiddleEastern, PacificIslander, European, OtherEthnicity, OtherEthnicitySpecify, CreatedDate) VALUES (@SocialID, @Month, @Year, @African, @Asian, @Hispanic, @Indigenous, @MiddleEastern, @PacificIslander, @European, @OtherEthnicity, @OtherSpecify, GETDATE())"
 
                 Using cmd As New SqlCommand(query, conn)
@@ -1803,7 +2200,7 @@ Public Class frmESGMain
         End If
 
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "UPDATE tbl_ESG_Nations SET ReportMonth = @Month, ReportYear = @Year, African = @African, Asian = @Asian, HispanicLatino = @Hispanic, Indigenous = @Indigenous, MiddleEastern = @MiddleEastern, PacificIslander = @PacificIslander, European = @European, OtherEthnicity = @OtherEthnicity, OtherEthnicitySpecify = @OtherSpecify, ModifiedDate = GETDATE() WHERE NationID = @RecordID"
 
                 Using cmd As New SqlCommand(query, conn)
@@ -1870,7 +2267,7 @@ Public Class frmESGMain
     Private Sub dgvSocialReligions_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvSocialReligions.CellClick
         If e.RowIndex >= 0 Then
             Dim row As DataGridViewRow = dgvSocialReligions.Rows(e.RowIndex)
-            currentEditRecordID = Convert.ToInt32(row.Cells("ReligionsID").Value)
+            currentEditRecordID = Convert.ToInt32(row.Cells("ReligionID").Value)
             currentEditTable = "Religions"
             LoadReligionsDataForEditing(currentEditRecordID)
             EnterReligionsEditMode()
@@ -1879,7 +2276,7 @@ Public Class frmESGMain
 
     Private Sub LoadReligionsDataForEditing(recordID As Integer)
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "SELECT * FROM tbl_ESG_Religions WHERE ReligionID = @RecordID"
                 Dim cmd As New SqlCommand(query, conn)
                 cmd.Parameters.AddWithValue("@RecordID", recordID)
@@ -1927,7 +2324,7 @@ Public Class frmESGMain
         End If
 
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "INSERT INTO tbl_ESG_Religions (SocialID, ReportMonth, ReportYear, Christianity, Islam, Hinduism, Buddhism, Judaism, Sikhism, OtherReligion, OtherReligionSpecify, NoReligion, CreatedDate) VALUES (@SocialID, @Month, @Year, @Christianity, @Islam, @Hinduism, @Buddhism, @Judaism, @Sikhism, @OtherReligion, @OtherSpecify, @NoReligion, GETDATE())"
 
                 Using cmd As New SqlCommand(query, conn)
@@ -1964,8 +2361,8 @@ Public Class frmESGMain
         End If
 
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
-                Dim query As String = "UPDATE tbl_ESG_Religions SET ReportMonth = @Month, ReportYear = @Year, Christianity = @Christianity, Islam = @Islam, Hinduism = @Hinduism, Buddhism = @Buddhism, Judaism = @Judaism, Sikhism = @Sikhism, OtherReligion = @OtherReligion, OtherReligionSpecify = @OtherSpecify, NoReligion = @NoReligion, ModifiedDate = GETDATE() WHERE ReligionsID = @RecordID"
+            Using conn As SqlConnection = ModShared.GetConnection()
+                Dim query As String = "UPDATE tbl_ESG_Religions SET ReportMonth = @Month, ReportYear = @Year, Christianity = @Christianity, Islam = @Islam, Hinduism = @Hinduism, Buddhism = @Buddhism, Judaism = @Judaism, Sikhism = @Sikhism, OtherReligion = @OtherReligion, OtherReligionSpecify = @OtherSpecify, NoReligion = @NoReligion, ModifiedDate = GETDATE() WHERE ReligionID = @RecordID"
 
                 Using cmd As New SqlCommand(query, conn)
                     cmd.Parameters.AddWithValue("@Month", dtpReligions.Value.Month)
@@ -2040,7 +2437,7 @@ Public Class frmESGMain
 
     Private Sub LoadLanguagesDataForEditing(recordID As Integer)
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "SELECT * FROM tbl_ESG_Languages WHERE LanguageID = @RecordID"
                 Dim cmd As New SqlCommand(query, conn)
                 cmd.Parameters.AddWithValue("@RecordID", recordID)
@@ -2083,7 +2480,7 @@ Public Class frmESGMain
         End If
 
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "INSERT INTO tbl_ESG_Languages (SocialID, ReportMonth, ReportYear, Sinhala, Hebrew, French, Hindi, CreatedDate) VALUES (@SocialID, @Month, @Year, @Sinhala, @Hebrew, @French, @Hindi, GETDATE())"
 
                 Using cmd As New SqlCommand(query, conn)
@@ -2115,7 +2512,7 @@ Public Class frmESGMain
         End If
 
         Try
-            Using conn As SqlConnection = modShared.GetConnection()
+            Using conn As SqlConnection = ModShared.GetConnection()
                 Dim query As String = "UPDATE tbl_ESG_Languages SET ReportMonth = @Month, ReportYear = @Year, Sinhala = @Sinhala, Hebrew = @Hebrew, French = @French, Hindi = @Hindi, ModifiedDate = GETDATE() WHERE LanguageID = @RecordID"
 
                 Using cmd As New SqlCommand(query, conn)
@@ -2174,10 +2571,22 @@ Public Class frmESGMain
             MessageBox.Show("No data to export", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
-        modShared.ExportToExcel(dgvSocialBasic, "Social_Data_Report")
+        ModShared.ExportToExcel(dgvSocialBasic, "Social_Data_Report")
+    End Sub
+    Private Sub btnHome_Click(sender As Object, e As EventArgs) Handles btnHome.Click
+        frmDashboard.Show()
+        Hide()
     End Sub
 
-    Private Sub GroupBoxHSE_Enter(sender As Object, e As EventArgs) Handles GroupBoxHSE.Enter
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        frmDashboard.Show()
+    End Sub
 
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        frmDashboard.Show()
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        frmDashboard.Show()
     End Sub
 End Class

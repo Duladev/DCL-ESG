@@ -61,6 +61,10 @@
               "target": "Package",
               "version": "[1.0.0, )"
             },
+            "CrystalReports.Engine": {
+              "target": "Package",
+              "version": "[13.0.4003, )"
+            },
             "EPPlus": {
               "target": "Package",
               "version": "[8.6.0, )"

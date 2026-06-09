@@ -17,6 +17,7 @@ Partial Class frmWasteManagement
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmWasteManagement))
         tabWasteCategories = New TabControl()
         tpNonRecycled = New TabPage()
         grpNonRecycledActions = New GroupBox()
@@ -125,6 +126,8 @@ Partial Class frmWasteManagement
         lblDailyTotalLabel = New Label()
         lblDailyTotalAmount = New Label()
         ofdDocuments = New OpenFileDialog()
+        btnHome = New Button()
+        Button1 = New Button()
         tabWasteCategories.SuspendLayout()
         tpNonRecycled.SuspendLayout()
         grpNonRecycledActions.SuspendLayout()
@@ -166,7 +169,7 @@ Partial Class frmWasteManagement
         tabWasteCategories.Location = New Point(12, 12)
         tabWasteCategories.Name = "tabWasteCategories"
         tabWasteCategories.SelectedIndex = 0
-        tabWasteCategories.Size = New Size(750, 433)
+        tabWasteCategories.Size = New Size(750, 511)
         tabWasteCategories.TabIndex = 0
         ' 
         ' tpNonRecycled
@@ -182,7 +185,7 @@ Partial Class frmWasteManagement
         tpNonRecycled.Location = New Point(4, 24)
         tpNonRecycled.Name = "tpNonRecycled"
         tpNonRecycled.Padding = New Padding(3)
-        tpNonRecycled.Size = New Size(742, 405)
+        tpNonRecycled.Size = New Size(742, 483)
         tpNonRecycled.TabIndex = 0
         tpNonRecycled.Text = "Non-Recycled Waste"
         tpNonRecycled.UseVisualStyleBackColor = True
@@ -204,7 +207,7 @@ Partial Class frmWasteManagement
         grpNonRecycledActions.Controls.Add(lblDateNonRecycled)
         grpNonRecycledActions.Location = New Point(6, 6)
         grpNonRecycledActions.Name = "grpNonRecycledActions"
-        grpNonRecycledActions.Size = New Size(728, 100)
+        grpNonRecycledActions.Size = New Size(728, 106)
         grpNonRecycledActions.TabIndex = 12
         grpNonRecycledActions.TabStop = False
         grpNonRecycledActions.Text = "Record Information"
@@ -345,7 +348,7 @@ Partial Class frmWasteManagement
         dgvNonRecycled.Name = "dgvNonRecycled"
         dgvNonRecycled.ReadOnly = True
         dgvNonRecycled.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        dgvNonRecycled.Size = New Size(728, 206)
+        dgvNonRecycled.Size = New Size(728, 284)
         dgvNonRecycled.TabIndex = 11
         ' 
         ' flpNonRecycledItems
@@ -353,7 +356,7 @@ Partial Class frmWasteManagement
         flpNonRecycledItems.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         flpNonRecycledItems.AutoScroll = True
         flpNonRecycledItems.BorderStyle = BorderStyle.FixedSingle
-        flpNonRecycledItems.Location = New Point(383, 112)
+        flpNonRecycledItems.Location = New Point(383, 127)
         flpNonRecycledItems.Name = "flpNonRecycledItems"
         flpNonRecycledItems.Size = New Size(199, 54)
         flpNonRecycledItems.TabIndex = 10
@@ -363,7 +366,7 @@ Partial Class frmWasteManagement
         ' 
         btnAddNonRecycledItem.BackColor = SystemColors.Control
         btnAddNonRecycledItem.Font = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold)
-        btnAddNonRecycledItem.Location = New Point(600, 115)
+        btnAddNonRecycledItem.Location = New Point(600, 130)
         btnAddNonRecycledItem.Name = "btnAddNonRecycledItem"
         btnAddNonRecycledItem.Size = New Size(120, 23)
         btnAddNonRecycledItem.TabIndex = 9
@@ -427,7 +430,7 @@ Partial Class frmWasteManagement
         tpRecycled.Location = New Point(4, 24)
         tpRecycled.Name = "tpRecycled"
         tpRecycled.Padding = New Padding(3)
-        tpRecycled.Size = New Size(742, 405)
+        tpRecycled.Size = New Size(742, 483)
         tpRecycled.TabIndex = 1
         tpRecycled.Text = "Recycled Waste"
         tpRecycled.UseVisualStyleBackColor = True
@@ -590,7 +593,7 @@ Partial Class frmWasteManagement
         dgvRecycled.Name = "dgvRecycled"
         dgvRecycled.ReadOnly = True
         dgvRecycled.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        dgvRecycled.Size = New Size(728, 158)
+        dgvRecycled.Size = New Size(728, 233)
         dgvRecycled.TabIndex = 13
         ' 
         ' flpRecycledItems
@@ -713,7 +716,7 @@ Partial Class frmWasteManagement
         tpOtherRecycled.Controls.Add(numEWaste)
         tpOtherRecycled.Location = New Point(4, 24)
         tpOtherRecycled.Name = "tpOtherRecycled"
-        tpOtherRecycled.Size = New Size(742, 405)
+        tpOtherRecycled.Size = New Size(742, 483)
         tpOtherRecycled.TabIndex = 2
         tpOtherRecycled.Text = "Other Recycled Waste"
         tpOtherRecycled.UseVisualStyleBackColor = True
@@ -876,7 +879,7 @@ Partial Class frmWasteManagement
         dgvOtherRecycled.Name = "dgvOtherRecycled"
         dgvOtherRecycled.ReadOnly = True
         dgvOtherRecycled.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        dgvOtherRecycled.Size = New Size(736, 143)
+        dgvOtherRecycled.Size = New Size(730, 221)
         dgvOtherRecycled.TabIndex = 15
         ' 
         ' flpOtherRecycledItems
@@ -1032,7 +1035,7 @@ Partial Class frmWasteManagement
         tpChemical.Controls.Add(numChemFabric)
         tpChemical.Location = New Point(4, 24)
         tpChemical.Name = "tpChemical"
-        tpChemical.Size = New Size(742, 405)
+        tpChemical.Size = New Size(742, 483)
         tpChemical.TabIndex = 3
         tpChemical.Text = "Chemical Waste"
         tpChemical.UseVisualStyleBackColor = True
@@ -1195,7 +1198,7 @@ Partial Class frmWasteManagement
         dgvChemical.Name = "dgvChemical"
         dgvChemical.ReadOnly = True
         dgvChemical.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        dgvChemical.Size = New Size(736, 169)
+        dgvChemical.Size = New Size(736, 247)
         dgvChemical.TabIndex = 15
         ' 
         ' flpChemicalItems
@@ -1365,11 +1368,32 @@ Partial Class frmWasteManagement
         ofdDocuments.FileName = "OpenFileDialog1"
         ofdDocuments.Multiselect = True
         ' 
+        ' btnHome
+        ' 
+        btnHome.BackgroundImage = CType(resources.GetObject("btnHome.BackgroundImage"), Image)
+        btnHome.BackgroundImageLayout = ImageLayout.Stretch
+        btnHome.Location = New Point(913, 179)
+        btnHome.Name = "btnHome"
+        btnHome.Size = New Size(45, 38)
+        btnHome.TabIndex = 11
+        btnHome.UseVisualStyleBackColor = True
+        ' 
+        ' Button1
+        ' 
+        Button1.Location = New Point(774, 183)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(116, 30)
+        Button1.TabIndex = 16
+        Button1.Text = "Manage Collectors"
+        Button1.UseVisualStyleBackColor = True
+        ' 
         ' frmWasteManagement
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(984, 525)
+        Controls.Add(Button1)
+        Controls.Add(btnHome)
         Controls.Add(grpDailyTotal)
         Controls.Add(grpFilters)
         Controls.Add(tabWasteCategories)
@@ -1527,4 +1551,6 @@ Partial Class frmWasteManagement
     Friend WithEvents grpDailyTotal As GroupBox
     Friend WithEvents lblDailyTotalLabel As Label
     Friend WithEvents lblDailyTotalAmount As Label
+    Friend WithEvents btnHome As Button
+    Friend WithEvents Button1 As Button
 End Class

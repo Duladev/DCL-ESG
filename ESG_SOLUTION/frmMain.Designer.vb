@@ -48,7 +48,7 @@ Partial Class frmMain
         TabControl1.Margin = New Padding(3, 2, 3, 2)
         TabControl1.Name = "TabControl1"
         TabControl1.SelectedIndex = 0
-        TabControl1.Size = New Size(934, 525)
+        TabControl1.Size = New Size(934, 527)
         TabControl1.TabIndex = 0
         ' 
         ' TabPageElectricity
@@ -57,7 +57,7 @@ Partial Class frmMain
         TabPageElectricity.Margin = New Padding(3, 2, 3, 2)
         TabPageElectricity.Name = "TabPageElectricity"
         TabPageElectricity.Padding = New Padding(3, 2, 3, 2)
-        TabPageElectricity.Size = New Size(926, 497)
+        TabPageElectricity.Size = New Size(926, 499)
         TabPageElectricity.TabIndex = 0
         TabPageElectricity.Text = "Electricity Purchase"
         TabPageElectricity.UseVisualStyleBackColor = True
@@ -68,7 +68,7 @@ Partial Class frmMain
         TabPageOwnElectricity.Margin = New Padding(3, 2, 3, 2)
         TabPageOwnElectricity.Name = "TabPageOwnElectricity"
         TabPageOwnElectricity.Padding = New Padding(3, 2, 3, 2)
-        TabPageOwnElectricity.Size = New Size(926, 497)
+        TabPageOwnElectricity.Size = New Size(926, 499)
         TabPageOwnElectricity.TabIndex = 1
         TabPageOwnElectricity.Text = "Own Generated Electricity"
         TabPageOwnElectricity.UseVisualStyleBackColor = True
@@ -79,7 +79,7 @@ Partial Class frmMain
         TabPageGas.Margin = New Padding(3, 2, 3, 2)
         TabPageGas.Name = "TabPageGas"
         TabPageGas.Padding = New Padding(3, 2, 3, 2)
-        TabPageGas.Size = New Size(926, 497)
+        TabPageGas.Size = New Size(926, 499)
         TabPageGas.TabIndex = 2
         TabPageGas.Text = "Gas"
         TabPageGas.UseVisualStyleBackColor = True
@@ -90,7 +90,7 @@ Partial Class frmMain
         TabPageWater.Margin = New Padding(3, 2, 3, 2)
         TabPageWater.Name = "TabPageWater"
         TabPageWater.Padding = New Padding(3, 2, 3, 2)
-        TabPageWater.Size = New Size(926, 497)
+        TabPageWater.Size = New Size(926, 499)
         TabPageWater.TabIndex = 3
         TabPageWater.Text = "Water"
         TabPageWater.UseVisualStyleBackColor = True
@@ -101,7 +101,7 @@ Partial Class frmMain
         TabPagePlastic.Margin = New Padding(3, 2, 3, 2)
         TabPagePlastic.Name = "TabPagePlastic"
         TabPagePlastic.Padding = New Padding(3, 2, 3, 2)
-        TabPagePlastic.Size = New Size(926, 497)
+        TabPagePlastic.Size = New Size(926, 499)
         TabPagePlastic.TabIndex = 4
         TabPagePlastic.Text = "Plastic"
         TabPagePlastic.UseVisualStyleBackColor = True
@@ -112,7 +112,7 @@ Partial Class frmMain
         TabPagePaper.Margin = New Padding(3, 2, 3, 2)
         TabPagePaper.Name = "TabPagePaper"
         TabPagePaper.Padding = New Padding(3, 2, 3, 2)
-        TabPagePaper.Size = New Size(926, 497)
+        TabPagePaper.Size = New Size(926, 499)
         TabPagePaper.TabIndex = 5
         TabPagePaper.Text = "Paper"
         TabPagePaper.UseVisualStyleBackColor = True
@@ -123,7 +123,7 @@ Partial Class frmMain
         TabPageProduct.Margin = New Padding(3, 2, 3, 2)
         TabPageProduct.Name = "TabPageProduct"
         TabPageProduct.Padding = New Padding(3, 2, 3, 2)
-        TabPageProduct.Size = New Size(926, 497)
+        TabPageProduct.Size = New Size(926, 499)
         TabPageProduct.TabIndex = 6
         TabPageProduct.Text = "Product Management"
         TabPageProduct.UseVisualStyleBackColor = True
@@ -135,12 +135,12 @@ Partial Class frmMain
         btnExit.FlatStyle = FlatStyle.Flat
         btnExit.Font = New Font("Microsoft Sans Serif", 10F, FontStyle.Bold)
         btnExit.ForeColor = Color.Black
-        btnExit.Location = New Point(856, 540)
+        btnExit.Location = New Point(854, 540)
         btnExit.Margin = New Padding(3, 2, 3, 2)
         btnExit.Name = "btnExit"
-        btnExit.Size = New Size(78, 26)
+        btnExit.Size = New Size(86, 29)
         btnExit.TabIndex = 1
-        btnExit.Text = "Exit"
+        btnExit.Text = "Logout"
         btnExit.UseVisualStyleBackColor = False
         ' 
         ' frmMain
