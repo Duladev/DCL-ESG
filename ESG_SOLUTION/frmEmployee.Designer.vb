@@ -101,10 +101,8 @@ Partial Class frmEmployee
         GroupBoxGrid.Controls.Add(btnHome)
         GroupBoxGrid.Controls.Add(btnLoad)
         GroupBoxGrid.Controls.Add(btnExportExcel)
-        GroupBoxGrid.Controls.Add(lblRecordCount)
         GroupBoxGrid.Controls.Add(DataGridViewEmployees)
-        GroupBoxGrid.Controls.Add(Label12)
-        GroupBoxGrid.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        GroupBoxGrid.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         GroupBoxGrid.Location = New Point(12, 293)
         GroupBoxGrid.Name = "GroupBoxGrid"
         GroupBoxGrid.Size = New Size(839, 383)
@@ -145,8 +143,8 @@ Partial Class frmEmployee
         ' 
         lblRecordCount.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
         lblRecordCount.AutoSize = True
-        lblRecordCount.Font = New Font("Segoe UI", 9F)
-        lblRecordCount.Location = New Point(231, 29)
+        lblRecordCount.Font = New Font("Segoe UI", 9.0F)
+        lblRecordCount.Location = New Point(243, 275)
         lblRecordCount.Name = "lblRecordCount"
         lblRecordCount.Size = New Size(13, 15)
         lblRecordCount.TabIndex = 3
@@ -156,8 +154,8 @@ Partial Class frmEmployee
         ' 
         Label12.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
         Label12.AutoSize = True
-        Label12.Font = New Font("Segoe UI", 9F)
-        Label12.Location = New Point(144, 29)
+        Label12.Font = New Font("Segoe UI", 9.0F)
+        Label12.Location = New Point(156, 275)
         Label12.Name = "Label12"
         Label12.Size = New Size(81, 15)
         Label12.TabIndex = 2
@@ -178,7 +176,7 @@ Partial Class frmEmployee
         GroupBoxFilters.Controls.Add(cmbCategory)
         GroupBoxFilters.Controls.Add(cmbGender)
         GroupBoxFilters.Controls.Add(btnClearFilters)
-        GroupBoxFilters.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        GroupBoxFilters.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         GroupBoxFilters.Location = New Point(12, 98)
         GroupBoxFilters.Name = "GroupBoxFilters"
         GroupBoxFilters.Size = New Size(332, 167)
@@ -229,7 +227,7 @@ Partial Class frmEmployee
         ' Label11
         ' 
         Label11.AutoSize = True
-        Label11.Font = New Font("Segoe UI", 9F)
+        Label11.Font = New Font("Segoe UI", 9.0F)
         Label11.Location = New Point(124, 99)
         Label11.Name = "Label11"
         Label11.Size = New Size(68, 15)
@@ -239,7 +237,7 @@ Partial Class frmEmployee
         ' Label10
         ' 
         Label10.AutoSize = True
-        Label10.Font = New Font("Segoe UI", 9F)
+        Label10.Font = New Font("Segoe UI", 9.0F)
         Label10.Location = New Point(9, 99)
         Label10.Name = "Label10"
         Label10.Size = New Size(73, 15)
@@ -249,7 +247,7 @@ Partial Class frmEmployee
         ' Label9
         ' 
         Label9.AutoSize = True
-        Label9.Font = New Font("Segoe UI", 9F)
+        Label9.Font = New Font("Segoe UI", 9.0F)
         Label9.Location = New Point(120, 28)
         Label9.Name = "Label9"
         Label9.Size = New Size(58, 15)
@@ -259,7 +257,7 @@ Partial Class frmEmployee
         ' Label8
         ' 
         Label8.AutoSize = True
-        Label8.Font = New Font("Segoe UI", 9F)
+        Label8.Font = New Font("Segoe UI", 9.0F)
         Label8.Location = New Point(13, 28)
         Label8.Name = "Label8"
         Label8.Size = New Size(48, 15)
@@ -269,7 +267,7 @@ Partial Class frmEmployee
         ' cmbNationality
         ' 
         cmbNationality.DropDownStyle = ComboBoxStyle.DropDownList
-        cmbNationality.Font = New Font("Segoe UI", 9F)
+        cmbNationality.Font = New Font("Segoe UI", 9.0F)
         cmbNationality.FormattingEnabled = True
         cmbNationality.Location = New Point(126, 120)
         cmbNationality.Name = "cmbNationality"
@@ -279,7 +277,7 @@ Partial Class frmEmployee
         ' cmbDepartment
         ' 
         cmbDepartment.DropDownStyle = ComboBoxStyle.DropDownList
-        cmbDepartment.Font = New Font("Segoe UI", 9F)
+        cmbDepartment.Font = New Font("Segoe UI", 9.0F)
         cmbDepartment.FormattingEnabled = True
         cmbDepartment.Location = New Point(13, 120)
         cmbDepartment.Name = "cmbDepartment"
@@ -289,7 +287,7 @@ Partial Class frmEmployee
         ' cmbCategory
         ' 
         cmbCategory.DropDownStyle = ComboBoxStyle.DropDownList
-        cmbCategory.Font = New Font("Segoe UI", 9F)
+        cmbCategory.Font = New Font("Segoe UI", 9.0F)
         cmbCategory.FormattingEnabled = True
         cmbCategory.Location = New Point(124, 49)
         cmbCategory.Name = "cmbCategory"
@@ -299,7 +297,7 @@ Partial Class frmEmployee
         ' cmbGender
         ' 
         cmbGender.DropDownStyle = ComboBoxStyle.DropDownList
-        cmbGender.Font = New Font("Segoe UI", 9F)
+        cmbGender.Font = New Font("Segoe UI", 9.0F)
         cmbGender.FormattingEnabled = True
         cmbGender.Items.AddRange(New Object() {"All", "Male", "Female"})
         cmbGender.Location = New Point(13, 49)
@@ -311,7 +309,7 @@ Partial Class frmEmployee
         ' 
         btnClearFilters.BackColor = SystemColors.Control
         btnClearFilters.FlatStyle = FlatStyle.Flat
-        btnClearFilters.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        btnClearFilters.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         btnClearFilters.ForeColor = SystemColors.ActiveCaptionText
         btnClearFilters.Location = New Point(232, 131)
         btnClearFilters.Name = "btnClearFilters"
@@ -325,7 +323,7 @@ Partial Class frmEmployee
         GroupBoxSearch.Controls.Add(btnSearch)
         GroupBoxSearch.Controls.Add(txtEmpID)
         GroupBoxSearch.Controls.Add(Label1)
-        GroupBoxSearch.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        GroupBoxSearch.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         GroupBoxSearch.Location = New Point(12, 12)
         GroupBoxSearch.Name = "GroupBoxSearch"
         GroupBoxSearch.Size = New Size(332, 80)
@@ -347,7 +345,7 @@ Partial Class frmEmployee
         ' 
         ' txtEmpID
         ' 
-        txtEmpID.Font = New Font("Segoe UI", 10F)
+        txtEmpID.Font = New Font("Segoe UI", 10.0F)
         txtEmpID.Location = New Point(30, 40)
         txtEmpID.Name = "txtEmpID"
         txtEmpID.Size = New Size(162, 25)
@@ -356,7 +354,7 @@ Partial Class frmEmployee
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Font = New Font("Segoe UI", 9F)
+        Label1.Font = New Font("Segoe UI", 9.0F)
         Label1.Location = New Point(11, 19)
         Label1.Name = "Label1"
         Label1.Size = New Size(103, 15)
@@ -388,17 +386,17 @@ Partial Class frmEmployee
         GroupBoxDetails.Controls.Add(lblGender)
         GroupBoxDetails.Controls.Add(lblEmpName)
         GroupBoxDetails.Controls.Add(lblEmpNo)
-        GroupBoxDetails.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        GroupBoxDetails.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         GroupBoxDetails.Location = New Point(350, 13)
         GroupBoxDetails.Name = "GroupBoxDetails"
-        GroupBoxDetails.Size = New Size(495, 282)
+        GroupBoxDetails.Size = New Size(501, 282)
         GroupBoxDetails.TabIndex = 4
         GroupBoxDetails.TabStop = False
         GroupBoxDetails.Text = "EMPLOYEE DETAILS (Click on row to view)"
         ' 
         ' txtDistance
         ' 
-        txtDistance.Font = New Font("Segoe UI", 9F)
+        txtDistance.Font = New Font("Segoe UI", 9.0F)
         txtDistance.Location = New Point(366, 142)
         txtDistance.Name = "txtDistance"
         txtDistance.ReadOnly = True
@@ -408,7 +406,7 @@ Partial Class frmEmployee
         ' Label7
         ' 
         Label7.AutoSize = True
-        Label7.Font = New Font("Segoe UI", 9F)
+        Label7.Font = New Font("Segoe UI", 9.0F)
         Label7.Location = New Point(275, 145)
         Label7.Name = "Label7"
         Label7.Size = New Size(83, 15)
@@ -417,7 +415,7 @@ Partial Class frmEmployee
         ' 
         ' txtNationality
         ' 
-        txtNationality.Font = New Font("Segoe UI", 9F)
+        txtNationality.Font = New Font("Segoe UI", 9.0F)
         txtNationality.Location = New Point(366, 189)
         txtNationality.Name = "txtNationality"
         txtNationality.ReadOnly = True
@@ -427,7 +425,7 @@ Partial Class frmEmployee
         ' Label6
         ' 
         Label6.AutoSize = True
-        Label6.Font = New Font("Segoe UI", 9F)
+        Label6.Font = New Font("Segoe UI", 9.0F)
         Label6.Location = New Point(275, 192)
         Label6.Name = "Label6"
         Label6.Size = New Size(68, 15)
@@ -436,7 +434,7 @@ Partial Class frmEmployee
         ' 
         ' txtTenure
         ' 
-        txtTenure.Font = New Font("Segoe UI", 9F)
+        txtTenure.Font = New Font("Segoe UI", 9.0F)
         txtTenure.Location = New Point(366, 104)
         txtTenure.Name = "txtTenure"
         txtTenure.ReadOnly = True
@@ -446,7 +444,7 @@ Partial Class frmEmployee
         ' Label5
         ' 
         Label5.AutoSize = True
-        Label5.Font = New Font("Segoe UI", 9F)
+        Label5.Font = New Font("Segoe UI", 9.0F)
         Label5.Location = New Point(275, 107)
         Label5.Name = "Label5"
         Label5.Size = New Size(72, 15)
@@ -455,7 +453,7 @@ Partial Class frmEmployee
         ' 
         ' txtAge
         ' 
-        txtAge.Font = New Font("Segoe UI", 9F)
+        txtAge.Font = New Font("Segoe UI", 9.0F)
         txtAge.Location = New Point(87, 239)
         txtAge.Name = "txtAge"
         txtAge.ReadOnly = True
@@ -465,7 +463,7 @@ Partial Class frmEmployee
         ' Label4
         ' 
         Label4.AutoSize = True
-        Label4.Font = New Font("Segoe UI", 9F)
+        Label4.Font = New Font("Segoe UI", 9.0F)
         Label4.Location = New Point(6, 242)
         Label4.Name = "Label4"
         Label4.Size = New Size(57, 15)
@@ -474,7 +472,7 @@ Partial Class frmEmployee
         ' 
         ' txtDOB
         ' 
-        txtDOB.Font = New Font("Segoe UI", 9F)
+        txtDOB.Font = New Font("Segoe UI", 9.0F)
         txtDOB.Location = New Point(366, 65)
         txtDOB.Name = "txtDOB"
         txtDOB.ReadOnly = True
@@ -484,7 +482,7 @@ Partial Class frmEmployee
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Font = New Font("Segoe UI", 9F)
+        Label3.Font = New Font("Segoe UI", 9.0F)
         Label3.Location = New Point(275, 68)
         Label3.Name = "Label3"
         Label3.Size = New Size(76, 15)
@@ -493,7 +491,7 @@ Partial Class frmEmployee
         ' 
         ' txtDOJ
         ' 
-        txtDOJ.Font = New Font("Segoe UI", 9F)
+        txtDOJ.Font = New Font("Segoe UI", 9.0F)
         txtDOJ.Location = New Point(366, 25)
         txtDOJ.Name = "txtDOJ"
         txtDOJ.ReadOnly = True
@@ -503,7 +501,7 @@ Partial Class frmEmployee
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Font = New Font("Segoe UI", 9F)
+        Label2.Font = New Font("Segoe UI", 9.0F)
         Label2.Location = New Point(275, 28)
         Label2.Name = "Label2"
         Label2.Size = New Size(85, 15)
@@ -512,7 +510,7 @@ Partial Class frmEmployee
         ' 
         ' txtDepartment
         ' 
-        txtDepartment.Font = New Font("Segoe UI", 9F)
+        txtDepartment.Font = New Font("Segoe UI", 9.0F)
         txtDepartment.Location = New Point(87, 194)
         txtDepartment.Name = "txtDepartment"
         txtDepartment.ReadOnly = True
@@ -521,7 +519,7 @@ Partial Class frmEmployee
         ' 
         ' txtCategory
         ' 
-        txtCategory.Font = New Font("Segoe UI", 9F)
+        txtCategory.Font = New Font("Segoe UI", 9.0F)
         txtCategory.Location = New Point(87, 145)
         txtCategory.Name = "txtCategory"
         txtCategory.ReadOnly = True
@@ -530,7 +528,7 @@ Partial Class frmEmployee
         ' 
         ' txtGender
         ' 
-        txtGender.Font = New Font("Segoe UI", 9F)
+        txtGender.Font = New Font("Segoe UI", 9.0F)
         txtGender.Location = New Point(87, 104)
         txtGender.Name = "txtGender"
         txtGender.ReadOnly = True
@@ -539,7 +537,7 @@ Partial Class frmEmployee
         ' 
         ' txtEmpName
         ' 
-        txtEmpName.Font = New Font("Segoe UI", 9F)
+        txtEmpName.Font = New Font("Segoe UI", 9.0F)
         txtEmpName.Location = New Point(87, 65)
         txtEmpName.Name = "txtEmpName"
         txtEmpName.ReadOnly = True
@@ -548,7 +546,7 @@ Partial Class frmEmployee
         ' 
         ' txtEmpNo
         ' 
-        txtEmpNo.Font = New Font("Segoe UI", 9F)
+        txtEmpNo.Font = New Font("Segoe UI", 9.0F)
         txtEmpNo.Location = New Point(87, 25)
         txtEmpNo.Name = "txtEmpNo"
         txtEmpNo.ReadOnly = True
@@ -558,7 +556,7 @@ Partial Class frmEmployee
         ' lblDepartment
         ' 
         lblDepartment.AutoSize = True
-        lblDepartment.Font = New Font("Segoe UI", 9F)
+        lblDepartment.Font = New Font("Segoe UI", 9.0F)
         lblDepartment.Location = New Point(6, 197)
         lblDepartment.Name = "lblDepartment"
         lblDepartment.Size = New Size(73, 15)
@@ -568,7 +566,7 @@ Partial Class frmEmployee
         ' lblCategory
         ' 
         lblCategory.AutoSize = True
-        lblCategory.Font = New Font("Segoe UI", 9F)
+        lblCategory.Font = New Font("Segoe UI", 9.0F)
         lblCategory.Location = New Point(6, 150)
         lblCategory.Name = "lblCategory"
         lblCategory.Size = New Size(58, 15)
@@ -578,7 +576,7 @@ Partial Class frmEmployee
         ' lblGender
         ' 
         lblGender.AutoSize = True
-        lblGender.Font = New Font("Segoe UI", 9F)
+        lblGender.Font = New Font("Segoe UI", 9.0F)
         lblGender.Location = New Point(6, 107)
         lblGender.Name = "lblGender"
         lblGender.Size = New Size(48, 15)
@@ -588,7 +586,7 @@ Partial Class frmEmployee
         ' lblEmpName
         ' 
         lblEmpName.AutoSize = True
-        lblEmpName.Font = New Font("Segoe UI", 9F)
+        lblEmpName.Font = New Font("Segoe UI", 9.0F)
         lblEmpName.Location = New Point(6, 68)
         lblEmpName.Name = "lblEmpName"
         lblEmpName.Size = New Size(42, 15)
@@ -598,7 +596,7 @@ Partial Class frmEmployee
         ' lblEmpNo
         ' 
         lblEmpNo.AutoSize = True
-        lblEmpNo.Font = New Font("Segoe UI", 9F)
+        lblEmpNo.Font = New Font("Segoe UI", 9.0F)
         lblEmpNo.Location = New Point(6, 28)
         lblEmpNo.Name = "lblEmpNo"
         lblEmpNo.Size = New Size(81, 15)
@@ -607,19 +605,20 @@ Partial Class frmEmployee
         ' 
         ' frmEmployee
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(854, 688)
         Controls.Add(GroupBoxDetails)
         Controls.Add(GroupBoxSearch)
         Controls.Add(GroupBoxFilters)
+        Controls.Add(lblRecordCount)
         Controls.Add(GroupBoxGrid)
+        Controls.Add(Label12)
         Name = "frmEmployee"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Employee Management System - Details Viewer"
         CType(DataGridViewEmployees, ComponentModel.ISupportInitialize).EndInit()
         GroupBoxGrid.ResumeLayout(False)
-        GroupBoxGrid.PerformLayout()
         GroupBoxFilters.ResumeLayout(False)
         GroupBoxFilters.PerformLayout()
         GroupBoxSearch.ResumeLayout(False)
@@ -627,6 +626,7 @@ Partial Class frmEmployee
         GroupBoxDetails.ResumeLayout(False)
         GroupBoxDetails.PerformLayout()
         ResumeLayout(False)
+        PerformLayout()
 
     End Sub
 

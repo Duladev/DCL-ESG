@@ -780,10 +780,17 @@ Public Class frmCSR
     End Class
 
     Protected Overrides Sub OnFormClosing(ByVal e As FormClosingEventArgs)
-        ' Clean up resources when form closes
+        ' Only intercept if the user clicked the [X] button
+        If e.CloseReason = CloseReason.UserClosing Then
+            e.Cancel = True   ' This prevents the application from shutting down
+            Me.Hide()         ' This hides the form from the user
+        End If
+
         ClearPreviewImage()
+
         MyBase.OnFormClosing(e)
     End Sub
+
 
     Private Sub btnHome_Click(sender As Object, e As EventArgs) Handles btnHome.Click
         frmDashboard.Show()

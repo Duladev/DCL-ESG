@@ -4,6 +4,9 @@
     <Compile Update="ESGCard.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="frmEmployee.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="frmESGReports.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -23,9 +26,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="frmElectricity.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="frmEmployee.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="frmESGMain.vb">

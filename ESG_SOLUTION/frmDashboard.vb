@@ -5,7 +5,8 @@ Public Class frmDashboard
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.WindowState = FormWindowState.Normal
         UpdateDateTime()
-        ApplyButtonStyling()
+        ' Remove button styling with hover effects
+        ' ApplyButtonStyling() - Commented out to remove hover effects
 
         ' To add a background image, uncomment and specify your image path:
         'Me.BackgroundImage = System.Drawing.Image.FromFile("F:\DCL-ESG\ESG_SOLUTION\1.jpg")
@@ -20,59 +21,38 @@ Public Class frmDashboard
         'labelDateTime.Text = DateTime.Now.ToString("dddd, MMMM dd, yyyy HH:mm:ss")
     End Sub
 
+    ' This method is completely removed/not called to eliminate hover effects
     Private Sub ApplyButtonStyling()
-        AddHandler BtnCSR.MouseEnter, Sub(senderObj As Object, eObj As EventArgs) BtnCSR.BackColor = Color.FromArgb(60, 90, 120)
-        AddHandler BtnCSR.MouseLeave, Sub(senderObj As Object, eObj As EventArgs) BtnCSR.BackColor = Color.FromArgb(40, 70, 100)
-
-        AddHandler BtnEMP_Details.MouseEnter, Sub(senderObj As Object, eObj As EventArgs) BtnEMP_Details.BackColor = Color.FromArgb(60, 90, 120)
-        AddHandler BtnEMP_Details.MouseLeave, Sub(senderObj As Object, eObj As EventArgs) BtnEMP_Details.BackColor = Color.FromArgb(40, 70, 100)
-
-        AddHandler BtnINVENTORY.MouseEnter, Sub(senderObj As Object, eObj As EventArgs) BtnINVENTORY.BackColor = Color.FromArgb(60, 90, 120)
-        AddHandler BtnINVENTORY.MouseLeave, Sub(senderObj As Object, eObj As EventArgs) BtnINVENTORY.BackColor = Color.FromArgb(40, 70, 100)
-
-        AddHandler BtnWASTE_MANAGEMENT.MouseEnter, Sub(senderObj As Object, eObj As EventArgs) BtnWASTE_MANAGEMENT.BackColor = Color.FromArgb(60, 90, 120)
-        AddHandler BtnWASTE_MANAGEMENT.MouseLeave, Sub(senderObj As Object, eObj As EventArgs) BtnWASTE_MANAGEMENT.BackColor = Color.FromArgb(40, 70, 100)
-
-        AddHandler BtnSOCIAL.MouseEnter, Sub(senderObj As Object, eObj As EventArgs) BtnSOCIAL.BackColor = Color.FromArgb(60, 90, 120)
-        AddHandler BtnSOCIAL.MouseLeave, Sub(senderObj As Object, eObj As EventArgs) BtnSOCIAL.BackColor = Color.FromArgb(40, 70, 100)
-
-        AddHandler BtnREPORTS.MouseEnter, Sub(senderObj As Object, eObj As EventArgs) BtnREPORTS.BackColor = Color.FromArgb(60, 90, 120)
-        AddHandler BtnREPORTS.MouseLeave, Sub(senderObj As Object, eObj As EventArgs) BtnREPORTS.BackColor = Color.FromArgb(40, 70, 100)
+        ' All hover effect code removed
     End Sub
 
     Private Sub BtnCSR_Click(sender As Object, e As EventArgs) Handles BtnCSR.Click
-        'UpdateMainContent("CSR Module")
         Me.Hide()
         frmCSR.Show()
         ShowMessage("CSR Dashboard loaded.")
     End Sub
 
     Private Sub BtnEMP_Details_Click(sender As Object, e As EventArgs) Handles BtnEMP_Details.Click
-        'UpdateMainContent("Employee Details")
         frmEmployee.Show()
         ShowMessage("Employee Management module loaded.")
     End Sub
 
     Private Sub BtnINVENTORY_Click(sender As Object, e As EventArgs) Handles BtnINVENTORY.Click
-        'UpdateMainContent("Inventory Management")
         frmMain.Show()
         ShowMessage("Inventory module loaded.")
     End Sub
 
     Private Sub BtnWASTE_MANAGEMENT_Click(sender As Object, e As EventArgs) Handles BtnWASTE_MANAGEMENT.Click
-        'UpdateMainContent("Waste Management")
         frmWasteManagement.Show()
         ShowMessage("Waste Management module loaded.")
     End Sub
 
     Private Sub BtnSOCIAL_Click(sender As Object, e As EventArgs) Handles BtnSOCIAL.Click
-        'UpdateMainContent("Social Impact")
         frmESGMain.Show()
         ShowMessage("Social module loaded.")
     End Sub
 
     Private Sub BtnREPORTS_Click(sender As Object, e As EventArgs) Handles BtnREPORTS.Click
-        'UpdateMainContent("Reports & Analytics")
         frmESGReports.Show()
         ShowMessage("Reports module loaded.")
     End Sub
@@ -85,8 +65,6 @@ Public Class frmDashboard
                 ctrl.Dispose()
             End If
         Next
-
-        'LabelWelcome.Text = "ESG Dashboard - " & moduleName
 
         Dim contentPanel As New Panel()
         contentPanel.Location = New Point(20, 100)
@@ -127,8 +105,6 @@ Public Class frmDashboard
 
         Dim random As New Random()
         Dim newScore As Integer = random.Next(70, 95)
-        'ProgressBarESG.Value = newScore
-        'LabelScoreValue.Text = newScore.ToString() & "%"
     End Sub
 
     Private Function GetModuleDescription(moduleName As String) As String

@@ -33,7 +33,6 @@ Partial Class frmWater
         lblMonth = New Label()
         lblYear = New Label()
         grpWaterButtons = New GroupBox()
-        btnHome = New Button()
         btnClearWater = New Button()
         btnRefreshWater = New Button()
         btnExportWaterExcel = New Button()
@@ -215,7 +214,7 @@ Partial Class frmWater
         ' 
         ' grpWaterButtons
         ' 
-        grpWaterButtons.Controls.Add(btnHome)
+        grpWaterButtons.Controls.Add(Button1)
         grpWaterButtons.Controls.Add(btnClearWater)
         grpWaterButtons.Controls.Add(btnRefreshWater)
         grpWaterButtons.Controls.Add(btnExportWaterExcel)
@@ -230,18 +229,6 @@ Partial Class frmWater
         grpWaterButtons.TabIndex = 1
         grpWaterButtons.TabStop = False
         grpWaterButtons.Text = "Water Actions"
-        ' 
-        ' btnHome
-        ' 
-        btnHome.BackColor = SystemColors.AppWorkspace
-        btnHome.FlatStyle = FlatStyle.Flat
-        btnHome.ForeColor = Color.White
-        btnHome.Location = New Point(148, 140)
-        btnHome.Name = "btnHome"
-        btnHome.Size = New Size(116, 26)
-        btnHome.TabIndex = 8
-        btnHome.Text = "Home"
-        btnHome.UseVisualStyleBackColor = False
         ' 
         ' btnClearWater
         ' 
@@ -695,7 +682,7 @@ Partial Class frmWater
         ' 
         Button1.BackgroundImage = CType(resources.GetObject("Button1.BackgroundImage"), Image)
         Button1.BackgroundImageLayout = ImageLayout.Stretch
-        Button1.Location = New Point(587, 153)
+        Button1.Location = New Point(178, 138)
         Button1.Name = "Button1"
         Button1.Size = New Size(45, 38)
         Button1.TabIndex = 10
@@ -707,7 +694,6 @@ Partial Class frmWater
         AutoScaleMode = AutoScaleMode.Font
         AutoScroll = True
         ClientSize = New Size(930, 665)
-        Controls.Add(Button1)
         Controls.Add(grpRainFilters)
         Controls.Add(grpWaterFilters)
         Controls.Add(grdRainWater)
@@ -790,7 +776,6 @@ Partial Class frmWater
     Friend WithEvents cmbRainYearFilter As ComboBox
     Friend WithEvents lblRainMonthFilter As Label
     Friend WithEvents cmbRainMonthFilter As ComboBox
-    Friend WithEvents btnHome As Button
     Friend WithEvents btnClearWater As Button
     Friend WithEvents btnRefreshWater As Button
     Friend WithEvents btnClearRain As Button

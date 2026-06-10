@@ -528,11 +528,11 @@ Public Class frmWater
         ClearRainWaterForm()
     End Sub
 
-    Private Sub btnHome_Click(sender As Object, e As EventArgs) Handles btnHome.Click
-        Dim dashboard As New frmDashboard()
-        dashboard.Show()
-        frmMain.Close()
-        Me.Close()
+    Private Sub btnHome_Click(sender As Object, e As EventArgs)
+        Dim dashboard As New frmDashboard
+        dashboard.Show
+        frmMain.Close
+        Close
     End Sub
 
     Private Sub btnExportWaterExcel_Click(sender As Object, e As EventArgs) Handles btnExportWaterExcel.Click

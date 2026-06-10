@@ -281,7 +281,6 @@ Public Class frmEmployee
             .Distinct() _
             .Count() & ")"
     End Sub
-
     Private Sub ApplyFilters(sender As Object, e As EventArgs)
         Try
             Dim dv As New DataView(dtEmployees)
