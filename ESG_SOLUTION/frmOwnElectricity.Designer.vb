@@ -38,6 +38,7 @@ Partial Class frmOwnElectricity
         lblMonth = New Label()
         lblYear = New Label()
         grpButtons = New GroupBox()
+        btnHome = New Button()
         btnClear = New Button()
         btnRefresh = New Button()
         btnExportExcel = New Button()
@@ -52,7 +53,6 @@ Partial Class frmOwnElectricity
         cmbYearFilter = New ComboBox()
         lblMonthFilter = New Label()
         cmbMonthFilter = New ComboBox()
-        btnHome = New Button()
         grpInput.SuspendLayout()
         grpButtons.SuspendLayout()
         CType(grdData, ComponentModel.ISupportInitialize).BeginInit()
@@ -107,7 +107,7 @@ Partial Class frmOwnElectricity
         ' 
         txtSoldCapacity.BackColor = Color.LightGray
         txtSoldCapacity.Enabled = False
-        txtSoldCapacity.Location = New Point(436, 148)
+        txtSoldCapacity.Location = New Point(472, 146)
         txtSoldCapacity.Name = "txtSoldCapacity"
         txtSoldCapacity.Size = New Size(118, 23)
         txtSoldCapacity.TabIndex = 15
@@ -139,7 +139,7 @@ Partial Class frmOwnElectricity
         ' 
         ' txtNonRenewableCap
         ' 
-        txtNonRenewableCap.Location = New Point(436, 108)
+        txtNonRenewableCap.Location = New Point(472, 106)
         txtNonRenewableCap.Name = "txtNonRenewableCap"
         txtNonRenewableCap.Size = New Size(118, 23)
         txtNonRenewableCap.TabIndex = 11
@@ -149,9 +149,9 @@ Partial Class frmOwnElectricity
         lblNonRenewableCap.AutoSize = True
         lblNonRenewableCap.Location = New Point(318, 110)
         lblNonRenewableCap.Name = "lblNonRenewableCap"
-        lblNonRenewableCap.Size = New Size(112, 15)
+        lblNonRenewableCap.Size = New Size(148, 15)
         lblNonRenewableCap.TabIndex = 10
-        lblNonRenewableCap.Text = "Monthly Generated:"
+        lblNonRenewableCap.Text = "Monthly Generated (KWh):"
         ' 
         ' cmbNonRenewableType
         ' 
@@ -173,7 +173,7 @@ Partial Class frmOwnElectricity
         ' 
         ' txtRenewableCap
         ' 
-        txtRenewableCap.Location = New Point(436, 78)
+        txtRenewableCap.Location = New Point(472, 76)
         txtRenewableCap.Name = "txtRenewableCap"
         txtRenewableCap.Size = New Size(118, 23)
         txtRenewableCap.TabIndex = 7
@@ -183,9 +183,9 @@ Partial Class frmOwnElectricity
         lblRenewableCap.AutoSize = True
         lblRenewableCap.Location = New Point(318, 80)
         lblRenewableCap.Name = "lblRenewableCap"
-        lblRenewableCap.Size = New Size(112, 15)
+        lblRenewableCap.Size = New Size(148, 15)
         lblRenewableCap.TabIndex = 6
-        lblRenewableCap.Text = "Monthly Generated:"
+        lblRenewableCap.Text = "Monthly Generated (KWh):"
         ' 
         ' cmbRenewableType
         ' 
@@ -260,6 +260,16 @@ Partial Class frmOwnElectricity
         grpButtons.TabIndex = 1
         grpButtons.TabStop = False
         grpButtons.Text = "Actions"
+        ' 
+        ' btnHome
+        ' 
+        btnHome.BackgroundImage = CType(resources.GetObject("btnHome.BackgroundImage"), Image)
+        btnHome.BackgroundImageLayout = ImageLayout.Stretch
+        btnHome.Location = New Point(185, 175)
+        btnHome.Name = "btnHome"
+        btnHome.Size = New Size(45, 38)
+        btnHome.TabIndex = 10
+        btnHome.UseVisualStyleBackColor = True
         ' 
         ' btnClear
         ' 
@@ -414,16 +424,6 @@ Partial Class frmOwnElectricity
         cmbMonthFilter.Name = "cmbMonthFilter"
         cmbMonthFilter.Size = New Size(85, 23)
         cmbMonthFilter.TabIndex = 3
-        ' 
-        ' btnHome
-        ' 
-        btnHome.BackgroundImage = CType(resources.GetObject("btnHome.BackgroundImage"), Image)
-        btnHome.BackgroundImageLayout = ImageLayout.Stretch
-        btnHome.Location = New Point(185, 175)
-        btnHome.Name = "btnHome"
-        btnHome.Size = New Size(45, 38)
-        btnHome.TabIndex = 10
-        btnHome.UseVisualStyleBackColor = True
         ' 
         ' frmOwnElectricity
         ' 

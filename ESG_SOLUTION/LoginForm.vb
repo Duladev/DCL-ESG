@@ -129,7 +129,7 @@ Namespace ESG_SOLUTION
         Private Function AuthenticateUser(username As String, password As String) As Boolean
             ' Matches Users table: Username and UserPws columns
             Const sql As String =
-                "SELECT COUNT(1) FROM vw_tblUserLogin WHERE Username = @user AND UserPws = @pass"
+                "SELECT COUNT(1) FROM tbl_ESG_UserLogin WHERE Username = @user AND UserPws = @pass"
 
             Using conn As SqlConnection = GetConnection()
                 conn.Open()
@@ -248,8 +248,6 @@ Namespace ESG_SOLUTION
         Private Sub btnLogin2_Click(sender As Object, e As EventArgs) Handles btnLogin2.Click
             PerformLogin()
         End Sub
-
-
     End Class
 
     ' ═════════════════════════════════════════════════════════════════════════

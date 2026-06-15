@@ -33,6 +33,7 @@ Partial Class frmWater
         lblMonth = New Label()
         lblYear = New Label()
         grpWaterButtons = New GroupBox()
+        Button1 = New Button()
         btnClearWater = New Button()
         btnRefreshWater = New Button()
         btnExportWaterExcel = New Button()
@@ -76,7 +77,6 @@ Partial Class frmWater
         cmbRainYearFilter = New ComboBox()
         lblRainMonthFilter = New Label()
         cmbRainMonthFilter = New ComboBox()
-        Button1 = New Button()
         grpWaterPurchased.SuspendLayout()
         grpWaterButtons.SuspendLayout()
         CType(grdWater, ComponentModel.ISupportInitialize).BeginInit()
@@ -229,6 +229,16 @@ Partial Class frmWater
         grpWaterButtons.TabIndex = 1
         grpWaterButtons.TabStop = False
         grpWaterButtons.Text = "Water Actions"
+        ' 
+        ' Button1
+        ' 
+        Button1.BackgroundImage = CType(resources.GetObject("Button1.BackgroundImage"), Image)
+        Button1.BackgroundImageLayout = ImageLayout.Stretch
+        Button1.Location = New Point(178, 138)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(45, 38)
+        Button1.TabIndex = 10
+        Button1.UseVisualStyleBackColor = True
         ' 
         ' btnClearWater
         ' 
@@ -677,16 +687,6 @@ Partial Class frmWater
         cmbRainMonthFilter.Name = "cmbRainMonthFilter"
         cmbRainMonthFilter.Size = New Size(85, 23)
         cmbRainMonthFilter.TabIndex = 3
-        ' 
-        ' Button1
-        ' 
-        Button1.BackgroundImage = CType(resources.GetObject("Button1.BackgroundImage"), Image)
-        Button1.BackgroundImageLayout = ImageLayout.Stretch
-        Button1.Location = New Point(178, 138)
-        Button1.Name = "Button1"
-        Button1.Size = New Size(45, 38)
-        Button1.TabIndex = 10
-        Button1.UseVisualStyleBackColor = True
         ' 
         ' frmWater
         ' 

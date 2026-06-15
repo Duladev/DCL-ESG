@@ -38,10 +38,9 @@ Public Class frmCSR
         dgvData.ScrollBars = ScrollBars.Both ' This enables both horizontal and vertical scrollbars
         dgvData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None ' Don't auto-size columns to fit
 
-        ' Optional: Set minimum column width for better scrolling experience
+        ' Optional: Set minimum column width for better scrolling
         dgvData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
 
-        ' Ensure all columns are visible by setting their width appropriately
         ' This allows horizontal scrolling when columns exceed the visible area
         dgvData.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None
     End Sub
@@ -54,7 +53,7 @@ Public Class frmCSR
         ' Configure ListView columns
         lvwPhotos.Columns.Clear()
         lvwPhotos.Columns.Add("Photo Name", 150)
-        lvwPhotos.Columns.Add("Primary", 60)
+        'lvwPhotos.Columns.Add("Primary", 60)
         lvwPhotos.Columns.Add("Uploaded Date", 120)
         lvwPhotos.Columns.Add("Original File", 150)
     End Sub
@@ -68,7 +67,7 @@ Public Class frmCSR
 
             If dialog.ShowDialog() = DialogResult.OK Then
                 Dim newPath As String = dialog.SelectedPath
-                ' Update baseFolderPath in ModShared (optional - if you want to persist)
+                ' Update baseFolderPath in ModShared (optional - if want to persist)
                 ' This would require saving to app config or registry
 
                 txtPhotoFolderPath.Text = newPath
@@ -120,7 +119,7 @@ Public Class frmCSR
 
     Private Sub AdjustDataGridViewColumns()
         ' Set specific column widths to ensure horizontal scrolling works
-        ' You can adjust these values based on your preference
+        ' can adjust these values based on preference
         If dgvData.Columns.Count > 0 Then
             For Each column As DataGridViewColumn In dgvData.Columns
                 ' Set a reasonable minimum width for columns
@@ -278,7 +277,7 @@ Public Class frmCSR
 
         If Not ValidateInputs() Then Return
 
-        If MessageBox.Show("Are you sure you want to update this record?", "Confirm Update",
+        If MessageBox.Show("Are  sure  want to update this record?", "Confirm Update",
                           MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
             Return
         End If
@@ -346,7 +345,7 @@ Public Class frmCSR
         Dim selectedRow = dgvData.SelectedRows(0)
         Dim recordIDToDelete As Integer = Convert.ToInt32(selectedRow.Cells("RecordID").Value)
 
-        If MessageBox.Show("Are you sure you want to delete this record and all associated photos?", "Confirm Delete",
+        If MessageBox.Show("Are  sure  want to delete this record and all associated photos?", "Confirm Delete",
                            MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
             Dim photoStoragePath As String = GetPhotoStoragePath()
@@ -473,7 +472,7 @@ Public Class frmCSR
         LoadPhotos(currentRecordID)
         tempPhotoNames.Clear()
 
-        MessageBox.Show("Record loaded successfully! You can now update or delete it.", "Record Loaded",
+        MessageBox.Show("Record loaded successfully!  can now update or delete it.", "Record Loaded",
                       MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
@@ -573,7 +572,7 @@ Public Class frmCSR
         Dim photoInfo = DirectCast(selectedItem.Tag, PhotoInfo)
         Dim photoStoragePath As String = GetPhotoStoragePath()
 
-        If MessageBox.Show("Are you sure you want to delete this photo?", "Confirm Delete",
+        If MessageBox.Show("Are  sure  want to delete this photo?", "Confirm Delete",
                           MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
             ' Clear preview if this photo is currently being viewed
@@ -782,8 +781,8 @@ Public Class frmCSR
     Protected Overrides Sub OnFormClosing(ByVal e As FormClosingEventArgs)
         ' Only intercept if the user clicked the [X] button
         If e.CloseReason = CloseReason.UserClosing Then
-            e.Cancel = True   ' This prevents the application from shutting down
-            Me.Hide()         ' This hides the form from the user
+            e.Cancel = True
+            Me.Hide()
         End If
 
         ClearPreviewImage()

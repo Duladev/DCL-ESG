@@ -675,7 +675,7 @@ Partial Class frmCSR
         ' lblPhotoCount
         ' 
         lblPhotoCount.AutoSize = True
-        lblPhotoCount.Location = New Point(170, 9)
+        lblPhotoCount.Location = New Point(288, 27)
         lblPhotoCount.Margin = New Padding(4, 0, 4, 0)
         lblPhotoCount.Name = "lblPhotoCount"
         lblPhotoCount.Size = New Size(82, 15)
@@ -685,10 +685,10 @@ Partial Class frmCSR
         ' btnSetPrimary
         ' 
         btnSetPrimary.BackColor = SystemColors.Control
-        btnSetPrimary.Location = New Point(288, 20)
+        btnSetPrimary.Location = New Point(521, 101)
         btnSetPrimary.Margin = New Padding(4, 3, 4, 3)
         btnSetPrimary.Name = "btnSetPrimary"
-        btnSetPrimary.Size = New Size(86, 28)
+        btnSetPrimary.Size = New Size(57, 20)
         btnSetPrimary.TabIndex = 3
         btnSetPrimary.Text = "Set as Primary"
         btnSetPrimary.UseVisualStyleBackColor = False
@@ -697,7 +697,7 @@ Partial Class frmCSR
         ' btnViewPhoto
         ' 
         btnViewPhoto.BackColor = SystemColors.Control
-        btnViewPhoto.Location = New Point(288, 95)
+        btnViewPhoto.Location = New Point(288, 54)
         btnViewPhoto.Margin = New Padding(4, 3, 4, 3)
         btnViewPhoto.Name = "btnViewPhoto"
         btnViewPhoto.Size = New Size(86, 33)
@@ -708,7 +708,7 @@ Partial Class frmCSR
         ' btnDeletePhoto
         ' 
         btnDeletePhoto.BackColor = SystemColors.Control
-        btnDeletePhoto.Location = New Point(288, 54)
+        btnDeletePhoto.Location = New Point(288, 93)
         btnDeletePhoto.Margin = New Padding(4, 3, 4, 3)
         btnDeletePhoto.Name = "btnDeletePhoto"
         btnDeletePhoto.Size = New Size(86, 35)
@@ -721,10 +721,10 @@ Partial Class frmCSR
         lvwPhotos.Columns.AddRange(New ColumnHeader() {ColumnHeader1, ColumnHeader2, ColumnHeader3, ColumnHeader4})
         lvwPhotos.FullRowSelect = True
         lvwPhotos.GridLines = True
-        lvwPhotos.Location = New Point(5, 27)
+        lvwPhotos.Location = New Point(12, 27)
         lvwPhotos.Margin = New Padding(4, 3, 4, 3)
         lvwPhotos.Name = "lvwPhotos"
-        lvwPhotos.Size = New Size(269, 103)
+        lvwPhotos.Size = New Size(250, 103)
         lvwPhotos.TabIndex = 0
         lvwPhotos.UseCompatibleStateImageBehavior = False
         lvwPhotos.View = View.Details
@@ -736,15 +736,18 @@ Partial Class frmCSR
         ' 
         ' ColumnHeader2
         ' 
+        ColumnHeader2.DisplayIndex = 3
         ColumnHeader2.Text = "Primary"
         ' 
         ' ColumnHeader3
         ' 
+        ColumnHeader3.DisplayIndex = 1
         ColumnHeader3.Text = "Upload Date"
         ColumnHeader3.Width = 100
         ' 
         ' ColumnHeader4
         ' 
+        ColumnHeader4.DisplayIndex = 2
         ColumnHeader4.Text = "Original Name"
         ColumnHeader4.Width = 100
         ' 

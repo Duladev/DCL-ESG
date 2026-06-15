@@ -198,6 +198,7 @@ Partial Class frmDashboard
         ClientSize = New Size(884, 661)
         Controls.Add(PanelMainContent)
         Font = New Font("Segoe UI", 9F)
+        MaximizeBox = False
         Name = "frmDashboard"
         StartPosition = FormStartPosition.CenterScreen
         Text = "ESG Management System"

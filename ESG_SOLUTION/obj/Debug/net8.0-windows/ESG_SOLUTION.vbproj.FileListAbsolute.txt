@@ -224,3 +224,8 @@ F:\Release\net8.0-windows\ESG_SOLUTION.deps.json
 F:\Release\net8.0-windows\ESG_SOLUTION.runtimeconfig.json
 F:\Release\net8.0-windows\ESG_SOLUTION.dll
 F:\Release\net8.0-windows\ESG_SOLUTION.pdb
+F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.frmScreenRights.resources
+F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.frmChangePassword.resources
+F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.ESG_SOLUTION.ChangePasswordForm.resources
+F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.CreateUserForm.resources
+F:\DCL-ESG\ESG_SOLUTION\obj\Debug\net8.0-windows\ESG_SOLUTION.ESG_SOLUTION.ForgotPasswordForm.resources

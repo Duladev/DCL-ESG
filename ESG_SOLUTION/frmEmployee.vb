@@ -10,6 +10,7 @@ Public Class frmEmployee
         ApplyModernStyle(Me)
         LoadEmployeeData()
         SetupFilters()
+        SetupAgeFilter()
         SetupDetailsGroupBox()
         ' Add keypress handlers for Enter key navigation
         AddKeyPressHandlers(Me.Controls)
@@ -122,9 +123,16 @@ Public Class frmEmployee
         colNationality.DataPropertyName = "Nationality"
         colNationality.Width = 120
 
+        ' Age Category
+        Dim colAgeCategory As New DataGridViewTextBoxColumn()
+        colAgeCategory.Name = "Age_Category"
+        colAgeCategory.HeaderText = "Age Category"
+        colAgeCategory.DataPropertyName = "AgeCategory"
+        colAgeCategory.Width = 130
+
         ' Add all columns to grid
         DataGridViewEmployees.Columns.AddRange(New DataGridViewColumn() {colEmpNo, colEmpName, colGender, colCategory, colDepartment,
-                                                                         colDOJ, colToPresent, colDOB, colAge, colTenure, colNationality})
+                                                                         colDOJ, colToPresent, colDOB, colAge, colTenure, colNationality, colAgeCategory})
 
         ' Create a new DataTable for display with calculated columns
         Dim displayTable As New DataTable()
@@ -139,6 +147,7 @@ Public Class frmEmployee
         displayTable.Columns.Add("Age", GetType(Integer))
         displayTable.Columns.Add("Tenure", GetType(Double))
         displayTable.Columns.Add("Nationality", GetType(String))
+        displayTable.Columns.Add("AgeCategory", GetType(String))
 
         ' Populate display table with calculated values
         For Each row As DataRow In dtEmployees.Rows
@@ -160,15 +169,19 @@ Public Class frmEmployee
             displayRow("BDATE") = If(row("BDATE") Is DBNull.Value, DBNull.Value, Convert.ToDateTime(row("BDATE")))
 
             ' Calculate Age
+            Dim age As Integer = 0
             If row("BDATE") IsNot DBNull.Value Then
                 Dim birthDate As DateTime = Convert.ToDateTime(row("BDATE"))
                 Dim today As DateTime = DateTime.Today
-                Dim age As Integer = today.Year - birthDate.Year
+                age = today.Year - birthDate.Year
                 If birthDate.Date > today.AddYears(-age) Then age -= 1
                 displayRow("Age") = age
             Else
                 displayRow("Age") = 0
             End If
+
+            ' Calculate Age Category
+            displayRow("AgeCategory") = GetAgeCategory(age)
 
             ' Calculate Tenure
             If row("DATE_JOINED") IsNot DBNull.Value Then
@@ -187,6 +200,41 @@ Public Class frmEmployee
 
         DataGridViewEmployees.DataSource = displayTable
         lblRecordCount.Text = displayTable.Rows.Count.ToString()
+    End Sub
+
+    Private Function GetAgeCategory(age As Integer) As String
+        If age <= 17 Then
+            Return "17 years old or less"
+        ElseIf age >= 18 AndAlso age <= 30 Then
+            Return "Between 18 and 30 years old"
+        ElseIf age >= 31 AndAlso age <= 50 Then
+            Return "Between 31 and 50 years old"
+        ElseIf age >= 51 Then
+            Return "50 years old or above"
+        Else
+            Return "Not Available"
+        End If
+    End Function
+
+    Private Sub SetupAgeFilter()
+        ' Add Age Category ComboBox
+        Dim lblAgeCategory As New Label()
+        lblAgeCategory.Text = "Age Category:"
+        lblAgeCategory.Location = New Point(10, 120)
+        lblAgeCategory.Size = New Size(80, 25)
+
+        ' Populate age categories
+        cmbAgeCategory.Items.Clear()
+        cmbAgeCategory.Items.Add("All")
+        cmbAgeCategory.Items.Add("17 years old or less")
+        cmbAgeCategory.Items.Add("Between 18 and 30 years old")
+        cmbAgeCategory.Items.Add("Between 31 and 50 years old")
+        cmbAgeCategory.Items.Add("50 years old or above")
+        cmbAgeCategory.SelectedIndex = 0
+
+        ' Remove existing handler and add new one
+        RemoveHandler cmbAgeCategory.SelectedIndexChanged, AddressOf ApplyFilters
+        AddHandler cmbAgeCategory.SelectedIndexChanged, AddressOf ApplyFilters
     End Sub
 
     Private Sub SetupFilters()
@@ -281,40 +329,81 @@ Public Class frmEmployee
             .Distinct() _
             .Count() & ")"
     End Sub
+
     Private Sub ApplyFilters(sender As Object, e As EventArgs)
         Try
-            Dim dv As New DataView(dtEmployees)
-            Dim filters As New List(Of String)()
+            Dim filteredRows As List(Of DataRow) = New List(Of DataRow)()
 
-            ' Gender filter - check if there are items and if "All" is selected
-            If cmbGender.Items.Count > 0 AndAlso cmbGender.SelectedIndex > 0 Then
-                Dim selectedGender = cmbGender.SelectedItem.ToString()
-                If selectedGender = "Male" Then
-                    filters.Add("SEX = 1")
-                ElseIf selectedGender = "Female" Then
-                    filters.Add("SEX = 0")
+            For Each row As DataRow In dtEmployees.Rows
+                Dim includeRow As Boolean = True
+
+                ' Gender filter
+                If cmbGender.Items.Count > 0 AndAlso cmbGender.SelectedIndex > 0 Then
+                    Dim selectedGender = cmbGender.SelectedItem.ToString()
+                    Dim rowGender As String = ""
+                    If row("SEX") IsNot DBNull.Value Then
+                        Dim sexValue As Integer = Convert.ToInt32(row("SEX"))
+                        rowGender = If(sexValue = 1, "Male", "Female")
+                    End If
+
+                    If selectedGender = "Male" AndAlso rowGender <> "Male" Then
+                        includeRow = False
+                    ElseIf selectedGender = "Female" AndAlso rowGender <> "Female" Then
+                        includeRow = False
+                    End If
                 End If
-            End If
 
-            ' Category filter
-            If cmbCategory.SelectedIndex > 0 Then
-                filters.Add($"CATEGORY = '{cmbCategory.SelectedItem.ToString().Replace("'", "''")}'")
-            End If
+                ' Category filter
+                If includeRow AndAlso cmbCategory.SelectedIndex > 0 Then
+                    If row("CATEGORY").ToString() <> cmbCategory.SelectedItem.ToString() Then
+                        includeRow = False
+                    End If
+                End If
 
-            ' Department filter
-            If cmbDepartment.SelectedIndex > 0 Then
-                filters.Add($"DepartmentName = '{cmbDepartment.SelectedItem.ToString().Replace("'", "''")}'")
-            End If
+                ' Department filter
+                If includeRow AndAlso cmbDepartment.SelectedIndex > 0 Then
+                    If row("DepartmentName").ToString() <> cmbDepartment.SelectedItem.ToString() Then
+                        includeRow = False
+                    End If
+                End If
 
-            ' Nationality filter
-            If cmbNationality.SelectedIndex > 0 Then
-                filters.Add($"Nationality = '{cmbNationality.SelectedItem.ToString().Replace("'", "''")}'")
-            End If
+                ' Nationality filter
+                If includeRow AndAlso cmbNationality.SelectedIndex > 0 Then
+                    If row("Nationality").ToString() <> cmbNationality.SelectedItem.ToString() Then
+                        includeRow = False
+                    End If
+                End If
 
-            dv.RowFilter = If(filters.Count > 0, String.Join(" AND ", filters), "")
+                ' Age Category filter
+                If includeRow AndAlso cmbAgeCategory IsNot Nothing AndAlso cmbAgeCategory.SelectedIndex > 0 Then
+                    Dim selectedAgeCategory As String = cmbAgeCategory.SelectedItem.ToString()
 
-            ' Re-populate grid with filtered data
-            Dim filteredTable As DataTable = dv.ToTable()
+                    ' Calculate age for this row
+                    Dim age As Integer = 0
+                    If row("BDATE") IsNot DBNull.Value Then
+                        Dim birthDate As DateTime = Convert.ToDateTime(row("BDATE"))
+                        Dim today As DateTime = DateTime.Today
+                        age = today.Year - birthDate.Year
+                        If birthDate.Date > today.AddYears(-age) Then age -= 1
+                    End If
+
+                    Dim rowAgeCategory As String = GetAgeCategory(age)
+                    If rowAgeCategory <> selectedAgeCategory Then
+                        includeRow = False
+                    End If
+                End If
+
+                If includeRow Then
+                    filteredRows.Add(row)
+                End If
+            Next
+
+            ' Create filtered DataTable
+            Dim filteredTable As DataTable = dtEmployees.Clone()
+            For Each row As DataRow In filteredRows
+                filteredTable.ImportRow(row)
+            Next
+
             PopulateGridViewWithFilteredData(filteredTable)
 
         Catch ex As Exception
@@ -336,6 +425,7 @@ Public Class frmEmployee
         displayTable.Columns.Add("Age", GetType(Integer))
         displayTable.Columns.Add("Tenure", GetType(Double))
         displayTable.Columns.Add("Nationality", GetType(String))
+        displayTable.Columns.Add("AgeCategory", GetType(String))
 
         For Each row As DataRow In filteredTable.Rows
             Dim displayRow As DataRow = displayTable.NewRow()
@@ -350,14 +440,18 @@ Public Class frmEmployee
             displayRow("BDATE") = If(row("BDATE") Is DBNull.Value, DBNull.Value, Convert.ToDateTime(row("BDATE")))
 
             ' Age calculation
+            Dim age As Integer = 0
             If row("BDATE") IsNot DBNull.Value Then
                 Dim birthDate As DateTime = Convert.ToDateTime(row("BDATE"))
-                Dim age As Integer = DateTime.Today.Year - birthDate.Year
+                age = DateTime.Today.Year - birthDate.Year
                 If birthDate.Date > DateTime.Today.AddYears(-age) Then age -= 1
                 displayRow("Age") = age
             Else
                 displayRow("Age") = 0
             End If
+
+            ' Age Category
+            displayRow("AgeCategory") = GetAgeCategory(age)
 
             ' Tenure calculation
             If row("DATE_JOINED") IsNot DBNull.Value Then
@@ -381,6 +475,7 @@ Public Class frmEmployee
         If cmbCategory.Items.Count > 0 Then cmbCategory.SelectedIndex = 0
         If cmbDepartment.Items.Count > 0 Then cmbDepartment.SelectedIndex = 0
         If cmbNationality.Items.Count > 0 Then cmbNationality.SelectedIndex = 0
+        If cmbAgeCategory IsNot Nothing AndAlso cmbAgeCategory.Items.Count > 0 Then cmbAgeCategory.SelectedIndex = 0
         txtEmpID.Clear()
         LoadEmployeeData()
     End Sub

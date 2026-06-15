@@ -27,7 +27,6 @@ Public Class frmDashboard
     End Sub
 
     Private Sub BtnCSR_Click(sender As Object, e As EventArgs) Handles BtnCSR.Click
-        Me.Hide()
         frmCSR.Show()
         ShowMessage("CSR Dashboard loaded.")
     End Sub
