@@ -297,20 +297,7 @@ Add date picker for all tabs.
 
 
 
-
-
-
-
-
-
-
-
-Conditions
-no need store procedures.
-Use as simple database stucture with indexes.
-use loop when data grid views and excel functions.
-vb.net windows form application.
-sql server database.
+Use 65 Commit for withoutr QC updates
 should be guide all components how to apply and their names and other attributes.
 when upload the particular documents when data entry should be save file path in database.
 should be can multiple documents upload for same record same time.
