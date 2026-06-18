@@ -23,43 +23,65 @@ Partial Class frmESGReports
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmESGReports))
-        RoundedButton1 = New RoundedButton()
         btnHome = New Button()
+        Button1 = New Button()
+        Button2 = New Button()
+        Button3 = New Button()
         SuspendLayout()
-        ' 
-        ' RoundedButton1
-        ' 
-        RoundedButton1.BackColor = SystemColors.AppWorkspace
-        RoundedButton1.CornerRadius = 8
-        RoundedButton1.Location = New Point(107, 78)
-        RoundedButton1.Name = "RoundedButton1"
-        RoundedButton1.Size = New Size(101, 33)
-        RoundedButton1.TabIndex = 1
-        RoundedButton1.Text = "Daily Waste"
-        RoundedButton1.UseVisualStyleBackColor = False
         ' 
         ' btnHome
         ' 
         btnHome.BackgroundImage = CType(resources.GetObject("btnHome.BackgroundImage"), Image)
         btnHome.BackgroundImageLayout = ImageLayout.Stretch
-        btnHome.Location = New Point(598, 21)
+        btnHome.Location = New Point(731, 21)
         btnHome.Name = "btnHome"
         btnHome.Size = New Size(45, 38)
         btnHome.TabIndex = 13
         btnHome.UseVisualStyleBackColor = True
+        ' 
+        ' Button1
+        ' 
+        Button1.Location = New Point(75, 77)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(129, 41)
+        Button1.TabIndex = 14
+        Button1.Text = "Daily Waste"
+        Button1.UseVisualStyleBackColor = True
+        ' 
+        ' Button2
+        ' 
+        Button2.Location = New Point(75, 124)
+        Button2.Name = "Button2"
+        Button2.Size = New Size(129, 41)
+        Button2.TabIndex = 15
+        Button2.Text = "Age"
+        Button2.UseVisualStyleBackColor = True
+        ' 
+        ' Button3
+        ' 
+        Button3.Location = New Point(75, 171)
+        Button3.Name = "Button3"
+        Button3.Size = New Size(129, 41)
+        Button3.TabIndex = 16
+        Button3.Text = "Purchases"
+        Button3.UseVisualStyleBackColor = True
         ' 
         ' frmESGReports
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
+        Controls.Add(Button3)
+        Controls.Add(Button2)
+        Controls.Add(Button1)
         Controls.Add(btnHome)
-        Controls.Add(RoundedButton1)
         Name = "frmESGReports"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "ESGReports"
         ResumeLayout(False)
     End Sub
-
-    Friend WithEvents RoundedButton1 As RoundedButton
     Friend WithEvents btnHome As Button
+    Friend WithEvents Button1 As Button
+    Friend WithEvents Button2 As Button
+    Friend WithEvents Button3 As Button
 End Class

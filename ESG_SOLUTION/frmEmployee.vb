@@ -1,7 +1,4 @@
 ﻿Imports System.Data.SqlClient
-Imports System.Data
-Imports System.IO
-Imports Excel = Microsoft.Office.Interop.Excel
 
 Public Class frmEmployee
     Private dtEmployees As New DataTable()

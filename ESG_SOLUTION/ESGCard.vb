@@ -1,6 +1,4 @@
-Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports System.Windows.Forms
 
 ''' <summary>
 ''' ESG Metric Card — shows an icon, label, value, and optional badge.

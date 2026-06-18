@@ -1,8 +1,5 @@
-﻿Imports System.ComponentModel
-Imports System.Data.SqlClient
+﻿Imports System.Data.SqlClient
 Imports System.IO
-Imports OfficeOpenXml
-Imports OfficeOpenXml.Style
 
 Public Class frmCSR
     Private currentRecordID As Integer = -1

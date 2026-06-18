@@ -1,6 +1,4 @@
-Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports System.Windows.Forms
 
 ''' <summary>
 ''' Reusable ESG Title Bar — drop onto every form.

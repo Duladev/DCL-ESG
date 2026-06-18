@@ -1,6 +1,4 @@
 ﻿Imports System.Data.SqlClient
-Imports System.Windows.Forms
-Imports System.IO
 
 Public Class frmESGMain
     Private ageCategories As New Dictionary(Of String, Integer)

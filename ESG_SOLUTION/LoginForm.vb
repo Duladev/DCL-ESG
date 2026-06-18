@@ -1,10 +1,6 @@
-﻿Imports System
-Imports System.Data
-Imports System.Data.SqlClient
-Imports System.Drawing
+﻿Imports System.Data.SqlClient
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
-Imports System.Windows.Forms
 
 Namespace ESG_SOLUTION
 

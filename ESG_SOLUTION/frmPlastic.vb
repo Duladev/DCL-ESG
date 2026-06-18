@@ -1,6 +1,4 @@
 ﻿Imports System.Data.SqlClient
-Imports System.IO
-Imports System.Diagnostics
 
 Public Class frmPlastic
     Private currentFiles As New List(Of String)

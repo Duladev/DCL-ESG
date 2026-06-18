@@ -1,9 +1,6 @@
-﻿Imports System.Data
-Imports System.Data.SqlClient
-Imports System.Drawing
+﻿Imports System.Data.SqlClient
 Imports System.Drawing.Drawing2D
 Imports System.IO
-Imports System.Windows.Forms
 
 Public Class frmCSRActivity
 

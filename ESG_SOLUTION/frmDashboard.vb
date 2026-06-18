@@ -1,6 +1,4 @@
-﻿Imports System.Drawing
-
-Public Class frmDashboard
+﻿Public Class frmDashboard
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.WindowState = FormWindowState.Normal

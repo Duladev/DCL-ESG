@@ -1,14 +1,16 @@
 ﻿Imports System.Data.SqlClient
+Imports System.Drawing.Drawing2D
 Imports System.IO
 Imports System.Text
-Imports System.Drawing.Drawing2D
 
 Module ModShared
     Public connString As String = "Data Source='DCL-ICT-007\DEVELOPER';Initial Catalog=ESG;Integrated Security=True"
     Public baseFolderPath As String = "DCL-ICT-007\Environment project\Upload"
     Public PBReportPath As String = "DCL-ICT-007\Production_Reports\"
-    Public mReportName, mRecordSelectionFormula, mPara As String
-    Public objForm As New frm_ESGReportViewer
+    Public mReportName As String
+    Public mRecordSelectionFormula As String
+    Public mPara As String
+    Public objForm As frm_ESGReportViewer
     Public strReportPath As String
 
 

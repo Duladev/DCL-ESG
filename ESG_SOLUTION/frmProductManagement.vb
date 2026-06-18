@@ -1,5 +1,4 @@
 ﻿Imports System.Data.SqlClient
-Imports System.Windows.Forms
 
 Public Class frmProductManagement
     Private currentEditID As Integer = -1
