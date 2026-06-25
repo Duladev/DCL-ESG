@@ -1,18 +1,56 @@
 ﻿Imports System.Data.SqlClient
-Imports System.Drawing.Drawing2D
 Imports System.IO
 Imports System.Text
+Imports System.Drawing.Drawing2D
 
 Module ModShared
     Public connString As String = "Data Source='DCL-ICT-007\DEVELOPER';Initial Catalog=ESG;Integrated Security=True"
-    Public baseFolderPath As String = "DCL-ICT-007\Environment project\Upload"
-    Public PBReportPath As String = "DCL-ICT-007\Production_Reports\"
+    Public baseFolderPath As String = "\\DCL-ICT-007\Environment project\Upload"
+    'Public PBReportPath As String = "\\DCL-ICT-007\Production Reports\"
     Public mReportName As String
     Public mRecordSelectionFormula As String
     Public mPara As String
     Public objForm As frm_ESGReportViewer
-    Public strReportPath As String
+    Public strReportPath As String = "\\DCL-ICT-007\Production Reports\"
 
+
+    'Report viewver external exe start
+    ' Path to the compiled viewer EXE — Tools folder
+    Private ReadOnly ViewerExePath As String =
+        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tools", "ESGCrystalViewer.exe")
+
+    ''' <summary>
+    ''' Launches the Crystal Report viewer as a separate .NET FX 4.8 process.
+    ''' </summary>
+    Public Sub ShowCrystalReport(reportPath As String,
+                                  Optional selectionFormula As String = "",
+                                  Optional paramValue As String = "")
+        If Not File.Exists(ViewerExePath) Then
+            MessageBox.Show($"Crystal Viewer not found:{Environment.NewLine}{ViewerExePath}",
+                            "Configuration Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
+        If Not File.Exists(reportPath) Then
+            MessageBox.Show($"Report file not found:{Environment.NewLine}{reportPath}",
+                            "Report Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
+        ' Wrap each argument in quotes to handle spaces in paths
+        Dim args As String = $"""{reportPath}"" ""{selectionFormula}"" ""{paramValue}"""
+
+        Dim psi As New ProcessStartInfo()
+        psi.FileName = ViewerExePath
+        psi.Arguments = args
+        psi.UseShellExecute = False
+        psi.CreateNoWindow = False
+
+        Process.Start(psi)
+
+    End Sub
+
+    'Report viewver external exe end
 
     ' Style configuration
     Public Property TopBarColor As Color = Color.FromArgb(43, 108, 43)

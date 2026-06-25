@@ -9,14 +9,16 @@
     <StartupObject>ESG_SOLUTION.My.MyApplication</StartupObject>
     <Title>ESG- SOLUTION</Title>
     <ApplicationIcon>ESG_ICON.ico</ApplicationIcon>
+    <RepositoryUrl>https://github.com/Duladev/DCL-ESG</RepositoryUrl>
+    <RepositoryType>git.</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>F:\Release</OutputPath>
+    <OutputPath>D:\Environment project\Release</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>F:\Release</OutputPath>
+    <OutputPath>D:\Environment project\Release</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,3 +1,5 @@
 <Solution>
-  <Project Path="ESG_SOLUTION.vbproj" />
+  <Project Path="ESG_SOLUTION.vbproj">
+    <BuildType Project="Release" />
+  </Project>
 </Solution>

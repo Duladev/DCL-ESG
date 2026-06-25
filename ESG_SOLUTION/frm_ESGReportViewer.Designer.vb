@@ -28,6 +28,7 @@ Partial Class frm_ESGReportViewer
         ' 
         ClientSize = New Size(622, 289)
         Name = "frm_ESGReportViewer"
+        StartPosition = FormStartPosition.CenterScreen
         ResumeLayout(False)
 
     End Sub
