@@ -22,15 +22,17 @@ Partial Class frm_ESGReportViewer
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        SuspendLayout()
-        ' 
-        ' frm_ESGReportViewer
-        ' 
-        ClientSize = New Size(622, 289)
-        Name = "frm_ESGReportViewer"
-        StartPosition = FormStartPosition.CenterScreen
-        ResumeLayout(False)
+        Me.SuspendLayout()
+        '
+        'Form1
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.Name = "Form1"
+        Me.Text = "Form1"
+        Me.ResumeLayout(False)
 
     End Sub
-    Private WithEvents CRViewer1 As CrystalDecisions.Windows.Forms.CrystalReportViewer
+
 End Class

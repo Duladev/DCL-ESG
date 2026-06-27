@@ -63,7 +63,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CrystalDecisions.CrystalReports.Engine" Version="1.0.0" />
+<PackageReference Include="CrystalDecisions.CrystalReports.Engine" Version="1.0.0" />
     <PackageReference Include="CrystalDecisions.Windows.Forms" Version="1.0.0" />
     <PackageReference Include="CrystalReports.Engine" Version="13.0.4003" />
     <PackageReference Include="EPPlus" Version="8.6.0" />

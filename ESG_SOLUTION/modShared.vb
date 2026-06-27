@@ -10,8 +10,8 @@ Module ModShared
     Public mReportName As String
     Public mRecordSelectionFormula As String
     Public mPara As String
-    Public objForm As frm_ESGReportViewer
-    Public strReportPath As String = "\\DCL-ICT-007\Production Reports\"
+    'Public objForm As frm_ESGReportViewer
+    Public strReportPath As String
 
 
     'Report viewver external exe start
