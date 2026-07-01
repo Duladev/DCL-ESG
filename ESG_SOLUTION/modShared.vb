@@ -14,7 +14,6 @@ Module ModShared
     Public strReportPath As String
 
 
-    'Report viewver external exe start
     ' Path to the compiled viewer EXE — Tools folder
     Private ReadOnly ViewerExePath As String =
         Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tools", "ESGCrystalViewer.exe")
@@ -23,31 +22,51 @@ Module ModShared
     ''' Launches the Crystal Report viewer as a separate .NET FX 4.8 process.
     ''' </summary>
     Public Sub ShowCrystalReport(reportPath As String,
-                                  Optional selectionFormula As String = "",
-                                  Optional paramValue As String = "")
-        If Not File.Exists(ViewerExePath) Then
-            MessageBox.Show($"Crystal Viewer not found:{Environment.NewLine}{ViewerExePath}",
+                              Optional selectionFormula As String = "",
+                              Optional paramValue As String = "")
+        Try
+            If Not File.Exists(ViewerExePath) Then
+                MessageBox.Show($"Crystal Viewer not found:{Environment.NewLine}{ViewerExePath}",
                             "Configuration Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Return
-        End If
+                Return
+            End If
 
-        If Not File.Exists(reportPath) Then
-            MessageBox.Show($"Report file not found:{Environment.NewLine}{reportPath}",
+            If Not File.Exists(reportPath) Then
+                MessageBox.Show($"Report file not found:{Environment.NewLine}{reportPath}",
                             "Report Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Return
-        End If
+                Return
+            End If
 
-        ' Wrap each argument in quotes to handle spaces in paths
-        Dim args As String = $"""{reportPath}"" ""{selectionFormula}"" ""{paramValue}"""
+            ' Build arguments with proper quoting
+            Dim args As String = $"""{reportPath}"""
 
-        Dim psi As New ProcessStartInfo()
-        psi.FileName = ViewerExePath
-        psi.Arguments = args
-        psi.UseShellExecute = False
-        psi.CreateNoWindow = False
+            If Not String.IsNullOrEmpty(selectionFormula) Then
+                args &= $" ""{selectionFormula}"""
+            End If
 
-        Process.Start(psi)
+            If Not String.IsNullOrEmpty(paramValue) Then
+                args &= $" ""{paramValue}"""
+            End If
 
+            ' Start the viewer process
+            Dim psi As New ProcessStartInfo()
+            psi.FileName = ViewerExePath
+            psi.Arguments = args
+            psi.UseShellExecute = False
+            psi.CreateNoWindow = False
+            psi.WindowStyle = ProcessWindowStyle.Normal
+
+            Process.Start(psi)
+
+        Catch ex As Exception
+            MessageBox.Show($"Error launching Crystal Report Viewer:{Environment.NewLine}{ex.Message}",
+                          "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    ' Overload for simpler usage
+    Public Sub ShowCrystalReport(reportPath As String, paramValue As String)
+        ShowCrystalReport(reportPath, "", paramValue)
     End Sub
 
     'Report viewver external exe end

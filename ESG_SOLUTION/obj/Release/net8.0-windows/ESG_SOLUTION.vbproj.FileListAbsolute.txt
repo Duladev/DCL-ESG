@@ -9,8 +9,6 @@ D:\Environment project\Release\net8.0-windows\ESG_SOLUTION.deps.json
 D:\Environment project\Release\net8.0-windows\ESG_SOLUTION.runtimeconfig.json
 D:\Environment project\Release\net8.0-windows\ESG_SOLUTION.dll
 D:\Environment project\Release\net8.0-windows\ESG_SOLUTION.pdb
-F:\DCL-ESG\ESG_SOLUTION\obj\Release\net8.0-windows\ESG_SOLUTION.ESGCard.resources
-F:\DCL-ESG\ESG_SOLUTION\obj\Release\net8.0-windows\ESG_SOLUTION.ESGTitleBar.resources
 F:\DCL-ESG\ESG_SOLUTION\obj\Release\net8.0-windows\ESG_SOLUTION.frmCollectorManagement.resources
 F:\DCL-ESG\ESG_SOLUTION\obj\Release\net8.0-windows\ESG_SOLUTION.frmCSR.resources
 F:\DCL-ESG\ESG_SOLUTION\obj\Release\net8.0-windows\ESG_SOLUTION.frmCSRActivity.resources

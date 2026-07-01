@@ -1,13 +1,13 @@
 ﻿Imports CrystalDecisions.CrystalReports.Engine
 Imports CrystalDecisions.Windows.Forms
+Imports CrystalDecisions.Shared
 
 Public Class frm_ESGReportViewer
     Private objReportDocument As ReportDocument
-    Private WithEvents CRViewer1 As CrystalReportViewer  ' only needed if NOT added via designer
+    Private WithEvents CRViewer1 As CrystalReportViewer
 
     Private Sub frm_ESGReportViewer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
-            ' If CRViewer1 was NOT added in the designer, create it here
             If CRViewer1 Is Nothing Then
                 CRViewer1 = New CrystalReportViewer()
                 CRViewer1.Dock = DockStyle.Fill
@@ -24,6 +24,9 @@ Public Class frm_ESGReportViewer
             objReportDocument = New ReportDocument()
             objReportDocument.Load(strReportPath)
 
+            ' Apply DB login to main report and all subreports
+            ApplyLogOn(objReportDocument)
+
             If Not String.IsNullOrWhiteSpace(mRecordSelectionFormula) Then
                 objReportDocument.RecordSelectionFormula = mRecordSelectionFormula
             End If
@@ -34,6 +37,35 @@ Public Class frm_ESGReportViewer
             MsgBox(ex.Message, MsgBoxStyle.Critical Or MsgBoxStyle.OkOnly, Me.Text)
             Me.Close()
         End Try
+    End Sub
+
+    Private Sub ApplyLogOn(report As ReportDocument)
+        Dim connInfo As New ConnectionInfo()
+        connInfo.ServerName = "DCL-ICT-007\DEVELOPER"
+        connInfo.DatabaseName = "ESG"
+        connInfo.IntegratedSecurity = True
+
+        ' Apply to main report tables
+        For Each tbl As Table In report.Database.Tables
+            Dim tli As TableLogOnInfo = tbl.LogOnInfo
+            tli.ConnectionInfo = connInfo
+            tbl.ApplyLogOnInfo(tli)
+        Next
+
+        ' Apply to subreports
+        For Each section As Section In report.ReportDefinition.Sections
+            For Each obj As ReportObject In section.ReportObjects
+                If obj.Kind = ReportObjectKind.SubreportObject Then
+                    Dim sub_report As SubreportObject = DirectCast(obj, SubreportObject)
+                    Dim subDoc As ReportDocument = report.OpenSubreport(sub_report.SubreportName)
+                    For Each tbl As Table In subDoc.Database.Tables
+                        Dim tli As TableLogOnInfo = tbl.LogOnInfo
+                        tli.ConnectionInfo = connInfo
+                        tbl.ApplyLogOnInfo(tli)
+                    Next
+                End If
+            Next
+        Next
     End Sub
 
     Private Sub frm_ESGReportViewer_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
