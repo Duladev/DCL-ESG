@@ -1,0 +1,4 @@
+F:\DCL-ESG\ESGCrystalViewer\obj\Debug\ESGCrystalViewer.vbproj.AssemblyReference.cache
+F:\DCL-ESG\ESGCrystalViewer\obj\Debug\ESGCrystalViewer.Resources.resources
+F:\DCL-ESG\ESGCrystalViewer\obj\Debug\ESGCrystalViewer.vbproj.GenerateResource.cache
+F:\DCL-ESG\ESGCrystalViewer\obj\Debug\ESGCrystalViewer.vbproj.CoreCompileInputs.cache
